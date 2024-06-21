@@ -1,3 +1,3 @@
-# Monkey Development Kit (🐒 Monkey-DK 🙊)
+# wp-editor
 
 
