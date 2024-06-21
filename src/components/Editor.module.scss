@@ -1,0 +1,117 @@
+.wp-editor {
+  // style
+  border: 1px solid #ddd;
+
+  .wp-editor-content {
+    height: 100px;
+    padding: 12px;
+    overflow-y: scroll;
+
+    &:empty {
+      &::before {
+        color: #aaa;
+        content: attr(aria-placeholder);
+      }
+    }
+
+    :global {
+      img {
+        max-width: 100%;
+      }
+
+      .mention-list {
+        position: absolute;
+        z-index: 1;
+        top: 100%;
+        left: 0;
+        margin: 4px 0;
+
+        .mention-list-area {
+          padding: 0;
+          border: 1px solid #ddd;
+          margin: 0;
+          list-style: none;
+
+          >.mention-item {
+            padding: 4px 8px;
+            cursor: pointer;
+            user-select: none;
+
+            &.active {
+              background-color: aqua;
+            }
+          }
+        }
+      }
+
+      .mention {
+        position: relative;
+
+        &.will-mention {
+          // style
+        }
+
+        &.unkown-mention,
+        &.complete-mention {
+          padding: 0 4px;
+        }
+
+        &.unkown-mention {
+          border: 1px dashed gray;
+          background-color: transparent;
+        }
+
+        &.complete-mention {
+          background-color: rgb(0 255 255 / 42.2%);
+        }
+      }
+
+      .hash-list {
+        position: absolute;
+        z-index: 1;
+        top: 100%;
+        left: 0;
+        margin: 4px 0;
+
+        .hash-list-area {
+          padding: 0;
+          border: 1px solid #ddd;
+          margin: 0;
+          list-style: none;
+
+          >.hash-item {
+            padding: 4px 8px;
+            cursor: pointer;
+            user-select: none;
+
+            &.active {
+              background-color: aqua;
+            }
+          }
+        }
+      }
+
+      .hash {
+        position: relative;
+
+        &.will-hash {
+          // style
+        }
+
+        &.unkown-hash,
+        &.complete-hash {
+          padding: 0 4px;
+        }
+
+        &.unkown-hash {
+          border: 1px dashed gray;
+          background-color: transparent;
+        }
+
+        &.complete-hash {
+          background-color: rgb(0 255 255 / 42.2%);
+        }
+      }
+    }
+  }
+}
