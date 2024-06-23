@@ -28,6 +28,7 @@ import PasteToPlainText, {
 
 type EditorRef = HTMLDivElement & {
   setData: (data: string) => void;
+
 };
 
 type Props = Omit<TextareaHTMLAttributes<HTMLDivElement>, 'aria-placeholder' | 'value'> & {
@@ -87,7 +88,7 @@ const Editor = forwardRef<EditorRef, Props>(
 
     const mutationObserver = useMemo(() => {
       return new MutationObserver(() => {
-        if(!contentEditableEl.current){
+        if (!contentEditableEl.current) {
           return;
         }
 
@@ -126,7 +127,7 @@ const Editor = forwardRef<EditorRef, Props>(
       range.collapse(false);
 
       // 선택 객체에서 범위를 제거하고 새 범위 추가
-      selection.removeAllRanges();
+      selection.removeAllRanges()
       selection.addRange(range);
 
       return range;
@@ -160,13 +161,14 @@ const Editor = forwardRef<EditorRef, Props>(
 
             if (cursorPosition.top < editableRect.top) {
               contentEditableEl.current.scrollTop -= (editableRect.top - cursorPosition.top);
-            }else if(cursorPosition.bottom > editableRect.bottom){
+            } else if (cursorPosition.bottom > editableRect.bottom) {
               contentEditableEl.current.scrollTop += (cursorPosition.bottom - editableRect.bottom);
             }
 
+
           }
 
-          
+
           previousRevisions.current.disabled = true;
 
           plugins.forEach((plugin) => {
@@ -195,21 +197,27 @@ const Editor = forwardRef<EditorRef, Props>(
           e.preventDefault();
         }
 
-        if(e.code === 'Enter'){
+        if (e.code === 'Enter' && !e.nativeEvent.isComposing) {
           e.preventDefault();
 
+          const { focusNode } = selection
+
           const br = document.createElement('br');
-          const range = selection.getRangeAt(0);
+          const range = selection.getRangeAt(0)
           range.deleteContents(); // 선택된 내용을 삭제
 
           const frag = document.createDocumentFragment();
-          const emptyChar = document.createTextNode('\u00a0');
-          frag.appendChild(emptyChar); // 비어있는 텍스트 노드 추가 (브라우저 호환성 문제 해결)
-          frag.appendChild(br);
-          
+          const subBr = document.createElement('br');
 
-          range.insertNode(emptyChar);
-          range.insertNode(br);
+          if (focusNode.nodeType === Node.TEXT_NODE) {
+            frag.appendChild(subBr);
+          }
+          frag.appendChild(br);
+
+
+
+
+          range.insertNode(frag);
           range.setStartAfter(br);
           range.setEndAfter(br);
 
@@ -218,7 +226,7 @@ const Editor = forwardRef<EditorRef, Props>(
 
           range.collapse(false);
 
-          console.log(selection.getRangeAt(0));
+          console.log(focusNode);
 
           const brRect = br.getBoundingClientRect();
           const editableRect = contentEditableEl.current.getBoundingClientRect();
@@ -227,6 +235,9 @@ const Editor = forwardRef<EditorRef, Props>(
             contentEditableEl.current.scrollTop += (brRect.bottom - editableRect.bottom) + brRect.height;
           }
         }
+
+
+
 
         plugins.forEach((plugin) => {
           plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
@@ -271,6 +282,8 @@ const Editor = forwardRef<EditorRef, Props>(
     const handleCopy = useCallback(
       (e: ClipboardEvent<HTMLDivElement>) => {
         const { selection, range } = getSelection();
+
+
 
         plugins.forEach((plugin) => {
           plugin.handleCopy && plugin.handleCopy({ selection, range, event: e });

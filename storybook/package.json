@@ -16,6 +16,9 @@
     "storybook": "env-cmd -e local storybook dev -p 6006",
     "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider storybook build"
   },
+  "resolutions": {
+    "jackspeak": "2.1.1"
+  },
   "dependencies": {
     "@storybook/addon-controls": "7.4.3 ",
     "@storybook/nextjs": "7.4.3",
