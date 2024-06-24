@@ -1,6 +1,6 @@
 {
-  "name": "wp-editor",
-  "version": "1.0.0",
+  "name": "wemixplay-editor",
+  "version": "1.0.2",
   "author": "Derek KIM",
   "license": "MIT",
   "main": "dist/index.js",
@@ -98,5 +98,5 @@
   "resolutions": {
     "**/fsevents": "2.3.2",
     "**/node-pre-gyp": "0.17.0"
-}
+  }
 }
