@@ -1,5 +1,5 @@
 import React from 'react';
-import type { WpEditorPlugin } from '../../editor';
+import type { WpEditorPlugin } from '@/index';
 import { uniqueId } from 'lodash-es';
 import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'react';
 import HashList, { HashListRef } from './components/HashList';
@@ -272,8 +272,6 @@ class HashTag implements WpEditorPlugin {
       this.config.onWriteHash &&
         this.config.onWriteHash(focusNode.parentElement.firstChild.textContent.replace('#', ''));
     }
-
-    console.log(isStartHash);
 
     if (isStartHash) {
       this.hashId = `hash-${uniqueId()}`;

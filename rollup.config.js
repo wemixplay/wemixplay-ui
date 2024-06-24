@@ -6,7 +6,7 @@ const ignore = require('rollup-plugin-ignore');
 const postcss = require('rollup-plugin-postcss');
 const resolve = require('@rollup/plugin-node-resolve').nodeResolve; // NodeResolve 함수를 직접 가져옴
 const commonjs = require('@rollup/plugin-commonjs');
-const createIndexFilePlugin = require('./plugins/rollup-plugin-create-index.js');
+// const createIndexFilePlugin = require('./plugins/rollup-plugin-create-index.js');
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -22,7 +22,20 @@ const plugins = [
 		babelHelpers: 'runtime',
 		exclude: 'node_modules/**',
 		extensions,
-		plugins: ['@emotion'],
+		presets: [
+			[
+				'@babel/preset-env',
+				{
+					useBuiltIns: 'usage',
+					corejs: 3, // core-js version 3 사용
+				}
+			],
+			'@babel/preset-react',
+			'@babel/preset-typescript'
+		],
+		plugins: [
+			'@babel/plugin-transform-runtime'
+		],
 	}),
 	postcss({
 		modules: true,
@@ -34,15 +47,15 @@ const plugins = [
 		],
 		extract: false,
 		minimize: true,
-		sourceMap: true
+		sourceMap: process.NODE_ENV === 'development'
 	}),
-	createIndexFilePlugin({
-		target: '',
-		fileName: {
-			cjs: 'index.cjs.js',
-			esm: 'index.esm.mjs',
-		},
-	}),
+	// createIndexFilePlugin({
+	// 	target: '',
+	// 	fileName: {
+	// 		cjs: 'index.cjs.js',
+	// 		esm: 'index.esm.mjs',
+	// 	},
+	// }),
 ]
 
 if (process.env.NODE_ENV === 'production') {
@@ -51,8 +64,14 @@ if (process.env.NODE_ENV === 'production') {
 			unused: true,
 			dead_code: true,
 			conditionals: true,
-			drop_console: true, // 콘솔 로그 제거
-			pure_funcs: ['console.info', 'console.debug', 'console.warn'], // 특정 콘솔 함수 제거
+			drop_console: true,
+			pure_funcs: ['console.info', 'console.debug', 'console.warn'],
+		},
+		mangle: {
+			toplevel: true,
+		},
+		output: {
+			comments: false,
 		},
 	}));
 }
@@ -73,9 +92,14 @@ module.exports = {
 			sourcemap: process.env.NODE_ENV !== 'production',
 		},
 	],
-	manualChunks(id) {
-		if (id.includes('node_modules')) {
-			return 'vendors';
-		}
-	}
+	treeshake: {
+		moduleSideEffects: false,
+		propertyReadSideEffects: false,
+		unknownGlobalSideEffects: false,
+	},
+	// manualChunks(id) {
+	// 	if (id.includes('node_modules')) {
+	// 		return 'vendors';
+	// 	}
+	// }
 };

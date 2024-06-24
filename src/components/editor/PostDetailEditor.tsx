@@ -12,7 +12,7 @@ import React, {
   useState
 } from 'react';
 import style from './PostEditor.module.scss';
-import Editor, { EditorProps, EditorRef } from './Editor';
+import Editor, { WpEditorProps, WpEditorRef } from './Editor';
 import Mention from '@/plugins/mention/Mention';
 import HashTag from '@/plugins/hashTag/HashTag';
 import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
@@ -33,7 +33,7 @@ type PostDetailEditorValue = {
   ogUrl?: string;
 };
 
-type Props = Omit<EditorProps, 'plugin' | 'config' | 'initailValue'> & {
+type Props = Omit<WpEditorProps, 'plugin' | 'config' | 'initailValue'> & {
   className?: string;
   btnSubmitElement?: ReactElement;
   value?: PostDetailEditorValue;
@@ -43,7 +43,7 @@ type Props = Omit<EditorProps, 'plugin' | 'config' | 'initailValue'> & {
 
 const cx = makeCxFunc(style);
 
-const PostDetailEditor = forwardRef<EditorRef, Props>(
+const PostDetailEditor = forwardRef<WpEditorRef, Props>(
   (
     {
       className = '',
@@ -232,4 +232,5 @@ const PostDetailEditor = forwardRef<EditorRef, Props>(
 
 PostDetailEditor.displayName = 'PostDetailEditor';
 
+export type { Props as PostDetailEditorProps, PostEditorMediaValue, PostDetailEditorValue };
 export default PostDetailEditor;

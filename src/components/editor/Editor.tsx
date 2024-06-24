@@ -19,14 +19,14 @@ import classNames from 'classnames/bind';
 import style from './Editor.module.scss';
 import Mention, { MentionConfig } from '@/plugins/mention/Mention';
 import HashTag, { HashTagConfig } from '@/plugins/hashTag/HashTag';
-import { WpEditorPluginConstructor } from '@/editor';
+import { WpEditorPluginConstructor } from '@/index';
 import AutoUrlMatch, { AutoUrlMatchConfig } from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import { debounce } from 'lodash-es';
 import PasteToPlainText, {
   PasteToPlainTextConfig
 } from '@/plugins/pasteToPlainText/PasteToPlainText';
 
-type EditorRef = HTMLDivElement & {
+type WpEditorRef = HTMLDivElement & {
   setData: (data: string) => void;
 };
 
@@ -57,7 +57,7 @@ const constructEditorPlugin = ({
   return plugin.map((p) => new p({ contentEditableEl }));
 };
 
-const Editor = forwardRef<EditorRef, Props>(
+const WpEditor = forwardRef<WpEditorRef, Props>(
   (
     {
       className = '',
@@ -72,7 +72,7 @@ const Editor = forwardRef<EditorRef, Props>(
     },
     ref
   ) => {
-    const contentEditableEl = useRef<EditorRef>();
+    const contentEditableEl = useRef<WpEditorRef>();
     const previousRevisions = useRef<{
       index: number;
       stack: string[];
@@ -367,7 +367,7 @@ const Editor = forwardRef<EditorRef, Props>(
   }
 );
 
-Editor.displayName = 'Editor';
+WpEditor.displayName = 'WpEditor';
 
-export type { Props as EditorProps, EditorRef };
-export default Editor;
+export type { Props as WpEditorProps, WpEditorRef };
+export default WpEditor;

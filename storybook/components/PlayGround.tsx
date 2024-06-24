@@ -1,10 +1,11 @@
 import React, { type ReactNode } from 'react';
 type PropsType = {
-	children: ReactNode;
+  children: ReactNode;
 };
 
-const PlayGround = ({ children }: PropsType) =>
-// Logic
+const PlayGround = ({ children }: PropsType) => (
+  // Logic
 
-	<div>{children}</div>;
+  <div>{children}</div>
+);
 export default PlayGround;

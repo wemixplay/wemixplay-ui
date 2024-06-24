@@ -20,7 +20,7 @@ type Props = {
   id?: string;
   className?: string;
   list?: (Record<string, string> & { name: string })[];
-  listElement?: (item: any) => React.JSX.Element;
+  listElement?: (item: JSONObject) => React.JSX.Element;
   selectHashItem: () => void;
   closeHashList: () => void;
 };

@@ -1,5 +1,5 @@
 {
-    "include": ["src", "global.d.ts"],
+    "include": ["src", "global.d.ts", "src/types"],
     "exclude": ["node_modules", "dist"],
     "compilerOptions": {
         "target": "es6" /* 최신 브라우저는 es6을 대부분 지원한다. */,
@@ -14,7 +14,7 @@
         "noUnusedParameters": false,
         "strictNullChecks": false,
         "declaration": true /* 타입스크립트가 자동으로 타입정의 (d.ts) 파일을 생성해 준다. */,
-        "declarationDir": "dist/types",
+        "declarationDir": "dist",
         "esModuleInterop": true,
         "skipLibCheck": true,
         "outDir": "./dist" /* 컴파일된 결과물을 어디에 저장할지에 대한 것을 명시해 준다. */,

@@ -1,5 +1,5 @@
 import { ClipboardEvent, MutableRefObject } from 'react';
-import { WpEditorPlugin } from '../../editor';
+import { WpEditorPlugin } from '@/index';
 
 type PasteToPlainTextConfig = {
   onMatchImgOrVideoUrl?: (urls: { tag: 'img' | 'video' | 'iframe'; src: string }[]) => void;

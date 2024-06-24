@@ -24,22 +24,24 @@ export const makeCxFunc = (style: { readonly [key: string]: string }) => {
   };
 };
 
-export const cn = (...args: Array<string | number | boolean | undefined | Record<string, any>>) => {
-	const classNames = args.reduce<string>((acc, cur) => {
-		if (typeof cur === 'string') {
-			acc += ` ${cur}`;
-		} else if (typeof cur === 'object') {
-			acc += Object.entries(cur ?? {}).reduce((names, [key, value]) => {
-				if (value) {
-					names += ` ${key}`;
-				}
+export const cn = (
+  ...args: Array<string | number | boolean | undefined | Record<string, JSONObject>>
+) => {
+  const classNames = args.reduce<string>((acc, cur) => {
+    if (typeof cur === 'string') {
+      acc += ` ${cur}`;
+    } else if (typeof cur === 'object') {
+      acc += Object.entries(cur ?? {}).reduce((names, [key, value]) => {
+        if (value) {
+          names += ` ${key}`;
+        }
 
-				return names;
-			}, '');
-		}
+        return names;
+      }, '');
+    }
 
-		return acc;
-	}, '');
+    return acc;
+  }, '');
 
-	return classNames;
+  return classNames;
 };

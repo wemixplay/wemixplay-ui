@@ -3,7 +3,7 @@ import { uniqueId } from 'lodash-es';
 import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'react';
 import MentionList, { MentionListRef } from './components/MentionList';
 import MentionContainer from './components/MentionContainer';
-import { WpEditorPlugin } from '../../editor';
+import { WpEditorPlugin } from '@/index';
 
 type MentionConfig = {
   list: (Record<string, string> & { name: string })[];
@@ -326,8 +326,7 @@ class Mention implements WpEditorPlugin {
     return false;
   }
 
-  handleUndoRedo({ selection, range }: { selection: Selection; range: Range }) {
-    console.log(range.startContainer)
+  handleUndoRedo({ range }: { selection: Selection; range: Range }) {
     if ((range.startContainer as HTMLElement).classList?.contains('mention')) {
       const mentionTag = range.startContainer as HTMLElement;
       const mentionId = mentionTag.id;
