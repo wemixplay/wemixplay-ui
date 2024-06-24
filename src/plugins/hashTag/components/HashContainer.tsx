@@ -1,12 +1,12 @@
 'use client';
 
 import React, { ReactNode, useEffect, useState } from 'react';
-import Hash, { HashConfig } from '../Hash';
+import HashTag, { HashTagConfig } from '../HashTag';
 import HashPortal from './HashPortal';
 
 type Props = {
-  hash?: Hash;
-  children: (config: HashConfig) => ReactNode;
+  hash?: HashTag;
+  children: (config: HashTagConfig) => ReactNode;
 };
 
 const HashContainer = ({ hash, children }: Props) => {

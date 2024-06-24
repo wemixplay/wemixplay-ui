@@ -1,5 +1,5 @@
 const chokidar = require('chokidar');
-const {SvgComponentGenerator} = require('../dist/modules');
+const {SvgComponentGenerator} = require('monkey-d/modules');
 
 let watcher = null; // 전역 또는 모듈 수준의 변수로 watcher를 관리
 

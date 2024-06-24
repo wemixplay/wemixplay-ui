@@ -1,0 +1,45 @@
+{
+  "root": true,
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint", "prettier", "react-hooks", "react"],
+  "parserOptions": {
+    "createDefaultProgram": true
+  },
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "ignorePatterns": ["node_modules/", "*.js", "dist/*"],
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended",
+    "prettier",
+    "plugin:react/recommended" 
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx", ".jsx"] }],
+    "no-useless-catch": "off",
+    "react/no-children-prop": "off",
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": "off"
+  },
+  "settings": { // 추가된 부분
+    "react": {
+      "version": "detect" // React 버전을 자동으로 감지하여 설정
+    }
+  },
+  "overrides": [
+    {
+      "files": ["*.js", "*.jsx", "*.ts", "*.tsx"],
+      "rules": {
+        "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx", ".jsx"] }],
+        "@typescript-eslint/explicit-function-return-type": "off",
+        "@typescript-eslint/no-unused-vars": "off",
+        "@typescript-eslint/no-empty-interface": "off"
+      }
+    }
+  ]
+}

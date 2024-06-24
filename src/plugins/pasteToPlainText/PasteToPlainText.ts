@@ -2,16 +2,14 @@ import { ClipboardEvent, MutableRefObject } from 'react';
 import { WpEditorPlugin } from '../../editor';
 
 type PasteToPlainTextConfig = {
-  onMatchImgOrVideoUrl?: (
-    urls: { tag: 'img' | 'video' | 'iframe'; src: string }[]
-  ) => { tag: 'img' | 'video' | 'iframe'; src: string }[];
+  onMatchImgOrVideoUrl?: (urls: { tag: 'img' | 'video' | 'iframe'; src: string }[]) => void;
 };
 
 class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
   public commandKey = 'pasteToPlainText';
   public config: PasteToPlainTextConfig = {
     onMatchImgOrVideoUrl: (urls) => {
-      return urls;
+      //
     }
   };
   public contentEditableEl: MutableRefObject<HTMLDivElement>;

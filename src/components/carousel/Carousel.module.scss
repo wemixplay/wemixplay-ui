@@ -1,0 +1,28 @@
+.carousel-wrapper {
+  .carousel-swiper {
+    :global {
+      .swiper-slide {
+        background-color: white;
+      }
+    }
+  }
+
+  .carousel-navigation {
+    button {
+      padding: 4px;
+      border: 1px solid;
+      margin-right: 4px;
+      cursor: pointer;
+
+      &:disabled {
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  .carousel-pagination {
+    > span {
+      cursor: pointer;
+    }
+  }
+}

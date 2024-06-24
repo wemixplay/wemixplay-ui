@@ -1,0 +1,15 @@
+.ripple {
+  position: relative;
+  display: contents;
+  overflow: hidden;
+
+  .animate {
+    opacity: 0.3;
+  }
+
+  /* stylelint-disable-next-line selector-type-no-unknown */
+  jwripple {
+    animation-name: material-ripple;
+    animation-timing-function: ease-out;
+  }
+}

@@ -1,0 +1,13 @@
+.post-detail-editor{
+  .control-box{
+    display: flex;
+    
+    .left{
+      .btn-img-upload{
+        input{
+          display: none;
+        }
+      }
+    }
+  }
+}

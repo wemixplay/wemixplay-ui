@@ -1,0 +1,31 @@
+.images-upload-preview{
+  .image-preview-slider{
+    :global{
+      .swiper{
+        padding: 40px 0;
+
+        .swiper-slide{
+          position: relative;
+          width: auto !important;
+
+          *{
+            user-select: none;
+          }
+        }
+      }
+    }
+
+    .btn-img-delete{
+      position: absolute;
+      top:0;
+      right:0;
+      z-index: 1;
+    }
+  }
+
+  .preview-image-box{
+    img{
+      height: 355px;
+    }
+  }
+}

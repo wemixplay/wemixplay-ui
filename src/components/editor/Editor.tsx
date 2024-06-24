@@ -17,18 +17,17 @@ import React, {
 } from 'react';
 import classNames from 'classnames/bind';
 import style from './Editor.module.scss';
-import Mention, { MentionConfig } from '../plugins/mention/Mention';
-import Hash, { HashConfig } from '../plugins/hashTag/Hash';
-import { WpEditorPluginConstructor } from '../editor';
-import AutoUrlMatch, { AutoUrlMatchConfig } from '../plugins/autoUrlMatch/AutoUrlMatch';
+import Mention, { MentionConfig } from '@/plugins/mention/Mention';
+import HashTag, { HashTagConfig } from '@/plugins/hashTag/HashTag';
+import { WpEditorPluginConstructor } from '@/editor';
+import AutoUrlMatch, { AutoUrlMatchConfig } from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import { debounce } from 'lodash-es';
 import PasteToPlainText, {
   PasteToPlainTextConfig
-} from '../plugins/pasteToPlainText/PasteToPlainText';
+} from '@/plugins/pasteToPlainText/PasteToPlainText';
 
 type EditorRef = HTMLDivElement & {
   setData: (data: string) => void;
-
 };
 
 type Props = Omit<TextareaHTMLAttributes<HTMLDivElement>, 'aria-placeholder' | 'value'> & {
@@ -39,8 +38,8 @@ type Props = Omit<TextareaHTMLAttributes<HTMLDivElement>, 'aria-placeholder' | '
   plugin?: WpEditorPluginConstructor[];
   config?: {
     mention?: MentionConfig;
-    hash?: HashConfig;
-    autourlMatch?: AutoUrlMatchConfig;
+    hash?: HashTagConfig;
+    autoUrlMatch?: AutoUrlMatchConfig;
     pasteToPlainText?: PasteToPlainTextConfig;
   };
   handleChange?: (value: string, name?: string) => void;
@@ -65,7 +64,7 @@ const Editor = forwardRef<EditorRef, Props>(
       name,
       initialValue,
       config = {},
-      plugin = [Mention, Hash, AutoUrlMatch, PasteToPlainText],
+      plugin = [Mention, HashTag, AutoUrlMatch, PasteToPlainText],
       placeholder = '입력해주세요..!',
       onClick,
       handleChange,
@@ -127,7 +126,7 @@ const Editor = forwardRef<EditorRef, Props>(
       range.collapse(false);
 
       // 선택 객체에서 범위를 제거하고 새 범위 추가
-      selection.removeAllRanges()
+      selection.removeAllRanges();
       selection.addRange(range);
 
       return range;
@@ -135,7 +134,8 @@ const Editor = forwardRef<EditorRef, Props>(
 
     const handleUndoRedo = useCallback(
       (e: InputEvent | { inputType: string; preventDefault: () => void }) => {
-        let { selection, range } = getSelection();
+        const { selection } = getSelection();
+        let { range } = getSelection();
 
         if (e.inputType === 'historyUndo' || e.inputType === 'historyRedo') {
           e.preventDefault && e.preventDefault();
@@ -160,14 +160,11 @@ const Editor = forwardRef<EditorRef, Props>(
             const editableRect = contentEditableEl.current.getBoundingClientRect();
 
             if (cursorPosition.top < editableRect.top) {
-              contentEditableEl.current.scrollTop -= (editableRect.top - cursorPosition.top);
+              contentEditableEl.current.scrollTop -= editableRect.top - cursorPosition.top;
             } else if (cursorPosition.bottom > editableRect.bottom) {
-              contentEditableEl.current.scrollTop += (cursorPosition.bottom - editableRect.bottom);
+              contentEditableEl.current.scrollTop += cursorPosition.bottom - editableRect.bottom;
             }
-
-
           }
-
 
           previousRevisions.current.disabled = true;
 
@@ -200,10 +197,10 @@ const Editor = forwardRef<EditorRef, Props>(
         if (e.code === 'Enter' && !e.nativeEvent.isComposing) {
           e.preventDefault();
 
-          const { focusNode } = selection
+          const { focusNode } = selection;
 
           const br = document.createElement('br');
-          const range = selection.getRangeAt(0)
+          const range = selection.getRangeAt(0);
           range.deleteContents(); // 선택된 내용을 삭제
 
           const frag = document.createDocumentFragment();
@@ -214,9 +211,6 @@ const Editor = forwardRef<EditorRef, Props>(
           }
           frag.appendChild(br);
 
-
-
-
           range.insertNode(frag);
           range.setStartAfter(br);
           range.setEndAfter(br);
@@ -226,18 +220,14 @@ const Editor = forwardRef<EditorRef, Props>(
 
           range.collapse(false);
 
-          console.log(focusNode);
-
           const brRect = br.getBoundingClientRect();
           const editableRect = contentEditableEl.current.getBoundingClientRect();
 
           if (brRect.bottom >= editableRect.bottom) {
-            contentEditableEl.current.scrollTop += (brRect.bottom - editableRect.bottom) + brRect.height;
+            contentEditableEl.current.scrollTop +=
+              brRect.bottom - editableRect.bottom + brRect.height;
           }
         }
-
-
-
 
         plugins.forEach((plugin) => {
           plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
@@ -282,8 +272,6 @@ const Editor = forwardRef<EditorRef, Props>(
     const handleCopy = useCallback(
       (e: ClipboardEvent<HTMLDivElement>) => {
         const { selection, range } = getSelection();
-
-
 
         plugins.forEach((plugin) => {
           plugin.handleCopy && plugin.handleCopy({ selection, range, event: e });
@@ -381,5 +369,5 @@ const Editor = forwardRef<EditorRef, Props>(
 
 Editor.displayName = 'Editor';
 
-export type { Props as PostEditorProps, EditorRef };
+export type { Props as EditorProps, EditorRef };
 export default Editor;

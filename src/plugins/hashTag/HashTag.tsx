@@ -5,7 +5,7 @@ import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'r
 import HashList, { HashListRef } from './components/HashList';
 import HashContainer from './components/HashContainer';
 
-type HashConfig = {
+type HashTagConfig = {
   list: (Record<string, string> & { name: string })[];
   listElement?: <T = { name: string }>(item: T) => React.JSX.Element;
   onWriteHash?: (text: string) => void;
@@ -13,17 +13,17 @@ type HashConfig = {
   onCloseHashList?: () => void;
 };
 
-class Hash implements WpEditorPlugin {
+class HashTag implements WpEditorPlugin {
   public readonly commandKey = 'hash';
   private _hashId: string;
   private setTargetHashId: (targetHashId: string) => void;
   public contentEditableEl: MutableRefObject<HTMLDivElement>;
   private postHashListRef: HashListRef;
-  private _config: HashConfig = {
+  private _config: HashTagConfig = {
     list: [],
     onWriteHash: (text) => {}
   };
-  private setNewConfig: (newConfig: HashConfig) => void;
+  private setNewConfig: (newConfig: HashTagConfig) => void;
 
   constructor({ contentEditableEl }: { contentEditableEl: MutableRefObject<HTMLDivElement> }) {
     this.contentEditableEl = contentEditableEl;
@@ -42,7 +42,7 @@ class Hash implements WpEditorPlugin {
     return this._hashId;
   }
 
-  set config(newConfig: HashConfig) {
+  set config(newConfig: HashTagConfig) {
     this._config = newConfig;
     this.setNewConfig && this.setNewConfig(newConfig);
   }
@@ -51,11 +51,11 @@ class Hash implements WpEditorPlugin {
     return this._config;
   }
 
-  setConfig(config: HashConfig) {
+  setConfig(config: HashTagConfig) {
     this.config = { ...this.config, ...(config ?? {}) };
   }
 
-  component({ plugin }: { plugin: Hash }) {
+  component({ plugin }: { plugin: HashTag }) {
     return (
       <HashContainer hash={plugin}>
         {({ list, listElement }) => (
@@ -351,12 +351,12 @@ class Hash implements WpEditorPlugin {
     setConfig
   }: {
     setTargetHashId: (targetHashId: string) => void;
-    setConfig: (newConfig: HashConfig) => void;
+    setConfig: (newConfig: HashTagConfig) => void;
   }) {
     this.setTargetHashId = setTargetHashId;
     this.setNewConfig = setConfig;
   }
 }
 
-export type { HashConfig };
-export default Hash;
+export type { HashTagConfig };
+export default HashTag;
