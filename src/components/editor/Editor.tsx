@@ -118,6 +118,42 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       return { selection, range };
     }, []);
 
+    const insertLineBreak = useCallback(() => {
+      const { selection } = getSelection();
+
+      const { focusNode, focusOffset } = selection;
+
+      const br = document.createElement('br');
+      const range = selection.getRangeAt(0);
+      range.deleteContents(); // 선택된 내용을 삭제
+
+      const frag = document.createDocumentFragment();
+      const subBr = document.createElement('br');
+
+      if (focusNode.nodeType === Node.TEXT_NODE) {
+        if (focusNode.parentNode.nodeType === Node.ELEMENT_NODE) {
+        }
+        frag.appendChild(subBr);
+      }
+      frag.appendChild(br);
+
+      range.insertNode(frag);
+      range.setStartAfter(br);
+      range.setEndAfter(br);
+
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      range.collapse(false);
+
+      const brRect = br.getBoundingClientRect();
+      const editableRect = contentEditableEl.current.getBoundingClientRect();
+
+      if (brRect.bottom >= editableRect.bottom) {
+        contentEditableEl.current.scrollTop += brRect.bottom - editableRect.bottom + brRect.height;
+      }
+    }, []);
+
     const rangeMoveContentEnd = useCallback(() => {
       const { selection, range } = getSelection();
 
@@ -147,6 +183,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
             const content = stack[targetIndex];
 
             contentEditableEl.current.innerHTML = content;
+
+            handleChange && handleChange(content, name);
 
             range = rangeMoveContentEnd();
 
@@ -181,7 +219,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           previousRevisions.current.disabled = false;
         }
       },
-      [getSelection, plugins, rangeMoveContentEnd]
+      [name, handleChange, getSelection, plugins, rangeMoveContentEnd]
     );
 
     const handleKeyDown = useCallback(
@@ -194,39 +232,44 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           e.preventDefault();
         }
 
-        if (e.code === 'Enter' && !e.nativeEvent.isComposing) {
+        if (e.code === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
           e.preventDefault();
 
-          const { focusNode } = selection;
+          document.execCommand('insertLineBreak');
 
-          const br = document.createElement('br');
-          const range = selection.getRangeAt(0);
-          range.deleteContents(); // 선택된 내용을 삭제
+          // const { focusNode, focusOffset } = selection;
 
-          const frag = document.createDocumentFragment();
-          const subBr = document.createElement('br');
+          // const br = document.createElement('br');
+          // const range = selection.getRangeAt(0);
+          // range.deleteContents(); // 선택된 내용을 삭제
 
-          if (focusNode.nodeType === Node.TEXT_NODE) {
-            frag.appendChild(subBr);
-          }
-          frag.appendChild(br);
+          // const frag = document.createDocumentFragment();
+          // const subBr = document.createElement('br');
 
-          range.insertNode(frag);
-          range.setStartAfter(br);
-          range.setEndAfter(br);
+          // if (
+          //   focusNode.nodeType === Node.TEXT_NODE &&
+          //   focusNode.textContent.length === focusOffset
+          // ) {
+          //   frag.appendChild(subBr);
+          // }
+          // frag.appendChild(br);
 
-          selection.removeAllRanges();
-          selection.addRange(range);
+          // range.insertNode(frag);
+          // range.setStartAfter(br);
+          // range.setEndAfter(br);
 
-          range.collapse(false);
+          // selection.removeAllRanges();
+          // selection.addRange(range);
 
-          const brRect = br.getBoundingClientRect();
-          const editableRect = contentEditableEl.current.getBoundingClientRect();
+          // range.collapse(false);
 
-          if (brRect.bottom >= editableRect.bottom) {
-            contentEditableEl.current.scrollTop +=
-              brRect.bottom - editableRect.bottom + brRect.height;
-          }
+          // const brRect = br.getBoundingClientRect();
+          // const editableRect = contentEditableEl.current.getBoundingClientRect();
+
+          // if (brRect.bottom >= editableRect.bottom) {
+          //   contentEditableEl.current.scrollTop +=
+          //     brRect.bottom - editableRect.bottom + brRect.height;
+          // }
         }
 
         plugins.forEach((plugin) => {

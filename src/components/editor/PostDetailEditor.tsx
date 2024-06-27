@@ -19,18 +19,26 @@ import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import PasteToPlainText from '@/plugins/pasteToPlainText/PasteToPlainText';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import { SvgIcoImage } from '@/assets/svgs';
-import Ripple from '../ripple/Ripple';
 import { orderBy, uniqBy } from 'lodash-es';
 import { imageFileUpload, readAsDataURLAsync } from '@/utils/fileUtils';
 import ImagesUploadPreview from './ImagesUploadPreview';
+import {
+  convertIframeTwitchURL,
+  convertIframeYouTubeURL,
+  isTwitchURL,
+  isYouTubeURL
+} from '@/utils/urlUtils';
+import IframesUploadPreview from './IframesUploadPreview';
+import OgMetaDataPreview from './OgMetaDataPreview';
 
 type PostEditorMediaValue = { file?: File; src: string };
+type PostEditorIframeValue = { type?: 'youtube' | 'twitch'; src: string };
 
 type PostDetailEditorValue = {
-  editorInitailValue?: string;
+  value?: string;
   images?: PostEditorMediaValue[];
-  videos?: PostEditorMediaValue[];
-  ogUrl?: string;
+  iframes?: PostEditorIframeValue[];
+  ogMetaData?: Record<string, string> | null;
 };
 
 type Props = Omit<WpEditorProps, 'plugin' | 'config' | 'initailValue'> & {
@@ -56,6 +64,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
     ref
   ) => {
     const imgInputRef = useRef<HTMLInputElement>();
+    const excludeOgSiteUrl = useRef<string[]>([]);
 
     const [data, setData] = useState(value);
 
@@ -63,7 +72,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
       return {
         ...data,
         images: uniqBy(data?.images ?? [], 'src'),
-        videos: uniqBy(data?.videos ?? [], 'src')
+        iframes: uniqBy(data?.iframes ?? [], 'src')
       };
     }, [data]);
 
@@ -93,13 +102,12 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           images = images.filter((_, index) => params.deleteIndex !== index);
         }
 
-        setData({ ...memorizationData, images });
-        handleChange && handleChange({ ...memorizationData, images }, name);
-
         // input[type="file"] 요소의 value 값을 없애주지 않으면 직전에 등록한 이미지와 같은 이미지가 다시 업로드가 안됨
         imgInputRef.current.value = '';
+
+        return images;
       },
-      [memorizationData.images, handleChange, name]
+      [memorizationData, handleChange, name]
     );
 
     /**
@@ -135,9 +143,12 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           images.push({ file: file, src: dataUrl });
         }
 
-        handleUpdateImages({ newImage: images });
+        const newData = { ...memorizationData, images: handleUpdateImages({ newImage: images }) };
+
+        setData(newData);
+        handleChange && handleChange(newData, name);
       },
-      [memorizationData?.images, handleUpdateImages]
+      [name, memorizationData, handleUpdateImages, handleChange]
     );
 
     /**
@@ -149,9 +160,76 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
       async (e: ChangeEvent<HTMLInputElement>) => {
         const { file, dataUrl } = await imageFileUpload(e);
 
-        handleUpdateImages({ newImage: { file, src: dataUrl } });
+        const newData = {
+          ...memorizationData,
+          images: handleUpdateImages({ newImage: { file, src: dataUrl } })
+        };
+
+        setData(newData);
+        handleChange && handleChange(newData, name);
       },
-      [handleUpdateImages]
+      [name, memorizationData, handleUpdateImages, handleChange]
+    );
+
+    const handleUpdateIframe = useCallback(
+      (
+        params:
+          | {
+              iframes: PostEditorIframeValue | PostEditorIframeValue[];
+            }
+          | {
+              deleteIndex: number;
+            }
+      ) => {
+        let iframes = [...memorizationData.iframes];
+
+        if ('iframes' in params) {
+          if (Array.isArray(params.iframes)) {
+            iframes = [...iframes, ...params.iframes];
+          } else {
+            iframes.push(params.iframes);
+          }
+
+          iframes = orderBy(iframes, 'src');
+
+          if (iframes.length > 4) {
+            alert('이미지는 최대 4개까지 가능합니다!!');
+
+            return;
+          }
+        } else {
+          iframes = iframes.filter((_, index) => params.deleteIndex !== index);
+        }
+
+        return iframes;
+      },
+      [memorizationData.iframes]
+    );
+
+    const handleUpdateOgMetaData = useCallback(
+      ({ urls, type }: { urls: string[]; type: 'add' | 'delete' }) => {
+        if (!urls) {
+          return;
+        }
+
+        if (type === 'add') {
+          const targetUrl = urls.filter((url) => !excludeOgSiteUrl.current.includes(url))[0];
+
+          if (memorizationData.ogMetaData) {
+            return memorizationData.ogMetaData;
+          } else if (targetUrl) {
+            return {
+              url: targetUrl,
+              name: targetUrl
+            };
+          }
+        } else {
+          excludeOgSiteUrl.current.push(urls[0]);
+        }
+
+        return null;
+      },
+      [memorizationData.ogMetaData]
     );
 
     const onMatchImgOrVideoUrl = useCallback(
@@ -162,23 +240,106 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
         }[]
       ) => {
         const images = urls.filter((url) => url.tag === 'img');
+        const iframes = urls.filter((url) => url.tag === 'iframe');
 
-        handleUpdateImages({ newImage: images });
+        const newImages = handleUpdateImages({ newImage: images });
+        const newIframes = handleUpdateIframe({ iframes });
+
+        const newData = { ...memorizationData, images: newImages, iframes: newIframes };
+
+        setData(newData);
+        handleChange && handleChange(newData, name);
       },
-      []
+      [name, memorizationData, handleChange, handleUpdateImages, handleUpdateIframe]
     );
 
-    const onMatchUrl = useCallback((url: string) => {
-      const imagePattern = /\.(jpg|jpeg|png|gif|webp)$/i;
+    const onMatchUrl = useCallback(
+      (urls: string[]) => {
+        const imagePattern = /\.(jpg|jpeg|png|gif|webp)$/i;
 
-      const isImageUrl = imagePattern.test(url);
+        const urlInfoList = urls.reduce(
+          (acc, cur) => {
+            let type = 'etc';
 
-      if (isImageUrl) {
-        handleUpdateImages({ newImage: { src: url } });
-      }
+            if (imagePattern.test(cur)) {
+              type = 'image';
+            } else if (isYouTubeURL(cur)) {
+              type = 'youtube';
+            } else if (isTwitchURL(cur)) {
+              type = 'twitch';
+            }
 
-      return `<a href="${url}" target="_blank">${url}</a>`;
-    }, []);
+            if (!acc[type]) {
+              acc[type] = [];
+            }
+
+            acc[type].push(cur);
+
+            return acc;
+          },
+          {} as Record<string, string[]>
+        );
+
+        const { image = [], youtube = [], twitch = [], etc = [] } = urlInfoList;
+
+        const newOgMetaData = handleUpdateOgMetaData({
+          urls: etc,
+          type: etc.length ? 'add' : 'delete'
+        });
+        const newImages = handleUpdateImages({ newImage: image.map((url) => ({ src: url })) });
+        const newIframes = handleUpdateIframe({
+          iframes: [
+            ...youtube.map(
+              (url) =>
+                ({ type: 'youtube', src: convertIframeYouTubeURL(url) }) as PostEditorIframeValue
+            ),
+            ...twitch.map(
+              (url) =>
+                ({ type: 'twitch', src: convertIframeTwitchURL(url) }) as PostEditorIframeValue
+            )
+          ]
+        });
+
+        const newData = {
+          ...memorizationData,
+          images: newImages,
+          iframes: newIframes,
+          ogMetaData: newOgMetaData
+        };
+
+        setData(newData);
+        handleChange && handleChange(newData, name);
+
+        return urls.map((url) => `<a href="${url}" target="_blank">${url}</a>`);
+      },
+      [
+        name,
+        memorizationData,
+        handleChange,
+        handleUpdateImages,
+        handleUpdateIframe,
+        handleUpdateOgMetaData
+      ]
+    );
+
+    const handleEditorTextChange = useCallback(
+      (value: string) => {
+        const newData = {
+          ...memorizationData,
+          value,
+          ogMetaData:
+            !memorizationData.ogMetaData || !value.includes(memorizationData.ogMetaData?.url)
+              ? null
+              : memorizationData.ogMetaData
+        };
+
+        excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) => value.includes(url));
+
+        setData(newData);
+        handleChange && handleChange(newData, name);
+      },
+      [name, memorizationData, handleChange]
+    );
 
     useEffect(() => {
       if (value) {
@@ -191,7 +352,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
         <Editor
           ref={ref}
           plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText]}
-          initialValue={memorizationData?.editorInitailValue}
+          initialValue={memorizationData?.value}
           {...editorProps}
           config={{
             pasteToPlainText: {
@@ -203,11 +364,36 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           }}
           onDragOver={onDragOver}
           onDrop={onInputDrop}
+          handleChange={handleEditorTextChange}
         ></Editor>
         {memorizationData.images.length > 0 && (
           <ImagesUploadPreview
-            images={memorizationData?.images}
-            handleDeleteImg={handleUpdateImages}
+            images={memorizationData.images}
+            handleDeleteImg={({ deleteIndex }) => {
+              const images = handleUpdateImages({ deleteIndex });
+
+              setData((data) => ({ ...data, images }));
+            }}
+          />
+        )}
+        {memorizationData.iframes.length > 0 && (
+          <IframesUploadPreview
+            iframes={memorizationData.iframes}
+            handleDeleteIframe={({ deleteIndex }) => {
+              const iframes = handleUpdateIframe({ deleteIndex });
+
+              setData((data) => ({ ...data, iframes }));
+            }}
+          />
+        )}
+        {!!memorizationData.ogMetaData && (
+          <OgMetaDataPreview
+            ogMetaData={memorizationData.ogMetaData}
+            handleDeleteOgMetaData={(params) => {
+              const ogMetaData = handleUpdateOgMetaData(params);
+
+              setData((data) => ({ ...data, ogMetaData }));
+            }}
           />
         )}
 

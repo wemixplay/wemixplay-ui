@@ -2,14 +2,14 @@ import { ClipboardEvent, KeyboardEvent, MutableRefObject } from 'react';
 import { WpEditorPlugin } from '@/index';
 
 type AutoUrlMatchConfig = {
-  onMatchUrl?: (text: string) => string;
+  onMatchUrl?: (urls: string[]) => string[];
 };
 
 class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
   public commandKey = 'autoUrlMatch';
   public config: AutoUrlMatchConfig = {
-    onMatchUrl: (text: string) => {
-      return text;
+    onMatchUrl: (urls: string[]) => {
+      return urls;
     }
   };
   public contentEditableEl: MutableRefObject<HTMLDivElement>;
@@ -23,9 +23,10 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
   }
 
   getUrlMatchList(str: string) {
-    const regex = /(?:\s|^)https?:\/\/\S*/g;
+    const urlRegex =
+      /(https?:\/\/[^\s/$.?#].[^\s]*)|(www\.[^\s/$.?#].[^\s]*)|(ftp:\/\/[^\s/$.?#].[^\s]*)/gi;
 
-    return (str ?? '').match(regex)?.map((item) => item.trim()) ?? [];
+    return (str ?? '').match(urlRegex)?.map((item) => item.trim()) ?? [];
   }
 
   handlePaste({
@@ -36,12 +37,16 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     range: Range;
     event: ClipboardEvent<HTMLDivElement>;
   }) {
-    const plainTextData = event.nativeEvent.clipboardData.getData('text/plain');
+    const plainTextData = event.nativeEvent.clipboardData
+      .getData('text/plain')
+      .replace(/<\/?[^>]+(>|$)/g, '')
+      .trim();
     const urlMatchList = this.getUrlMatchList(plainTextData);
+    const replaceUrlMatchList = this.config.onMatchUrl(urlMatchList);
 
     if (urlMatchList.length > 0) {
-      const modifiedData = urlMatchList.reduce((acc, cur) => {
-        return acc.replace(cur, this.config.onMatchUrl(cur));
+      const modifiedData = urlMatchList.reduce((acc, cur, index) => {
+        return acc.replace(cur, replaceUrlMatchList[index]);
       }, plainTextData);
 
       if (!selection.rangeCount) {
@@ -54,8 +59,11 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
       // 수정된 데이터를 contenteditable 요소에 삽입
       const tempDiv = document.createElement('div');
       tempDiv.innerHTML = `${modifiedData}&nbsp;`;
-      const element = tempDiv.firstChild;
-      range.insertNode(element);
+      const element = tempDiv.lastChild;
+
+      for (const child of Array.from(tempDiv.childNodes).reverse()) {
+        range.insertNode(child);
+      }
 
       // 커서를 수정된 텍스트의 끝으로 이동
       range.setStartAfter(element);
@@ -84,7 +92,7 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
       if (matchUrlFormatText && this.config.onMatchUrl) {
         // 임시 div를 사용하여 HTML 문자열을 파싱
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = this.config.onMatchUrl(matchUrlFormatText);
+        tempDiv.innerHTML = this.config.onMatchUrl([matchUrlFormatText])[0] || '';
         const childNodes = Array.from(tempDiv.childNodes);
 
         if (childNodes.length > 0) {

@@ -1,0 +1,13 @@
+.og-meta-data-preview{
+  .og-meta-data-content{
+    position: relative;
+    display: inline-block;
+
+    .btn-img-delete{
+      position: absolute;
+      top:0;
+      right:0;
+      z-index: 1;
+    }
+  }
+}
