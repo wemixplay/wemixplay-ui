@@ -225,6 +225,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
     const handleKeyDown = useCallback(
       (e: KeyboardEvent<HTMLDivElement>) => {
         const { selection, range } = getSelection();
+        const prevData = contentEditableEl.current.innerHTML;
 
         if (e.code === 'KeyZ' && e.metaKey && e.shiftKey) {
           handleUndoRedo({ ...e, inputType: 'historyRedo' });
@@ -232,20 +233,27 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           e.preventDefault();
         }
 
-        if (e.code === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+        plugins.forEach((plugin) => {
+          plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
+        });
+
+        if (
+          e.code === 'Enter' &&
+          !e.shiftKey &&
+          !e.nativeEvent.isComposing &&
+          contentEditableEl.current.innerHTML === prevData
+        ) {
           e.preventDefault();
+          e.stopPropagation();
 
+          // e.preventDefault();
           document.execCommand('insertLineBreak');
-
           // const { focusNode, focusOffset } = selection;
-
           // const br = document.createElement('br');
           // const range = selection.getRangeAt(0);
           // range.deleteContents(); // 선택된 내용을 삭제
-
           // const frag = document.createDocumentFragment();
           // const subBr = document.createElement('br');
-
           // if (
           //   focusNode.nodeType === Node.TEXT_NODE &&
           //   focusNode.textContent.length === focusOffset
@@ -253,28 +261,19 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           //   frag.appendChild(subBr);
           // }
           // frag.appendChild(br);
-
           // range.insertNode(frag);
           // range.setStartAfter(br);
           // range.setEndAfter(br);
-
           // selection.removeAllRanges();
           // selection.addRange(range);
-
           // range.collapse(false);
-
           // const brRect = br.getBoundingClientRect();
           // const editableRect = contentEditableEl.current.getBoundingClientRect();
-
           // if (brRect.bottom >= editableRect.bottom) {
           //   contentEditableEl.current.scrollTop +=
           //     brRect.bottom - editableRect.bottom + brRect.height;
           // }
         }
-
-        plugins.forEach((plugin) => {
-          plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
-        });
 
         textareaProps.onKeyDown && textareaProps.onKeyDown(e);
       },
