@@ -10,7 +10,11 @@
     "@storybook/blocks": "7.4.3 ",
     "@storybook/react": "7.4.3 ",
     "@storybook/testing-library": "^0.2.2",
-    "env-cmd": "^10.1.0"
+    "css-loader": "^7.1.2",
+    "env-cmd": "^10.1.0",
+    "sass": "^1.69.5",
+    "sass-loader": "^13.3.2",
+    "style-loader": "^4.0.0"
   },
   "scripts": {
     "storybook": "env-cmd -e local storybook dev -p 6008",

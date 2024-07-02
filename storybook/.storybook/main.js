@@ -3,6 +3,7 @@ import path from 'path';
 /** @type { import('@storybook/nextjs').StorybookConfig } */
 const config = {
   stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
+  staticDirs: ['../static'],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',
@@ -31,6 +32,21 @@ const config = {
   webpackFinal: async (config) => {
     if (!config?.resolve || !config?.module || !config?.plugins) return config;
     if (!config.module.rules) config.module.rules = [];
+
+    config.module.rules.push({
+      test: /\.s(a|c)ss$/,
+      loader: 'sass-loader',
+      options: {
+        additionalData:  `
+          @import "../src/styles/abstracts/_variables.scss"; 
+          @import "../src/styles/abstracts/_mixin.scss";
+          @import "../src/styles/abstracts/_animation.scss";
+        ` +
+        "$env: '" +
+        process.env.NEXT_PUBLIC_S3_BUCKET_URL +
+        "';"
+      },
+    });
 
     
     config.resolve.alias = {

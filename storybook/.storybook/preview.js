@@ -1,4 +1,6 @@
-// import '../../src/styles/reset.css';
+import '@/styles/theme.scss';
+import '@/styles/global.scss';
+import '../styles/storybook.scss';
 
 const preview = {
   parameters: {
@@ -27,20 +29,5 @@ const preview = {
     }
   ]
 };
-
-// export const parameters = {
-//   nextjs: {
-//     appDirectory: true,
-//     navigation: {
-//       pathname: '/some-default-path',
-//       push() {
-//         // The default implementation that logs the action into the Actions panel is lost
-//       },
-//       replace() {
-//         // The default implementation that logs the action into the Actions panel is lost
-//       },
-//     },
-//   },
-// };
 
 export default preview;
