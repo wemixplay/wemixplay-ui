@@ -16,7 +16,7 @@ import React, {
   useState
 } from 'react';
 import classNames from 'classnames/bind';
-import style from './Editor.module.scss';
+import style from './WpEditor.module.scss';
 import Mention, { MentionConfig } from '@/plugins/mention/Mention';
 import HashTag, { HashTagConfig } from '@/plugins/hashTag/HashTag';
 import { WpEditorPluginConstructor } from '@/index';
