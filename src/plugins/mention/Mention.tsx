@@ -155,6 +155,8 @@ class Mention implements WpEditorPlugin {
       focusOffset: 1,
       focusTopEnd: existOnlyAtMark
     });
+
+    this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
   handleClick({

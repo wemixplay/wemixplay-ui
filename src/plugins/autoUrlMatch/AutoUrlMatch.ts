@@ -72,6 +72,8 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
       selection.addRange(range);
 
       event.preventDefault();
+
+      this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
     }
   }
 
@@ -120,6 +122,8 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
           selection.addRange(range);
 
           event.preventDefault(); // 기본 공백 문자 삽입을 방지
+
+          this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
         }
       }
     }

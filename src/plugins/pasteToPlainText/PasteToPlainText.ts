@@ -82,6 +82,8 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
       this.config.onMatchImgOrVideoUrl(matchList);
 
       event.preventDefault();
+
+      this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
     }
   }
 }
