@@ -1,0 +1,14 @@
+.checkbox-cont {
+  :global {
+    .checkbox,
+    .radio-box {
+      margin-right: 12px;
+    }
+  }
+
+  .result {
+    margin-top: 36px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+}

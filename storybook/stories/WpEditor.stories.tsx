@@ -1,17 +1,17 @@
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
-import Editor from '@/components/editor/Editor';
+import WpEditor from '@/components/editor/WpEditor';
 
-type StoryComponent = StoryObj<typeof Editor>;
-type StoryTemplate = StoryFn<typeof Editor>;
+type StoryComponent = StoryObj<typeof WpEditor>;
+type StoryTemplate = StoryFn<typeof WpEditor>;
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 export default {
-  component: Editor,
+  component: WpEditor,
   tags: ['autodocs']
-} as Meta<typeof Editor>;
+} as Meta<typeof WpEditor>;
 
 const Template: StoryTemplate = (args) => {
-  return <Editor {...args} />;
+  return <WpEditor {...args} />;
 };
 
 export const Default: StoryComponent = {

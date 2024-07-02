@@ -1,0 +1,203 @@
+.checkbox {
+  /**
+  * position: relative; 를 바꾸게 되면 사이드이펙트가 날 수 있음으로
+  * 필요시 상위 element에 position 속성을 주시기 바랍니다.
+  */
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+
+  // font-size, font-weight, line-height, font-feature-settings, font-family, color는 .text로 전달되어 지기 때문에
+  // 따로 .text에 위의 스타일 속성들을 정의하지 않으셔도 됩니다.
+
+  @include label-02-reading-r;
+
+  &.readonly {
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &.disabled {
+    cursor: not-allowed;
+    opacity: $color-global-opacity-43;
+
+    .ico-check { // input이 disabled 경우의 .ico-check에 대한 정의
+      .icon {
+        border: 1px solid var(--semantic-line-normal-normal);
+      }
+    }
+  }
+
+  &:not(.disabled) {
+    &:hover {
+      @include hover {
+        .ico-check {
+          &::before {
+            opacity: $color-global-opacity-5;
+          }
+        }
+      }
+    }
+
+    &:focus {
+      .ico-check {
+        &::before {
+          opacity: $color-global-opacity-8;
+        }
+      }
+    }
+
+    &:active {
+      .ico-check {
+        &::before {
+          opacity: $color-global-opacity-12;
+        }
+      }
+    }
+  }
+
+  .ico-check { // input이 체크 되어있지 않을 경우의 .ico-check에 대한 정의
+    position: relative;
+    display: flex;
+    width: 32px;
+    height: 32px;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: $rd-circle;
+    margin-right: 8px;
+    transition: background-color 0.15s, border 0.15s;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: $rd-circle;
+      background: var(--semantic-label-normal);
+      content: "";
+      opacity: 0;
+      transition: opacity 0.15s;
+    }
+
+    .icon {
+      z-index: 1;
+      display: flex;
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--semantic-line-normal-normal);
+      border-radius: $rd-3;
+      background-color: var(--semantic-static-white);
+      transition: background-color 0.15s, border 0.15s;
+    }
+
+    svg {
+      opacity: 0;
+      transition: all 0.15s;
+    }
+  }
+
+  input {
+    display: none;
+
+    &:checked { // input이 체크 되어있을 경우의 .ico-check에 대한 정의
+      ~ .ico-check {
+        .icon {
+          border: 1px solid var(--semantic-primary-normal);
+          background-color: var(--semantic-primary-normal);
+        }
+
+        .check {
+          opacity: 1;
+        }
+      }
+    }
+
+    &:indeterminate {
+      ~ .ico-check {
+        .icon {
+          border: 1px solid var(--semantic-primary-normal);
+          background-color: var(--semantic-primary-normal);
+        }
+
+        .partial {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .text {
+    /**
+    * 상위 선택자인 .checkbox의 스타일을 상속 받습니다.
+    */
+    color: inherit;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    user-select: none;
+  }
+
+  label {
+    /**
+    * label은 레이아웃에 영향을 받지 않는 마크업 구조로
+    * label을 클릭 했을시 하위 input에 대한 상태를 변경해주기 위해서만 존재하기 때문에
+    * display: contents; 속성을 주입하였습니다.
+    */
+    display: contents;
+    cursor: inherit;
+
+    /**
+    * label이 display: contents;이기 때문에 클릭 이벤트 또한 안먹는 구간이 있을 수 있으므로
+    * 클릭 이벤트는 먹을 수 있도록 가상 선택자를 활용하였습니다.
+    */
+    &::after {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      display: block;
+      width: 100%;
+      height: 100%;
+      content: "";
+    }
+  }
+
+  &.small {
+    .ico-check {
+      width: 28px;
+      height: 28px;
+
+      .icon {
+        width: 16px;
+        height: 16px;
+
+        svg {
+          width: 14px;
+          height: 14px;
+        }
+      }
+    }
+
+    &[class*="check-single"] {
+      .ico-check {
+        .icon {
+          width: 20px;
+          height: 20px;
+
+          svg {
+            width: inherit;
+            height: inherit;
+          }
+        }
+      }
+    }
+  }
+}

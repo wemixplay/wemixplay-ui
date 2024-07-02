@@ -12,7 +12,7 @@ import React, {
   useState
 } from 'react';
 import style from './PostEditor.module.scss';
-import Editor, { WpEditorProps, WpEditorRef } from './Editor';
+import WpEditor, { WpEditorProps, WpEditorRef } from './WpEditor';
 import Mention from '@/plugins/mention/Mention';
 import HashTag from '@/plugins/hashTag/HashTag';
 import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
@@ -373,11 +373,9 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
       }
     }, [value]);
 
-    console.log('memorizationData >>', memorizationData);
-
     return (
       <div className={cx(className, 'post-detail-editor')}>
-        <Editor
+        <WpEditor
           ref={ref}
           plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText]}
           initialValue={memorizationData?.value}
@@ -393,7 +391,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           onDragOver={onDragOver}
           onDrop={onInputDrop}
           handleChange={handleEditorTextChange}
-        ></Editor>
+        ></WpEditor>
         {memorizationData.images.length > 0 && (
           <ImagesUploadPreview
             images={memorizationData.images}

@@ -1,0 +1,11 @@
+.checkbox-round {
+  :global {
+    .ico-check {
+      .icon {
+        width: 20px;
+        height: 20px;
+        border-radius: $rd-circle;
+      }
+    }
+  }
+}

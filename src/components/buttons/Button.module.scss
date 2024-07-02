@@ -1,0 +1,97 @@
+.btn {
+  position: relative;
+  display: flex;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 28px;
+  border-radius: $rd-10;
+  background-color: var(--semantic-label-normal);
+  color: var(--semantic-static-white);
+  cursor: pointer;
+  text-align: center;
+  transition: background-color ease 0.25s;
+
+  @include body-01-normal-m;
+
+  // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: $rd-10;
+    background-color: var(--semantic-label-normal);
+    content: "";
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+
+  [class*="spinner"] {
+    margin-left: 8px;
+  }
+
+  &.fullsize {
+    width: 100%;
+    flex: 1;
+  }
+
+  // 버튼 상태에 따른 스타일 정의
+  &:disabled {
+    background-color: var(--semantic-interaction-disable);
+    color: var(--semantic-label-assistive);
+    cursor: not-allowed;
+  }
+
+  // 버튼 상태에 따른 스타일 정의 :disabled 아닌 경우
+  &:not(:disabled) {
+    &:hover {
+      @include hover {
+        &::before {
+          opacity: 0.075;
+        }
+      }
+    }
+
+    &:focus {
+      &::before {
+        opacity: 0.12;
+      }
+    }
+
+    &:active {
+      &::before {
+        opacity: 0.18;
+      }
+    }
+  }
+
+  * {
+    pointer-events: none;
+  }
+
+  /* 버튼 사이즈별 스타일 정의 */
+  &.large {
+    height: 48px;
+  }
+
+  &.medium {
+    height: 40px;
+    padding: 0 20px;
+
+    @include body-02-normal-b;
+  }
+
+  &.small {
+    height: 32px;
+    padding: 0 14px;
+
+    @include label-02-reading-m;
+  }
+
+  // 컬러 타입에 따른 색상 정의
+  &.secondary {
+    background-color: var(--semantic-primary-normal);
+  }
+}

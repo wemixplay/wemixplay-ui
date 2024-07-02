@@ -1,0 +1,85 @@
+.avatar {
+  position: relative;
+  display: inline-block;
+  border-radius: 50%;
+
+  &.no-image {
+    background-color: #fafafa;
+  }
+
+  &.small {
+    width: 24px;
+    height: 24px;
+  }
+
+  &.medium {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.avtr-img-area {
+  position: relative;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.avtr-img {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+
+  // border: 2px solid #fff;
+  border-radius: inherit;
+
+  // &.loading {
+  //   animation: skeleton-blank ease 2s infinite;
+  //   background-color: #eee;
+
+  //   img {
+  //     opacity: 0;
+  //   }
+  // }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+}
+
+.avtr-bedge-area {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  right: 4px;
+
+  >* {
+    transform: translateX(50%);
+  }
+}
+
+.avtr-bedge {
+  display: inline-flex;
+  min-width: 18px;
+  align-items: center;
+  justify-content: center;
+  padding: 3px 6px;
+  border-radius: 100px;
+  background: #ff00e5;
+  color: white;
+  column-gap: 2px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: -0.1px;
+  line-height: 133%;
+
+  .king-mark {
+    height: 100%;
+  }
+}

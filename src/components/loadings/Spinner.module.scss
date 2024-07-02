@@ -1,0 +1,46 @@
+.spinner {
+  position: relative;
+  z-index: 2;
+  width: 20px;
+  height: 20px;
+  animation: rotate 2s linear infinite;
+  stroke: black;
+  stroke-width: 5px;
+
+  .border {
+    opacity: 0.3;
+    stroke: inherit;
+    stroke-linecap: round;
+    stroke-width: inherit;
+  }
+
+  .path {
+    animation: dash 1.5s ease-in-out infinite;
+    stroke: inherit;
+    stroke-linecap: round;
+    stroke-width: inherit;
+  }
+
+  @keyframes rotate {
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+
+  @keyframes dash {
+    0% {
+      stroke-dasharray: 1, 150;
+      stroke-dashoffset: 0;
+    }
+
+    50% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -35;
+    }
+
+    100% {
+      stroke-dasharray: 90, 150;
+      stroke-dashoffset: -124;
+    }
+  }
+}
