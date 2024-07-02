@@ -1,7 +1,7 @@
 {
-  "name": "wemixplay-editor",
-  "version": "1.1.3",
-  "author": "Derek KIM",
+  "name": "wemixplay-ui",
+  "version": "1.0.0",
+  "author": "WEMADE",
   "license": "MIT",
   "main": "dist/index.cjs.js",
   "types": "dist/index.d.ts",
@@ -24,7 +24,7 @@
     "start": "NODE_ENV=development rollup -c && node scripts/svgComponentGenerator.js & rollup -cw",
     "build": "rm -rf dist && NODE_ENV=production rollup -c && node scripts/svgComponentGenerator.js",
     "prepare": "yarn build",
-    "storybook": "cd storybook && yarn && yarn storybook"
+    "storybook": "NODE_ENV=development node scripts/svgComponentGenerator.js & cd storybook && yarn && yarn storybook"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
