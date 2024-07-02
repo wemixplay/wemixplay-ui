@@ -66,15 +66,21 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
     const imgInputRef = useRef<HTMLInputElement>();
     const excludeOgSiteUrl = useRef<string[]>([]);
 
-    const [data, setData] = useState(value);
+    const [textData, setTextData] = useState(value?.value);
+    const [mediaData, setMediaData] = useState<Omit<PostDetailEditorValue, 'value'>>({
+      images: value?.images ?? [],
+      iframes: value?.iframes ?? [],
+      ogMetaData: value?.ogMetaData
+    });
 
     const memorizationData = useMemo(() => {
       return {
-        ...data,
-        images: uniqBy(data?.images ?? [], 'src'),
-        iframes: uniqBy(data?.iframes ?? [], 'src')
+        ...mediaData,
+        value: textData,
+        images: uniqBy(mediaData.images, 'src'),
+        iframes: uniqBy(mediaData.iframes, 'src')
       };
-    }, [data]);
+    }, [textData, mediaData]);
 
     const handleUpdateImages = useCallback(
       (
@@ -145,7 +151,11 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
 
         const newData = { ...memorizationData, images: handleUpdateImages({ newImage: images }) };
 
-        setData(newData);
+        setMediaData({
+          images: newData.images,
+          iframes: newData.iframes,
+          ogMetaData: newData.ogMetaData
+        });
         handleChange && handleChange(newData, name);
       },
       [name, memorizationData, handleUpdateImages, handleChange]
@@ -165,7 +175,11 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           images: handleUpdateImages({ newImage: { file, src: dataUrl } })
         };
 
-        setData(newData);
+        setMediaData({
+          images: newData.images,
+          iframes: newData.iframes,
+          ogMetaData: newData.ogMetaData
+        });
         handleChange && handleChange(newData, name);
       },
       [name, memorizationData, handleUpdateImages, handleChange]
@@ -247,7 +261,13 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
 
         const newData = { ...memorizationData, images: newImages, iframes: newIframes };
 
-        setData(newData);
+        console.log(newImages);
+
+        setMediaData({
+          images: newData.images,
+          iframes: newData.iframes,
+          ogMetaData: newData.ogMetaData
+        });
         handleChange && handleChange(newData, name);
       },
       [name, memorizationData, handleChange, handleUpdateImages, handleUpdateIframe]
@@ -307,7 +327,11 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           ogMetaData: newOgMetaData
         };
 
-        setData(newData);
+        setMediaData({
+          images: newData.images,
+          iframes: newData.iframes,
+          ogMetaData: newData.ogMetaData
+        });
         handleChange && handleChange(newData, name);
 
         return urls.map((url) => `<a href="${url}" target="_blank">${url}</a>`);
@@ -335,7 +359,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
 
         excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) => value.includes(url));
 
-        setData(newData);
+        setTextData(value);
         handleChange && handleChange(newData, name);
       },
       [name, memorizationData, handleChange]
@@ -343,9 +367,13 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
 
     useEffect(() => {
       if (value) {
-        setData(value);
+        const { value: textValue, ...mediaValues } = value;
+        setTextData(textValue);
+        setMediaData(mediaValues);
       }
     }, [value]);
+
+    console.log('memorizationData >>', memorizationData);
 
     return (
       <div className={cx(className, 'post-detail-editor')}>
@@ -372,7 +400,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
             handleDeleteImg={({ deleteIndex }) => {
               const images = handleUpdateImages({ deleteIndex });
 
-              setData((data) => ({ ...data, images }));
+              setMediaData((data) => ({ ...data, images }));
             }}
           />
         )}
@@ -382,7 +410,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
             handleDeleteIframe={({ deleteIndex }) => {
               const iframes = handleUpdateIframe({ deleteIndex });
 
-              setData((data) => ({ ...data, iframes }));
+              setMediaData((data) => ({ ...data, iframes }));
             }}
           />
         )}
@@ -392,7 +420,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
             handleDeleteOgMetaData={(params) => {
               const ogMetaData = handleUpdateOgMetaData(params);
 
-              setData((data) => ({ ...data, ogMetaData }));
+              setMediaData((data) => ({ ...data, ogMetaData }));
             }}
           />
         )}
