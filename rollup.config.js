@@ -42,7 +42,12 @@ const plugins = [
 		extensions: ['.css', '.scss', '.sass'],
 		use: [
 			['sass', {
-				includePaths: ['./src/styles']
+				include: ["src/styles/abstracts/_animation.scss"],
+				data: `
+					@import "@/styles/abstracts/_variables.scss";
+					@import "@/styles/abstracts/_mixin.scss";
+					@import "@/styles/abstracts/_animation.scss";
+				`
 			}]
 		],
 		extract: false,
