@@ -13,7 +13,7 @@
     "env-cmd": "^10.1.0"
   },
   "scripts": {
-    "storybook": "env-cmd -e local storybook dev -p 6006",
+    "storybook": "env-cmd -e local storybook dev -p 6008",
     "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider storybook build"
   },
   "resolutions": {
