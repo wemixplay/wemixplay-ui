@@ -10,7 +10,7 @@ const svgCompGenertor = new SvgComponentGenerator({
 
 if (process.env.NODE_ENV === 'development') {
   if (!watcher) { // Watcher가 이미 존재하지 않는 경우에만 생성
-    watcher = chokidar.watch(svgFileDir, { persistent: true, ignored: /\/svg\/types\// });
+    watcher = chokidar.watch('src/assets/svgs', { persistent: true, ignored: /\/svg\/types\// });
   }
 
   watcher.on('add', svgCompGenertor.generate);
