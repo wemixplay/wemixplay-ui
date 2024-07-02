@@ -1,0 +1,167 @@
+/* stylelint-disable font-family-no-missing-generic-family-keyword */
+/* stylelint-disable order/properties-order */
+/* stylelint-disable scss/no-duplicate-mixins */
+
+@mixin scroll($width: 6px, $thumb: $gray40, $track: $gray00) {
+  $scrollbar-thumb-width: $width;
+  $scrollbar-thumb-color: $thumb;
+  $scrollbar-track-color: $track;
+
+  &::-webkit-scrollbar {
+    position: absolute;
+    width: $scrollbar-thumb-width;
+    height: $scrollbar-thumb-width;
+
+    &-track {
+      background-color: $scrollbar-track-color;
+    }
+
+    &-thumb {
+      background-color: $scrollbar-thumb-color;
+    }
+
+    &-track,
+    &-thumb {
+      border-radius: 8px;
+    }
+  }
+}
+
+// 라이트모드 컬러가 적용된 스크롤바
+@mixin scroll-interaction {
+  &::-webkit-scrollbar {
+    width: 9px; // 인터랙션이 포함된 스크롤바 영역의 width
+
+    &-track {
+      background-color: white;
+    }
+
+    &-thumb {
+      background-color: rgb(112 115 124 / 16%);
+      background-clip: padding-box;
+      border: 3px solid white;
+    }
+
+    &-track,
+    &-thumb {
+      border-radius: 10px;
+    }
+  }
+}
+
+@mixin ellipsis($lines: 1) {
+  @if $lines == 1 {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+  } @else {
+    display: block;
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: $lines;
+    -webkit-box-orient: vertical;
+    white-space: initial;
+  }
+}
+
+@mixin a11y {
+  position: absolute !important;
+  display: block !important;
+  overflow: hidden !important;
+  width: 1px !important;
+  height: 1px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  margin: 0 !important;
+  clip: rect(1px, 1px, 1px, 1px) !important;
+  clip-path: inset(50%) !important;
+  word-break: initial !important;
+  word-wrap: initial !important;
+}
+
+@mixin skeleton-basic-animation($duration: 2s) {
+  animation: skeleton-blank ease $duration infinite;
+}
+
+@mixin word-break {
+  word-break: keep-all;
+  overflow-wrap: break-word;
+}
+
+@mixin font-size($size: 12, $base: 16) {
+  font-size: $size + px;
+  font-size: ($size / $base) * 1rem;
+}
+
+@mixin line-height($height: 12, $base: 16) {
+  line-height: $height + px;
+  line-height: ($height / $base) * 1rem;
+}
+
+@mixin mobile-status {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin hover {
+  @media (hover: hover) and (pointer: fine) {
+    @content;
+  }
+}
+
+@mixin breakpoint-360 {
+  @media (min-width: 360px) {
+    @content;
+  }
+}
+
+@mixin breakpoint-375 {
+  @media (min-width: 375px) {
+    @content;
+  }
+}
+
+/* 640 NFT이미지 대응  */
+@mixin breakpoint-640 {
+  @media (min-width: 640px) {
+    @content;
+  }
+}
+
+/* 768 미만은 모바일  */
+@mixin breakpoint-768 {
+  @media (min-width: 768px) {
+    @content;
+  }
+}
+
+/* 1024 ~ */
+@mixin breakpoint-1024 {
+  @media (min-width: 1024px) {
+    @content;
+  }
+}
+
+/* 1280 ~ */
+@mixin breakpoint-1280 {
+  @media (min-width: 1280px) {
+    @content;
+  }
+}
+
+/* 1440 ~ */
+@mixin breakpoint-1440 {
+  @media (min-width: 1440px) {
+    @content;
+  }
+}
+
+/* 1920 ~ */
+@mixin breakpoint-1920 {
+  @media (min-width: 1920px) {
+    @content;
+  }
+}

@@ -1,0 +1,973 @@
+/* stylelint-disable custom-property-pattern */
+/* stylelint-disable scss/dollar-variable-pattern */
+/* stylelint-disable selector-class-pattern */
+
+/* iOS 브라우저 높이 대응 */
+$vh: var(--vh, 1vh); // calc($vh * 100 )
+
+/* Opacity Black */
+$black-100: rgb(0 0 0 / 100%);
+$black-96: rgb(0 0 0 / 96%);
+$black-88: rgb(0 0 0 / 88%);
+$black-80: rgb(0 0 0 / 80%);
+$black-72: rgb(0 0 0 / 72%);
+$black-64: rgb(0 0 0 / 64%);
+$black-56: rgb(0 0 0 / 56%);
+$black-48: rgb(0 0 0 / 48%);
+$black-40: rgb(0 0 0 / 40%);
+$black-32: rgb(0 0 0 / 32%);
+$black-24: rgb(0 0 0 / 24%);
+$black-16: rgb(0 0 0 / 16%);
+$black-8: rgb(0 0 0 / 8%);
+
+/* Opacity White  */
+$white-100: rgb(255  255 255 / 100%);
+$white-96: rgb(255  255 255 / 96%);
+$white-88: rgb(255  255 255 / 88%);
+$white-80: rgb(255  255 255 / 80%);
+$white-72: rgb(255  255 255 / 72%);
+$white-64: rgb(255  255 255 / 64%);
+$white-56: rgb(255  255 255 / 56%);
+$white-48: rgb(255  255 255 / 48%);
+$white-40: rgb(255  255 255 / 40%);
+$white-32: rgb(255  255 255 / 32%);
+$white-24: rgb(255  255 255 / 24%);
+$white-16: rgb(255  255 255 / 16%);
+$white-8: rgb(255  255 255 / 8%);
+
+/* Pink  */
+$pink-500: #df3e82;
+$pink-400: #f54977;
+$pink-300: #ff6690;
+$pink-200: #ffb3c7;
+
+/* Dark Grey */
+$dark-grey-01: #0c0c18;
+$dark-grey-02: #141425;
+$dark-grey-03: #18182c;
+$dark-grey-04: #272742;
+
+/* Grey */
+$grey-01: rgba(#f5f5f5, 0.64);
+$grey-02: #8a95a3;
+
+/* Gradient */
+$gradient-01: linear-gradient(90deg, rgb(255 41 93) 0%, rgb(255 66 202) 50.52%, rgb(178 81 255) 100%);
+$gradient-02: linear-gradient(78deg, rgb(181 187 247) -13.11%, rgb(207 206 224) 6.27%, rgb(214 201 219) 47.85%, rgb(186 232 255) 61.83%, rgb(205 204 248) 74.32%, rgb(205 204 248) 80.25%, rgb(255 251 253) 86.21%, rgb(255 251 253) 92.32%, rgb(252 206 245) 99.95%);
+$gradient-03: linear-gradient(256deg, rgb(255 255 255) 2.74%, rgb(212 212 212) 42.75%, rgb(255 255 255) 69.29%, rgb(197 197 197) 84.4%);
+
+/* Color */
+$green-01: #2dbe85;
+$red-01: #fc3044;
+
+/* Gap */
+$gap-mobile-col: 16px;
+$gap-desktop-col: 40px;
+$gap-mobile-row: 100px;
+$gap-desktop-row: 160px;
+
+/* Spacing */
+$sp-2: 0.125rem;  // 2px
+$sp-4: 0.25rem;  // 4px
+$sp-6: 0.375rem;  // 6px
+$sp-8: 0.5rem;  // 8px
+$sp-10: 0.625rem;  // 10px
+$sp-12: 0.75rem; // 12px
+$sp-16: 1rem; // 16px
+$sp-20: 1.25rem;   // 20px
+$sp-24: 1.5rem; // 24px
+$sp-28: 1.75rem; // 28px
+$sp-32: 2rem; // 32px
+$sp-40: 2.5rem;   // 40px
+$sp-48: 3rem; // 48px
+$sp-56: 3.5rem; // 56px
+$sp-60: 3.75rem;   // 60px
+$sp-72: 4.5rem; // 72px
+$sp-80: 5rem;   // 80px
+
+/* Radius */
+$rd-2: 0.125rem;  // 2px
+$rd-3: 0.188rem;   // 3px
+$rd-4: 0.25rem;  // 4px
+$rd-6: 0.375rem;  // 6px
+$rd-8: 0.5rem;  // 8px
+$rd-10: 0.625rem; // 10px
+$rd-12: 0.75rem; // 12px
+$rd-16: 1rem; // 16px
+$rd-20: 1.25rem;   // 20px
+$rd-24: 1.5rem; // 24px
+$rd-circle: 50%; // circle
+
+/*
+  Color Palette * Global
+  글로벌 변수에 정의된 것을 기준으로 시멘틱 컬러변수에 재정의하여 사용합니다.
+*/
+
+/* wemixplay */
+$color-global-wemixplay-50: #f06;
+$color-global-wemixplay-40: #e5005c;
+$color-global-wemixplay-30: #cc0052;
+
+/* common */
+$color-global-common-100: #fff;
+$color-global-common-0: #000;
+
+/* neutral */
+$color-global-neutral-99: #f7f7f7;
+$color-global-neutral-95: #dcdcdc;
+$color-global-neutral-90: #c4c4c4;
+$color-global-neutral-80: #b0b0b0;
+$color-global-neutral-70: #9b9b9b;
+$color-global-neutral-60: #8a8a8a;
+$color-global-neutral-50: #737373;
+$color-global-neutral-40: #5c5c5c;
+$color-global-neutral-30: #474747;
+$color-global-neutral-22: #303030;
+$color-global-neutral-20: #2a2a2a;
+$color-global-neutral-15: #1c1c1c;
+$color-global-neutral-10: #171717;
+$color-global-neutral-5: #0f0f0f;
+
+/* cool neutral */
+$color-global-coolNeutral-99: #f7f7f8;
+$color-global-coolNeutral-98: #f4f4f5;
+$color-global-coolNeutral-97: #eaebec;
+$color-global-coolNeutral-96: #e1e2e4;
+$color-global-coolNeutral-95: #dbdcdf;
+$color-global-coolNeutral-90: #c2c4c8;
+$color-global-coolNeutral-80: #aeb0b6;
+$color-global-coolNeutral-70: #989ba2;
+$color-global-coolNeutral-60: #878a93;
+$color-global-coolNeutral-50: #70737c;
+$color-global-coolNeutral-40: #5a5c63;
+$color-global-coolNeutral-30: #46474c;
+$color-global-coolNeutral-25: #37383c;
+$color-global-coolNeutral-23: #333438;
+$color-global-coolNeutral-22: #2e2f33;
+$color-global-coolNeutral-20: #292a2d;
+$color-global-coolNeutral-17: #212225;
+$color-global-coolNeutral-15: #1b1c1e;
+$color-global-coolNeutral-10: #171719;
+$color-global-coolNeutral-7: #141415;
+$color-global-coolNeutral-5: #0f0f10;
+
+/* blue */
+$color-global-blue-99: #f7fbff;
+$color-global-blue-95: #eaf2fe;
+$color-global-blue-90: #c9defe;
+$color-global-blue-80: #9ec5ff;
+$color-global-blue-70: #69a5ff;
+$color-global-blue-60: #3385ff;
+$color-global-blue-55: #1a75ff;
+$color-global-blue-50: #06f;
+$color-global-blue-45: #005eeb;
+$color-global-blue-40: #0054d1;
+$color-global-blue-30: #003e9c;
+$color-global-blue-20: #002966;
+$color-global-blue-10: #001536;
+
+/* red */
+$color-global-red-99: #fffafa;
+$color-global-red-95: #feecec;
+$color-global-red-90: #fed5d5;
+$color-global-red-80: #ffb5b5;
+$color-global-red-70: #ff8c8c;
+$color-global-red-60: #ff6363;
+$color-global-red-50: #ff4242;
+$color-global-red-40: #e52222;
+$color-global-red-30: #b00c0c;
+$color-global-red-20: #730303;
+$color-global-red-10: #3b0101;
+
+/* green */
+$color-global-green-99: #f2fff6;
+$color-global-green-95: #d9ffe6;
+$color-global-green-90: #acfcc7;
+$color-global-green-80: #7df5a5;
+$color-global-green-70: #49e57d;
+$color-global-green-60: #1ed45a;
+$color-global-green-50: #00bf40;
+$color-global-green-40: #009632;
+$color-global-green-30: #006e25;
+$color-global-green-20: #004517;
+$color-global-green-10: #00240c;
+
+/* orange */
+$color-global-orange-99: #fffcf7;
+$color-global-orange-95: #fef4e6;
+$color-global-orange-90: #fee6c6;
+$color-global-orange-80: #ffd49c;
+$color-global-orange-70: #ffc06e;
+$color-global-orange-60: #ffa938;
+$color-global-orange-50: #ff9200;
+$color-global-orange-40: #d47800;
+$color-global-orange-30: #9c5800;
+$color-global-orange-20: #663a00;
+$color-global-orange-10: #361e00;
+
+/* redOrange */
+$color-global-redOrange-99: #fffaf7;
+$color-global-redOrange-95: #feeee5;
+$color-global-redOrange-90: #fed9c4;
+$color-global-redOrange-80: #ffbd96;
+$color-global-redOrange-70: #ff9b61;
+$color-global-redOrange-60: #ff7b2e;
+$color-global-redOrange-50: #ff5e00;
+$color-global-redOrange-40: #c94a00;
+$color-global-redOrange-30: #913500;
+$color-global-redOrange-20: #592100;
+$color-global-redOrange-10: #290f00;
+
+/* lime */
+$color-global-lime-99: #f8fff2;
+$color-global-lime-95: #e6ffd4;
+$color-global-lime-90: #ccfca9;
+$color-global-lime-80: #aef779;
+$color-global-lime-70: #88f03e;
+$color-global-lime-60: #6be016;
+$color-global-lime-50: #58cf04;
+$color-global-lime-40: #48ad00;
+$color-global-lime-30: #347d00;
+$color-global-lime-20: #225200;
+$color-global-lime-10: #112900;
+
+/* cyan */
+$color-global-cyan-99: #f7feff;
+$color-global-cyan-95: #defaff;
+$color-global-cyan-90: #b5f4ff;
+$color-global-cyan-80: #8aedff;
+$color-global-cyan-70: #57dff7;
+$color-global-cyan-60: #28d0ed;
+$color-global-cyan-50: #00bdde;
+$color-global-cyan-40: #0098b2;
+$color-global-cyan-30: #006f82;
+$color-global-cyan-20: #004854;
+$color-global-cyan-10: #00252b;
+
+/* lightBlue */
+$color-global-lightBlue-99: #f7fdff;
+$color-global-lightBlue-95: #e5f6fe;
+$color-global-lightBlue-90: #c4ecfe;
+$color-global-lightBlue-80: #a1e1ff;
+$color-global-lightBlue-70: #70d2ff;
+$color-global-lightBlue-60: #3dc2ff;
+$color-global-lightBlue-50: #00aeff;
+$color-global-lightBlue-40: #008dcf;
+$color-global-lightBlue-30: #006796;
+$color-global-lightBlue-20: #004261;
+$color-global-lightBlue-10: #002130;
+
+/* violet */
+$color-global-violet-99: #fbfaff;
+$color-global-violet-95: #f0ecfe;
+$color-global-violet-90: #dbd3fe;
+$color-global-violet-80: #c0b0ff;
+$color-global-violet-70: #9e86fc;
+$color-global-violet-60: #7d5ef7;
+$color-global-violet-50: #6541f2;
+$color-global-violet-40: #4f29e5;
+$color-global-violet-30: #3a16c9;
+$color-global-violet-20: #23098f;
+$color-global-violet-10: #11024d;
+
+/* purple */
+$color-global-purple-99: #fefbff;
+$color-global-purple-95: #f9edff;
+$color-global-purple-90: #f2d6ff;
+$color-global-purple-80: #e9baff;
+$color-global-purple-70: #de96ff;
+$color-global-purple-60: #d478ff;
+$color-global-purple-50: #cb59ff;
+$color-global-purple-40: #ad36e3;
+$color-global-purple-30: #861cb8;
+$color-global-purple-20: #580a7d;
+$color-global-purple-10: #290247;
+
+/* pink */
+$color-global-pink-99: #fffafe;
+$color-global-pink-95: #feecfb;
+$color-global-pink-90: #fed3f7;
+$color-global-pink-80: #ffb8f3;
+$color-global-pink-70: #ff94ed;
+$color-global-pink-60: #fa73e3;
+$color-global-pink-50: #f553da;
+$color-global-pink-40: #d331b8;
+$color-global-pink-30: #a81690;
+$color-global-pink-20: #730560;
+$color-global-pink-10: #3d0133;
+
+/* opacity */
+$color-global-opacity-0: 0%;
+$color-global-opacity-5: 5%;
+$color-global-opacity-8: 8%;
+$color-global-opacity-10: 10%;
+$color-global-opacity-12: 12%;
+$color-global-opacity-16: 16%;
+$color-global-opacity-22: 22%;
+$color-global-opacity-28: 28%;
+$color-global-opacity-35: 35%;
+$color-global-opacity-43: 43%;
+$color-global-opacity-52: 52%;
+$color-global-opacity-61: 61%;
+$color-global-opacity-64: 64%;
+$color-global-opacity-74: 74%;
+$color-global-opacity-88: 88%;
+$color-global-opacity-97: 97%;
+$color-global-opacity-100: 100%;
+
+/* ICON COLOR */
+$icon-chennel-certified: #3d6aff;
+
+/* Typography */
+@mixin display-01-b {
+  font-weight: 700;
+  letter-spacing: -0.0319em;
+
+  @include font-size(56);
+  @include line-height(72);
+}
+
+@mixin display-01-sb {
+  font-weight: 600;
+  letter-spacing: -0.0319em;
+
+  @include font-size(56);
+  @include line-height(72);
+}
+
+@mixin display-01-m {
+  font-weight: 500;
+  letter-spacing: -0.0319em;
+
+  @include font-size(56);
+  @include line-height(72);
+}
+
+@mixin display-01-r {
+  font-weight: 400;
+  letter-spacing: -0.0319em;
+
+  @include font-size(56);
+  @include line-height(72);
+}
+
+@mixin display-02-b {
+  font-weight: 700;
+  letter-spacing: -0.0282em;
+
+  @include font-size(40);
+  @include line-height(52);
+}
+
+@mixin display-02-sb {
+  font-weight: 600;
+  letter-spacing: -0.0282em;
+
+  @include font-size(40);
+  @include line-height(52);
+}
+
+@mixin display-02-m {
+  font-weight: 500;
+  letter-spacing: -0.0282em;
+
+  @include font-size(40);
+  @include line-height(52);
+}
+
+@mixin display-02-r {
+  font-weight: 400;
+  letter-spacing: -0.0282em;
+
+  @include font-size(40);
+  @include line-height(52);
+}
+
+@mixin title-01-b {
+  font-weight: 700;
+  letter-spacing: -0.027em;
+
+  @include font-size(36);
+  @include line-height(48);
+}
+
+@mixin title-01-sb {
+  font-weight: 600;
+  letter-spacing: -0.027em;
+
+  @include font-size(36);
+  @include line-height(48);
+}
+
+@mixin title-01-m {
+  font-weight: 500;
+  letter-spacing: -0.027em;
+
+  @include font-size(36);
+  @include line-height(48);
+}
+
+@mixin title-01-r {
+  font-weight: 400;
+  letter-spacing: -0.027em;
+
+  @include font-size(36);
+  @include line-height(48);
+}
+
+@mixin title-02-b {
+  font-weight: 700;
+  letter-spacing: -0.0236em;
+
+  @include font-size(28);
+  @include line-height(38);
+}
+
+@mixin title-02-sb {
+  font-weight: 600;
+  letter-spacing: -0.0236em;
+
+  @include font-size(28);
+  @include line-height(38);
+}
+
+@mixin title-02-m {
+  font-weight: 500;
+  letter-spacing: -0.0236em;
+
+  @include font-size(28);
+  @include line-height(38);
+}
+
+@mixin title-02-r {
+  font-weight: 400;
+  letter-spacing: -0.0236em;
+
+  @include font-size(28);
+  @include line-height(38);
+}
+
+@mixin title-03-b {
+  font-weight: 700;
+  letter-spacing: -0.023em;
+
+  @include font-size(24);
+  @include line-height(32);
+}
+
+@mixin title-03-sb {
+  font-weight: 600;
+  letter-spacing: -0.023em;
+
+  @include font-size(24);
+  @include line-height(32);
+}
+
+@mixin title-03-m {
+  font-weight: 500;
+  letter-spacing: -0.023em;
+
+  @include font-size(24);
+  @include line-height(32);
+}
+
+@mixin title-03-r {
+  font-weight: 400;
+  letter-spacing: -0.023em;
+
+  @include font-size(24);
+  @include line-height(32);
+}
+
+@mixin heading-01-b {
+  font-weight: 700;
+  letter-spacing: -0.0194em;
+
+  @include font-size(22);
+  @include line-height(30);
+}
+
+@mixin heading-01-sb {
+  font-weight: 600;
+  letter-spacing: -0.0194em;
+
+  @include font-size(22);
+  @include line-height(30);
+}
+
+@mixin heading-01-m {
+  font-weight: 500;
+  letter-spacing: -0.0194em;
+
+  @include font-size(22);
+  @include line-height(30);
+}
+
+@mixin heading-01-r {
+  font-weight: 400;
+  letter-spacing: -0.0194em;
+
+  @include font-size(22);
+  @include line-height(30);
+}
+
+@mixin heading-02-b {
+  font-weight: 700;
+  letter-spacing: -0.012em;
+
+  @include font-size(20);
+  @include line-height(28);
+}
+
+@mixin heading-02-sb {
+  font-weight: 600;
+  letter-spacing: -0.012em;
+
+  @include font-size(20);
+  @include line-height(28);
+}
+
+@mixin heading-02-m {
+  font-weight: 500;
+  letter-spacing: -0.012em;
+
+  @include font-size(20);
+  @include line-height(28);
+}
+
+@mixin heading-02-r {
+  font-weight: 400;
+  letter-spacing: -0.012em;
+
+  @include font-size(20);
+  @include line-height(28);
+}
+
+@mixin headline-01-b {
+  font-weight: 700;
+  letter-spacing: -0.002em;
+
+  @include font-size(18);
+  @include line-height(26);
+}
+
+@mixin headline-01-sb {
+  font-weight: 600;
+  letter-spacing: -0.002em;
+
+  @include font-size(18);
+  @include line-height(26);
+}
+
+@mixin headline-01-m {
+  font-weight: 500;
+  letter-spacing: -0.002em;
+
+  @include font-size(18);
+  @include line-height(26);
+}
+
+@mixin headline-01-r {
+  font-weight: 400;
+  letter-spacing: -0.002em;
+
+  @include font-size(18);
+  @include line-height(26);
+}
+
+@mixin headline-02-b {
+  font-weight: 700;
+  letter-spacing: 0;
+
+  @include font-size(17);
+  @include line-height(24);
+}
+
+@mixin headline-02-sb {
+  font-weight: 600;
+  letter-spacing: 0;
+
+  @include font-size(17);
+  @include line-height(24);
+}
+
+@mixin headline-02-m {
+  font-weight: 500;
+  letter-spacing: 0;
+
+  @include font-size(17);
+  @include line-height(24);
+}
+
+@mixin headline-02-r {
+  font-weight: 400;
+  letter-spacing: 0;
+
+  @include font-size(17);
+  @include line-height(24);
+}
+
+@mixin body-01-normal-b {
+  font-weight: 700;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(24);
+}
+
+@mixin body-01-normal-sb {
+  font-weight: 600;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(24);
+}
+
+@mixin body-01-normal-m {
+  font-weight: 500;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(24);
+}
+
+@mixin body-01-normal-r {
+  font-weight: 400;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(24);
+}
+
+@mixin body-01-reading-01-b {
+  font-weight: 700;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(26);
+}
+
+@mixin body-01-reading-01-sb {
+  font-weight: 600;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(26);
+}
+
+@mixin body-01-reading-01-m {
+  font-weight: 500;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(26);
+}
+
+@mixin body-01-reading-01-r {
+  font-weight: 400;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(26);
+}
+
+@mixin body-01-reading-02-b {
+  font-weight: 700;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(21);
+}
+
+@mixin body-01-reading-02-sb {
+  font-weight: 600;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(21);
+}
+
+@mixin body-01-reading-02-m {
+  font-weight: 500;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(21);
+}
+
+@mixin body-01-reading-02-r {
+  font-weight: 400;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(21);
+}
+
+@mixin body-02-normal-b {
+  font-weight: 700;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-normal-sb {
+  font-weight: 600;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-normal-m {
+  font-weight: 500;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-normal-r {
+  font-weight: 400;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-reading-b {
+  font-weight: 700;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-reading-sb {
+  font-weight: 600;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-reading-m {
+  font-weight: 500;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-reading-r {
+  font-weight: 400;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin label-01-normal-b {
+  font-weight: 700;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(20);
+}
+
+@mixin label-01-normal-sb {
+  font-weight: 600;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(20);
+}
+
+@mixin label-01-normal-m {
+  font-weight: 500;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(20);
+}
+
+@mixin label-01-normal-r {
+  font-weight: 400;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(20);
+}
+
+@mixin label-01-reading-b {
+  font-weight: 700;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-01-reading-sb {
+  font-weight: 600;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-01-reading-m {
+  font-weight: 500;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-01-reading-r {
+  font-weight: 400;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-02-reading-b {
+  font-weight: 700;
+  letter-spacing: 0.0194em;
+
+  @include font-size(13);
+  @include line-height(18);
+}
+
+@mixin label-02-reading-sb {
+  font-weight: 600;
+  letter-spacing: 0.0194em;
+
+  @include font-size(13);
+  @include line-height(18);
+}
+
+@mixin label-02-reading-m {
+  font-weight: 500;
+  letter-spacing: 0.0194em;
+
+  @include font-size(13);
+  @include line-height(18);
+}
+
+@mixin label-02-reading-r {
+  font-weight: 400;
+  letter-spacing: 0.0194em;
+
+  @include font-size(13);
+  @include line-height(18);
+}
+
+@mixin caption-01-b {
+  font-weight: 700;
+  letter-spacing: 0.0252em;
+
+  @include font-size(12);
+  @include line-height(16) ;
+}
+
+@mixin caption-01-sb {
+  font-weight: 600;
+  letter-spacing: 0.0252em;
+
+  @include font-size(12);
+  @include line-height(16) ;
+}
+
+@mixin caption-01-m {
+  font-weight: 500;
+  letter-spacing: 0.0252em;
+
+  @include font-size(12);
+  @include line-height(16) ;
+}
+
+@mixin caption-01-r {
+  font-weight: 400;
+  letter-spacing: 0.0252em;
+
+  @include font-size(12);
+  @include line-height(16) ;
+}
+
+@mixin caption-02-b {
+  font-weight: 700;
+
+  @include font-size(11);
+  @include line-height(14);
+}
+
+@mixin caption-02-sb {
+  font-weight: 600;
+
+  @include font-size(11);
+  @include line-height(14);
+}
+
+@mixin caption-02-m {
+  font-weight: 500;
+
+  @include font-size(11);
+  @include line-height(14);
+}
+
+@mixin caption-02-r {
+  font-weight: 400;
+
+  @include font-size(11);
+  @include line-height(14);
+}
+
+/* 아래부터 4.0 리뉴얼 디자인 컬러값 적용 후 삭제 */
+$color-white: #f5f5f5;
+$white: #eaecef;
+$black: #000;
+$gray100: #1a1a1a;
+$gray90: #262626;
+$gray80: #404040;
+$gray70: #595959;
+$gray60: #737373;
+$gray50: #8c8c8c;
+$gray40: #a6a6a6;
+$gray30: #bfbfbf;
+$gray20: #d9d9d9;
+$gray10: #f2f2f2;
+$gray00: #fff;
+$play-red: #df3e82;
+$play-purple: #9573ff;
+$color-pink: #e12172;
+$color-pink-light: #ff0063;
+$color-red: #fc3044;
+$color-purple: #aa88eb;
+$color-purple-text: #bb4bff;
+$color-text-guide: #8a95a3;
+$color-blue: #4d7cff;
+$color-bg: #0c0c18;
+$color-black-popup-content: #212132;
+$color-black-10: rgba($black, 0.1);
+$color-black-70: rgba($black, 0.7);
+$color-black-80: rgba($black, 0.8);
+$color-green: #2dbe85;
+$color-green-10: rgba($color-green, 0.1);
+$color-green-50: rgba($color-green, 0.5);
+$color-content-bg: #18182c;
+$color-content-item: #272742;
+$color-content-item-50: rgba($color-content-item, 0.5);
+$color-content-item-text: #8a95a3;
+$color-content-item-text-50: rgba($color-content-item-text, 0.5);
+$color-content-item-hover: #2c2c42;
+$dark-text-desc-2: #b7bdc6;
+$color-magenta: #aa88eb;
+$color-purple: #6400c9;
+$color-gradation: linear-gradient(68deg, #b5bbf7 3.67%, #cfcee0 19.55%, #d6c9db 53.65%, #bae8ff 65.1%, #cdccf8 75.34%, #cdccf8 80.21%, #fffbfd 85.09%, #fffbfd 90.1%, #fccef5 96.35%);
+$pink-gradation: linear-gradient(90deg, #e90387 0.24%, #fc6866 100.6%);
+$color-gradation-item: linear-gradient(180deg, rgb(0 0 0 / 20%) 0%, rgb(29 31 46 / 0%) 16.1%);
+$color-content-bg-dark: #141425;
+$color-content-bg-dark2: #101021;
+$color-black-popup-bg: #151521;
+$color-black-popup-content: #212132;

@@ -1,0 +1,129 @@
+/* stylelint-disable custom-property-pattern */
+
+[data-theme="light"] {
+  // static
+  --semantic-static-white: #{$color-global-common-100};
+  --semantic-static-black: #{$color-global-common-0};
+
+  // primary
+  --semantic-primary-normal: #{$color-global-wemixplay-50};
+  --semantic-primary-strong: #{$color-global-wemixplay-40};
+  --semantic-primary-heavy: #{$color-global-wemixplay-30};
+
+  // highlight
+  --semantic-highlight-normal: #{$color-global-blue-50};
+  --semantic-highlight-strong: #{$color-global-blue-45};
+  --semantic-highlight-heavy: #{$color-global-blue-40};
+
+  // label
+  --semantic-label-normal: #{$color-global-coolNeutral-10};
+  --semantic-label-strong: #{$color-global-coolNeutral-10};
+  --semantic-label-neutral: #{rgba($color-global-coolNeutral-10, $color-global-opacity-88)};
+  --semantic-label-alternative: #{rgba($color-global-coolNeutral-25, $color-global-opacity-61)};
+  --semantic-label-assistive: #{rgba($color-global-coolNeutral-25, $color-global-opacity-28)};
+  --semantic-label-disable: #{rgba($color-global-coolNeutral-25, $color-global-opacity-16)};
+  --semantic-label-inverse-normal: #{$color-global-coolNeutral-99};
+  --semantic-label-inverse-alternative: #{$color-global-coolNeutral-80};
+
+  // background
+  --semantic-background-normal-normal: #{$color-global-common-100};
+  --semantic-background-normal-alternative: #{$color-global-coolNeutral-99};
+  --semantic-background-elevated-normal: #{$color-global-common-100};
+  --semantic-background-elevated-alternative: #{$color-global-coolNeutral-99};
+
+  // interaction
+  --semantic-interaction-inactive: #{$color-global-coolNeutral-70};
+  --semantic-interaction-disable: #{$color-global-coolNeutral-98};
+
+  // line
+  --semantic-line-normal-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
+  --semantic-line-normal-neutral: #{rgba($color-global-coolNeutral-50, $color-global-opacity-16)};
+  --semantic-line-normal-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-8)};
+  --semantic-line-solid-normal: #{$color-global-coolNeutral-96};
+  --semantic-line-solid-neutral: #{$color-global-coolNeutral-97};
+  --semantic-line-solid-alternative: #{$color-global-coolNeutral-98};
+
+  // status
+  --semantic-status-positive: #{$color-global-green-50};
+  --semantic-status-positive-bg: #{rgba($color-global-green-50, $color-global-opacity-10)};
+  --semantic-status-cautionary: #{$color-global-orange-50};
+  --semantic-status-cautionary-bg: #{rgba($color-global-orange-50, $color-global-opacity-10)};
+  --semantic-status-negative: #{$color-global-red-50};
+  --semantic-status-negative-bg: #{rgba($color-global-red-50, $color-global-opacity-16)};
+  --semantic-status-negative-ball: #{rgba($color-global-red-50, $color-global-opacity-74)};
+  --semantic-status-blue: #{$color-global-blue-50};
+  --semantic-status-blue-bg: #{rgba($color-global-blue-50, $color-global-opacity-10)};
+
+  // accent
+  --semantic-accent-lime: #{$color-global-lime-50};
+  --semantic-accent-cyan: #{$color-global-cyan-50};
+  --semantic-accent-lightBlue: #{$color-global-lightBlue-50};
+  --semantic-accent-violet: #{$color-global-violet-50};
+  --semantic-accent-purple: #{$color-global-purple-50};
+  --semantic-accent-pink: #{$color-global-pink-50};
+
+  // Component - fill
+  --semantic-fill-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-8)};
+  --semantic-fill-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-16)};
+  --semantic-fill-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-5)};
+
+  // Component - Material
+  --semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-52)};
+
+  // Shadow
+  --semantic-shadow-normal:
+    0 1px 2px rgb(0 0 0 / 12%),
+    0 0 1px rgb(0 0 0 / 8%),
+    0 0 1px rgb(0 0 0 / 8%);
+  --semantic-shadow-emphasize:
+    0 2px 8px rgb(0 0 0 / 12%),
+    0 1px 4px rgb(0 0 0 / 8%),
+    0 0 1px rgb(0 0 0 / 8%);
+  --semantic-shadow-strong:
+    0 6px 12px rgb(0 0 0 / 12%),
+    0 4px 8px rgb(0 0 0 / 8%),
+    0 0 4px rgb(0 0 0 / 8%);
+  --semantic-shadow-heavy:
+    0 16px 20px rgb(0 0 0 / 12%),
+    0 8px 16px rgb(0 0 0 / 8%),
+    0 0 8px rgb(0 0 0 / 8%);
+  --semantic-shadoe-big: 0 20px 50px 0 rgb(0 0 0 / 10%);
+
+  /*  Nft Marketplace */
+  --semantic-nft-bg: #{$color-global-neutral-5};
+  --semantic-nft-trade-info-bg: #{rgba(23, 23, 25, 0.64) };
+
+  /* Status */
+  --semantic-status-sold-out: #{$color-global-green-50};
+  --semantic-status-sold-out-line: #{rgba(45, 190, 133, 0.39)};
+  --semantic-status-sold-out-bg: #{$color-global-green-95};
+  --semantic-status-burned: #{$color-global-orange-50};
+  --semantic-status-burned-line: #{rgba(255, 129, 13, 0.39)};
+  --semantic-status-burned-bg: #{$color-global-orange-95};
+  --semantic-color-gradation: #{linear-gradient(102deg, #c23d6e 0%, #ac40d2 32.81%, #7c46ed 66.67%, #4a45d1 100%)};
+  --semantic-nft-state-badge: #{rgb(255 0 102 / 10%)};
+  --semantic-status-bidding: #{$color-global-green-50};
+  --semantic-status-soon: #{$color-global-lightBlue-50};
+
+  // Button
+  --semantic-color-btn-green: #{$color-global-green-50};
+  --semantic-color-btn-blue: #{$color-global-blue-50};
+  --semantic-color-btn-pink: #{$color-global-wemixplay-50};
+  --semantic-color-btn-dark-gray: #{$color-global-neutral-30};
+  --semantic-color-btn-gray: #{rgba(112, 115, 124, 0.16)};
+  --semantic-number-btn-color: #{rgb(112 115 124 / 16%)};
+  --semantic-number-btn-color-disabled: #{rgb(112 115 124 / 8%)};
+  --semantic-nft-switch-disabled: #{$color-global-neutral-50};
+
+  // Hover Color
+  --semantic-color-hover: #{rgba(112, 115, 124, 0.08)};
+
+  // 모바일 선택한 Filter Chip 스크롤 오른쪽 그라데이션 효과
+  --semantic-filter-scroll-gradient: #{rgba($color-global-common-100, $color-global-opacity-0)};
+}
+
+[data-theme="dark"] {
+  // static
+  --semantic-static-white: #{$color-global-common-100};
+  --semantic-static-black: #{$color-global-common-0};
+}

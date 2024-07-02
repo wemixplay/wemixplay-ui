@@ -1,0 +1,572 @@
+/* stylelint-disable keyframes-name-pattern */
+@keyframes modal-fade {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes modal-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modal-small-scale {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modal-bottom-sheet {
+  0% {
+    opacity: 0;
+    transform: translateY(calc(100% + 60px));
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+@keyframes modal-mobile-sidebar {
+  0% {
+    transform: translateX(calc(100% + 28px));
+  }
+
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes modal-slide-left {
+  0% {
+    opacity: 0;
+    transform: translateX(-100%);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes modal-slide-right {
+  0% {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateX(0%);
+  }
+}
+
+@keyframes modal-full-page {
+  0% {
+    opacity: 0;
+    transform: translateY(60%);
+  }
+
+  30% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0%);
+  }
+}
+
+@keyframes modal-pop-fade {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes modal-fade-in {
+  0% {
+    opacity: 0;
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes dialog-pop-fade {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  60% {
+    opacity: 1;
+    transform: scale(1.03);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes select-option-slide {
+  from {
+    opacity: 0;
+    transform: scaleY(0.3);
+  }
+
+  to {
+    opacity: 1;
+    transform: scaleY(1);
+  }
+}
+
+@keyframes select-option-mobile-slide {
+  0% {
+    opacity: 0;
+    transform: translateY(400px);
+  }
+
+  20% {
+    opacity: 0;
+    transform: translateY(400px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes skeleton-blank {
+  0% {
+    filter: brightness(0.8);
+  }
+
+  50% {
+    filter: brightness(1.2);
+  }
+
+  100% {
+    filter: brightness(0.8);
+  }
+}
+
+@keyframes material-ripple {
+  0% {
+    border-radius: 50%;
+    opacity: 0.3;
+    transform: translate(-50%, -50%) scale(0);
+  }
+
+  100% {
+    border-radius: 45%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(1.5);
+  }
+}
+
+@keyframes reflect-rotate {
+  70% {
+    transform: rotate(360deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes mslide_01 {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.4);
+  }
+}
+
+@keyframes mslide_02 {
+  0% {
+    animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform: scale(3);
+  }
+
+  6.5% {
+    animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform: scale(1.4);
+  }
+
+  100% {
+    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    transform: scale(0.9);
+  }
+}
+
+@keyframes mslide_03 {
+  0% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mslide_03 {
+  0% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@keyframes mslide_04 {
+  0% {
+    transform: scale(1.1) translateX(-40px);
+  }
+
+  100% {
+    transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes mslide_04-m {
+  0% {
+    transform: scale(1.2) translateX(-16px);
+  }
+
+  100% {
+    transform: scale(1) translateX(0);
+  }
+}
+
+@keyframes mslide_05 {
+  0% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1.1);
+  }
+}
+
+@keyframes mslide_06 {
+  0% {
+    animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform: scale(3);
+  }
+
+  6.5% {
+    animation-timing-function: cubic-bezier(0.645, 0.045, 0.355, 1);
+    transform: scale(1.4);
+  }
+
+  60% {
+    animation-timing-function: cubic-bezier(0.445, 0.05, 0.55, 0.95);
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes mslide_07 {
+  0% {
+    transform: scale(1.2);
+  }
+
+  100% {
+    transform: scale(1.5);
+  }
+}
+
+@keyframes flip {
+  from {
+    opacity: 1;
+    transform: perspective(2500px) rotateY(-20deg);
+  }
+
+  to {
+    opacity: 0.8;
+    transform: perspective(2500px) rotateY(20deg);
+  }
+}
+
+@keyframes ani-live {
+  0% {
+    opacity: 0;
+    transform: scale(1, 1) translateY(-50%);
+  }
+
+  40% {
+    background-color: rgba($color: #fff, $alpha: 10%);
+    opacity: 0;
+  }
+
+  41% {
+    background-color: rgba($color: #fff, $alpha: 35%);
+    opacity: 1;
+    transform: scale(1, 1) translateY(-50%);
+  }
+
+  70% {
+    background-color: rgba($color: #fff, $alpha: 10%);
+    opacity: 0.5;
+    transform: scale(3, 3) translateY(-50%);
+  }
+
+  100% {
+    opacity: 0.5;
+    transform: scale(1, 1) translateY(-50%);
+  }
+}
+
+@keyframes ani-live-circle {
+  0% {
+    opacity: 1;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  41% {
+    opacity: 0.5;
+  }
+
+  51% {
+    opacity: 0.5;
+  }
+
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes ani-pulse {
+  0% {
+    transform: scale(0.33);
+  }
+
+  80% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ani-circle {
+  0% {
+    transform: scale(0.8);
+  }
+
+  50% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0.8);
+  }
+}
+
+@keyframes progress-bar-stripes {
+  from {
+    background-position: 0 16px;
+  }
+
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Gamefi > Swap progress, loading 애니메이션 */
+@keyframes rotate {
+  from {
+    transform: rotate(-1turn);
+  }
+
+  to {
+    transform: rotate(0turn);
+  }
+}
+
+/* Progress 왼쪽 애니매이션 */
+@keyframes left {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(0); }
+  50% { transform: rotate(180deg); }
+  75% { transform: rotate(180deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Progress 오른쪽 애니매이션 */
+@keyframes right {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(180deg); }
+  50% { transform: rotate(180deg); }
+  75% { transform: rotate(360deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* swap processing */
+@keyframes flash {
+  0% {
+    background-color: #cacaca;
+    box-shadow: 6px 0 #cacaca, -6px 0 #cacaca;
+  }
+
+  50% {
+    background-color: #cacaca;
+    box-shadow: 6px 0 #cacaca, -6px 0 #808080;
+  }
+
+  65% {
+    background-color: #808080;
+    box-shadow: 6px 0 #cacaca, -6px 0 #cacaca;
+  }
+
+  80% {
+    background-color: #cacaca;
+    box-shadow: 6px 0 #808080, -6px 0 #cacaca;
+  }
+
+  100% {
+    background-color: #cacaca;
+    box-shadow: 6px 0 #cacaca, -6px 0 #cacaca;
+  }
+}
+
+@keyframes card-roll-vertical {
+  0% {
+    z-index: 2;
+    opacity: 1;
+    transform: translateY(100%);
+  }
+
+  50% {
+    transform: translateY(0%);
+  }
+
+  60% {
+    transform: translateY(0%);
+  }
+
+  98% {
+    transform: translateY(-100%);
+  }
+
+  99% {
+    z-index: 2;
+    opacity: 1;
+    transform: translateY(-100%);
+  }
+
+  99.1% {
+    z-index: -1;
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+
+  99.2% {
+    z-index: -1;
+    opacity: 0;
+    transform: translateY(100%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+@keyframes doodoongsil {
+  0% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-4px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes multi-wallet {
+  0% {
+    background-position: -16px 0, calc(100% + 16px) 0;
+  }
+
+  20% {
+    background-position: -10px 0, calc(100% + 18px) 0;
+  }
+
+  40% {
+    background-position: -20px 0, calc(100% + 9px) 0;
+  }
+
+  60% {
+    background-position: -16px 0, calc(100% + 16px) 0;
+  }
+
+  100% {
+    background-position: -16px 0, calc(100% + 16px) 0;
+  }
+}
