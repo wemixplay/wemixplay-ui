@@ -11,7 +11,7 @@ export default {
 } as Meta<typeof WpEditor>;
 
 const Template: StoryTemplate = (args) => {
-  return <WpEditor {...args} />;
+  return <WpEditor {...args} maxLength={20} />;
 };
 
 export const Default: StoryComponent = {

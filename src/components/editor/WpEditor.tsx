@@ -25,6 +25,7 @@ import { debounce } from 'lodash-es';
 import PasteToPlainText, {
   PasteToPlainTextConfig
 } from '@/plugins/pasteToPlainText/PasteToPlainText';
+import CountTextLength, { CountTextLengthConfig } from '@/plugins/countTextLength/CountTextLength';
 
 type WpEditorRef = HTMLDivElement & {
   setData: (data: string) => void;
@@ -35,12 +36,14 @@ type Props = Omit<TextareaHTMLAttributes<HTMLDivElement>, 'aria-placeholder' | '
   name?: string;
   initialValue?: string;
   placeholder?: string;
+  maxLength?: number;
   plugin?: WpEditorPluginConstructor[];
   config?: {
     mention?: MentionConfig;
     hash?: HashTagConfig;
     autoUrlMatch?: AutoUrlMatchConfig;
     pasteToPlainText?: PasteToPlainTextConfig;
+    countTextLength?: CountTextLengthConfig;
   };
   handleChange?: (value: string, name?: string) => void;
 };
@@ -64,8 +67,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       name,
       initialValue,
       config = {},
-      plugin = [Mention, HashTag, AutoUrlMatch, PasteToPlainText],
+      plugin = [Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength],
       placeholder = '입력해주세요..!',
+      maxLength,
       onClick,
       handleChange,
       ...textareaProps
@@ -83,7 +87,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       disabled: false
     });
 
-    const [plugins] = useState(constructEditorPlugin({ plugin, contentEditableEl }));
+    const [plugins, setPlugins] = useState(constructEditorPlugin({ plugin, contentEditableEl }));
 
     const mutationObserver = useMemo(() => {
       return new MutationObserver(() => {
@@ -377,6 +381,10 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       }
     }, [initialValue, rangeMoveContentEnd]);
 
+    useEffect(() => {
+      setPlugins(constructEditorPlugin({ plugin, contentEditableEl }));
+    }, []);
+
     useImperativeHandle(ref, () => {
       contentEditableEl.current.setData = setData;
 
@@ -390,6 +398,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           className={cx(className, 'wp-editor-content')}
           {...textareaProps}
           aria-placeholder={placeholder}
+          aria-valuemax={maxLength} // maxLength props 를 통해 입력받은 수치를 aria-valuemax 에 할당
           contentEditable
           onInput={handlePostDataChange}
           onPaste={handlePaste}
