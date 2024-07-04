@@ -8,7 +8,7 @@ import React, {
   ClipboardEvent
 } from 'react';
 
-import WpEditor, { WpEditorProps, WpEditorRef } from './components/editor/Editor';
+import WpEditor, { WpEditorProps, WpEditorRef } from './components/editor/WpEditor';
 import PostDetailEditor, {
   PostDetailEditorProps,
   PostDetailEditorValue,
