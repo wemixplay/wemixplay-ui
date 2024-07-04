@@ -68,7 +68,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       initialValue,
       config = {},
       plugin = [Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength],
-      placeholder = '입력해주세요..!',
+      placeholder = 'What is happening?!',
       maxLength,
       onClick,
       handleChange,

@@ -1,4 +1,5 @@
 import path from 'path';
+import {WebpackSvgComponentPlugin} from 'monkey-d/modules';
 
 /** @type { import('@storybook/nextjs').StorybookConfig } */
 const config = {
@@ -48,10 +49,52 @@ const config = {
       },
     });
 
+    const fileLoaderRule = config.module.rules.find(rule => rule.test && rule.test.test('.svg'));
+    fileLoaderRule.exclude = /\.svg$/;
+
+    console.log('fileLoaderRule >> ', fileLoaderRule)
+
+    // config.module.rules.push(// 기존 파일 로더 규칙을 찾습니다.
+    //   {
+    //     exclude: /\.svg$/,
+    //     use: [
+    //       {
+    //         loader: 'file-loader',
+    //         options: {
+    //           name: '[path][name].[ext]',
+    //         },
+    //       },
+    //     ],
+    //   })
+
+    config.module.rules.push({
+      loader: '@svgr/webpack',
+      options: {
+        prettier: false,
+        svgo: true,
+        svgoConfig: {
+          plugins: [
+            {
+              name: 'removeViewBox',
+              active: false
+            }
+          ]
+        },
+        titleProp: true
+      },
+      test: /\.svg$/
+    });
+
+    config.plugins.push(new WebpackSvgComponentPlugin({
+      svgFileDir: '../src/assets/svgs',
+      outputDir: '../src/assets/svgs',
+      useSvgr: true,
+      typescript: true
+    }))
     
     config.resolve.alias = {
       ...config.resolve.alias,
-      '@': path.resolve(__dirname, '../../src'),
+      '@': path.resolve(__dirname, '../../src')
     };
 
     return config;

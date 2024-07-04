@@ -1,3 +1,4 @@
+const path = require('path');
 const babel = require('@rollup/plugin-babel').default;
 const typescript = require('@rollup/plugin-typescript');
 const json = require('@rollup/plugin-json');
@@ -6,9 +7,13 @@ const ignore = require('rollup-plugin-ignore');
 const postcss = require('rollup-plugin-postcss');
 const resolve = require('@rollup/plugin-node-resolve').nodeResolve; // NodeResolve 함수를 직접 가져옴
 const commonjs = require('@rollup/plugin-commonjs');
+const svgr = require('@svgr/rollup');
+const alias = require('@rollup/plugin-alias');
 // const createIndexFilePlugin = require('./plugins/rollup-plugin-create-index.js');
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
+
+console.log('path src >>',  path.resolve(__dirname, './src'))
 
 const plugins = [
 	json(),
@@ -37,23 +42,50 @@ const plugins = [
 			'@babel/plugin-transform-runtime'
 		],
 	}),
+	svgr({
+		prettier: false,
+		svgo: true,
+		svgoConfig: {
+			plugins: [
+				{
+					name: 'removeViewBox',
+					active: false
+				}
+			]
+		},
+		titleProp: true
+	}),
 	postcss({
 		modules: true,
 		extensions: ['.css', '.scss', '.sass'],
 		use: [
 			['sass', {
-				include: ["src/styles/abstracts/_animation.scss"],
+				includePaths: [
+					path.resolve(__dirname, 'src/styles')
+				]
+			}]
+		],
+		preprocessor: (content, id) => new Promise((resolve, reject) => {
+			const result = require('sass').compile({
 				data: `
 					@import "@/styles/abstracts/_variables.scss";
 					@import "@/styles/abstracts/_mixin.scss";
 					@import "@/styles/abstracts/_animation.scss";
-				`
-			}]
-		],
+					${content}
+				`,
+				includePaths: [path.dirname(id)]
+			});
+			resolve({ code: result.css.toString() });
+		}),
 		extract: false,
 		minimize: true,
 		sourceMap: process.NODE_ENV === 'development'
 	}),
+	alias({
+		entries: [
+			{ find: '@', replacement: path.resolve(__dirname, 'src') }
+		]
+	})
 	// createIndexFilePlugin({
 	// 	target: '',
 	// 	fileName: {

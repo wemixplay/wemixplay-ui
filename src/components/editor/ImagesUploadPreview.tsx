@@ -4,6 +4,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import style from './ImagesUploadPreview.module.scss';
 import Carousel from '../carousel/Carousel';
+import { SvgIcoDeleteX } from '@/assets/svgs';
 
 type Props = {
   images?: { file?: File; src: string }[];
@@ -30,7 +31,7 @@ const ImagesUploadPreview = ({ images = [], handleDeleteImg }: Props) => {
               className={cx('btn-img-delete')}
               onClick={() => handleDeleteImg({ deleteIndex: index })}
             >
-              delete
+              <SvgIcoDeleteX />
             </button>
             <div key={image.src} className={cx('preview-image-box')}>
               <img src={image.src} alt={image.src} />

@@ -12,13 +12,14 @@
     "@storybook/testing-library": "^0.2.2",
     "css-loader": "^7.1.2",
     "env-cmd": "^10.1.0",
+    "file-loader": "^6.2.0",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
     "style-loader": "^4.0.0"
   },
   "scripts": {
     "storybook": "env-cmd -e local storybook dev -p 6008",
-    "build-storybook": "cross-env NODE_OPTIONS=--openssl-legacy-provider storybook build"
+    "build-storybook": "NODE_ENV=development cross-env NODE_OPTIONS=--openssl-legacy-provider storybook build"
   },
   "resolutions": {
     "jackspeak": "2.1.1"

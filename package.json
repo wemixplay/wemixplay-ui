@@ -24,7 +24,7 @@
     "start": "NODE_ENV=development rollup -c && node scripts/svgComponentGenerator.js & rollup -cw",
     "build": "rm -rf dist && NODE_ENV=production rollup -c && node scripts/svgComponentGenerator.js",
     "prepare": "yarn build",
-    "storybook": "NODE_ENV=development node scripts/svgComponentGenerator.js & cd storybook && yarn && yarn storybook"
+    "storybook": "cd storybook && yarn && yarn storybook"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
@@ -37,12 +37,15 @@
     "@babel/preset-typescript": "^7.24.1",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
+    "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-json": "^6.1.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
+    "@svgr/rollup": "^8.1.0",
+    "@svgr/webpack": "6.5.1",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.0",
     "@types/lodash-es": "^4.17.12",
@@ -64,7 +67,7 @@
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.3.0",
     "fs-extra": "^11.2.0",
-    "monkey-d": "^1.1.44",
+    "monkey-d": "^1.2.0",
     "postcss": "^8.4.38",
     "postcss-modules": "^6.0.0",
     "prettier": "^3.3.2",

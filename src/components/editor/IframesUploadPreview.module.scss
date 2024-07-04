@@ -1,12 +1,19 @@
 .iframe-upload-preview{
+  margin: $sp-12 0 ;
+  
+
   .iframe-preview-slider{
     :global{
       .swiper{
-        padding: 40px 0;
+        padding:  0 $sp-20;
 
         .swiper-slide{
           position: relative;
           width: auto !important;
+
+          &:last-of-type {
+            margin-right: 0 !important;
+          }
 
           *{
             user-select: none;
@@ -24,8 +31,17 @@
   }
 
   .preview-iframe-box{
-    img{
-      height: 355px;
+    width: 100%; 
+    border-radius: $rd-12;
+    overflow: hidden;
+    iframe {
+      display: block;
+      min-width: 560px;
+      width: 100%; 
+      aspect-ratio: 16 / 9;
+      height: 100%;
+      border:  0;
     }
+ 
   }
 }
