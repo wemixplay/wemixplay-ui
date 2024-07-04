@@ -1,12 +1,17 @@
 .images-upload-preview{
+  margin: $sp-12 0 $sp-12 0; 
   .image-preview-slider{
     :global{
       .swiper{
-        padding: 40px 0;
-
+        padding: 0 $sp-20;
+        
         .swiper-slide{
           position: relative;
           width: auto !important;
+
+          &:last-of-type {
+            margin-right: 0 !important;
+          }
 
           *{
             user-select: none;
@@ -24,8 +29,11 @@
   }
 
   .preview-image-box{
+    overflow: hidden;
+    border-radius: $rd-12;
+
     img{
-      height: 355px;
+      height: 177px;
     }
   }
 }

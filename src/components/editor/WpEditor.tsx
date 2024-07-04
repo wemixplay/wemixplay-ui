@@ -65,7 +65,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       initialValue,
       config = {},
       plugin = [Mention, HashTag, AutoUrlMatch, PasteToPlainText],
-      placeholder = '입력해주세요..!',
+      placeholder = 'What is happening?!',
       onClick,
       handleChange,
       ...textareaProps

@@ -11,7 +11,11 @@ export default {
 } as Meta<typeof PostDetailEditor>;
 
 const Template: StoryTemplate = (args) => {
-  return <PostDetailEditor {...args} />;
+  return (
+    <div style={{ borderRadius: '12px', boxShadow: '0px 8px 16px 0px rgba(0, 0, 0, 0.12)' }}>
+      <PostDetailEditor {...args} />
+    </div>
+  );
 };
 
 export const Default: StoryComponent = {

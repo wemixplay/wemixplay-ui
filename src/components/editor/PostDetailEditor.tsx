@@ -18,7 +18,7 @@ import HashTag from '@/plugins/hashTag/HashTag';
 import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import PasteToPlainText from '@/plugins/pasteToPlainText/PasteToPlainText';
 import { makeCxFunc } from '@/utils/forReactUtils';
-import { SvgIcoImage } from '@/assets/svgs';
+
 import { orderBy, uniqBy } from 'lodash-es';
 import { imageFileUpload, readAsDataURLAsync } from '@/utils/fileUtils';
 import ImagesUploadPreview from './ImagesUploadPreview';
@@ -30,6 +30,9 @@ import {
 } from '@/utils/urlUtils';
 import IframesUploadPreview from './IframesUploadPreview';
 import OgMetaDataPreview from './OgMetaDataPreview';
+import Person from '../avatars/Person';
+import { SvgIcoImage } from '@/assets/svgs';
+const DEFAULT_IMAGE = '/assets/imgs/@default-profile-user.png';
 
 type PostEditorMediaValue = { file?: File; src: string };
 type PostEditorIframeValue = { type?: 'youtube' | 'twitch'; src: string };
@@ -57,7 +60,11 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
       className = '',
       value,
       name,
-      btnSubmitElement = <button className={cx('btn-submit')}>게시</button>,
+      btnSubmitElement = (
+        <button disabled className={cx('btn-submit')}>
+          게시
+        </button>
+      ),
       handleChange,
       ...editorProps
     },
@@ -376,6 +383,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
     return (
       <div className={cx(className, 'post-detail-editor')}>
         <WpEditor
+          className={cx('editor')}
           ref={ref}
           plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText]}
           initialValue={memorizationData?.value}
@@ -391,7 +399,14 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           onDragOver={onDragOver}
           onDrop={onInputDrop}
           handleChange={handleEditorTextChange}
-        ></WpEditor>
+        >
+          <a href="/">@NightCrows</a> Context: you are an f2p player, around level 131 arbalist
+          (231K PS). You want to improve your Magic Square gains. Any tips? Here are some questions
+          in my mind.
+          <br />
+          https://wemixplay.com/en <br />
+          https://www.youtube.com/watch?v=UUOpe_sTKzA
+        </WpEditor>
         {memorizationData.images.length > 0 && (
           <ImagesUploadPreview
             images={memorizationData.images}
@@ -432,10 +447,16 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
                 accept="image/png, image/gif, image/jpeg, image/jpg, image/webp"
                 onChange={onImageFileChange}
               />
+
               <SvgIcoImage />
             </label>
           </div>
-          <div className={cx('right')}>{btnSubmitElement}</div>
+          <div className={cx('right')}>
+            <span className={cx('text-count')}>
+              <b>144</b> / 1,000
+            </span>
+            {btnSubmitElement}
+          </div>
         </div>
       </div>
     );

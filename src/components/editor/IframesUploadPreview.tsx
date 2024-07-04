@@ -4,6 +4,7 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import style from './IframesUploadPreview.module.scss';
 import Carousel from '../carousel/Carousel';
+import { SvgIcoDeleteX } from '@/assets/svgs';
 
 type Props = {
   iframes?: { type?: 'youtube' | 'twitch'; src: string }[];
@@ -30,7 +31,7 @@ const IframesUploadPreview = ({ iframes = [], handleDeleteIframe }: Props) => {
               className={cx('btn-img-delete')}
               onClick={() => handleDeleteIframe({ deleteIndex: index })}
             >
-              delete
+              <SvgIcoDeleteX />
             </button>
             <div key={iframe.src} className={cx('preview-iframe-box')}>
               <iframe src={iframe.src} />

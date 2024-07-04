@@ -1,7 +1,58 @@
 .og-meta-data-preview{
+  padding:  0 $sp-20;
   .og-meta-data-content{
     position: relative;
     display: inline-block;
+    border-radius: $rd-8; 
+    border: 1px solid var(--semantic-line-normal-neutral);
+    width: 100%;
+    // padding: $sp-16;
+    color: var(--semantic-label-alternative);
+    @include label-01-normal-r; 
+    overflow: hidden;
+    
+
+    .preview-box {
+      display: flex; 
+      align-items: center;    
+
+   
+    }   
+    .preview-img {
+      max-width: 200px; 
+      width: 100%;
+      position: relative;
+      height: 113px;
+
+      img {
+        max-width: 100%;
+        object-fit: cover;
+        height: 100%;
+      }
+   }
+
+   .preview-data { 
+     padding: $sp-16 ;
+     display: flex; 
+     flex-direction: column;
+
+     .title {
+       @include label-01-normal-m; 
+       color: var(--semantic-label-normal);
+     }
+     .link {
+       @include label-01-normal-r; 
+       color: var(--semantic-label-alternative);
+     }
+     .description {
+       @include label-02-reading-r; 
+       margin-top: $sp-4;
+       color: var(--semantic-label-alternative);
+       @include ellipsis(2);
+     }
+   }
+    
+
 
     .btn-img-delete{
       position: absolute;

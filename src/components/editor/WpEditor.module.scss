@@ -1,16 +1,27 @@
 .wp-editor {
   // style
-  border: 1px solid #ddd;
+
 
   .wp-editor-content {
-    height: 100px;
-    padding: 12px;
+    // height: 100px;
+    margin: $sp-12 0; 
+    padding:  $sp-12 $sp-20 0 ;
     overflow-y: scroll;
     display: block;
+    @include body-01-reading-02-m;
+    color: var(--semantic-label-normal);
+
+    a {
+      color: var(--semantic-highlight-normal);
+      text-decoration: none;
+      @include body-01-reading-02-m;
+      cursor: pointer;
+    }
 
     &:empty {
       &::before {
-        color: #aaa;
+        color: var(--semantic-label-alternative); 
+        @include body-01-reading-02-m;
         content: attr(aria-placeholder);
       }
     }
