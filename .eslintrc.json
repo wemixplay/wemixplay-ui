@@ -23,8 +23,8 @@
     "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx", ".jsx"] }],
     "no-useless-catch": "off",
     "react/no-children-prop": "off",
-    "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": "off"
+    "no-unused-vars": "off"
+    
   },
   "settings": { // 추가된 부분
     "react": {

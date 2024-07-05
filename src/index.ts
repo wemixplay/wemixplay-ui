@@ -14,6 +14,7 @@ import PostDetailEditor, {
   PostDetailEditorValue,
   PostEditorMediaValue
 } from './components/editor/PostDetailEditor';
+
 interface WpEditorPlugin<C extends any = any> {
   commandKey: string;
   contentEditableEl: MutableRefObject<HTMLDivElement>;

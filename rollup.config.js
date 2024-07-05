@@ -9,11 +9,8 @@ const resolve = require('@rollup/plugin-node-resolve').nodeResolve; // NodeResol
 const commonjs = require('@rollup/plugin-commonjs');
 const svgr = require('@svgr/rollup');
 const alias = require('@rollup/plugin-alias');
-// const createIndexFilePlugin = require('./plugins/rollup-plugin-create-index.js');
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
-
-console.log('path src >>',  path.resolve(__dirname, './src'))
 
 const plugins = [
 	json(),
@@ -59,24 +56,17 @@ const plugins = [
 		modules: true,
 		extensions: ['.css', '.scss', '.sass'],
 		use: [
-			['sass', {
-				includePaths: [
-					path.resolve(__dirname, 'src/styles')
-				]
-			}]
+			[
+				'sass',
+				{
+					data: `
+			@import "./src/styles/abstracts/_variables.scss";
+			@import "./src/styles/abstracts/_mixin.scss";
+			@import "./src/styles/abstracts/_animation.scss";
+		`
+				}
+			]
 		],
-		preprocessor: (content, id) => new Promise((resolve, reject) => {
-			const result = require('sass').compile({
-				data: `
-					@import "@/styles/abstracts/_variables.scss";
-					@import "@/styles/abstracts/_mixin.scss";
-					@import "@/styles/abstracts/_animation.scss";
-					${content}
-				`,
-				includePaths: [path.dirname(id)]
-			});
-			resolve({ code: result.css.toString() });
-		}),
 		extract: false,
 		minimize: true,
 		sourceMap: process.NODE_ENV === 'development'
@@ -86,13 +76,6 @@ const plugins = [
 			{ find: '@', replacement: path.resolve(__dirname, 'src') }
 		]
 	})
-	// createIndexFilePlugin({
-	// 	target: '',
-	// 	fileName: {
-	// 		cjs: 'index.cjs.js',
-	// 		esm: 'index.esm.mjs',
-	// 	},
-	// }),
 ]
 
 if (process.env.NODE_ENV === 'production') {

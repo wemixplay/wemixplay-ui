@@ -1,9 +1,9 @@
-
 .post-detail-editor{
 
   .editor {
     margin: 0;
      padding: $sp-12 $sp-20 $sp-20  $sp-20;
+     min-height: 80px;
   }
   
   .control-box{
@@ -20,7 +20,7 @@
         display: flex; 
         align-items: center; 
         justify-content: center;
-
+        
         &::before{
           content: ''; 
           left: 50%; 

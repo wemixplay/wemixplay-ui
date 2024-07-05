@@ -3,12 +3,14 @@ import viteLogo from '/vite.svg';
 
 import './App.css';
 import { SvgReact } from './assets/svgs';
+import { WpEditor } from 'wemixplay-ui';
 
 function App() {
 	const [count, setCount] = useState(0);
 
 	return (
 		<>
+		<WpEditor />
 			<div>
 				<a href='https://vitejs.dev' target='_blank' rel='noreferrer'>
 					<img src={viteLogo} className='logo' alt='Vite logo' />

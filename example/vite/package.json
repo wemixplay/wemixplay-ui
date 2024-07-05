@@ -10,9 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "monkey-d": "^1.1.17",
+    "monkey-d": "^1.1.30",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "wemixplay-ui": "^1.1.6"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",

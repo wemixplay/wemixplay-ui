@@ -1,0 +1,19 @@
+{
+  "extends": [
+    "stylelint-prettier",
+    "stylelint-config-standard",
+    "stylelint-config-standard-scss",
+    "stylelint-config-idiomatic-order"
+  ],
+  "plugins": [
+    "stylelint-scss",
+    "stylelint-order"
+  ],
+  "rules": {
+    "function-url-quotes": "never",
+    "property-no-vendor-prefix": null,
+    "max-line-length": null,
+    "selector-pseudo-class-no-unknown": null,
+    "no-descending-specificity": null
+  }
+}

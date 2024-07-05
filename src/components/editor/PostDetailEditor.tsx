@@ -32,6 +32,8 @@ import IframesUploadPreview from './IframesUploadPreview';
 import OgMetaDataPreview from './OgMetaDataPreview';
 import Person from '../avatars/Person';
 import { SvgIcoImage } from '@/assets/svgs';
+import CountTextLength from '@/plugins/countTextLength/CountTextLength';
+import { commaWithValue } from '@/utils/valueParserUtils';
 const DEFAULT_IMAGE = '/assets/imgs/@default-profile-user.png';
 
 type PostEditorMediaValue = { file?: File; src: string };
@@ -44,7 +46,7 @@ type PostDetailEditorValue = {
   ogMetaData?: Record<string, string> | null;
 };
 
-type Props = Omit<WpEditorProps, 'plugin' | 'config' | 'initailValue'> & {
+type Props = Omit<WpEditorProps, 'plugin' | 'initailValue'> & {
   className?: string;
   btnSubmitElement?: ReactElement;
   value?: PostDetailEditorValue;
@@ -60,11 +62,14 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
       className = '',
       value,
       name,
+      maxLength = 1000,
+      placeholder = 'What is happening?!',
       btnSubmitElement = (
         <button disabled className={cx('btn-submit')}>
           게시
         </button>
       ),
+      config = {},
       handleChange,
       ...editorProps
     },
@@ -73,6 +78,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
     const imgInputRef = useRef<HTMLInputElement>();
     const excludeOgSiteUrl = useRef<string[]>([]);
 
+    const [textLength, setTextLength] = useState(value?.value?.length ?? 0);
     const [textData, setTextData] = useState(value?.value);
     const [mediaData, setMediaData] = useState<Omit<PostDetailEditorValue, 'value'>>({
       images: value?.images ?? [],
@@ -385,28 +391,28 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
         <WpEditor
           className={cx('editor')}
           ref={ref}
-          plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText]}
+          plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
           initialValue={memorizationData?.value}
+          placeholder={placeholder}
+          maxLength={maxLength}
           {...editorProps}
           config={{
+            ...config,
             pasteToPlainText: {
               onMatchImgOrVideoUrl: onMatchImgOrVideoUrl
             },
             autoUrlMatch: {
               onMatchUrl: onMatchUrl
+            },
+            countTextLength: {
+              hideUi: true,
+              onChangeTextLength: setTextLength
             }
           }}
           onDragOver={onDragOver}
           onDrop={onInputDrop}
           handleChange={handleEditorTextChange}
-        >
-          <a href="/">@NightCrows</a> Context: you are an f2p player, around level 131 arbalist
-          (231K PS). You want to improve your Magic Square gains. Any tips? Here are some questions
-          in my mind.
-          <br />
-          https://wemixplay.com/en <br />
-          https://www.youtube.com/watch?v=UUOpe_sTKzA
-        </WpEditor>
+        ></WpEditor>
         {memorizationData.images.length > 0 && (
           <ImagesUploadPreview
             images={memorizationData.images}
@@ -453,7 +459,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           </div>
           <div className={cx('right')}>
             <span className={cx('text-count')}>
-              <b>144</b> / 1,000
+              <b>{commaWithValue(textLength)}</b> / {commaWithValue(maxLength)}
             </span>
             {btnSubmitElement}
           </div>

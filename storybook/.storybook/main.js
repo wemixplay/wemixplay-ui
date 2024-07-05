@@ -54,19 +54,6 @@ const config = {
 
     console.log('fileLoaderRule >> ', fileLoaderRule)
 
-    // config.module.rules.push(// 기존 파일 로더 규칙을 찾습니다.
-    //   {
-    //     exclude: /\.svg$/,
-    //     use: [
-    //       {
-    //         loader: 'file-loader',
-    //         options: {
-    //           name: '[path][name].[ext]',
-    //         },
-    //       },
-    //     ],
-    //   })
-
     config.module.rules.push({
       loader: '@svgr/webpack',
       options: {

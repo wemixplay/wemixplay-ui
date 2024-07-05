@@ -26,6 +26,18 @@ export const Default: StoryComponent = {
       }
     }
   },
-  args: {},
+  args: {
+    config: {
+      mention: {
+        list: [
+          { name: 'Derek', age: '30' },
+          { name: 'Easton', age: '30' }
+        ]
+      },
+      hash: {
+        list: [{ name: 'Derek' }, { name: 'Easton' }]
+      }
+    }
+  },
   render: Template
 };

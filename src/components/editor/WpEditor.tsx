@@ -17,15 +17,13 @@ import React, {
 } from 'react';
 import classNames from 'classnames/bind';
 import style from './WpEditor.module.scss';
-import Mention, { MentionConfig } from '@/plugins/mention/Mention';
-import HashTag, { HashTagConfig } from '@/plugins/hashTag/HashTag';
+import { MentionConfig } from '@/plugins/mention/Mention';
+import { HashTagConfig } from '@/plugins/hashTag/HashTag';
 import { WpEditorPluginConstructor } from '@/index';
-import AutoUrlMatch, { AutoUrlMatchConfig } from '@/plugins/autoUrlMatch/AutoUrlMatch';
+import { AutoUrlMatchConfig } from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import { debounce } from 'lodash-es';
-import PasteToPlainText, {
-  PasteToPlainTextConfig
-} from '@/plugins/pasteToPlainText/PasteToPlainText';
-import CountTextLength, { CountTextLengthConfig } from '@/plugins/countTextLength/CountTextLength';
+import { PasteToPlainTextConfig } from '@/plugins/pasteToPlainText/PasteToPlainText';
+import { CountTextLengthConfig } from '@/plugins/countTextLength/CountTextLength';
 
 type WpEditorRef = HTMLDivElement & {
   setData: (data: string) => void;
@@ -67,8 +65,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       name,
       initialValue,
       config = {},
-      plugin = [Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength],
-      placeholder = 'What is happening?!',
+      plugin = [],
+      placeholder,
       maxLength,
       onClick,
       handleChange,

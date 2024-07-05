@@ -1,7 +1,10 @@
 import { WpEditorPlugin } from '@/index';
 import type { MutableRefObject } from 'react';
 
-type CountTextLengthConfig = {};
+type CountTextLengthConfig = {
+  hideUi?: boolean;
+  onChangeTextLength?: (length: number) => void;
+};
 
 class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
   public commandKey = 'countTextLength';
@@ -10,10 +13,15 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
 
   constructor({ contentEditableEl }: { contentEditableEl: MutableRefObject<HTMLDivElement> }) {
     this.contentEditableEl = contentEditableEl;
+  }
+
+  setConfig(config) {
+    this.config = { ...this.config, ...(config ?? {}) };
+
     const target = this.contentEditableEl.current;
     const parentEl = target?.parentElement;
 
-    if (parentEl && !parentEl?.querySelector('.characters')) {
+    if (!this.config.hideUi && parentEl && !parentEl?.querySelector('.characters')) {
       const el = document.createElement('div');
       el.classList.add('characters');
 
@@ -36,10 +44,6 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
     }
   }
 
-  setConfig(config) {
-    this.config = { ...this.config, ...(config ?? {}) };
-  }
-
   countText() {
     const contentEditorEl = this.contentEditableEl.current;
     const listAreaEl =
@@ -50,19 +54,23 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
     const textContentLength =
       contentEditorEl.textContent.length - (listAreaEl?.textContent?.length || 0);
 
-    // textContent 길이 값 변경
-    const countEl = document.getElementById('count');
-    countEl.innerHTML = String(textContentLength);
+    if (!this.config.hideUi) {
+      // textContent 길이 값 변경
+      const countEl = document.getElementById('count');
+      countEl.innerHTML = String(textContentLength);
 
-    // maxLength 값 초과 시 스타일 추가를 위한 클래스 부여
-    const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
-    if (maxLength) {
-      if (textContentLength > maxLength) {
-        countEl.classList.add('error');
-      } else {
-        countEl.classList.remove('error');
+      // maxLength 값 초과 시 스타일 추가를 위한 클래스 부여
+      const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
+      if (maxLength) {
+        if (textContentLength > maxLength) {
+          countEl.classList.add('error');
+        } else {
+          countEl.classList.remove('error');
+        }
       }
     }
+
+    this.config.onChangeTextLength && this.config.onChangeTextLength(textContentLength);
 
     // 다른 함수 내에서 textContent 길이 값을 사용하기 위한 리턴
     return textContentLength;
