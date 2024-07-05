@@ -58,13 +58,15 @@ class HashTag implements WpEditorPlugin {
   component({ plugin }: { plugin: HashTag }) {
     return (
       <HashContainer hash={plugin}>
-        {({ list, listElement }) => (
+        {({ config, targetHashId }) => (
           <HashList
             ref={(ref) => {
               this.postHashListRef = ref;
             }}
-            list={list}
-            listElement={listElement}
+            contentEditableEl={plugin.contentEditableEl}
+            targetHashId={targetHashId}
+            list={config.list}
+            listElement={config.listElement}
             selectHashItem={() => {
               plugin.selectHashItem();
             }}
@@ -329,15 +331,8 @@ class HashTag implements WpEditorPlugin {
       const hashTag = range.startContainer as HTMLElement;
       const hashId = hashTag.id;
 
-      if (!this.hashId && hashTag.children[0]) {
-        const hashTagItems = hashTag.children[0].querySelectorAll('li');
-        const hashList = Array.from(hashTagItems).map((item) => {
-          return item.dataset as Record<string, string> & { name: string };
-        });
-
-        this.setConfig({ ...this.config, list: hashList });
-
-        hashTag.children[0].remove();
+      if (!this.hashId) {
+        this.config.onWriteHash && this.config.onWriteHash(hashTag.innerText.replace('#', ''));
 
         this.hashId = hashId;
       }

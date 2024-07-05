@@ -1,3 +1,3 @@
 /* eslint-disable */
-export type StaticSvgIconName = 'ico-check' | 'ico-close-black' | 'ico-close' | 'ico-delete-x' | 'ico-image' | 'ico-indeterminate' | 'ico-king-mark' | 'ico-search-black' | 'ico-search';
-export type SvgComponentName = 'SvgIcoCheck' | 'SvgIcoCloseBlack' | 'SvgIcoClose' | 'SvgIcoDeleteX' | 'SvgIcoImage' | 'SvgIcoIndeterminate' | 'SvgIcoKingMark' | 'SvgIcoSearchBlack' | 'SvgIcoSearch'
+export type StaticSvgIconName = 'ico-add-emoji' | 'ico-certified' | 'ico-check' | 'ico-close-black' | 'ico-close' | 'ico-comment' | 'ico-delete-x' | 'ico-ellipsis-chevron' | 'ico-image' | 'ico-indeterminate' | 'ico-king-mark' | 'ico-like' | 'ico-search-black' | 'ico-search' | 'ico-share' | 'ico-v-dots';
+export type SvgComponentName = 'SvgIcoAddEmoji' | 'SvgIcoCertified' | 'SvgIcoCheck' | 'SvgIcoCloseBlack' | 'SvgIcoClose' | 'SvgIcoComment' | 'SvgIcoDeleteX' | 'SvgIcoEllipsisChevron' | 'SvgIcoImage' | 'SvgIcoIndeterminate' | 'SvgIcoKingMark' | 'SvgIcoLike' | 'SvgIcoSearchBlack' | 'SvgIcoSearch' | 'SvgIcoShare' | 'SvgIcoVDots'

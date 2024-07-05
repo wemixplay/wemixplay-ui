@@ -5,6 +5,7 @@ let watcher = null; // 전역 또는 모듈 수준의 변수로 watcher를 관�
 
 const svgCompGenertor = new SvgComponentGenerator({
   svgFileDir: 'src/assets/svgs',
+  useSvgr: true,
   typescript: true
 })
 

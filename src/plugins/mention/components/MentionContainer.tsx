@@ -6,7 +6,7 @@ import MentionPortal from './MentionPortal';
 
 type Props = {
   mention?: Mention;
-  children: (config: MentionConfig) => ReactNode;
+  children: (params: { config: MentionConfig; targetMentionId: string }) => ReactNode;
 };
 
 const MentionContainer = ({ mention, children }: Props) => {
@@ -17,7 +17,11 @@ const MentionContainer = ({ mention, children }: Props) => {
     mention.observe({ setTargetMentionId, setConfig });
   }, [mention]);
 
-  return <MentionPortal targetMentionId={targetMentionId}>{children(config)}</MentionPortal>;
+  return targetMentionId ? (
+    <MentionPortal>{children({ config, targetMentionId })}</MentionPortal>
+  ) : (
+    <></>
+  );
 };
 
 export default MentionContainer;

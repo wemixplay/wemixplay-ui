@@ -1,0 +1,12 @@
+.feed-comments {
+  display: flex;
+  align-items: center;
+  margin-top: $sp-8;
+  margin-left: auto;
+
+  button {
+    &:not(:first-child) {
+      margin-left: $sp-24;
+    }
+  }
+}

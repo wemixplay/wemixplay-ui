@@ -1,6 +1,8 @@
 'use client';
 
 import React, {
+  CSSProperties,
+  MutableRefObject,
   forwardRef,
   useCallback,
   useEffect,
@@ -10,6 +12,8 @@ import React, {
   useState
 } from 'react';
 import { isDesktop } from 'react-device-detect';
+import style from './MentionList.module.scss';
+import { makeCxFunc } from '@/utils/forReactUtils';
 
 type MentionListRef = HTMLDivElement & {
   handleArrowUp: () => void;
@@ -18,18 +22,34 @@ type MentionListRef = HTMLDivElement & {
 };
 
 type Props = {
-  id?: string;
   className?: string;
   list?: (Record<string, string> & { name: string })[];
+  targetMentionId?: string;
+  contentEditableEl: MutableRefObject<HTMLDivElement>;
   listElement?: (item: JSONObject) => React.JSX.Element;
   selectMentionItem: () => void;
   closeMentionList: () => void;
 };
 
+const cx = makeCxFunc(style);
+
 const MentionList = forwardRef<MentionListRef, Props>(
-  ({ id, className = '', list, listElement, selectMentionItem, closeMentionList }, ref) => {
+  (
+    {
+      targetMentionId,
+      className = '',
+      list,
+      contentEditableEl,
+      listElement,
+      selectMentionItem,
+      closeMentionList
+    },
+    ref
+  ) => {
     const elRef = useRef<MentionListRef>();
 
+    const [boxDirection, setBoxDirection] = useState('bottom');
+    const [position, setPosition] = useState<CSSProperties>({});
     const [focusIndex, setFoucsIndex] = useState(0);
 
     const handleArrowUp = useCallback(() => {
@@ -80,6 +100,71 @@ const MentionList = forwardRef<MentionListRef, Props>(
       [selectMentionItem]
     );
 
+    /**
+     * MentionList가 노출될 여유 공간을 체크하고 위로 노출할지 아래로 노출할지 결정하는 함수
+     *
+     * @param top SelectBox의 y 위치값
+     * @param clientHeight SelectBox의 높이값
+     */
+    const checkTopBottomSpace = useCallback((top: number, clientHeight: number) => {
+      const windowTop = window.scrollY;
+      const windowBottom = window.scrollY + window.innerHeight;
+
+      // 공간이 없다면 반대 방향(위 -> 아래, 아래 -> 위)으로 방향 전환
+      if (top + clientHeight > windowBottom) {
+        setBoxDirection('top');
+      }
+    }, []);
+
+    /**
+     * MentionList의 위치값과 높이값 등을 계산하여 DropBox가 노출될 위치 좌표 값을 계산하는 함수
+     *
+     * @param el MentionList의 element (HTMLDivElement)
+     */
+    const calculatePosition = useCallback(
+      (el: HTMLDivElement) => {
+        if (!el) {
+          return;
+        }
+        const { offsetWidth, offsetHeight } = el;
+        const rect = el.getBoundingClientRect();
+        const isBodyMinusPosition =
+          document.body.style.position === 'fixed' &&
+          !!document.body.style.top &&
+          Number(document.body.style.top.replace('px', '')) < 0;
+        const scrollY = isBodyMinusPosition
+          ? Number(document.body.style.top.replace('px', '')) * -1
+          : window.scrollY;
+        const top = rect.top + scrollY;
+        const { left } = rect;
+
+        const positionStyle: CSSProperties = {
+          position: 'absolute',
+          zIndex: '9999999'
+        };
+
+        const dropboxElHeight = elRef.current.clientHeight ?? 0;
+
+        checkTopBottomSpace(top, dropboxElHeight);
+
+        switch (boxDirection) {
+          case 'top':
+            positionStyle.top = top - dropboxElHeight;
+            positionStyle.left = left;
+            break;
+          case 'bottom':
+            positionStyle.top = top + offsetHeight;
+            positionStyle.left = left;
+            break;
+          default:
+            break;
+        }
+
+        return positionStyle;
+      },
+      [checkTopBottomSpace, boxDirection]
+    );
+
     useImperativeHandle(ref, () => {
       elRef.current.handleArrowUp = handleArrowUp;
       elRef.current.handleArrowDown = handleArrowDown;
@@ -87,6 +172,19 @@ const MentionList = forwardRef<MentionListRef, Props>(
 
       return elRef.current;
     });
+
+    useEffect(() => {
+      if (contentEditableEl.current && targetMentionId) {
+        const mentionTag = contentEditableEl.current.querySelector(
+          `#${targetMentionId}`
+        ) as HTMLDivElement;
+
+        const position = calculatePosition(mentionTag);
+        setPosition(position);
+      } else {
+        setPosition({});
+      }
+    }, [targetMentionId, calculatePosition]);
 
     useEffect(() => {
       setFoucsIndex(0);
@@ -108,12 +206,11 @@ const MentionList = forwardRef<MentionListRef, Props>(
     return (
       <div
         ref={elRef}
-        id={id}
-        className="mention-list"
+        className={cx('mention-list')}
         contentEditable={false}
-        style={{ display: (list ?? []).length > 0 ? 'block' : 'none' }}
+        style={{ ...position, display: (list ?? []).length > 0 ? 'block' : 'none' }}
       >
-        <ul className="mention-list-area">
+        <ul className={cx('mention-list-area')}>
           {(list ?? []).map((item, index) => (
             <li
               ref={(el) => {
@@ -125,7 +222,7 @@ const MentionList = forwardRef<MentionListRef, Props>(
                   el.dataset[key] = value;
                 });
               }}
-              className={`mention-item ${focusIndex === index ? 'active' : ''}`}
+              className={cx('mention-item', { active: focusIndex === index })}
               key={`${item.name}-${index}`}
               onMouseOver={() => handleHover(index)}
               onClick={() => handleSelectMention(index)}

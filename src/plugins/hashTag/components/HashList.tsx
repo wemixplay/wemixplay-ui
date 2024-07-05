@@ -1,6 +1,8 @@
 'use client';
 
 import React, {
+  CSSProperties,
+  MutableRefObject,
   forwardRef,
   useCallback,
   useEffect,
@@ -9,6 +11,8 @@ import React, {
   useState
 } from 'react';
 import { isDesktop } from 'react-device-detect';
+import style from './HashList.module.scss';
+import { makeCxFunc } from '@/utils/forReactUtils';
 
 type HashListRef = HTMLDivElement & {
   handleArrowUp: () => void;
@@ -20,15 +24,32 @@ type Props = {
   id?: string;
   className?: string;
   list?: (Record<string, string> & { name: string })[];
+  targetHashId?: string;
+  contentEditableEl: MutableRefObject<HTMLDivElement>;
   listElement?: (item: JSONObject) => React.JSX.Element;
   selectHashItem: () => void;
   closeHashList: () => void;
 };
 
+const cx = makeCxFunc(style);
+
 const HashList = forwardRef<HashListRef, Props>(
-  ({ id, className = '', list, listElement, selectHashItem, closeHashList }, ref) => {
+  (
+    {
+      className = '',
+      contentEditableEl,
+      targetHashId,
+      list,
+      listElement,
+      selectHashItem,
+      closeHashList
+    },
+    ref
+  ) => {
     const elRef = useRef<HashListRef>();
 
+    const [boxDirection, setBoxDirection] = useState('bottom');
+    const [position, setPosition] = useState<CSSProperties>({});
     const [focusIndex, setFoucsIndex] = useState(0);
 
     const handleArrowUp = useCallback(() => {
@@ -79,6 +100,71 @@ const HashList = forwardRef<HashListRef, Props>(
       [selectHashItem]
     );
 
+    /**
+     * HashList가 노출될 여유 공간을 체크하고 위로 노출할지 아래로 노출할지 결정하는 함수
+     *
+     * @param top SelectBox의 y 위치값
+     * @param clientHeight SelectBox의 높이값
+     */
+    const checkTopBottomSpace = useCallback((top: number, clientHeight: number) => {
+      const windowTop = window.scrollY;
+      const windowBottom = window.scrollY + window.innerHeight;
+
+      // 공간이 없다면 반대 방향(위 -> 아래, 아래 -> 위)으로 방향 전환
+      if (top + clientHeight > windowBottom) {
+        setBoxDirection('top');
+      }
+    }, []);
+
+    /**
+     * HashList의 위치값과 높이값 등을 계산하여 DropBox가 노출될 위치 좌표 값을 계산하는 함수
+     *
+     * @param el HashList의 element (HTMLDivElement)
+     */
+    const calculatePosition = useCallback(
+      (el: HTMLDivElement) => {
+        if (!el) {
+          return;
+        }
+        const { offsetWidth, offsetHeight } = el;
+        const rect = el.getBoundingClientRect();
+        const isBodyMinusPosition =
+          document.body.style.position === 'fixed' &&
+          !!document.body.style.top &&
+          Number(document.body.style.top.replace('px', '')) < 0;
+        const scrollY = isBodyMinusPosition
+          ? Number(document.body.style.top.replace('px', '')) * -1
+          : window.scrollY;
+        const top = rect.top + scrollY;
+        const { left } = rect;
+
+        const positionStyle: CSSProperties = {
+          position: 'absolute',
+          zIndex: '9999999'
+        };
+
+        const dropboxElHeight = elRef.current.clientHeight ?? 0;
+
+        checkTopBottomSpace(top, dropboxElHeight);
+
+        switch (boxDirection) {
+          case 'top':
+            positionStyle.top = top - dropboxElHeight;
+            positionStyle.left = left;
+            break;
+          case 'bottom':
+            positionStyle.top = top + offsetHeight;
+            positionStyle.left = left;
+            break;
+          default:
+            break;
+        }
+
+        return positionStyle;
+      },
+      [checkTopBottomSpace, boxDirection]
+    );
+
     useImperativeHandle(ref, () => {
       elRef.current.handleArrowUp = handleArrowUp;
       elRef.current.handleArrowDown = handleArrowDown;
@@ -86,6 +172,19 @@ const HashList = forwardRef<HashListRef, Props>(
 
       return elRef.current;
     });
+
+    useEffect(() => {
+      if (contentEditableEl.current && targetHashId) {
+        const mentionTag = contentEditableEl.current.querySelector(
+          `#${targetHashId}`
+        ) as HTMLDivElement;
+
+        const position = calculatePosition(mentionTag);
+        setPosition(position);
+      } else {
+        setPosition({});
+      }
+    }, [targetHashId, calculatePosition]);
 
     useEffect(() => {
       setFoucsIndex(0);
@@ -107,12 +206,11 @@ const HashList = forwardRef<HashListRef, Props>(
     return (
       <div
         ref={elRef}
-        id={id}
-        className="hash-list"
+        className={cx('hash-list')}
         contentEditable={false}
-        style={{ display: (list ?? []).length > 0 ? 'block' : 'none' }}
+        style={{ ...position, display: (list ?? []).length > 0 ? 'block' : 'none' }}
       >
-        <ul className="hash-list-area">
+        <ul className={cx('hash-list-area')}>
           {(list ?? []).map((item, index) => (
             <li
               ref={(el) => {
@@ -124,7 +222,7 @@ const HashList = forwardRef<HashListRef, Props>(
                   el.dataset[key] = value;
                 });
               }}
-              className={`hash-item ${focusIndex === index ? 'active' : ''}`}
+              className={cx('hash-item', { active: focusIndex === index })}
               key={`${item.name}-${index}`}
               onMouseOver={() => handleHover(index)}
               onClick={() => handleSelectHash(index)}

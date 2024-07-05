@@ -1,0 +1,10 @@
+.feed-reactions {
+  display: flex;
+  align-items: center;
+
+  > button {
+    &:not(:first-child) {
+      margin-left: $sp-12;
+    }
+  }
+}

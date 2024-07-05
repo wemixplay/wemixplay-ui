@@ -6,4 +6,9 @@ declare module '*.svg' {
   export default content;
 }
 
+interface Window {
+  android?: any;
+  webkit?: any;
+}
+
 declare type JSONObject = any;

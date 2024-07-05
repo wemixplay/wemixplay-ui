@@ -58,13 +58,15 @@ class Mention implements WpEditorPlugin {
   component({ plugin }: { plugin: Mention }) {
     return (
       <MentionContainer mention={plugin}>
-        {({ list, listElement }) => (
+        {({ config, targetMentionId }) => (
           <MentionList
             ref={(ref) => {
               plugin.postMentionListRef = ref;
             }}
-            list={list}
-            listElement={listElement}
+            targetMentionId={targetMentionId}
+            contentEditableEl={plugin.contentEditableEl}
+            list={config.list}
+            listElement={config.listElement}
             selectMentionItem={() => {
               plugin.selectMentionItem();
             }}
@@ -333,15 +335,11 @@ class Mention implements WpEditorPlugin {
       const mentionTag = range.startContainer as HTMLElement;
       const mentionId = mentionTag.id;
 
-      if (!this.mentionId && mentionTag.children[0]) {
-        const mentionTagItems = mentionTag.children[0].querySelectorAll('li');
-        const mentionList = Array.from(mentionTagItems).map((item) => {
-          return item.dataset as Record<string, string> & { name: string };
-        });
+      console.log(mentionId, this.mentionId);
 
-        this.setConfig({ ...this.config, list: mentionList });
-
-        mentionTag.children[0].remove();
+      if (!this.mentionId) {
+        this.config.onWriteMention &&
+          this.config.onWriteMention(mentionTag.innerText.replace('@', ''));
 
         this.mentionId = mentionId;
       }

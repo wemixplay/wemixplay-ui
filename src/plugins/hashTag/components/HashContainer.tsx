@@ -6,7 +6,7 @@ import HashPortal from './HashPortal';
 
 type Props = {
   hash?: HashTag;
-  children: (config: HashTagConfig) => ReactNode;
+  children: (params: { config: HashTagConfig; targetHashId: string }) => ReactNode;
 };
 
 const HashContainer = ({ hash, children }: Props) => {
@@ -17,7 +17,7 @@ const HashContainer = ({ hash, children }: Props) => {
     hash.observe({ setTargetHashId, setConfig });
   }, [hash]);
 
-  return <HashPortal targetHashId={targetHashId}>{children(config)}</HashPortal>;
+  return <HashPortal>{children({ config, targetHashId })}</HashPortal>;
 };
 
 export default HashContainer;

@@ -1,0 +1,65 @@
+.popover-area {
+  display: contents;
+  font-size: 16px;
+
+  /* 버튼스타일  */
+  .btn-popover {
+    display: flex;
+    overflow: hidden;
+    width: 40px;
+    height: 40px;
+    align-items: center;
+    justify-content: center;
+    border-radius: $rd-circle;
+    background-color: var(--semantic-static-white);
+    color: inherit;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    transition: background 0.25s;
+    user-select: none;
+
+    &:hover {
+      background-color: yellowgreen;
+    }
+  }
+
+  @keyframes pop-fade {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+
+    60% {
+      opacity: 1;
+      transform: scale(1.03);
+    }
+
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  & ~ .popover-element-wrap {
+    position: relative;
+
+    .popover-element {
+      position: absolute;
+      padding: $sp-8 0;
+      border-radius: $rd-10;
+      background: var(--semantic-background-normal-normal);
+      box-shadow: 0 20px 50px 0 rgb(0 0 0 / 10%);
+    }
+  }
+
+  .popover-element-wrap {
+    position: relative;
+
+    .popover-element {
+      position: absolute;
+    }
+  }
+}

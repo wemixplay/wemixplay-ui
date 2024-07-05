@@ -1,7 +1,7 @@
 export const isYouTubeURL = (url: string) => {
   // 정규식 패턴 정의
   const youTubePattern =
-    /^(https:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]+$/;
+    /^(https:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]+(&[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*$/;
 
   // 정규식 테스트
   return youTubePattern.test(url);
@@ -9,8 +9,11 @@ export const isYouTubeURL = (url: string) => {
 
 export const convertIframeYouTubeURL = (url: string) => {
   // 정규식 패턴 정의
-  const shortUrlPattern = /https:\/\/youtu\.be\/([a-zA-Z0-9_-]+)/;
-  const longUrlPattern = /https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)/;
+  const shortUrlPattern =
+    /https:\/\/youtu\.be\/([a-zA-Z0-9_-]+)(?:\?[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*/;
+
+  const longUrlPattern =
+    /https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)(?:&[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*/;
 
   // 정규식 매칭 및 변환
   if (shortUrlPattern.test(url)) {
@@ -24,7 +27,8 @@ export const convertIframeYouTubeURL = (url: string) => {
 
 export const isTwitchURL = (url: string) => {
   // 정규식 패턴 정의
-  const twitchPattern = /^(https:\/\/)?(www\.)?(twitch\.tv\/)(video\/)?[a-zA-Z0-9_-]+$/;
+  const twitchPattern =
+    /^(https:\/\/)?(www\.)?twitch\.tv\/(video\/)?([a-zA-Z0-9_-]+)(\?[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+(&[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*)?$/;
 
   // 정규식 테스트
   return twitchPattern.test(url);
@@ -32,7 +36,8 @@ export const isTwitchURL = (url: string) => {
 
 export const convertIframeTwitchURL = (url: string): string => {
   // 정규식 패턴 정의
-  const urlPattern = /^(https:\/\/)?(www\.)?twitch\.tv\/(video\/)?([a-zA-Z0-9_-]+)/;
+  const urlPattern =
+    /^(https:\/\/)?(www\.)?twitch\.tv\/(video\/)?([a-zA-Z0-9_-]+)(\?[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+(&[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*)?$/;
 
   // 정규식 매칭 및 변환
   const match = url.match(urlPattern);

@@ -2,22 +2,23 @@
 
 import React from 'react';
 import classNames from 'classnames/bind';
-import style from './ImagesUploadPreview.module.scss';
+import style from './FeedImagesView.module.scss';
 import Carousel from '../carousel/Carousel';
 import { SvgIcoDeleteX } from '@/assets/svgs';
 
 type Props = {
+  className?: string;
   images?: { file?: File; src: string }[];
   handleDeleteImg?: ({ deleteIndex }: { deleteIndex: number }) => void;
 };
 
 const cx = classNames.bind(style);
 
-const ImagesUploadPreview = ({ images = [], handleDeleteImg }: Props) => {
+const FeedImagesView = ({ className = '', images = [], handleDeleteImg }: Props) => {
   //logic
 
   return (
-    <div className={cx('images-upload-preview')}>
+    <div className={cx(className, 'images-upload-preview')}>
       <Carousel
         className={cx('image-preview-slider')}
         freeMode
@@ -27,12 +28,15 @@ const ImagesUploadPreview = ({ images = [], handleDeleteImg }: Props) => {
       >
         {images.map((image, index) => (
           <>
-            <button
-              className={cx('btn-img-delete')}
-              onClick={() => handleDeleteImg({ deleteIndex: index })}
-            >
-              <SvgIcoDeleteX />
-            </button>
+            {!!handleDeleteImg && (
+              <button
+                className={cx('btn-img-delete')}
+                onClick={() => handleDeleteImg({ deleteIndex: index })}
+              >
+                <SvgIcoDeleteX />
+              </button>
+            )}
+
             <div key={image.src} className={cx('preview-image-box')}>
               <img src={image.src} alt={image.src} />
             </div>
@@ -43,4 +47,4 @@ const ImagesUploadPreview = ({ images = [], handleDeleteImg }: Props) => {
   );
 };
 
-export default ImagesUploadPreview;
+export default FeedImagesView;

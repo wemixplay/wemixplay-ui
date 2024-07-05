@@ -1,0 +1,138 @@
+.feed-box {
+  position: relative;
+  padding: $sp-16 0;
+
+  &::after {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 50%;
+    width: calc(100% - ($sp-20 * 2));
+    height: 1px;
+    background: var(--semantic-fill-strong);
+    content: "";
+    transform: translateX(-50%);
+  }
+
+  .feed-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 $sp-20;
+
+    .profile {
+      // style
+    }
+  }
+
+  .feed-body {
+    margin-top: $sp-12;
+    color: var(--semantic-static-black);
+
+    @include body-01-reading-02-r;
+
+    .text {
+      padding: 0 $sp-20;
+      margin: 0;
+
+      :global {
+        @include body-01-reading-02-r;
+      }
+
+      a {
+        color: var(--semantic-status-blue);
+
+        @include body-01-reading-02-r;
+
+        text-decoration: none;
+
+        & + a {
+          margin-left: $sp-4;
+        }
+      }
+    }
+
+    .carousel {
+      overflow: hidden;
+      width: 100%;
+      margin-top: $sp-12;
+
+      :global {
+        .carousel-swiper {
+          > .swiper {
+            overflow: hidden;
+            padding: 0 $sp-20;
+          }
+        }
+
+        .swiper-slide {
+          &:last-of-type {
+            margin-right: 0 !important;
+          }
+
+          .slide-item {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 0;
+
+            /* 캐러셀 이미지 비율은 16:9 고정, 이미지는 contain */
+            padding-bottom: 56.25%;
+            border-radius: $rd-12;
+            background-color: var(--semantic-fill-strong);
+          }
+
+          img {
+            min-height: 100%;
+            object-fit: contain;
+          }
+        }
+      }
+    }
+  }
+
+  .feed-footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: $sp-8 $sp-20 0 $sp-20;
+    margin-top: $sp-16;
+
+    button {
+      display: flex;
+      align-items: center;
+      color: var(--semantic-label-normal);
+      font-feature-settings: "ss10" on;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 500;
+      letter-spacing: 0.203px;
+      line-height: 142.9%;
+      text-align: center;
+
+      .count {
+        padding-left: $sp-4;
+      }
+    }
+
+    .feed-reactions {
+     // style
+    }
+
+    .feed-comments {
+     // style
+    }
+  }
+
+  /* Skeleton */
+  .skeleton {
+    width: 100%;
+    width: 308px;
+    height: 0;
+    padding-bottom: 56.527%;
+    border-radius: $rd-12;
+    animation: skeleton-blank infinite alternate 3s;
+    background-color: #d2d2d9;
+  }
+}

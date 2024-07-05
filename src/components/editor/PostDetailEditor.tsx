@@ -21,7 +21,7 @@ import { makeCxFunc } from '@/utils/forReactUtils';
 
 import { orderBy, uniqBy } from 'lodash-es';
 import { imageFileUpload, readAsDataURLAsync } from '@/utils/fileUtils';
-import ImagesUploadPreview from './ImagesUploadPreview';
+import FeedImagesView from './FeedImagesView';
 import {
   convertIframeTwitchURL,
   convertIframeYouTubeURL,
@@ -414,7 +414,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           handleChange={handleEditorTextChange}
         ></WpEditor>
         {memorizationData.images.length > 0 && (
-          <ImagesUploadPreview
+          <FeedImagesView
             images={memorizationData.images}
             handleDeleteImg={({ deleteIndex }) => {
               const images = handleUpdateImages({ deleteIndex });

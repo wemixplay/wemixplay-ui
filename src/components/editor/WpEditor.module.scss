@@ -31,31 +31,6 @@
         max-width: 100%;
       }
 
-      .mention-list {
-        position: absolute;
-        z-index: 1;
-        top: 100%;
-        left: 0;
-        margin: 4px 0;
-
-        .mention-list-area {
-          padding: 0;
-          border: 1px solid #ddd;
-          margin: 0;
-          list-style: none;
-
-          >.mention-item {
-            padding: 4px 8px;
-            cursor: pointer;
-            user-select: none;
-
-            &.active {
-              background-color: aqua;
-            }
-          }
-        }
-      }
-
       .mention {
         position: relative;
 
@@ -75,31 +50,6 @@
 
         &.complete-mention {
           background-color: rgb(0 255 255 / 42.2%);
-        }
-      }
-
-      .hash-list {
-        position: absolute;
-        z-index: 1;
-        top: 100%;
-        left: 0;
-        margin: 4px 0;
-
-        .hash-list-area {
-          padding: 0;
-          border: 1px solid #ddd;
-          margin: 0;
-          list-style: none;
-
-          >.hash-item {
-            padding: 4px 8px;
-            cursor: pointer;
-            user-select: none;
-
-            &.active {
-              background-color: aqua;
-            }
-          }
         }
       }
 

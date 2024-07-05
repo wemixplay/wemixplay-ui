@@ -1,0 +1,53 @@
+.profile {
+  display: flex;
+  align-items: center;
+
+  .title {
+    display: flex;
+    align-items: center;
+    color: var(--semantic-label-normal);
+
+    @include label-01-reading-sb;
+
+    svg {
+      margin-left: 4px;
+    }
+  }
+
+  &-text {
+    margin-left: $sp-12;
+  }
+
+  .info {
+    > span {
+      position: relative;
+
+      &:not(:first-child) {
+        &::before {
+          display: inline-flex;
+          width: 2px;
+          height: 2px;
+          align-items: center;
+          border-radius: $rd-circle;
+          margin: 0 $sp-6;
+          margin-top: -2px;
+          background: $color-global-coolNeutral-50;
+          content: "";
+          vertical-align: middle;
+        }
+      }
+    }
+
+    .category {
+      color: var(--semantic-label-neutral);
+
+      @include label-01-normal-r;
+    }
+
+    .date {
+      color: var(--semantic-label-alternative);
+
+      @include label-01-normal-r;
+    }
+  }
+}

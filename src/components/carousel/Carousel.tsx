@@ -1,5 +1,6 @@
 'use client';
 
+import React from 'react';
 import { Children, ReactNode, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import SwiperCore from 'swiper';
 import { SwiperSlide, Swiper, SwiperProps } from 'swiper/react';

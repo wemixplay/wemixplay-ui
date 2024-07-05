@@ -1,0 +1,45 @@
+.ellipsis-wrap {
+  color: var(--semantic-label-strong);
+
+  @include label-02-normal-r;
+
+  &.shortened {
+    .btn-ellipsis-trigger {
+      svg {
+        transform: rotate(0deg);
+      }
+    }
+  }
+
+  .ellipsis-content {
+    display: -webkit-box;
+    overflow: hidden;
+    -webkit-box-orient: vertical;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: inherit;
+    line-height: inherit;
+    text-overflow: ellipsis;
+    transition: height 0.3s;
+    will-change: height;
+  }
+
+  .btn-ellipsis-trigger {
+    display: flex;
+    height: 32px;
+    align-items: center;
+    margin-top: $sp-8;
+    color: inherit;
+    color: var(--semantic-label-alternative);
+    font-size: inherit;
+    font-style: normal;
+    font-weight: inherit;
+    line-height: inherit;
+
+    svg {
+      margin-left: $sp-4;
+      transform: rotate(180deg);
+      transition: transform 0.25s;
+    }
+  }
+}

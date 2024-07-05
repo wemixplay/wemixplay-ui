@@ -32,7 +32,7 @@ const plugins = [
 					corejs: 3, // core-js version 3 사용
 				}
 			],
-			'@babel/preset-react',
+			['@babel/preset-react', {runtime: 'automatic'}],
 			'@babel/preset-typescript'
 		],
 		plugins: [
