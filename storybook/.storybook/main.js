@@ -4,7 +4,10 @@ import {WebpackSvgComponentPlugin} from 'monkey-d/modules';
 /** @type { import('@storybook/nextjs').StorybookConfig } */
 const config = {
   stories: ['../stories/**/*.mdx', '../stories/**/*.stories.@(js|jsx|ts|tsx)'],
-  staticDirs: ['../static'],
+  staticDirs: ['../static', '../../src/assets', {
+    from: "../../src/assets/font",
+    to: path.resolve(__dirname, "../../src/assets/font")
+  }],
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-essentials',

@@ -1,6 +1,7 @@
 import '@/styles/theme.scss';
 import '@/styles/global.scss';
 import '../styles/storybook.scss';
+import {pretendard, twkEverett} from '@/constants/font.c'
 
 const preview = {
   parameters: {
@@ -24,7 +25,9 @@ const preview = {
   decorators: [
     (Story) => {
       return (
+        <div className={`storybook-font ${pretendard.variable} ${twkEverett.variable}`}>
           <Story />
+        </div>
       )
     }
   ]
