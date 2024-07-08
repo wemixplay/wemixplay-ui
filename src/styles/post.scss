@@ -1,0 +1,73 @@
+.post-content{
+  color: var(--semantic-static-black);
+
+  @include body-01-reading-02-r;
+
+  * {
+    color: var(--semantic-static-black);
+
+    @include body-01-reading-02-r;
+  }
+
+  a {
+    color: var(--semantic-status-blue);
+  
+    @include body-01-reading-02-r;
+  
+    text-decoration: none;
+  
+    & + a {
+      margin-left: $sp-4;
+    }
+  }
+
+  &:not(.editor){
+    .mention, .hash{
+      cursor: pointer;
+    }
+  }
+
+  .mention {
+    position: relative;
+
+    &.will-mention {
+      // style
+    }
+
+    &.unkown-mention,
+    &.complete-mention {
+      padding: 0 4px;
+    }
+
+    &.unkown-mention {
+      border: 1px dashed gray;
+      background-color: transparent;
+    }
+
+    &.complete-mention {
+      background-color: rgb(0 255 255 / 42.2%);
+    }
+  }
+
+  .hash {
+    position: relative;
+
+    &.will-hash {
+      // style
+    }
+
+    &.unkown-hash,
+    &.complete-hash {
+      padding: 0 4px;
+    }
+
+    &.unkown-hash {
+      border: 1px dashed gray;
+      background-color: transparent;
+    }
+
+    &.complete-hash {
+      background-color: rgb(0 255 255 / 42.2%);
+    }
+  }
+}

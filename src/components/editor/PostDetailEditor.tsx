@@ -30,11 +30,10 @@ import {
 } from '@/utils/urlUtils';
 import IframesUploadPreview from './IframesUploadPreview';
 import OgMetaDataPreview from './OgMetaDataPreview';
-import Person from '../avatars/Person';
 import { SvgIcoImage } from '@/assets/svgs';
 import CountTextLength from '@/plugins/countTextLength/CountTextLength';
 import { commaWithValue } from '@/utils/valueParserUtils';
-const DEFAULT_IMAGE = '/assets/imgs/@default-profile-user.png';
+import '@/styles/post.scss';
 
 type PostEditorMediaValue = { file?: File; src: string };
 type PostEditorIframeValue = { type?: 'youtube' | 'twitch'; src: string };
@@ -389,7 +388,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
     return (
       <div className={cx(className, 'post-detail-editor')}>
         <WpEditor
-          className={cx('editor')}
+          className={cx('editor', 'post-content')}
           ref={ref}
           plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
           initialValue={memorizationData?.value}
