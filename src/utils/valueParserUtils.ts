@@ -1,5 +1,6 @@
 import Decimal from 'decimal.js';
 import { isEmpty, isNaN, isNumber, isString, last, replace } from 'lodash-es';
+import { marked } from 'marked';
 
 /**
  * 특정 길이만큼 앞에 특정값을 채움
@@ -61,4 +62,29 @@ export const commaWithValue = (value: string | number) => {
     return parts.join('.');
   }
   return '0';
+};
+
+export const convertMarkdownToHtmlStr = async (
+  text: string,
+  callback?: (htmlStr: string) => void
+) => {
+  let convertStr = text;
+
+  convertStr = convertStr.replace(
+    /WP@\[(.*?)\]\('(\d+)'\)/g,
+    '<span class="mention complete-mention" data-id="$2">@$1</span>'
+  );
+  convertStr = convertStr.replace(
+    /WP#\[(.*?)\]\('(\d+)'\)/g,
+    '<span class="hash complete-hash" data-id="$2">#$1</span>'
+  );
+
+  // 줄바꿈 처리 (Markdown에서 줄바꿈을 위해서는 두 개의 공백이 필요함)
+  convertStr = convertStr.replace(/\n/g, '<br />');
+
+  convertStr = await marked(convertStr);
+
+  callback && callback(convertStr);
+
+  return convertStr;
 };
