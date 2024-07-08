@@ -14,6 +14,7 @@ type Props = {
   profileImg?: string;
   profileSize?: number;
   categoryName?: string;
+  certificated?: boolean;
   createdAt?: number;
   locale?: string;
 };
@@ -26,6 +27,7 @@ const FeedWriterInfo = ({
   profileImg,
   profileSize,
   categoryName,
+  certificated,
   createdAt,
   locale
 }: Props) => {
@@ -36,7 +38,8 @@ const FeedWriterInfo = ({
       <Person src={profileImg} customSize={profileSize} />
       <div className={cx('profile-text')}>
         <strong className={cx('title')}>
-          {name || '-'} <SvgIcoCertified width={12} height={12} />
+          {name || '-'}
+          {!!certificated && <SvgIcoCertified width={12} height={12} />}
         </strong>
         <div className={cx('info')}>
           {!!categoryName && <span className={cx('category')}>{categoryName}</span>}

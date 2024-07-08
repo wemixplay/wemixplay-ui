@@ -3,25 +3,13 @@
 import React, { MouseEvent, ReactElement, useId } from 'react';
 import classNames from 'classnames/bind';
 import style from './FeedBox.module.scss';
-import Ellipsis from '../ellipsis/Ellipsis';
 import FeedImagesView from '../editor/FeedImagesView';
 import PopoverButton from '../popover/PopoverButton';
-import Person from '../avatars/Person';
-import useCheckDevice from '@/hooks/useCheckDevice';
-import {
-  SvgIcoAddEmoji,
-  SvgIcoCertified,
-  SvgIcoComment,
-  SvgIcoLike,
-  SvgIcoShare,
-  SvgIcoVDots
-} from '@/assets/svgs';
-import { getTimeString } from '@/utils/dateUtils';
-import { toFormatterByInt } from '@/utils/valueParserUtils';
-import WpImage from '../image/WpImage';
+import { SvgIcoVDots } from '@/assets/svgs';
 import FeedEmojiArea from './FeedEmojiArea';
 import FeedEtcInfoArea from './FeedEtcInfoArea';
 import FeedWriterInfo from './FeedWriterInfo';
+import FeedTextContent from './FeedTextContent';
 
 type EmojiInfo = {
   emojiNo: number;
@@ -38,12 +26,15 @@ type Props = {
   managePopoverElement?: null | ReactElement;
   emojiSelectPopoverElement?: null | ReactElement;
   categoryName?: string;
+  certificated?: boolean;
   emojiList?: EmojiInfo[];
   commentCount?: number;
   likeCount?: number;
   createdAt?: number;
   updatedAt?: number;
   locale?: string;
+  onMentionClick?: (params: { name: string; id: string }) => void;
+  onHashTagClick?: (params: { name: string; id: string }) => void;
   onManageBtnClick?: null | ((e: MouseEvent<HTMLButtonElement>) => void);
   onEmojiSelectBtnClick?: null | ((e: MouseEvent<HTMLButtonElement>) => void);
   onShareBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
@@ -56,6 +47,7 @@ const FeedBox = ({
   writerName,
   writerImg,
   categoryName,
+  certificated,
   managePopoverElement = <></>,
   emojiSelectPopoverElement = <></>,
   emojiList = [],
@@ -65,12 +57,13 @@ const FeedBox = ({
   createdAt,
   updatedAt,
   locale = 'en',
+  onMentionClick,
+  onHashTagClick,
   onManageBtnClick,
   onEmojiSelectBtnClick,
   onShareBtnClick
 }: Props) => {
   const uid = useId();
-  const { isDesktop, isMobile, isTablet } = useCheckDevice();
 
   return (
     <article className={cx(className, 'feed-box')}>
@@ -82,6 +75,7 @@ const FeedBox = ({
             profileImg={writerImg}
             profileSize={avatarSize}
             categoryName={categoryName}
+            certificated={certificated}
             createdAt={createdAt}
             locale={locale}
           />
@@ -101,15 +95,12 @@ const FeedBox = ({
           </div>
         </div>
         <div className={cx('feed-body')}>
-          <Ellipsis
-            className={cx('text')}
-            content="Former player and boyhood Arsenal fan, Carl Jenkinson was back at the
-                            <a href='/'>#EmiratesStadium</a> on Sunday to show his support."
-            defaultShortened
-            lineClamp={3}
-            triggerLess="show less"
-            triggerMore="show more"
-            observingEnvs={[isMobile, isTablet, isDesktop]}
+          <FeedTextContent
+            className={cx('text-content')}
+            content="Former player and boyhood Arsenal fan, Carl Jenkinson was back at the <a href='/'>#EmiratesStadium</a> on Sunday to show his support.<span class='mention complete-mention' data-id='3'>@Derek</span>"
+            ellipsis={true}
+            onMentionClick={onMentionClick}
+            onHashTagClick={onHashTagClick}
           />
 
           <FeedImagesView className={cx('carousel')} images={[]} />

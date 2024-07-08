@@ -27,29 +27,12 @@
 
   .feed-body {
     margin-top: $sp-12;
-    color: var(--semantic-static-black);
 
-    @include body-01-reading-02-r;
-
-    .text {
+    .text-content {
       padding: 0 $sp-20;
       margin: 0;
 
-      :global {
-        @include body-01-reading-02-r;
-      }
-
-      a {
-        color: var(--semantic-status-blue);
-
-        @include body-01-reading-02-r;
-
-        text-decoration: none;
-
-        & + a {
-          margin-left: $sp-4;
-        }
-      }
+    
     }
 
     .carousel {
