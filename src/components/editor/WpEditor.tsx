@@ -24,6 +24,10 @@ import { AutoUrlMatchConfig } from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import { debounce } from 'lodash-es';
 import { PasteToPlainTextConfig } from '@/plugins/pasteToPlainText/PasteToPlainText';
 import { CountTextLengthConfig } from '@/plugins/countTextLength/CountTextLength';
+import Person from '../avatars/Person';
+import { SvgIcoChevronDown } from '@/assets/svgs';
+import PopoverButton from '../popover/PopoverButton';
+const DEFAULT_IMAGE = '/assets/imgs/svgs/default-profile.svg';
 
 type WpEditorRef = HTMLDivElement & {
   setData: (data: string) => void;
@@ -391,6 +395,33 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     return (
       <div className={cx('wp-editor')} onClick={onClick}>
+        <div className={cx('wp-editor-header')}>
+          <Person src={DEFAULT_IMAGE} size={'custom'} className={cx('avatar')} />
+          <div className={cx('profile-info')}>
+            <strong className={cx('user-name')}>gaegury</strong>
+            <div className={cx('btn-post-popover')}>
+              <PopoverButton
+                anchorId={`post-channel`}
+                id={`post-channel`}
+                popoverStyle={{ left: 0, top: 10, zIndex: 9999 }}
+                popoverElement={<>123</>}
+                popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
+                onClick={null}
+              >
+                <>
+                  {/* 내 채널에 포스트
+                  <SvgIcoChevronDown /> */}
+
+                  <span className={cx('selected-channel')}>
+                    <Person src={DEFAULT_IMAGE} size={'xsmall'} className={cx('avatar')} />
+                    Taming Master : Pet Guardian
+                  </span>
+                </>
+              </PopoverButton>
+            </div>
+          </div>
+        </div>
+
         <div
           ref={contentEditableEl}
           className={cx(className, 'wp-editor-content')}
