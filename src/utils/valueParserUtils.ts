@@ -114,7 +114,5 @@ export const convertHtmlToMarkdownStr = (text: string) => {
     '[$2]($1)[:target="_blank"]'
   );
 
-  console.log(convertStr);
-
   return convertStr;
 };
