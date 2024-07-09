@@ -9,16 +9,16 @@ const resolve = require('@rollup/plugin-node-resolve').nodeResolve; // NodeResol
 const commonjs = require('@rollup/plugin-commonjs');
 const svgr = require('@svgr/rollup');
 const alias = require('@rollup/plugin-alias');
+const replace = require('@rollup/plugin-replace');
+const peerDepsExternal = require('rollup-plugin-peer-deps-external');
+const { visualizer } = require("rollup-plugin-visualizer");
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 const plugins = [
+	peerDepsExternal(),
 	json(),
 	ignore(['fsevents']),
-	resolve({
-		extensions,
-	}),
-	commonjs(),
 	typescript(),
 	babel({
 		babelHelpers: 'runtime',
@@ -75,7 +75,28 @@ const plugins = [
 		entries: [
 			{ find: '@', replacement: path.resolve(__dirname, 'src') }
 		]
-	})
+	}),
+	resolve({
+		extensions,
+		browser: true,
+    dedupe: ['react', 'react-dom', 'lodash-es']
+	}),
+	replace({
+		'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+	}),
+	commonjs({
+		include: [
+			'node_modules/**',
+		],
+		exclude: [
+			'node_modules/process-es6/**',
+			'node_modules/lodash-es/**'
+		],
+		namedExports: {
+			'node_modules/react/index.js': ['Children', 'Component', 'PropTypes', 'createElement'],
+			'node_modules/react-dom/index.js': ['createPortal'],
+		},
+	}),
 ]
 
 if (process.env.NODE_ENV === 'production') {
@@ -96,8 +117,16 @@ if (process.env.NODE_ENV === 'production') {
 	}));
 }
 
+
+if(process.env.NODE_VI === 'OK'){
+	plugins.push(visualizer({
+    filename: 'bundle-analysis.html',
+    open: true,
+  }))
+}
+
 module.exports = {
-	external: ['react', 'react-dom', id => /fsevents/.test(id)],
+	external: id => ['react', 'react-dom'].includes(id) || /fsevents/.test(id),
 	plugins,
 	input: './src/index.ts',
 	output: [

@@ -15,6 +15,8 @@ import FeedDetailEditor, {
   PostEditorMediaValue
 } from './components/editor/FeedDetailEditor';
 
+import FeedBox, { FeedBoxProps } from './components/feed/FeedBox';
+
 interface WpEditorPlugin<C extends any = any> {
   commandKey: string;
   contentEditableEl: MutableRefObject<HTMLDivElement>;
@@ -65,6 +67,7 @@ export type {
   WpEditorPluginConstructor,
   FeedDetailEditorProps,
   PostEditorMediaValue,
-  FeedDetailEditorValue
+  FeedDetailEditorValue,
+  FeedBoxProps
 };
-export { WpEditor, FeedDetailEditor };
+export { WpEditor, FeedDetailEditor, FeedBox };

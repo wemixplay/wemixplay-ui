@@ -12,8 +12,6 @@ const MentionPortal = ({ children }: Props) => {
 
   const [wrapperElement, setWrapperElement] = useState<HTMLElement | null>(null);
 
-  useEffect;
-
   useEffect(() => {
     // 존재하지 않는 엘리먼트를 시스템이 직접 만들었는지 확인하는 flag
     let systemCreated = false;

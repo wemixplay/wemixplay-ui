@@ -125,4 +125,5 @@ const FeedBox = ({
   );
 };
 
+export type { Props as FeedBoxProps };
 export default FeedBox;
