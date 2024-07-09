@@ -1,4 +1,4 @@
-import { ClipboardEvent, KeyboardEvent, MutableRefObject } from 'react';
+import { ChangeEvent, ClipboardEvent, KeyboardEvent, MutableRefObject } from 'react';
 import { WpEditorPlugin } from '@/index';
 
 type AutoUrlMatchConfig = {
@@ -13,6 +13,7 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     }
   };
   public contentEditableEl: MutableRefObject<HTMLDivElement>;
+  private prevUrlList: string[] = [];
 
   constructor({ contentEditableEl }: { contentEditableEl: MutableRefObject<HTMLDivElement> }) {
     this.contentEditableEl = contentEditableEl;
@@ -29,54 +30,6 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     return (str ?? '').match(urlRegex)?.map((item) => item.trim()) ?? [];
   }
 
-  handlePaste({
-    selection,
-    event
-  }: {
-    selection: Selection;
-    range: Range;
-    event: ClipboardEvent<HTMLDivElement>;
-  }) {
-    const plainTextData = event.nativeEvent.clipboardData
-      .getData('text/plain')
-      .replace(/<\/?[^>]+(>|$)/g, '')
-      .trim();
-    const urlMatchList = this.getUrlMatchList(plainTextData);
-    const replaceUrlMatchList = this.config.onMatchUrl(urlMatchList);
-
-    if (urlMatchList.length > 0) {
-      const modifiedData = urlMatchList.reduce((acc, cur, index) => {
-        return acc.replace(cur, replaceUrlMatchList[index]);
-      }, plainTextData);
-
-      if (!selection.rangeCount) {
-        return;
-      }
-
-      const range = selection.getRangeAt(0);
-      range.deleteContents();
-
-      // 수정된 데이터를 contenteditable 요소에 삽입
-      const tempDiv = document.createElement('div');
-      tempDiv.innerHTML = `${modifiedData}&nbsp;`;
-      const element = tempDiv.lastChild;
-
-      for (const child of Array.from(tempDiv.childNodes).reverse()) {
-        range.insertNode(child);
-      }
-
-      // 커서를 수정된 텍스트의 끝으로 이동
-      range.setStartAfter(element);
-      range.setEndAfter(element);
-      selection.removeAllRanges();
-      selection.addRange(range);
-
-      event.preventDefault();
-
-      this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
-    }
-  }
-
   handleKeyDown({
     selection,
     range,
@@ -90,8 +43,8 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
 
     const matchUrlFormatText = this.getUrlMatchList(focusNode.textContent).pop();
 
-    if (event.key === ' ') {
-      if (matchUrlFormatText && this.config.onMatchUrl) {
+    if (event.code === 'Space' || event.code === 'Enter') {
+      if (matchUrlFormatText && focusNode.nodeType === Node.TEXT_NODE && this.config.onMatchUrl) {
         // 임시 div를 사용하여 HTML 문자열을 파싱
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = this.config.onMatchUrl([matchUrlFormatText])[0] || '';

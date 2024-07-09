@@ -46,13 +46,9 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
 
   countText() {
     const contentEditorEl = this.contentEditableEl.current;
-    const listAreaEl =
-      contentEditorEl.getElementsByClassName('mention-list-area')[0] ||
-      contentEditorEl.getElementsByClassName('hash-list-area')[0];
 
-    // 에디터 textContent 길이 - mention, hash list 의 textContent 길이
-    const textContentLength =
-      contentEditorEl.textContent.length - (listAreaEl?.textContent?.length || 0);
+    // 에디터 textContent 길이
+    const textContentLength = contentEditorEl.textContent.length;
 
     if (!this.config.hideUi) {
       // textContent 길이 값 변경

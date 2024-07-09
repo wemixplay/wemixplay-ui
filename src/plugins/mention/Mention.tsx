@@ -122,7 +122,7 @@ class Mention implements WpEditorPlugin {
     const isWillMention = !!mentionTag?.classList.contains('will-mention');
 
     const mentionRegex = new RegExp(
-      `<span\\s+id="${targetMentionId}"([^>]*)class="mention ${isWillMention ? 'will-mention' : 'unkown-mention'}"([^>]*)>(.*?)<\\/span>`,
+      `<span\\s+id="${targetMentionId}"([^>]*)class="mention ${isWillMention ? 'will-mention' : 'unknown-mention'}"([^>]*)>(.*?)<\\/span>`,
       'g'
     );
 
@@ -142,7 +142,7 @@ class Mention implements WpEditorPlugin {
     } else {
       target.innerHTML = target.innerHTML.replace(
         mentionRegex,
-        `<span id="${targetMentionId}" class="mention unkown-mention"$1$2>${selection.focusNode.textContent}</span>&nbsp;`
+        `<span id="${targetMentionId}" class="mention unknown-mention"$1$2>${selection.focusNode.textContent}</span>&nbsp;`
       );
     }
 
@@ -174,7 +174,7 @@ class Mention implements WpEditorPlugin {
 
     const focusInDecompleteMentionTag =
       !!focusNode?.parentElement?.classList?.contains?.('will-mention') ||
-      !!focusNode?.parentElement?.classList?.contains?.('unkown-mention');
+      !!focusNode?.parentElement?.classList?.contains?.('unknown-mention');
 
     const collapseCheckRange = selection.getRangeAt(0);
 
@@ -208,7 +208,7 @@ class Mention implements WpEditorPlugin {
 
     const focusInDecompleteMentionTag =
       !!selection.focusNode?.parentElement?.classList?.contains?.('will-mention') ||
-      !!selection.focusNode?.parentElement?.classList?.contains?.('unkown-mention');
+      !!selection.focusNode?.parentElement?.classList?.contains?.('unknown-mention');
 
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
       if (!targetMentionId && focusInDecompleteMentionTag) {

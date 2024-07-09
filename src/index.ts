@@ -9,11 +9,11 @@ import React, {
 } from 'react';
 
 import WpEditor, { WpEditorProps, WpEditorRef } from './components/editor/WpEditor';
-import PostDetailEditor, {
-  PostDetailEditorProps,
-  PostDetailEditorValue,
+import FeedDetailEditor, {
+  FeedDetailEditorProps,
+  FeedDetailEditorValue,
   PostEditorMediaValue
-} from './components/editor/PostDetailEditor';
+} from './components/editor/FeedDetailEditor';
 
 interface WpEditorPlugin<C extends any = any> {
   commandKey: string;
@@ -63,8 +63,8 @@ export type {
   WpEditorProps,
   WpEditorPlugin,
   WpEditorPluginConstructor,
-  PostDetailEditorProps,
+  FeedDetailEditorProps,
   PostEditorMediaValue,
-  PostDetailEditorValue
+  FeedDetailEditorValue
 };
-export { WpEditor, PostDetailEditor };
+export { WpEditor, FeedDetailEditor };

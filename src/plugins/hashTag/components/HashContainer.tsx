@@ -17,7 +17,7 @@ const HashContainer = ({ hash, children }: Props) => {
     hash.observe({ setTargetHashId, setConfig });
   }, [hash]);
 
-  return <HashPortal>{children({ config, targetHashId })}</HashPortal>;
+  return targetHashId ? <HashPortal>{children({ config, targetHashId })}</HashPortal> : <></>;
 };
 
 export default HashContainer;

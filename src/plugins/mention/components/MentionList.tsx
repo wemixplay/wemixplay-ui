@@ -213,17 +213,9 @@ const MentionList = forwardRef<MentionListRef, Props>(
         <ul className={cx('mention-list-area')}>
           {(list ?? []).map((item, index) => (
             <li
-              ref={(el) => {
-                if (!el) {
-                  return;
-                }
-
-                Object.entries(item).map(([key, value]) => {
-                  el.dataset[key] = value;
-                });
-              }}
               className={cx('mention-item', { active: focusIndex === index })}
               key={`${item.name}-${index}`}
+              data-id={item.id}
               onMouseOver={() => handleHover(index)}
               onClick={() => handleSelectMention(index)}
             >

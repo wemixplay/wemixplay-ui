@@ -1,19 +1,19 @@
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
-import PostDetailEditor from '@/components/editor/PostDetailEditor';
+import FeedDetailEditor from '@/components/editor/FeedDetailEditor';
 
-type StoryComponent = StoryObj<typeof PostDetailEditor>;
-type StoryTemplate = StoryFn<typeof PostDetailEditor>;
+type StoryComponent = StoryObj<typeof FeedDetailEditor>;
+type StoryTemplate = StoryFn<typeof FeedDetailEditor>;
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 export default {
-  component: PostDetailEditor,
+  component: FeedDetailEditor,
   tags: ['autodocs']
-} as Meta<typeof PostDetailEditor>;
+} as Meta<typeof FeedDetailEditor>;
 
 const Template: StoryTemplate = (args) => {
   return (
     <div style={{ borderRadius: '12px', boxShadow: '0px 8px 16px 0px rgba(0, 0, 0, 0.12)' }}>
-      <PostDetailEditor {...args} />
+      <FeedDetailEditor {...args} />
     </div>
   );
 };
@@ -30,8 +30,8 @@ export const Default: StoryComponent = {
     config: {
       mention: {
         list: [
-          { name: 'Derek', age: '30' },
-          { name: 'Easton', age: '30' }
+          { id: '1', name: 'Easton' },
+          { id: '2', name: 'Derek' }
         ]
       },
       hash: {

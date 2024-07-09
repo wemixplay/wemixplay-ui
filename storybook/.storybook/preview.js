@@ -5,7 +5,7 @@ import {pretendard, twkEverett} from '@/constants/font.c'
 
 const preview = {
   parameters: {
-    actions: { argTypesRegex: '^on[A-Z].*' },
+    actions: { argTypesRegex: '^(on|handle)(?!Icon)[A-Z].*' },
     backgrounds: {
       default: 'white',
       values: [

@@ -42,7 +42,8 @@ const FeedTextContent = ({
   );
 
   useEffect(() => {
-    convertMarkdownToHtmlStr(content, setHtmlContent);
+    const htmlStr = convertMarkdownToHtmlStr(content);
+    setHtmlContent(htmlStr);
   }, [content]);
 
   return (

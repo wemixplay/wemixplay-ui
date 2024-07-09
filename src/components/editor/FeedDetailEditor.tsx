@@ -7,6 +7,7 @@ import React, {
   forwardRef,
   useCallback,
   useEffect,
+  useImperativeHandle,
   useMemo,
   useRef,
   useState
@@ -32,13 +33,17 @@ import IframesUploadPreview from './IframesUploadPreview';
 import OgMetaDataPreview from './OgMetaDataPreview';
 import { SvgIcoImage } from '@/assets/svgs';
 import CountTextLength from '@/plugins/countTextLength/CountTextLength';
-import { commaWithValue } from '@/utils/valueParserUtils';
+import {
+  commaWithValue,
+  convertHtmlToMarkdownStr,
+  convertMarkdownToHtmlStr
+} from '@/utils/valueParserUtils';
 import '@/styles/post.scss';
 
 type PostEditorMediaValue = { file?: File; src: string };
 type PostEditorIframeValue = { type?: 'youtube' | 'twitch'; src: string };
 
-type PostDetailEditorValue = {
+type FeedDetailEditorValue = {
   value?: string;
   images?: PostEditorMediaValue[];
   iframes?: PostEditorIframeValue[];
@@ -47,39 +52,38 @@ type PostDetailEditorValue = {
 
 type Props = Omit<WpEditorProps, 'plugin' | 'initailValue'> & {
   className?: string;
-  btnSubmitElement?: ReactElement;
-  value?: PostDetailEditorValue;
+  btnSubmitText?: ReactElement | string;
+  value?: FeedDetailEditorValue;
   name?: string;
-  handleChange?: (value: PostDetailEditorValue, name?: string) => void;
+  handleChange?: (value: FeedDetailEditorValue, name?: string) => void;
+  onMatchExternalUrl?: (url: string[]) => void;
 };
 
 const cx = makeCxFunc(style);
 
-const PostDetailEditor = forwardRef<WpEditorRef, Props>(
+const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
   (
     {
       className = '',
       value,
       name,
+      btnSubmitText = 'POST',
       maxLength = 1000,
       placeholder = 'What is happening?!',
-      btnSubmitElement = (
-        <button disabled className={cx('btn-submit')}>
-          게시
-        </button>
-      ),
       config = {},
       handleChange,
+      onMatchExternalUrl,
       ...editorProps
     },
     ref
   ) => {
+    const wpEditorRef = useRef<WpEditorRef>();
     const imgInputRef = useRef<HTMLInputElement>();
     const excludeOgSiteUrl = useRef<string[]>([]);
 
     const [textLength, setTextLength] = useState(value?.value?.length ?? 0);
     const [textData, setTextData] = useState(value?.value);
-    const [mediaData, setMediaData] = useState<Omit<PostDetailEditorValue, 'value'>>({
+    const [mediaData, setMediaData] = useState<Omit<FeedDetailEditorValue, 'value'>>({
       images: value?.images ?? [],
       iframes: value?.iframes ?? [],
       ogMetaData: value?.ogMetaData
@@ -103,19 +107,19 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
         let images = [...(memorizationData?.images ?? [])];
 
         if ('newImage' in params) {
-          if (Array.isArray(params.newImage)) {
-            images = [...images, ...params.newImage];
-          } else {
+          if (Array.isArray(params.newImage) && images.length < 4) {
+            images = [...images, ...params.newImage.slice(0, 4 - images.length)];
+          } else if (!Array.isArray(params.newImage)) {
+            if (images.length >= 4) {
+              alert('이미지는 최대 4개까지 가능합니다!!');
+
+              return images;
+            }
+
             images.push(params.newImage);
           }
 
           images = orderBy(images, 'src');
-
-          if (images.length > 4) {
-            alert('이미지는 최대 4개까지 가능합니다!!');
-
-            return;
-          }
         } else {
           images = images.filter((_, index) => params.deleteIndex !== index);
         }
@@ -232,64 +236,17 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
       [memorizationData.iframes]
     );
 
-    const handleUpdateOgMetaData = useCallback(
-      ({ urls, type }: { urls: string[]; type: 'add' | 'delete' }) => {
-        if (!urls) {
-          return;
-        }
-
-        if (type === 'add') {
-          const targetUrl = urls.filter((url) => !excludeOgSiteUrl.current.includes(url))[0];
-
-          if (memorizationData.ogMetaData) {
-            return memorizationData.ogMetaData;
-          } else if (targetUrl) {
-            return {
-              url: targetUrl,
-              name: targetUrl
-            };
-          }
-        } else {
-          excludeOgSiteUrl.current.push(urls[0]);
-        }
-
-        return null;
-      },
-      [memorizationData.ogMetaData]
-    );
-
-    const onMatchImgOrVideoUrl = useCallback(
-      (
-        urls: {
-          tag: 'iframe' | 'img' | 'video';
-          src: string;
-        }[]
-      ) => {
-        const images = urls.filter((url) => url.tag === 'img');
-        const iframes = urls.filter((url) => url.tag === 'iframe');
-
-        const newImages = handleUpdateImages({ newImage: images });
-        const newIframes = handleUpdateIframe({ iframes });
-
-        const newData = { ...memorizationData, images: newImages, iframes: newIframes };
-
-        console.log(newImages);
-
-        setMediaData({
-          images: newData.images,
-          iframes: newData.iframes,
-          ogMetaData: newData.ogMetaData
-        });
-        handleChange && handleChange(newData, name);
-      },
-      [name, memorizationData, handleChange, handleUpdateImages, handleUpdateIframe]
-    );
-
     const onMatchUrl = useCallback(
-      (urls: string[]) => {
+      ({
+        textUrls,
+        mediaUrls
+      }: {
+        textUrls: string[];
+        mediaUrls: { tag: 'img' | 'video' | 'iframe'; src: string }[];
+      }) => {
         const imagePattern = /\.(jpg|jpeg|png|gif|webp)$/i;
 
-        const urlInfoList = urls.reduce(
+        const urlInfoList = textUrls.reduce(
           (acc, cur) => {
             let type = 'etc';
 
@@ -313,14 +270,17 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
         );
 
         const { image = [], youtube = [], twitch = [], etc = [] } = urlInfoList;
+        const externalUrl = etc.filter((url) => !excludeOgSiteUrl.current.includes(url));
 
-        const newOgMetaData = handleUpdateOgMetaData({
-          urls: etc,
-          type: etc.length ? 'add' : 'delete'
+        const newImages = handleUpdateImages({
+          newImage: [
+            ...mediaUrls.filter((url) => url.tag === 'img'),
+            ...image.map((url) => ({ src: url }))
+          ]
         });
-        const newImages = handleUpdateImages({ newImage: image.map((url) => ({ src: url })) });
         const newIframes = handleUpdateIframe({
           iframes: [
+            ...mediaUrls.filter((url) => url.tag === 'iframe'),
             ...youtube.map(
               (url) =>
                 ({ type: 'youtube', src: convertIframeYouTubeURL(url) }) as PostEditorIframeValue
@@ -332,21 +292,20 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           ]
         });
 
+        if (externalUrl.length > 0) {
+          onMatchExternalUrl && onMatchExternalUrl(externalUrl);
+        }
+
         const newData = {
           ...memorizationData,
           images: newImages,
-          iframes: newIframes,
-          ogMetaData: newOgMetaData
+          iframes: newIframes
         };
 
-        setMediaData({
-          images: newData.images,
-          iframes: newData.iframes,
-          ogMetaData: newData.ogMetaData
-        });
+        setMediaData(newData);
         handleChange && handleChange(newData, name);
 
-        return urls.map((url) => `<a href="${url}" target="_blank">${url}</a>`);
+        return textUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`);
       },
       [
         name,
@@ -354,7 +313,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
         handleChange,
         handleUpdateImages,
         handleUpdateIframe,
-        handleUpdateOgMetaData
+        onMatchExternalUrl
       ]
     );
 
@@ -362,17 +321,13 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
       (value: string) => {
         const newData = {
           ...memorizationData,
-          value,
-          ogMetaData:
-            !memorizationData.ogMetaData || !value.includes(memorizationData.ogMetaData?.url)
-              ? null
-              : memorizationData.ogMetaData
+          value
         };
 
         excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) => value.includes(url));
 
         setTextData(value);
-        handleChange && handleChange(newData, name);
+        handleChange && handleChange({ ...newData, value: convertHtmlToMarkdownStr(value) }, name);
       },
       [name, memorizationData, handleChange]
     );
@@ -380,16 +335,34 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
     useEffect(() => {
       if (value) {
         const { value: textValue, ...mediaValues } = value;
-        setTextData(textValue);
         setMediaData(mediaValues);
       }
     }, [value]);
+
+    useEffect(() => {
+      if (value?.value && !textData) {
+        const htmlStr = convertMarkdownToHtmlStr(value.value);
+
+        setTextData(htmlStr);
+      }
+    }, [value?.value, textData]);
+
+    useImperativeHandle(ref, () => {
+      const { setData } = wpEditorRef.current;
+
+      wpEditorRef.current.setData = (data: string) => {
+        const htmlStr = convertMarkdownToHtmlStr(data);
+        setData(htmlStr);
+      };
+
+      return wpEditorRef.current;
+    });
 
     return (
       <div className={cx(className, 'post-detail-editor')}>
         <WpEditor
           className={cx('editor', 'post-content')}
-          ref={ref}
+          ref={wpEditorRef}
           plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
           initialValue={memorizationData?.value}
           placeholder={placeholder}
@@ -398,10 +371,12 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           config={{
             ...config,
             pasteToPlainText: {
-              onMatchImgOrVideoUrl: onMatchImgOrVideoUrl
+              onMatchUrlReplace: onMatchUrl
             },
             autoUrlMatch: {
-              onMatchUrl: onMatchUrl
+              onMatchUrl: (urls) => {
+                return onMatchUrl({ textUrls: urls, mediaUrls: [] });
+              }
             },
             countTextLength: {
               hideUi: true,
@@ -436,9 +411,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
           <OgMetaDataPreview
             ogMetaData={memorizationData.ogMetaData}
             handleDeleteOgMetaData={(params) => {
-              const ogMetaData = handleUpdateOgMetaData(params);
-
-              setMediaData((data) => ({ ...data, ogMetaData }));
+              setMediaData((data) => ({ ...data, ogMetaData: undefined }));
             }}
           />
         )}
@@ -460,7 +433,9 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
             <span className={cx('text-count')}>
               <b>{commaWithValue(textLength)}</b> / {commaWithValue(maxLength)}
             </span>
-            {btnSubmitElement}
+            <button disabled className={cx('btn-submit')}>
+              {btnSubmitText}
+            </button>
           </div>
         </div>
       </div>
@@ -468,7 +443,7 @@ const PostDetailEditor = forwardRef<WpEditorRef, Props>(
   }
 );
 
-PostDetailEditor.displayName = 'PostDetailEditor';
+FeedDetailEditor.displayName = 'FeedDetailEditor';
 
-export type { Props as PostDetailEditorProps, PostEditorMediaValue, PostDetailEditorValue };
-export default PostDetailEditor;
+export type { Props as FeedDetailEditorProps, PostEditorMediaValue, FeedDetailEditorValue };
+export default FeedDetailEditor;

@@ -122,7 +122,7 @@ class HashTag implements WpEditorPlugin {
     const isWillHash = !!hashTag?.classList.contains('will-hash');
 
     const hashRegex = new RegExp(
-      `<span\\s+id="${targetHashId}"([^>]*)class="hash ${isWillHash ? 'will-hash' : 'unkown-hash'}"([^>]*)>(.*?)<\\/span>`,
+      `<span\\s+id="${targetHashId}"([^>]*)class="hash ${isWillHash ? 'will-hash' : 'unknown-hash'}"([^>]*)>(.*?)<\\/span>`,
       'g'
     );
 
@@ -142,7 +142,7 @@ class HashTag implements WpEditorPlugin {
     } else {
       target.innerHTML = target.innerHTML.replace(
         hashRegex,
-        `<span id="${targetHashId}" class="hash unkown-hash"$1$2>${selection.focusNode.textContent}</span>&nbsp;`
+        `<span id="${targetHashId}" class="hash unknown-hash"$1$2>${selection.focusNode.textContent}</span>&nbsp;`
       );
     }
 
@@ -181,7 +181,7 @@ class HashTag implements WpEditorPlugin {
 
     const focusInDecompleteHashTag =
       !!focusNode?.parentElement?.classList?.contains?.('will-hash') ||
-      !!focusNode?.parentElement?.classList?.contains?.('unkown-hash');
+      !!focusNode?.parentElement?.classList?.contains?.('unknown-hash');
 
     const collapseCheckRange = selection.getRangeAt(0);
 
@@ -206,7 +206,7 @@ class HashTag implements WpEditorPlugin {
 
     const focusInDecompleteHashTag =
       !!selection.focusNode?.parentElement?.classList?.contains?.('will-hash') ||
-      !!selection.focusNode?.parentElement?.classList?.contains?.('unkown-hash');
+      !!selection.focusNode?.parentElement?.classList?.contains?.('unknown-hash');
 
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
       if (!targetHashId && focusInDecompleteHashTag) {

@@ -34,18 +34,16 @@
       // style
     }
 
-    &.unkown-mention,
-    &.complete-mention {
-      padding: 0 4px;
-    }
-
     &.unkown-mention {
+      padding: 0 4px;
       border: 1px dashed gray;
       background-color: transparent;
     }
 
     &.complete-mention {
-      background-color: rgb(0 255 255 / 42.2%);
+      color: var(--semantic-status-blue);
+  
+      @include body-01-reading-02-r;
     }
   }
 
@@ -56,18 +54,16 @@
       // style
     }
 
-    &.unkown-hash,
-    &.complete-hash {
-      padding: 0 4px;
-    }
-
     &.unkown-hash {
+      padding: 0 4px;
       border: 1px dashed gray;
       background-color: transparent;
     }
 
     &.complete-hash {
-      background-color: rgb(0 255 255 / 42.2%);
+      color: var(--semantic-status-blue);
+  
+      @include body-01-reading-02-r;
     }
   }
 }
