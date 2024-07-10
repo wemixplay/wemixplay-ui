@@ -1,6 +1,6 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.2.17",
+  "version": "1.2.19",
   "author": "WEMADE",
   "license": "MIT",
   "main": "dist/index.cjs.js",
