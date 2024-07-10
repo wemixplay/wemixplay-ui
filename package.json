@@ -1,31 +1,31 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.2.8",
+  "version": "1.2.9",
   "author": "WEMADE",
   "license": "MIT",
-  "main": "dist/index.cjs.js",
-  "types": "dist/index.d.ts",
-  "module": "dist/index.esm.mjs",
+  "main": "dist/index.js",
+  "module": "dist/wemixplay-ui.esm.js",
+  "typings": "dist/index.d.ts",
   "engines": {
     "node": ">=16"
   },
   "files": [
-    "dist"
+    "dist",
+    "src"
   ],
-  "exports": {
-    ".": {
-      "import": "./dist/index.esm.mjs",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/index.d.ts"
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
     }
   },
   "scripts": {
-    "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
-    "lint:css": "stylelint --ignore-path .gitignore '**/*.scss'",
-    "start": "NODE_ENV=development rollup -c && node scripts/svgComponentGenerator.js & rollup -cw",
-    "build:dev": "rm -rf dist && NODE_ENV=production NODE_VI=OK rollup -c && node scripts/svgComponentGenerator.js",
-    "build": "rm -rf dist && NODE_ENV=production rollup -c && node scripts/svgComponentGenerator.js",
+    "start": "node scripts/svgComponentGenerator.js & tsdx watch",
+    "build": "node scripts/svgComponentGenerator.js && tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
     "prepare": "yarn build",
+    "size": "size-limit",
+    "analyze": "size-limit --why",
     "storybook": "NODE_ENV=development node scripts/svgComponentGenerator.js & cd storybook && yarn && yarn storybook"
   },
   "devDependencies": {
@@ -47,6 +47,7 @@
     "@rollup/plugin-replace": "^5.0.7",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^11.1.6",
+    "@size-limit/preset-small-lib": "8.1.2",
     "@types/fs-extra": "^11.0.4",
     "@types/lodash": "^4.17.0",
     "@types/lodash-es": "^4.17.12",
@@ -68,11 +69,14 @@
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.3.0",
     "fs-extra": "^11.2.0",
+    "husky": "8.0.3",
     "monkey-d": "^1.1.44",
     "postcss": "^8.4.38",
     "postcss-modules": "^6.0.0",
     "prettier": "^3.3.2",
     "prettier-eslint": "^16.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
     "rollup": "^4.13.2",
     "rollup-plugin-ignore": "^1.0.10",
     "rollup-plugin-node-builtins": "^2.1.2",
@@ -82,6 +86,7 @@
     "rollup-plugin-terser": "^7.0.2",
     "rollup-plugin-visualizer": "^5.12.0",
     "sass": "^1.77.6",
+    "size-limit": "8.1.2",
     "stylelint": "^14.16.1",
     "stylelint-config-idiomatic-order": "^9.0.0",
     "stylelint-config-standard": "^28.0.0",
@@ -89,9 +94,9 @@
     "stylelint-order": "^5.0.0",
     "stylelint-prettier": "^2.0.0",
     "stylelint-scss": "^4.3.0",
-    "tslib": "^2.6.2",
-    "typescript": "4.9.5",
-    "webpack-sources": "^3.2.3"
+    "tsdx": "0.14.1",
+    "tslib": "2.5.0",
+    "typescript": "4.9.5"
   },
   "peerDependencies": {
     "react": ">=16",
@@ -99,8 +104,7 @@
     "swiper": ">=11"
   },
   "dependencies": {
-    "@rollup/plugin-alias": "^5.1.0",
-    "@svgr/rollup": "6.5.1",
+    "@svgr/rollup": "^8.1.0",
     "@svgr/webpack": "6.5.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.11",
@@ -111,9 +115,7 @@
     "lodash-es": "^4.17.21",
     "next": "14.2.4",
     "node-gyp": "^10.1.0",
-    "react": "^18.2.0",
     "react-device-detect": "^2.2.3",
-    "react-dom": "^18.2.0",
     "react-responsive": "^10.0.0",
     "svgo": "^3.2.0",
     "swiper": "^11.1.1"
