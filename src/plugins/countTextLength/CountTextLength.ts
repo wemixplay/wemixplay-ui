@@ -32,7 +32,7 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
       el.append(countEl);
 
       // maxLength props 를 통해 입력받은 수치를 aria-valuemax 에 할당 (값이 부여되지 않은 경우에는 element 추가되지 않음)
-      const maxLength = target.ariaValueMax;
+      const maxLength = (target as JSONObject).ariaValueMax;
       if (maxLength) {
         const maxLengthEl = document.createElement('span');
         maxLengthEl.className = 'maxLength';
@@ -56,7 +56,7 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
       countEl.innerHTML = String(textContentLength);
 
       // maxLength 값 초과 시 스타일 추가를 위한 클래스 부여
-      const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
+      const maxLength = Number((contentEditorEl as JSONObject).ariaValueMax);
       if (maxLength) {
         if (textContentLength > maxLength) {
           countEl.classList.add('error');
@@ -80,7 +80,7 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
   }
   handleKeyDown({ event }) {
     const currLength = this.countText();
-    const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
+    const maxLength = Number((this.contentEditableEl.current as JSONObject).ariaValueMax);
     if (maxLength && currLength >= maxLength) {
       // maxLength 초과 시 전체선택, 복사, 잘라내기, 되돌리기, 다시실행, Backspace, delete, 방향키 가능. 이외 입력은 불가하도록 조건 추가.
       const allowKey = [8, 37, 38, 39, 40, 46]; // 8: Backspace, 37~40: 방향키,  46: delete

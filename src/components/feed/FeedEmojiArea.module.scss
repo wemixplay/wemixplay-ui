@@ -2,9 +2,18 @@
   display: flex;
   align-items: center;
 
+  .emoji-img{
+    background-color: transparent;
+  }
+
   > button {
     &:not(:first-child) {
       margin-left: $sp-12;
     }
+
+    .count{
+      padding-left: $sp-4;
+    }
   }
+  
 }

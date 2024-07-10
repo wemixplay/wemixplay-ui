@@ -1,6 +1,7 @@
 'use client';
 
 import React, {
+  MouseEvent,
   ChangeEvent,
   DragEvent,
   ReactElement,
@@ -29,16 +30,17 @@ import {
   isTwitchURL,
   isYouTubeURL
 } from '@/utils/urlUtils';
-import IframesUploadPreview from './IframesUploadPreview';
-import OgMetaDataPreview from './OgMetaDataPreview';
-import { SvgIcoImage } from '@/assets/svgs';
+import FeedIframesView from './FeedIframesView';
+import FeedLinkPreview, { FeedLinkPreviewProps } from './FeedLinkPreview';
+import { SvgIcoChevronDown, SvgIcoImage } from '@/assets/svgs';
 import CountTextLength from '@/plugins/countTextLength/CountTextLength';
 import {
   commaWithValue,
   convertHtmlToMarkdownStr,
   convertMarkdownToHtmlStr
 } from '@/utils/valueParserUtils';
-import '@/styles/post.scss';
+import Person from '../avatars/Person';
+import PopoverButton from '../popover/PopoverButton';
 
 type PostEditorMediaValue = { file?: File; src: string };
 type PostEditorIframeValue = { type?: 'youtube' | 'twitch'; src: string };
@@ -47,16 +49,29 @@ type FeedDetailEditorValue = {
   value?: string;
   images?: PostEditorMediaValue[];
   iframes?: PostEditorIframeValue[];
-  ogMetaData?: Record<string, string> | null;
+  ogMetaData?: FeedLinkPreviewProps['ogMetaData'];
 };
 
-type Props = Omit<WpEditorProps, 'plugin' | 'initailValue'> & {
+type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
   className?: string;
+  minLength?: number;
   btnSubmitText?: ReactElement | string;
   value?: FeedDetailEditorValue;
   name?: string;
+  writerName?: string;
+  writerImg?: string;
+  emptyChannelText?: string;
+  channelName?: string;
+  channelImg?: string;
+  selectChannelPopoverElement?: ReactElement;
+  imageMaxCnt?: number;
+  iframeMaxCnt?: number;
   handleChange?: (value: FeedDetailEditorValue, name?: string) => void;
   onMatchExternalUrl?: (url: string[]) => void;
+  onUserClick?: (e: MouseEvent<HTMLElement>) => void;
+  onSelectChannelClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onMaxImageUploads?: () => void;
+  onMaxIframeUploads?: () => void;
 };
 
 const cx = makeCxFunc(style);
@@ -67,12 +82,25 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       className = '',
       value,
       name,
+      minLength = 10,
+      writerName,
+      writerImg,
+      emptyChannelText = '내 채널에 포스트',
+      channelName,
+      channelImg,
       btnSubmitText = 'POST',
       maxLength = 1000,
       placeholder = 'What is happening?!',
       config = {},
+      imageMaxCnt = 4,
+      iframeMaxCnt = 4,
+      selectChannelPopoverElement = <></>,
       handleChange,
       onMatchExternalUrl,
+      onSelectChannelClick,
+      onUserClick,
+      onMaxImageUploads,
+      onMaxIframeUploads,
       ...editorProps
     },
     ref
@@ -107,11 +135,13 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         let images = [...(memorizationData?.images ?? [])];
 
         if ('newImage' in params) {
-          if (Array.isArray(params.newImage) && images.length < 4) {
-            images = [...images, ...params.newImage.slice(0, 4 - images.length)];
+          if (Array.isArray(params.newImage) && images.length < imageMaxCnt) {
+            images = [...images, ...params.newImage.slice(0, imageMaxCnt - images.length)];
           } else if (!Array.isArray(params.newImage)) {
-            if (images.length >= 4) {
-              alert('이미지는 최대 4개까지 가능합니다!!');
+            if (images.length >= imageMaxCnt) {
+              onMaxImageUploads
+                ? onMaxImageUploads()
+                : alert(`이미지는 최대 ${imageMaxCnt}까지 업로드가 가능합니다.`);
 
               return images;
             }
@@ -129,7 +159,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
         return images;
       },
-      [memorizationData, handleChange, name]
+      [memorizationData, name, imageMaxCnt, handleChange, onMaxImageUploads]
     );
 
     /**
@@ -222,8 +252,10 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
           iframes = orderBy(iframes, 'src');
 
-          if (iframes.length > 4) {
-            alert('이미지는 최대 4개까지 가능합니다!!');
+          if (iframes.length > iframeMaxCnt) {
+            onMaxIframeUploads
+              ? onMaxIframeUploads()
+              : alert(`영상은 최대 ${iframeMaxCnt}까지 업로드가 가능합니다.`);
 
             return;
           }
@@ -233,7 +265,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
         return iframes;
       },
-      [memorizationData.iframes]
+      [memorizationData.iframes, iframeMaxCnt]
     );
 
     const onMatchUrl = useCallback(
@@ -360,6 +392,45 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
     return (
       <div className={cx(className, 'post-detail-editor')}>
+        <div
+          className={cx('post-detail-editor-header', { 'exist-user-click-event': !!onUserClick })}
+        >
+          <Person
+            src={writerImg}
+            size={'custom'}
+            className={cx('avatar', 'user-img')}
+            onClick={onUserClick}
+          />
+          <div className={cx('profile-info')}>
+            <strong className={cx('user-name')} onClick={onUserClick}>
+              {writerName || '-'}
+            </strong>
+            <div className={cx('btn-post-popover')}>
+              <PopoverButton
+                anchorId={onSelectChannelClick ? '' : `post-channel`}
+                id={`post-channel`}
+                popoverStyle={{ left: 0, top: 10, zIndex: 9999 }}
+                popoverElement={selectChannelPopoverElement}
+                popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
+                onClick={onSelectChannelClick}
+              >
+                <span className={cx('selected-channel')}>
+                  {!channelName && !channelImg ? (
+                    <>
+                      {emptyChannelText}
+                      <SvgIcoChevronDown />
+                    </>
+                  ) : (
+                    <>
+                      <Person src={channelImg} size={'xsmall'} className={cx('avatar')} />
+                      {channelName || '-'}
+                    </>
+                  )}
+                </span>
+              </PopoverButton>
+            </div>
+          </div>
+        </div>
         <WpEditor
           className={cx('editor', 'post-content')}
           ref={wpEditorRef}
@@ -398,7 +469,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           />
         )}
         {memorizationData.iframes.length > 0 && (
-          <IframesUploadPreview
+          <FeedIframesView
             iframes={memorizationData.iframes}
             handleDeleteIframe={({ deleteIndex }) => {
               const iframes = handleUpdateIframe({ deleteIndex });
@@ -408,7 +479,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           />
         )}
         {!!memorizationData.ogMetaData && (
-          <OgMetaDataPreview
+          <FeedLinkPreview
             ogMetaData={memorizationData.ogMetaData}
             handleDeleteOgMetaData={(params) => {
               setMediaData((data) => ({ ...data, ogMetaData: undefined }));
@@ -433,7 +504,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             <span className={cx('text-count')}>
               <b>{commaWithValue(textLength)}</b> / {commaWithValue(maxLength)}
             </span>
-            <button disabled className={cx('btn-submit')}>
+            <button className={cx('btn-submit')} disabled={minLength > textLength}>
               {btnSubmitText}
             </button>
           </div>

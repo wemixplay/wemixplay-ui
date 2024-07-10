@@ -32,7 +32,7 @@ const plugins = [
 					corejs: 3, // core-js version 3 사용
 				}
 			],
-			['@babel/preset-react', {runtime: 'automatic'}],
+			'@babel/preset-react',
 			'@babel/preset-typescript'
 		],
 		plugins: [
@@ -60,10 +60,10 @@ const plugins = [
 				'sass',
 				{
 					data: `
-			@import "./src/styles/abstracts/_variables.scss";
-			@import "./src/styles/abstracts/_mixin.scss";
-			@import "./src/styles/abstracts/_animation.scss";
-		`
+						@import "./src/styles/abstracts/_variables.scss";
+						@import "./src/styles/abstracts/_mixin.scss";
+						@import "./src/styles/abstracts/_animation.scss";
+					`
 				}
 			]
 		],
@@ -84,19 +84,7 @@ const plugins = [
 	replace({
 		'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
 	}),
-	commonjs({
-		include: [
-			'node_modules/**',
-		],
-		exclude: [
-			'node_modules/process-es6/**',
-			'node_modules/lodash-es/**'
-		],
-		namedExports: {
-			'node_modules/react/index.js': ['Children', 'Component', 'PropTypes', 'createElement'],
-			'node_modules/react-dom/index.js': ['createPortal'],
-		},
-	}),
+	commonjs(),
 ]
 
 if (process.env.NODE_ENV === 'production') {

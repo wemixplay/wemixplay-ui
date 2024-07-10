@@ -13,7 +13,7 @@
     "monkey-d": "^1.1.30",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "wemixplay-ui": "^1.1.6"
+    "wemixplay-ui": "^1.2.17"
   },
   "devDependencies": {
     "@types/react": "^18.2.64",

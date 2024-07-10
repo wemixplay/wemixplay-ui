@@ -45,7 +45,7 @@ const DEFAULT_IMAGE = '/assets/imgs/svgs/default-profile.svg';
 const Person = ({
   className = '',
   level,
-  src = DEFAULT_IMAGE,
+  src,
   uid,
   name,
   size = 'medium',
@@ -54,7 +54,7 @@ const Person = ({
   onClick
 }: Props) => {
   const [loadStatus, setLoadStatus] = useState('loading');
-  const [imgSrc, setImgSrc] = useState(src);
+  const [imgSrc, setImgSrc] = useState(src || DEFAULT_IMAGE);
 
   /** 유저 레벨에 대한 bedge를 보여줄지 여부 */
   const showLevelBedge = useMemo(() => {
@@ -77,7 +77,7 @@ const Person = ({
 
   useEffect(() => {
     setLoadStatus('loading');
-    setImgSrc(src);
+    setImgSrc(src || DEFAULT_IMAGE);
   }, [src]);
 
   return (

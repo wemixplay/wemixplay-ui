@@ -10,6 +10,8 @@ import FeedEmojiArea from './FeedEmojiArea';
 import FeedEtcInfoArea from './FeedEtcInfoArea';
 import FeedWriterInfo from './FeedWriterInfo';
 import FeedTextContent from './FeedTextContent';
+import FeedLinkPreview, { FeedLinkPreviewProps } from '../editor/FeedLinkPreview';
+import FeedIframesView from '../editor/FeedIframesView';
 
 type EmojiInfo = {
   emojiNo: number;
@@ -23,6 +25,10 @@ type Props = {
   avatarSize?: number;
   writerName?: string;
   writerImg?: string;
+  images?: string[];
+  iframes?: string[];
+  textContent?: string;
+  ogMetaData?: FeedLinkPreviewProps['ogMetaData'];
   managePopoverElement?: null | ReactElement;
   emojiSelectPopoverElement?: null | ReactElement;
   categoryName?: string;
@@ -48,6 +54,10 @@ const FeedBox = ({
   writerImg,
   categoryName,
   certificated,
+  textContent,
+  images = [],
+  iframes = [],
+  ogMetaData,
   managePopoverElement = <></>,
   emojiSelectPopoverElement = <></>,
   emojiList = [],
@@ -82,9 +92,10 @@ const FeedBox = ({
 
           {/* Feed Management Button (삭제, 수정, 신고...) */}
           <div className={cx('btn-manage')}>
+            {updatedAt}
             <PopoverButton
-              anchorId={onManageBtnClick ? '' : `feed-manage-${uid}`}
-              id={`feed-manage-${uid}`}
+              anchorId={onManageBtnClick ? '' : `feed-manage-${uid.replace(/:/gi, '')}`}
+              id={`feed-manage-${uid.replace(/:/gi, '')}`}
               popoverStyle={{ right: -10, top: 10, zIndex: 9999 }}
               popoverElement={managePopoverElement}
               popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
@@ -97,13 +108,15 @@ const FeedBox = ({
         <div className={cx('feed-body')}>
           <FeedTextContent
             className={cx('text-content')}
-            content="Former player and boyhood Arsenal fan, Carl Jenkinson was back at the <a href='/'>#EmiratesStadium</a> on Sunday to show his support.<span class='mention complete-mention' data-id='3'>@Derek</span>"
+            content={textContent}
             ellipsis={true}
             onMentionClick={onMentionClick}
             onHashTagClick={onHashTagClick}
           />
 
-          <FeedImagesView className={cx('carousel')} images={[]} />
+          {images.length > 0 && <FeedImagesView className={cx('carousel')} images={images.map((src) => ({src: src}))} />}
+          {iframes.length > 0 && <FeedIframesView className={cx('carousel')} iframes={iframes.map((src) => ({src: src}))} />}
+          {!!ogMetaData && <FeedLinkPreview ogMetaData={ogMetaData} />}
         </div>
 
         <div className={cx('feed-footer')}>

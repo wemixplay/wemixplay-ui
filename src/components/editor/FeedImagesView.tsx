@@ -27,7 +27,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg }: Props)
         spaceBetween={10}
       >
         {images.map((image, index) => (
-          <>
+          <div key={`${image.src}-${index}`}>
             {!!handleDeleteImg && (
               <button
                 className={cx('btn-img-delete')}
@@ -40,7 +40,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg }: Props)
             <div key={image.src} className={cx('preview-image-box')}>
               <img src={image.src} alt={image.src} />
             </div>
-          </>
+          </div>
         ))}
       </Carousel>
     </div>

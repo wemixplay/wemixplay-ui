@@ -2,6 +2,7 @@
 
 import React, { MouseEvent, useCallback, useEffect, useState } from 'react';
 import useCheckDevice from '@/hooks/useCheckDevice';
+import WpEditorContents from '../editor/WpEditorContents';
 import Ellipsis from '../ellipsis/Ellipsis';
 import { sanitize } from 'isomorphic-dompurify';
 import { convertMarkdownToHtmlStr } from '@/utils/valueParserUtils';
@@ -42,12 +43,12 @@ const FeedTextContent = ({
   );
 
   useEffect(() => {
-    const htmlStr = convertMarkdownToHtmlStr(content);
+    const htmlStr = convertMarkdownToHtmlStr(content ?? '');
     setHtmlContent(htmlStr);
   }, [content]);
 
   return (
-    <div className={`${className} post-content`} onClick={handleClick}>
+    <WpEditorContents className={className} onClick={handleClick}>
       {ellipsis ? (
         <Ellipsis
           className="text"
@@ -61,7 +62,7 @@ const FeedTextContent = ({
       ) : (
         <div className="text" dangerouslySetInnerHTML={{ __html: sanitize(htmlContent) }}></div>
       )}
-    </div>
+    </WpEditorContents>
   );
 };
 
