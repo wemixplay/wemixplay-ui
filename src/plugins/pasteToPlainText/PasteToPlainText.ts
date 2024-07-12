@@ -1,5 +1,5 @@
 import { ClipboardEvent, MutableRefObject } from 'react';
-import { WpEditorPlugin } from '@/index';
+import { WpEditorPlugin } from '@/components/editor/editor';
 
 type PasteToPlainTextConfig = {
   onMatchUrlReplace?: (params: {

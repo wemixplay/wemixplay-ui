@@ -1,5 +1,5 @@
 import React from 'react';
-import type { WpEditorPlugin } from '@/index';
+import type { WpEditorPlugin } from '@/components/editor/editor';
 import { uniqueId } from 'lodash-es';
 import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'react';
 import HashList, { HashListRef } from './components/HashList';

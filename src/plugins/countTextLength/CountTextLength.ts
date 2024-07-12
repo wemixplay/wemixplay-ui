@@ -1,4 +1,4 @@
-import { WpEditorPlugin } from '@/index';
+import { WpEditorPlugin } from '@/components/editor/editor';
 import type { MutableRefObject } from 'react';
 
 type CountTextLengthConfig = {

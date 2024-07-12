@@ -16,6 +16,7 @@ import React, {
 import style from './CheckBox.module.scss';
 import { SvgIcoCheck, SvgIcoIndeterminate } from '@/assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
+import { uniq } from 'lodash';
 
 interface Props
   extends Pick<InputHTMLAttributes<HTMLInputElement>, 'onChange' | 'onBlur' | 'onFocus'> {
@@ -182,7 +183,7 @@ const CheckBox = forwardRef<HTMLInputElement, Props>(
           // currentData가 없다면 changeValue값에서 중복되는 값이 없도록 필터링 진행
           changeValue = currentData
             ? currentData.filter((d: string | number) => changeValue.includes(d))
-            : [...new Set(changeValue)];
+            : uniq(changeValue);
 
           // changeValue값 handleChange함수를 이용하여 상위 컴포넌트에 전달
           handleChange && handleChange(changeValue, name);

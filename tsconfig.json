@@ -1,11 +1,11 @@
 {
-    "include": ["src", "global.d.ts", "src/types"],
+    "include": ["src", "global.d.ts", "src/types", "src/**/*.d.ts"],
     "exclude": ["node_modules", "dist"],
     "compilerOptions": {
         "target": "es6" /* 최신 브라우저는 es6을 대부분 지원한다. */,
         "module": "esnext" /* 모듈 시스템을 지정한다. */,
         "lib": ["dom", "esnext"],
-        "types": ["@emotion/react/types/css-prop"],
+        "typeRoots" : ["./node_modules/@types"],
         "jsx": "react",
         "moduleResolution": "node",
         "sourceMap": true,
@@ -29,9 +29,8 @@
         "resolveJsonModule": true,
         // `tsdx build` ignores this option, but it is commonly used when type-checking separately with `tsc`
         "noEmit": true,
-        "baseUrl": ".",
         "paths": { 
-            "@/*": ["src/*"]
+            "@/*": ["./src/*"]
         }
     }
 }

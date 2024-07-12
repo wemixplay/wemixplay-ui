@@ -19,25 +19,18 @@ const plugins = [
   peerDepsExternal(),
   json(),
   ignore(['fsevents']),
-  typescript(),
+  typescript({
+		tsconfig: "tsconfig.json",
+    useTsconfigDeclarationDir: true,
+	}),
 	babel({
-    babelHelpers: 'runtime',
+    babelHelpers: 'bundled',
     exclude: 'node_modules/**',
     extensions,
     presets: [
-      [
-        '@babel/preset-env',
-        {
-          useBuiltIns: 'usage',
-					corejs: 3,
-					targets: '> 0.25%, not dead'
-        }
-      ],
+      '@babel/preset-env',
       '@babel/preset-react',
       '@babel/preset-typescript'
-    ],
-    plugins: [
-      ['@babel/plugin-transform-runtime'],
     ],
   }),
   svgr({
@@ -120,16 +113,11 @@ module.exports = {
   output: {
 		dir: 'dist',
 		format: 'esm',
-		sourcemap: true,
+		sourcemap: process.env.NODE_ENV === 'development',
 		manualChunks(id) {
 			if (id.includes('node_modules')) {
 				return 'vendors';
 			}
 		}
-	},
-	treeshake: {
-		moduleSideEffects: false,
-		propertyReadSideEffects: false,
-		unknownGlobalSideEffects: false,
 	}
 };

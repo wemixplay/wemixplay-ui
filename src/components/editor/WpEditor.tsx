@@ -17,13 +17,13 @@ import React, {
 } from 'react';
 import classNames from 'classnames/bind';
 import style from './WpEditor.module.scss';
-import { MentionConfig } from '@/plugins/mention/Mention';
-import { HashTagConfig } from '@/plugins/hashTag/HashTag';
-import { WpEditorPluginConstructor } from '@/index';
-import { AutoUrlMatchConfig } from '@/plugins/autoUrlMatch/AutoUrlMatch';
+import { MentionConfig } from '../../plugins/mention/Mention';
+import { HashTagConfig } from '../../plugins/hashTag/HashTag';
+import { WpEditorPluginConstructor } from './editor';
+import { AutoUrlMatchConfig } from '../../plugins/autoUrlMatch/AutoUrlMatch';
 import { debounce } from 'lodash-es';
-import { PasteToPlainTextConfig } from '@/plugins/pasteToPlainText/PasteToPlainText';
-import { CountTextLengthConfig } from '@/plugins/countTextLength/CountTextLength';
+import { PasteToPlainTextConfig } from '../../plugins/pasteToPlainText/PasteToPlainText';
+import { CountTextLengthConfig } from '../../plugins/countTextLength/CountTextLength';
 import WpEditorContents from './WpEditorContents';
 
 type WpEditorRef = HTMLDivElement & {

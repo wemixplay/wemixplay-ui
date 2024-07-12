@@ -20,7 +20,14 @@ export const makeCxFunc = (style: { readonly [key: string]: string }) => {
 
       return acc;
     }, '');
-    return [...new Set(`${classNames} ${cx(args)}`.trim().split(' '))].join(' ');
+
+    const arr = `${classNames} ${cx(args)}`.trim().split(' ');
+
+    const uniqueArr = arr.filter((element, index) => {
+      return arr.indexOf(element) === index;
+    });
+
+    return uniqueArr.join(' ');
   };
 };
 

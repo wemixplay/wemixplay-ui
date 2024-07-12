@@ -3,7 +3,7 @@ import { uniqueId } from 'lodash-es';
 import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'react';
 import MentionList, { MentionListRef } from './components/MentionList';
 import MentionContainer from './components/MentionContainer';
-import { WpEditorPlugin } from '@/index';
+import { WpEditorPlugin } from '@/components/editor/editor';
 
 type MentionConfig = {
   list: (Record<string, string> & { name: string })[];
