@@ -11,6 +11,11 @@
       margin-left: $sp-12;
     }
 
+    &.no-exist-event{
+      cursor: default;
+      pointer-events: none;
+    }
+
     .count{
       padding-left: $sp-4;
     }

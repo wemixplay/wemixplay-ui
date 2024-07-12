@@ -29,9 +29,11 @@ const FeedEtcInfoArea = ({ className = '', commentCount, likeCount, onShareBtnCl
         <SvgIcoLike />
         <span className={cx('count')}>{toFormatterByInt(likeCount, 1)}</span>
       </button>
-      <button type="button" className={cx('btn-share')} onClick={onShareBtnClick}>
-        <SvgIcoShare width={22} height={22} />
-      </button>
+      {!!onShareBtnClick && (
+        <button type="button" className={cx('btn-share')} onClick={onShareBtnClick}>
+          <SvgIcoShare width={22} height={22} />
+        </button>
+      )}
     </div>
   );
 };

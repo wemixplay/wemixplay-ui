@@ -6,7 +6,7 @@
         "module": "esnext" /* 모듈 시스템을 지정한다. */,
         "lib": ["dom", "esnext"],
         "types": ["@emotion/react/types/css-prop"],
-        "jsx": "preserve",
+        "jsx": "react",
         "moduleResolution": "node",
         "sourceMap": true,
         "importHelpers": true,

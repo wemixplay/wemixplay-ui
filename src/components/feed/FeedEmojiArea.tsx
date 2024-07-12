@@ -19,6 +19,7 @@ type Props = {
   className?: string;
   emojiList: EmojiInfo[];
   emojiSelectPopoverElement?: null | ReactElement;
+  onEmojiClick?: (params: EmojiInfo) => void;
   onEmojiSelectBtnClick?: null | ((e: MouseEvent<HTMLButtonElement>) => void);
 };
 
@@ -28,6 +29,7 @@ const FeedEmojiArea = ({
   className = '',
   emojiList,
   emojiSelectPopoverElement,
+  onEmojiClick,
   onEmojiSelectBtnClick
 }: Props) => {
   const uid = useId();
@@ -47,7 +49,12 @@ const FeedEmojiArea = ({
   return (
     <div className={cx(className, 'feed-reactions')}>
       {emojiList.map((emoji) => (
-        <button key={emoji.emojiNo} type="button" className={cx({ active: emoji.isMyClick })}>
+        <button
+          key={emoji.emojiNo}
+          type="button"
+          className={cx({ active: emoji.isMyClick, 'no-exist-event': !onEmojiClick })}
+          onClick={() => onEmojiClick(emoji)}
+        >
           <WpImage
             className={cx('emoji-img')}
             src={emoji.imageUrl}
@@ -60,20 +67,25 @@ const FeedEmojiArea = ({
       ))}
 
       {/* Emoji list */}
-      <div className={cx('btn-add-emoji')}>
-        <PopoverButton
-          anchorId={onEmojiSelectBtnClick ? '' : `add-emoji-${uid.replace(/:/gi, '')}`}
-          id={`add-emoji-${uid.replace(/:/gi, '')}`}
-          popoverStyle={popoverStyle}
-          popoverElement={emojiSelectPopoverElement}
-          popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
-          onClick={onEmojiSelectBtnClick}
-        >
-          <SvgIcoAddEmoji width={24} height={24} />
-        </PopoverButton>
-      </div>
+      {!!emojiSelectPopoverElement && !!onEmojiSelectBtnClick ? (
+        <div className={cx('btn-add-emoji')}>
+          <PopoverButton
+            anchorId={onEmojiSelectBtnClick ? '' : `add-emoji-${uid.replace(/:/gi, '')}`}
+            id={`add-emoji-${uid.replace(/:/gi, '')}`}
+            popoverStyle={popoverStyle}
+            popoverElement={emojiSelectPopoverElement}
+            popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
+            onClick={onEmojiSelectBtnClick}
+          >
+            <SvgIcoAddEmoji width={24} height={24} />
+          </PopoverButton>
+        </div>
+      ) : (
+        <></>
+      )}
     </div>
   );
 };
 
+export type { Props as FeedEmojiAreaProps, EmojiInfo };
 export default FeedEmojiArea;

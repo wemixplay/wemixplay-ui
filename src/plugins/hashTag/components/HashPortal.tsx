@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactNode, useEffect, useRef, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 type Props = {
@@ -8,8 +8,6 @@ type Props = {
 };
 
 const HashPortal = ({ children }: Props) => {
-  const prevTatgetHashId = useRef('');
-
   const [wrapperElement, setWrapperElement] = useState<HTMLElement | null>(null);
 
   useEffect(() => {

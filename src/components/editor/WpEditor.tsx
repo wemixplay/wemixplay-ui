@@ -363,13 +363,13 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         characterData: true
       });
 
-      // contentElement.addEventListener('beforeinput', handleUndoRedo);
+      contentElement.addEventListener('beforeinput', handleUndoRedo);
 
-      // return () => {
-      //   mutationObserver.disconnect();
+      return () => {
+        mutationObserver.disconnect();
 
-      //   contentElement.removeEventListener('beforeinput', handleUndoRedo);
-      // };
+        contentElement.removeEventListener('beforeinput', handleUndoRedo);
+      };
     }, [mutationObserver, handleUndoRedo]);
 
     useEffect(() => {
@@ -392,8 +392,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     return (
       <div className={cx('wp-editor')} onClick={onClick}>
-
-
         <WpEditorContents
           ref={contentEditableEl}
           className={cx(className, 'wp-editor-content')}
