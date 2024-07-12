@@ -1,11 +1,12 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.5.67",
+  "version": "1.5.68",
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "typings": "dist/index.d.ts",
   "engines": {
     "node": ">=16"
   },
