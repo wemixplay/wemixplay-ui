@@ -1,6 +1,6 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.4.4",
+  "version": "1.4.5",
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
@@ -24,7 +24,7 @@
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:css": "stylelint --ignore-path .gitignore '**/*.scss'",
     "start": "NODE_ENV=development rollup -c && node scripts/svgComponentGenerator.js & rollup -cw",
-    "build:dev": "rm -rf dist && NODE_ENV=production NODE_VI=OK rollup -c && node scripts/svgComponentGenerator.js",
+    "build:dev": "rm -rf dist && NODE_ENV=development NODE_VI=OK rollup -c && node scripts/svgComponentGenerator.js",
     "build": "rm -rf dist && NODE_ENV=production rollup -c && node scripts/svgComponentGenerator.js",
     "prepare": "yarn build",
     "storybook": "NODE_ENV=development node scripts/svgComponentGenerator.js & cd storybook && yarn && yarn storybook"
