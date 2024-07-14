@@ -1,5 +1,5 @@
 import { ChangeEvent, ClipboardEvent, KeyboardEvent, MutableRefObject } from 'react';
-import { WpEditorPlugin } from '@/components/editor/editor';
+import { WpEditorPlugin } from '@/components/editor/WpEditor';
 
 type AutoUrlMatchConfig = {
   onMatchUrl?: (urls: string[]) => string[];

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { WpEditorPlugin } from '@/components/editor/editor';
+import type { WpEditorPlugin } from '@/components/editor/WpEditor';
 import { uniqueId } from 'lodash-es';
 import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'react';
 import HashList, { HashListRef } from './components/HashList';
@@ -21,7 +21,7 @@ class HashTag implements WpEditorPlugin {
   private postHashListRef: HashListRef;
   private _config: HashTagConfig = {
     list: [],
-    onWriteHash: (text) => {}
+    onWriteHash: (text) => { }
   };
   private setNewConfig: (newConfig: HashTagConfig) => void;
 

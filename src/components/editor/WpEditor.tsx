@@ -19,12 +19,54 @@ import classNames from 'classnames/bind';
 import style from './WpEditor.module.scss';
 import { MentionConfig } from '../../plugins/mention/Mention';
 import { HashTagConfig } from '../../plugins/hashTag/HashTag';
-import { WpEditorPluginConstructor } from './editor';
 import { AutoUrlMatchConfig } from '../../plugins/autoUrlMatch/AutoUrlMatch';
 import { debounce } from 'lodash-es';
 import { PasteToPlainTextConfig } from '../../plugins/pasteToPlainText/PasteToPlainText';
 import { CountTextLengthConfig } from '../../plugins/countTextLength/CountTextLength';
 import WpEditorContents from './WpEditorContents';
+
+export interface WpEditorPlugin<C extends any = any> {
+  commandKey: string;
+  contentEditableEl: MutableRefObject<HTMLDivElement>;
+  config: C;
+
+  setConfig: (config?: C | undefined) => void;
+  component?: <P extends { plugin: any }>(props: P) => React.JSX.Element;
+  handleClick?: (params: {
+    selection: Selection;
+    range: Range;
+    event: MouseEvent<HTMLDivElement>;
+  }) => void;
+  handleKeyDown?: (params: {
+    selection: Selection;
+    range: Range;
+    event: KeyboardEvent<HTMLDivElement>;
+  }) => void;
+  handleChange?: (params: {
+    selection: Selection;
+    range: Range;
+    event: ChangeEvent<HTMLDivElement>;
+  }) => void;
+  handlePaste?: (params: {
+    selection: Selection;
+    range: Range;
+    event: ClipboardEvent<HTMLDivElement>;
+  }) => void;
+  handleCopy?: (params: {
+    selection: Selection;
+    range: Range;
+    event: ClipboardEvent<HTMLDivElement>;
+  }) => void;
+  handleUndoRedo?: (params: { selection: Selection; range: Range }) => void;
+}
+
+export interface WpEditorPluginConstructor {
+  new({
+    contentEditableEl
+  }: {
+    contentEditableEl: MutableRefObject<HTMLDivElement>;
+  }): WpEditorPlugin;
+}
 
 type WpEditorRef = HTMLDivElement & {
   setData: (data: string) => void;
