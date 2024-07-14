@@ -1,8 +1,8 @@
 {
-    "include": ["src", "global.d.ts", "src/types", "src/**/*.d.ts"],
+    "include": ["src", "global.d.ts", "src/types", "src/components/editor/editor.d.ts"],
     "exclude": ["node_modules", "dist"],
     "compilerOptions": {
-        "target": "es6" /* 최신 브라우저는 es6을 대부분 지원한다. */,
+        "target": "es5",
         "module": "esnext" /* 모듈 시스템을 지정한다. */,
         "lib": ["dom", "esnext"],
         "typeRoots" : ["./node_modules/@types"],
@@ -27,8 +27,10 @@
         // error out if import and file system have a casing mismatch. Recommended by TS
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
+        "allowSyntheticDefaultImports": true,
+        "emitDeclarationOnly": false,
         // `tsdx build` ignores this option, but it is commonly used when type-checking separately with `tsc`
-        "noEmit": true,
+        "noEmit": false,
         "paths": { 
             "@/*": ["./src/*"]
         }

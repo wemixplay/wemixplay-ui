@@ -20,10 +20,17 @@ const plugins = [
   json(),
   ignore(['fsevents']),
   typescript({
-		tsconfig: "tsconfig.json",
-    useTsconfigDeclarationDir: true,
-	}),
-	babel({
+    typescript: require('ttypescript'),
+    tsconfigDefaults: {
+      compilerOptions: {
+        plugins: [
+          { "transform": "typescript-transform-paths" },
+          { "transform": "typescript-transform-paths", "afterDeclarations": true }
+        ]
+      }
+    }
+  }),
+  babel({
     babelHelpers: 'bundled',
     exclude: 'node_modules/**',
     extensions,
@@ -72,7 +79,7 @@ const plugins = [
   }),
   resolve({
     extensions,
-		browser: true,
+    browser: true,
     dedupe: ['react', 'react-dom', 'lodash-es']
   }),
   replace({
@@ -99,7 +106,7 @@ if (process.env.NODE_ENV === 'production') {
   }));
 }
 
-if(process.env.NODE_VI === 'OK'){
+if (process.env.NODE_VI === 'OK') {
   plugins.push(visualizer({
     filename: 'bundle-analysis.html',
     open: true,
@@ -111,13 +118,13 @@ module.exports = {
   plugins,
   input: './src/index.ts',
   output: {
-		dir: 'dist',
-		format: 'esm',
-		sourcemap: process.env.NODE_ENV === 'development',
-		manualChunks(id) {
-			if (id.includes('node_modules')) {
-				return 'vendors';
-			}
-		}
-	}
+    dir: 'dist',
+    format: 'esm',
+    sourcemap: process.env.NODE_ENV === 'development',
+    manualChunks(id) {
+      if (id.includes('node_modules')) {
+        return 'vendors';
+      }
+    }
+  }
 };
