@@ -49,6 +49,28 @@
   }
 }
 
+// 라이트모드 컬러가 적용된 스크롤바
+@mixin scroll-interaction {
+  &::-webkit-scrollbar {
+    width: 9px; // 인터랙션이 포함된 스크롤바 영역의 width
+
+    &-track {
+      background-color: white;
+    }
+
+    &-thumb {
+      background-color: rgb(112 115 124 / 16%);
+      background-clip: padding-box;
+      border: 3px solid white;
+    }
+
+    &-track,
+    &-thumb {
+      border-radius: 10px;
+    }
+  }
+}
+
 @mixin ellipsis($lines: 1) {
   @if $lines == 1 {
     overflow: hidden;

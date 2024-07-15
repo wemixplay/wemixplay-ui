@@ -3,21 +3,66 @@
   z-index: 1;
   top: 100%;
   left: 0;
-  margin: 4px 0;
+  width: 100%;
+  max-width: 270px;
+  padding: $sp-20;
+  border-radius: 12px;
+
+  // background-color: var(--semantic-static-white);
+  background-color: white;
+  box-shadow: 0 8px 16px 0 rgb(0 0 0 / 12%);
 
   .mention-list-area {
+    overflow: auto;
+    max-height: 250px;
     padding: 0;
-    border: 1px solid #ddd;
     margin: 0;
     list-style: none;
 
+    @include scroll-interaction ;
+
     >.mention-item {
-      padding: 4px 8px;
+      display: flex;
+      width: 100%;
+      min-height: 68px;
+      box-sizing: border-box;
+      align-items: center;
+      padding: $sp-12;
       cursor: pointer;
+      transition: background 0.3s;
       user-select: none;
 
+      .thumb {
+        width: 36px;
+        height: 36px;
+        flex-shrink: 0;
+      }
+
+      .item-info {
+        display: flex;
+        max-width: calc(100% - 36px);
+        align-items: center;
+        padding-left: $sp-12;
+        margin: 0;
+
+        .item-title {
+          @include ellipsis(2);
+        }
+
+        svg {
+          flex-shrink: 0;
+          margin-left: 4px;
+        }
+      }
+
+      &:hover {
+        border-radius: var(--general-beta-08, 8px);
+        background: var(--Background-Normal-Alternative, #f7f7f8);
+        color: var(--semantic-label-normal);
+      }
+
       &.active {
-        background-color: aqua;
+
       }
     }
   }

@@ -13,6 +13,7 @@ import React, {
 import { isDesktop } from 'react-device-detect';
 import style from './HashList.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
+import { SvgIcoHashtag } from '@/assets/svgs';
 
 type HashListRef = HTMLDivElement & {
   handleArrowUp: () => void;
@@ -227,7 +228,13 @@ const HashList = forwardRef<HashListRef, Props>(
               onMouseOver={() => handleHover(index)}
               onClick={() => handleSelectHash(index)}
             >
-              {listElement ? listElement(item) : item.name}
+              {/* {listElement ? listElement(item) : item.name} */}
+
+              <SvgIcoHashtag width={24} height={24} className={cx('icon')} />
+              <div className={cx('info-area')}>
+                <strong className={cx('title')}>mIMIREEhowsame_mIMIREEhowsame</strong>
+                <span className={cx('count')}>1.5k Members </span>
+              </div>
             </li>
           ))}
         </ul>

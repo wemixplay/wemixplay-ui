@@ -14,6 +14,9 @@ import React, {
 import { isDesktop } from 'react-device-detect';
 import style from './MentionList.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
+import Person from '@/components/avatars/Person';
+import WpImage from '@/components/image/WpImage';
+import { SvgIcoCertified } from '@/assets/svgs';
 
 type MentionListRef = HTMLDivElement & {
   handleArrowUp: () => void;
@@ -219,7 +222,14 @@ const MentionList = forwardRef<MentionListRef, Props>(
               onMouseOver={() => handleHover(index)}
               onClick={() => handleSelectMention(index)}
             >
-              {listElement ? listElement(item) : item.name}
+              {/* {listElement ? listElement(item) : item.name} */}
+              <Person src={''} size={'custom'} className={cx('thumb')} />
+              <p className={cx('item-info')}>
+                <strong className={cx('item-title')}>
+                  Taming Master Taming MasterTaming MasterTaming MasterTaming Master
+                </strong>
+                <SvgIcoCertified width={12} height={12} />
+              </p>
             </li>
           ))}
         </ul>
