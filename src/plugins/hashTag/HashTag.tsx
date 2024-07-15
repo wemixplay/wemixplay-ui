@@ -21,7 +21,7 @@ class HashTag implements WpEditorPlugin {
   private postHashListRef: HashListRef;
   private _config: HashTagConfig = {
     list: [],
-    onWriteHash: (text) => { }
+    onWriteHash: (text) => {}
   };
   private setNewConfig: (newConfig: HashTagConfig) => void;
 

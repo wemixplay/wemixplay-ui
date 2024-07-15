@@ -1,4 +1,4 @@
-import '@/styles/theme.scss';
+// import '@/styles/theme.scss';
 import '@/styles/global.scss';
 import '../styles/storybook.scss';
 import {pretendard, twkEverett} from '@/constants/font.c'

@@ -14,42 +14,42 @@ export const pretendard = localFont({
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/pretendard/Pretendard-Regular.woff',
+      path: '../assets/font/pretendard/Pretendard-Regular.woff',
       weight: '400',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/pretendard/Pretendard-Regular.ttf',
+      path: '../assets/font/pretendard/Pretendard-Regular.ttf',
       weight: '400',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/pretendard/Pretendard-SemiBold.woff2',
+      path: '../assets/font/pretendard/Pretendard-SemiBold.woff2',
       weight: '600',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/pretendard/Pretendard-SemiBold.woff',
+      path: '../assets/font/pretendard/Pretendard-SemiBold.woff',
       weight: '600',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/pretendard/Pretendard-SemiBold.ttf',
+      path: '../assets/font/pretendard/Pretendard-SemiBold.ttf',
       weight: '600',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/pretendard/Pretendard-Bold.woff2',
+      path: '../assets/font/pretendard/Pretendard-Bold.woff2',
       weight: '700',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/pretendard/Pretendard-Bold.woff',
+      path: '../assets/font/pretendard/Pretendard-Bold.woff',
       weight: '700',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/pretendard/Pretendard-Bold.ttf',
+      path: '../assets/font/pretendard/Pretendard-Bold.ttf',
       weight: '700',
       style: 'normal'
     }
@@ -61,32 +61,32 @@ export const pretendard = localFont({
 export const twkEverett = localFont({
   src: [
     {
-      path: '../assets/assets/font/everett/TWKEverett-Regular-web.woff2',
+      path: '../assets/font/everett/TWKEverett-Regular-web.woff2',
       weight: '400',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/everett/TWKEverett-Regular-web.woff',
+      path: '../assets/font/everett/TWKEverett-Regular-web.woff',
       weight: '400',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/everett/TWKEverett-Regular-web.ttf',
+      path: '../assets/font/everett/TWKEverett-Regular-web.ttf',
       weight: '400',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/everett/TWKEverett-Bold-web.woff2',
+      path: '../assets/font/everett/TWKEverett-Bold-web.woff2',
       weight: '700',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/everett/TWKEverett-Bold-web.woff',
+      path: '../assets/font/everett/TWKEverett-Bold-web.woff',
       weight: '700',
       style: 'normal'
     },
     {
-      path: '../assets/assets/font/everett/TWKEverett-Bold-web.ttf',
+      path: '../assets/font/everett/TWKEverett-Bold-web.ttf',
       weight: '700',
       style: 'normal'
     }

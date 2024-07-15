@@ -45,17 +45,14 @@ const config = {
           @import "../src/styles/abstracts/_variables.scss"; 
           @import "../src/styles/abstracts/_mixin.scss";
           @import "../src/styles/abstracts/_animation.scss";
-        ` +
-        "$env: '" +
-        process.env.NEXT_PUBLIC_S3_BUCKET_URL +
-        "';"
+          @import "../src/styles/base/_reset.scss";
+          @import "../src/styles/theme.scss";
+        `
       },
     });
 
     const fileLoaderRule = config.module.rules.find(rule => rule.test && rule.test.test('.svg'));
     fileLoaderRule.exclude = /\.svg$/;
-
-    console.log('fileLoaderRule >> ', fileLoaderRule)
 
     config.module.rules.push({
       loader: '@svgr/webpack',
