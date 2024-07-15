@@ -58,18 +58,21 @@ type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
   btnSubmitText?: ReactElement | string;
   value?: FeedDetailEditorValue;
   name?: string;
+  isOfficial?: boolean;
   writerName?: string;
   writerImg?: string;
-  emptyChannelText?: string;
   channelName?: string;
   channelImg?: string;
+  categoryName?: string;
   selectChannelPopoverElement?: ReactElement;
+  selectCategoryPopoverElement?: ReactElement;
   imageMaxCnt?: number;
   iframeMaxCnt?: number;
   handleChange?: (value: FeedDetailEditorValue, name?: string) => void;
   onMatchExternalUrl?: (url: string[]) => void;
   onUserClick?: (e: MouseEvent<HTMLElement>) => void;
   onSelectChannelClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onSelectCategoryClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onMaxImageUploads?: () => void;
   onMaxIframeUploads?: () => void;
 };
@@ -83,11 +86,12 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       value,
       name,
       minLength = 10,
+      isOfficial,
       writerName,
       writerImg,
-      emptyChannelText = '내 채널에 포스트',
       channelName,
       channelImg,
+      categoryName,
       btnSubmitText = 'POST',
       maxLength = 1000,
       placeholder = 'What is happening?!',
@@ -95,9 +99,11 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       imageMaxCnt = 4,
       iframeMaxCnt = 4,
       selectChannelPopoverElement = <></>,
+      selectCategoryPopoverElement = <></>,
       handleChange,
       onMatchExternalUrl,
       onSelectChannelClick,
+      onSelectCategoryClick,
       onUserClick,
       onMaxImageUploads,
       onMaxIframeUploads,
@@ -406,28 +412,34 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               {writerName || '-'}
             </strong>
             <div className={cx('btn-post-popover')}>
-              <PopoverButton
-                anchorId={onSelectChannelClick ? '' : `post-channel`}
-                id={`post-channel`}
-                popoverStyle={{ left: 0, top: 10, zIndex: 9999 }}
-                popoverElement={selectChannelPopoverElement}
-                popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
-                onClick={onSelectChannelClick}
-              >
-                <span className={cx('selected-channel')}>
-                  {!channelName && !channelImg ? (
-                    <>
-                      {emptyChannelText}
-                      <SvgIcoChevronDown />
-                    </>
-                  ) : (
-                    <>
+              {isOfficial ? (
+                <PopoverButton
+                  anchorId={onSelectCategoryClick ? '' : `post-category`}
+                  id={`post-category`}
+                  popoverStyle={{ left: 0, top: 10, zIndex: 9999 }}
+                  popoverElement={selectCategoryPopoverElement}
+                  popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
+                  onClick={onSelectCategoryClick}
+                >
+                  <span className={cx('selected-channel')}>{categoryName || '-'}</span>
+                </PopoverButton>
+              ) : (
+                <PopoverButton
+                  anchorId={onSelectChannelClick ? '' : `post-channel`}
+                  id={`post-channel`}
+                  popoverStyle={{ left: 0, top: 10, zIndex: 9999 }}
+                  popoverElement={selectChannelPopoverElement}
+                  popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
+                  onClick={onSelectChannelClick}
+                >
+                  <span className={cx('selected-channel')}>
+                    {!!channelImg && (
                       <Person src={channelImg} size={'xsmall'} className={cx('avatar')} />
-                      {channelName || '-'}
-                    </>
-                  )}
-                </span>
-              </PopoverButton>
+                    )}
+                    {channelName || '-'}
+                  </span>
+                </PopoverButton>
+              )}
             </div>
           </div>
         </div>
