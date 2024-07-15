@@ -67,7 +67,7 @@ const FeedEmojiArea = ({
       ))}
 
       {/* Emoji list */}
-      {!!emojiSelectPopoverElement && !!onEmojiSelectBtnClick ? (
+      {!!emojiSelectPopoverElement || !!onEmojiSelectBtnClick ? (
         <div className={cx('btn-add-emoji')}>
           <PopoverButton
             anchorId={onEmojiSelectBtnClick ? '' : `add-emoji-${uid.replace(/:/gi, '')}`}

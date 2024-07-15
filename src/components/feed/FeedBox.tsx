@@ -86,7 +86,7 @@ const FeedBox = ({
           />
 
           {/* Feed Management Button (삭제, 수정, 신고...) */}
-          {!!managePopoverElement && !!onManageBtnClick ? (
+          {!!managePopoverElement || !!onManageBtnClick ? (
             <div className={cx('btn-manage')}>
               {updatedAt}
               <PopoverButton
@@ -133,6 +133,7 @@ const FeedBox = ({
             className={cx('feed-reactions')}
             emojiList={emojiList}
             emojiSelectPopoverElement={emojiSelectPopoverElement}
+            onEmojiClick={onEmojiClick}
             onEmojiSelectBtnClick={onEmojiSelectBtnClick}
           />
           <FeedEtcInfoArea
