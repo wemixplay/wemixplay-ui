@@ -109,6 +109,9 @@
     }
 
     .right {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
       margin-left: auto;
 
       .text-count {
@@ -123,16 +126,32 @@
       }
 
       .btn-submit {
+        position: relative;
         height: 40px;
         padding: 0 $sp-20;
         border-radius: $sp-8;
 
-        // background: var(--Cool-Neutral-10, #171719);
+        background: var(--Cool-Neutral-10, #171719);
         color: var(--semantic-static-white);
         text-align: center;
         transition: background 0.25s, color 0.25s;
 
         @include body-02-normal-b;
+
+        &.loading{
+          .text{
+            visibility: hidden;
+          }
+
+          .spinner{
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          }
+        }
 
         &:disabled {
           border-radius: $sp-8;
