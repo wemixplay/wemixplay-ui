@@ -5,7 +5,9 @@ import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'r
 import HashList, { HashListRef } from './components/HashList';
 import HashContainer from './components/HashContainer';
 
-type HashTagInfo = Record<string, string> & { id: number; name: string; postCnt: number };
+type HashTagInfo = { id: number; name: string; postCnt: number } & {
+  [key: string]: string | number | undefined; // 추가적인 필드도 허용
+};
 
 type HashTagConfig = {
   list: HashTagInfo[];
