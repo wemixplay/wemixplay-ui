@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-constraint */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import React, {
@@ -61,7 +63,7 @@ export interface WpEditorPlugin<C extends any = any> {
 }
 
 export interface WpEditorPluginConstructor {
-  new({
+  new ({
     contentEditableEl
   }: {
     contentEditableEl: MutableRefObject<HTMLDivElement>;
