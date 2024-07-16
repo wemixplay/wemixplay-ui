@@ -5,6 +5,7 @@ import WpEditor, { WpEditorProps, WpEditorRef } from './components/editor/WpEdit
 import FeedDetailEditor, {
   FeedDetailEditorProps,
   FeedDetailEditorValue,
+  PostEditorImageValue,
   PostEditorMediaValue
 } from './components/editor/FeedDetailEditor';
 
@@ -15,6 +16,7 @@ export type {
   WpEditorProps,
   FeedDetailEditorProps,
   PostEditorMediaValue,
+  PostEditorImageValue,
   FeedDetailEditorValue,
   FeedBoxProps
 };
