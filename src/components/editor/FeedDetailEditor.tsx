@@ -41,22 +41,26 @@ import {
 } from '@/utils/valueParserUtils';
 import Person from '../avatars/Person';
 import PopoverButton from '../popover/PopoverButton';
+import Spinner from '../loadings/Spinner';
 
-type PostEditorMediaValue = { file?: File; src: string };
-type PostEditorIframeValue = { type?: 'youtube' | 'twitch'; src: string };
+type PostEditorImageValue = { file?: File; src: string };
+type PostEditorMediaValue = { type: 'youtube' | 'twitch'; src: string };
 
 type FeedDetailEditorValue = {
-  value?: string;
-  images?: PostEditorMediaValue[];
-  iframes?: PostEditorIframeValue[];
+  textValue?: string;
+  images?: PostEditorImageValue[];
+  media?: PostEditorMediaValue[];
   ogMetaData?: FeedLinkPreviewProps['ogMetaData'];
 };
 
-type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
+type Props = Omit<WpEditorProps, 'plugin' | 'initialValue' | 'handleChange'> & {
   className?: string;
   minLength?: number;
   btnSubmitText?: ReactElement | string;
-  value?: FeedDetailEditorValue;
+  textValue?: string;
+  images?: PostEditorImageValue[];
+  media?: PostEditorMediaValue[];
+  ogMetaData?: FeedLinkPreviewProps['ogMetaData'];
   name?: string;
   isOfficial?: boolean;
   writerName?: string;
@@ -68,13 +72,17 @@ type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
   selectCategoryPopoverElement?: ReactElement;
   imageMaxCnt?: number;
   iframeMaxCnt?: number;
-  handleChange?: (value: FeedDetailEditorValue, name?: string) => void;
+  loading?: boolean;
   onMatchExternalUrl?: (url: string[]) => void;
   onUserClick?: (e: MouseEvent<HTMLElement>) => void;
   onSelectChannelClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onSelectCategoryClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onMaxImageUploads?: () => void;
   onMaxIframeUploads?: () => void;
+  handleTextChange?: (value: string, name?: string) => void;
+  handleImageChange?: (value: PostEditorImageValue[], name?: string) => void;
+  handleMediaChange?: (value: PostEditorMediaValue[], name?: string) => void;
+  handleSubmit?: (value: FeedDetailEditorValue, name?: string) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -83,7 +91,10 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
   (
     {
       className = '',
-      value,
+      textValue,
+      images = [],
+      media = [],
+      ogMetaData,
       name,
       minLength = 10,
       isOfficial,
@@ -100,7 +111,11 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       iframeMaxCnt = 4,
       selectChannelPopoverElement = <></>,
       selectCategoryPopoverElement = <></>,
-      handleChange,
+      loading,
+      handleTextChange,
+      handleImageChange,
+      handleMediaChange,
+      handleSubmit,
       onMatchExternalUrl,
       onSelectChannelClick,
       onSelectCategoryClick,
@@ -115,27 +130,25 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
     const imgInputRef = useRef<HTMLInputElement>();
     const excludeOgSiteUrl = useRef<string[]>([]);
 
-    const [textLength, setTextLength] = useState(value?.value?.length ?? 0);
-    const [textData, setTextData] = useState(value?.value);
-    const [mediaData, setMediaData] = useState<Omit<FeedDetailEditorValue, 'value'>>({
-      images: value?.images ?? [],
-      iframes: value?.iframes ?? [],
-      ogMetaData: value?.ogMetaData
-    });
+    const [textLength, setTextLength] = useState(textValue?.length ?? 0);
+    const [textData, setTextData] = useState(textValue);
+    const [imagesData, setImagesData] = useState(images);
+    const [mediaData, setMediaData] = useState(media);
+    const [metaData, setMetaData] = useState(ogMetaData);
 
     const memorizationData = useMemo(() => {
       return {
         ...mediaData,
-        value: textData,
-        images: uniqBy(mediaData.images, 'src'),
-        iframes: uniqBy(mediaData.iframes, 'src')
+        textValue: textData,
+        images: uniqBy(imagesData, 'src'),
+        media: uniqBy(mediaData, 'src')
       };
     }, [textData, mediaData]);
 
     const handleUpdateImages = useCallback(
       (
         params:
-          | { newImage: PostEditorMediaValue | PostEditorMediaValue[] }
+          | { newImage: PostEditorImageValue | PostEditorImageValue[] }
           | { deleteIndex: number }
       ) => {
         let images = [...(memorizationData?.images ?? [])];
@@ -165,7 +178,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
         return images;
       },
-      [memorizationData, name, imageMaxCnt, handleChange, onMaxImageUploads]
+      [memorizationData, name, imageMaxCnt, onMaxImageUploads]
     );
 
     /**
@@ -201,16 +214,12 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           images.push({ file: file, src: dataUrl });
         }
 
-        const newData = { ...memorizationData, images: handleUpdateImages({ newImage: images }) };
+        const newImage = handleUpdateImages({ newImage: images });
 
-        setMediaData({
-          images: newData.images,
-          iframes: newData.iframes,
-          ogMetaData: newData.ogMetaData
-        });
-        handleChange && handleChange(newData, name);
+        setImagesData(newImage);
+        handleImageChange && handleImageChange(newImage, name);
       },
-      [name, memorizationData, handleUpdateImages, handleChange]
+      [name, memorizationData, handleUpdateImages, handleImageChange]
     );
 
     /**
@@ -222,43 +231,36 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       async (e: ChangeEvent<HTMLInputElement>) => {
         const { file, dataUrl } = await imageFileUpload(e);
 
-        const newData = {
-          ...memorizationData,
-          images: handleUpdateImages({ newImage: { file, src: dataUrl } })
-        };
+        const newImage = handleUpdateImages({ newImage: { file, src: dataUrl } });
 
-        setMediaData({
-          images: newData.images,
-          iframes: newData.iframes,
-          ogMetaData: newData.ogMetaData
-        });
-        handleChange && handleChange(newData, name);
+        setImagesData(newImage);
+        handleImageChange && handleImageChange(newImage, name);
       },
-      [name, memorizationData, handleUpdateImages, handleChange]
+      [name, memorizationData, handleUpdateImages, handleImageChange]
     );
 
-    const handleUpdateIframe = useCallback(
+    const handleUpdateMedia = useCallback(
       (
         params:
           | {
-              iframes: PostEditorIframeValue | PostEditorIframeValue[];
+              media: PostEditorMediaValue | PostEditorMediaValue[];
             }
           | {
               deleteIndex: number;
             }
       ) => {
-        let iframes = [...memorizationData.iframes];
+        let media = [...memorizationData.media];
 
-        if ('iframes' in params) {
-          if (Array.isArray(params.iframes)) {
-            iframes = [...iframes, ...params.iframes];
+        if ('media' in params) {
+          if (Array.isArray(params.media)) {
+            media = [...media, ...params.media];
           } else {
-            iframes.push(params.iframes);
+            media.push(params.media);
           }
 
-          iframes = orderBy(iframes, 'src');
+          media = orderBy(media, 'src');
 
-          if (iframes.length > iframeMaxCnt) {
+          if (media.length > iframeMaxCnt) {
             onMaxIframeUploads
               ? onMaxIframeUploads()
               : alert(`영상은 최대 ${iframeMaxCnt}까지 업로드가 가능합니다.`);
@@ -266,12 +268,12 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             return;
           }
         } else {
-          iframes = iframes.filter((_, index) => params.deleteIndex !== index);
+          media = media.filter((_, index) => params.deleteIndex !== index);
         }
 
-        return iframes;
+        return media;
       },
-      [memorizationData.iframes, iframeMaxCnt]
+      [memorizationData.media, iframeMaxCnt]
     );
 
     const onMatchUrl = useCallback(
@@ -284,7 +286,9 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       }) => {
         const imagePattern = /\.(jpg|jpeg|png|gif|webp)$/i;
 
-        const urlInfoList = textUrls.reduce(
+        const testUrlList = [...textUrls, ...mediaUrls.map((item) => item.src)];
+
+        const urlInfoList = testUrlList.reduce(
           (acc, cur) => {
             let type = 'etc';
 
@@ -316,16 +320,15 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             ...image.map((url) => ({ src: url }))
           ]
         });
-        const newIframes = handleUpdateIframe({
-          iframes: [
-            ...mediaUrls.filter((url) => url.tag === 'iframe'),
+        const newMedia = handleUpdateMedia({
+          media: [
             ...youtube.map(
               (url) =>
-                ({ type: 'youtube', src: convertIframeYouTubeURL(url) }) as PostEditorIframeValue
+                ({ type: 'youtube', src: convertIframeYouTubeURL(url) }) as PostEditorMediaValue
             ),
             ...twitch.map(
               (url) =>
-                ({ type: 'twitch', src: convertIframeTwitchURL(url) }) as PostEditorIframeValue
+                ({ type: 'twitch', src: convertIframeTwitchURL(url) }) as PostEditorMediaValue
             )
           ]
         });
@@ -334,26 +337,25 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           onMatchExternalUrl && onMatchExternalUrl(externalUrl);
         }
 
-        const newData = {
-          ...memorizationData,
-          images: newImages,
-          iframes: newIframes
-        };
-
-        setMediaData(newData);
-        handleChange && handleChange(newData, name);
+        setMediaData(newMedia);
+        setImagesData(newImages);
+        handleMediaChange && handleMediaChange(newMedia, name);
+        handleImageChange && handleImageChange(newImages, name);
 
         return textUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`);
       },
       [
         name,
         memorizationData,
-        handleChange,
+        handleImageChange,
+        handleMediaChange,
         handleUpdateImages,
-        handleUpdateIframe,
+        handleUpdateMedia,
         onMatchExternalUrl
       ]
     );
+
+    console.log('mediaData >>', mediaData);
 
     const handleEditorTextChange = useCallback(
       (value: string) => {
@@ -364,26 +366,29 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
         excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) => value.includes(url));
 
-        setTextData(value);
-        handleChange && handleChange({ ...newData, value: convertHtmlToMarkdownStr(value) }, name);
+        const convertValue = convertHtmlToMarkdownStr(value);
+
+        setTextData(convertValue);
+        handleTextChange && handleTextChange(convertValue, name);
       },
-      [name, memorizationData, handleChange]
+      [name, memorizationData, handleTextChange]
     );
 
     useEffect(() => {
-      if (value) {
-        const { value: textValue, ...mediaValues } = value;
-        setMediaData(mediaValues);
-      }
-    }, [value]);
+      setMediaData(media);
+    }, [media]);
 
     useEffect(() => {
-      if (value?.value && !textData) {
-        const htmlStr = convertMarkdownToHtmlStr(value.value);
+      setImagesData(images);
+    }, [images]);
+
+    useEffect(() => {
+      if (textValue && !textData) {
+        const htmlStr = convertMarkdownToHtmlStr(textValue);
 
         setTextData(htmlStr);
       }
-    }, [value?.value, textData]);
+    }, [textValue, textData]);
 
     useImperativeHandle(ref, () => {
       const { setData } = wpEditorRef.current;
@@ -419,9 +424,17 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                   popoverStyle={{ left: 0, top: 10, zIndex: 9999 }}
                   popoverElement={selectCategoryPopoverElement}
                   popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
+                  ripple={{ disabled: !selectCategoryPopoverElement && !onSelectCategoryClick }}
                   onClick={onSelectCategoryClick}
                 >
-                  <span className={cx('selected-channel')}>{categoryName || '-'}</span>
+                  <span className={cx('selected-channel')}>
+                    {categoryName || '-'}{' '}
+                    {selectCategoryPopoverElement || onSelectCategoryClick ? (
+                      <SvgIcoChevronDown />
+                    ) : (
+                      <></>
+                    )}
+                  </span>
                 </PopoverButton>
               ) : (
                 <PopoverButton
@@ -430,6 +443,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                   popoverStyle={{ left: 0, top: 10, zIndex: 9999 }}
                   popoverElement={selectChannelPopoverElement}
                   popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
+                  ripple={{ disabled: !selectChannelPopoverElement && !onSelectChannelClick }}
                   onClick={onSelectChannelClick}
                 >
                   <span className={cx('selected-channel')}>
@@ -437,6 +451,11 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                       <Person src={channelImg} size={'xsmall'} className={cx('avatar')} />
                     )}
                     {channelName || '-'}
+                    {selectChannelPopoverElement || onSelectChannelClick ? (
+                      <SvgIcoChevronDown />
+                    ) : (
+                      <></>
+                    )}
                   </span>
                 </PopoverButton>
               )}
@@ -447,7 +466,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           className={cx('editor', 'post-content')}
           ref={wpEditorRef}
           plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
-          initialValue={memorizationData?.value}
+          initialValue={memorizationData?.textValue}
           placeholder={placeholder}
           maxLength={maxLength}
           {...editorProps}
@@ -480,21 +499,21 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             }}
           />
         )}
-        {memorizationData.iframes.length > 0 && (
+        {memorizationData.media.length > 0 && (
           <FeedIframesView
-            iframes={memorizationData.iframes}
+            iframes={memorizationData.media}
             handleDeleteIframe={({ deleteIndex }) => {
-              const iframes = handleUpdateIframe({ deleteIndex });
+              const iframes = handleUpdateMedia({ deleteIndex });
 
-              setMediaData((data) => ({ ...data, iframes }));
+              setMediaData(iframes);
             }}
           />
         )}
-        {!!memorizationData.ogMetaData && (
+        {!!metaData && (
           <FeedLinkPreview
-            ogMetaData={memorizationData.ogMetaData}
+            ogMetaData={metaData}
             handleDeleteOgMetaData={(params) => {
-              setMediaData((data) => ({ ...data, ogMetaData: undefined }));
+              setMetaData(undefined);
             }}
           />
         )}
@@ -516,8 +535,27 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             <span className={cx('text-count')}>
               <b>{commaWithValue(textLength)}</b> / {commaWithValue(maxLength)}
             </span>
-            <button className={cx('btn-submit')} disabled={minLength > textLength}>
-              {btnSubmitText}
+            <button
+              className={cx('btn-submit', { loading })}
+              disabled={minLength > textLength || loading}
+              onClick={() =>
+                handleSubmit(
+                  {
+                    ...memorizationData,
+                    textValue: convertHtmlToMarkdownStr(memorizationData.textValue)
+                  },
+                  name
+                )
+              }
+            >
+              <span className={cx('text')}>{btnSubmitText}</span>
+              {loading ? (
+                <span className={cx('spinner')}>
+                  <Spinner size={20} />
+                </span>
+              ) : (
+                <></>
+              )}
             </button>
           </div>
         </div>
@@ -528,5 +566,10 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
 FeedDetailEditor.displayName = 'FeedDetailEditor';
 
-export type { Props as FeedDetailEditorProps, PostEditorMediaValue, FeedDetailEditorValue };
+export type {
+  Props as FeedDetailEditorProps,
+  PostEditorImageValue,
+  PostEditorMediaValue,
+  FeedDetailEditorValue
+};
 export default FeedDetailEditor;
