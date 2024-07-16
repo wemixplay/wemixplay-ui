@@ -14,17 +14,19 @@ import { isDesktop } from 'react-device-detect';
 import style from './HashList.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import { SvgIcoHashtag } from '@/assets/svgs';
+import { HashTagInfo } from '../HashTag';
+import { toFormatterByInt } from '@/utils/valueParserUtils';
 
 type HashListRef = HTMLDivElement & {
   handleArrowUp: () => void;
   handleArrowDown: () => void;
-  handleSubmit: () => { profileImg?: string; name: string };
+  handleSubmit: () => HashTagInfo;
 };
 
 type Props = {
   id?: string;
   className?: string;
-  list?: (Record<string, string> & { name: string })[];
+  list?: HashTagInfo[];
   targetHashId?: string;
   contentEditableEl: MutableRefObject<HTMLDivElement>;
   listElement?: (item: JSONObject) => React.JSX.Element;
@@ -220,7 +222,7 @@ const HashList = forwardRef<HashListRef, Props>(
                 }
 
                 Object.entries(item).map(([key, value]) => {
-                  el.dataset[key] = value;
+                  el.dataset[key] = String(value);
                 });
               }}
               className={cx('hash-item', { active: focusIndex === index })}
@@ -228,13 +230,17 @@ const HashList = forwardRef<HashListRef, Props>(
               onMouseOver={() => handleHover(index)}
               onClick={() => handleSelectHash(index)}
             >
-              {/* {listElement ? listElement(item) : item.name} */}
-
-              <SvgIcoHashtag width={24} height={24} className={cx('icon')} />
-              <div className={cx('info-area')}>
-                <strong className={cx('title')}>mIMIREEhowsame_mIMIREEhowsame</strong>
-                <span className={cx('count')}>1.5k Members </span>
-              </div>
+              {listElement ? (
+                listElement(item)
+              ) : (
+                <>
+                  <SvgIcoHashtag width={24} height={24} className={cx('icon')} />
+                  <div className={cx('info-area')}>
+                    <strong className={cx('title')}>{item.name}</strong>
+                    <span className={cx('count')}>{toFormatterByInt(item.postCnt, 1)} Posts</span>
+                  </div>
+                </>
+              )}
             </li>
           ))}
         </ul>

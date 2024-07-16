@@ -5,11 +5,19 @@ import MentionList, { MentionListRef } from './components/MentionList';
 import MentionContainer from './components/MentionContainer';
 import { WpEditorPlugin } from '@/components/editor/WpEditor';
 
+type MentionInfo = Record<string, string> & { id: number; name: string; profileImg?: string };
+
 type MentionConfig = {
-  list: (Record<string, string> & { name: string })[];
-  listElement?: <T = { name: string }>(item: T) => React.JSX.Element;
+  list: MentionInfo[];
+  listElement?: (item: MentionInfo) => React.JSX.Element;
   onWriteMention?: (text: string) => void;
-  onCompleteMention?: <T = { name: string }>(mention: T) => void;
+  onCompleteMention?: ({
+    allMention,
+    currentMention
+  }: {
+    allMention: MentionInfo[];
+    currentMention: MentionInfo;
+  }) => void;
   onCloseMentionList?: () => void;
 };
 
@@ -21,7 +29,7 @@ class Mention implements WpEditorPlugin {
   private postMentionListRef: MentionListRef;
   private _config: MentionConfig = {
     list: [],
-    onWriteMention: (text) => { }
+    onWriteMention: (text) => {}
   };
   private setNewConfig: (newConfig: MentionConfig) => void;
 
@@ -111,7 +119,7 @@ class Mention implements WpEditorPlugin {
   }: {
     selection: Selection;
     range: Range;
-    mention?: Record<string, string> & { name: string };
+    mention?: MentionInfo;
   }) {
     const target = this.contentEditableEl.current;
     const targetMentionId = this.mentionId;
@@ -136,9 +144,7 @@ class Mention implements WpEditorPlugin {
 
       const newMentionTag = target.querySelector(`#${targetMentionId}`) as HTMLSpanElement;
 
-      Object.entries(mention).forEach(([key, value]) => {
-        newMentionTag.dataset[key] = value;
-      });
+      newMentionTag.dataset.id = String(mention.id);
     } else {
       target.innerHTML = target.innerHTML.replace(
         mentionRegex,
@@ -192,7 +198,17 @@ class Mention implements WpEditorPlugin {
 
     const mention = this.postMentionListRef.handleSubmit();
     this.leaveMentionTag({ selection, range, mention });
-    this.config.onCompleteMention && this.config.onCompleteMention(mention);
+
+    const allMentionEls = this.contentEditableEl.current.querySelectorAll(
+      '.mention.complete-mention'
+    );
+
+    const allMention = Array.from(allMentionEls).map((mentionEl) => {
+      return Object.fromEntries(Object.entries((mentionEl as HTMLSpanElement).dataset));
+    }) as MentionInfo[];
+
+    this.config.onCompleteMention &&
+      this.config.onCompleteMention({ allMention, currentMention: mention });
   }
 
   handleKeyDown({
@@ -335,8 +351,6 @@ class Mention implements WpEditorPlugin {
       const mentionTag = range.startContainer as HTMLElement;
       const mentionId = mentionTag.id;
 
-      console.log(mentionId, this.mentionId);
-
       if (!this.mentionId) {
         this.config.onWriteMention &&
           this.config.onWriteMention(mentionTag.innerText.replace('@', ''));
@@ -360,5 +374,5 @@ class Mention implements WpEditorPlugin {
   }
 }
 
-export type { MentionConfig };
+export type { MentionConfig, MentionInfo };
 export default Mention;

@@ -17,16 +17,17 @@ import { makeCxFunc } from '@/utils/forReactUtils';
 import Person from '@/components/avatars/Person';
 import WpImage from '@/components/image/WpImage';
 import { SvgIcoCertified } from '@/assets/svgs';
+import { MentionInfo } from '../Mention';
 
 type MentionListRef = HTMLDivElement & {
   handleArrowUp: () => void;
   handleArrowDown: () => void;
-  handleSubmit: () => { profileImg?: string; name: string };
+  handleSubmit: () => MentionInfo;
 };
 
 type Props = {
   className?: string;
-  list?: (Record<string, string> & { name: string })[];
+  list?: MentionInfo[];
   targetMentionId?: string;
   contentEditableEl: MutableRefObject<HTMLDivElement>;
   listElement?: (item: JSONObject) => React.JSX.Element;
@@ -222,14 +223,17 @@ const MentionList = forwardRef<MentionListRef, Props>(
               onMouseOver={() => handleHover(index)}
               onClick={() => handleSelectMention(index)}
             >
-              {/* {listElement ? listElement(item) : item.name} */}
-              <Person src={''} size={'custom'} className={cx('thumb')} />
-              <p className={cx('item-info')}>
-                <strong className={cx('item-title')}>
-                  Taming Master Taming MasterTaming MasterTaming MasterTaming Master
-                </strong>
-                <SvgIcoCertified width={12} height={12} />
-              </p>
+              {listElement ? (
+                listElement(item)
+              ) : (
+                <>
+                  <Person src={item.profileImg} size={'custom'} className={cx('thumb')} />
+                  <p className={cx('item-info')}>
+                    <strong className={cx('item-title')}>{item.name}</strong>
+                    <SvgIcoCertified width={12} height={12} />
+                  </p>
+                </>
+              )}
             </li>
           ))}
         </ul>

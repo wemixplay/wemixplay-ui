@@ -5,11 +5,19 @@ import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'r
 import HashList, { HashListRef } from './components/HashList';
 import HashContainer from './components/HashContainer';
 
+type HashTagInfo = Record<string, string> & { id: number; name: string; postCnt: number };
+
 type HashTagConfig = {
-  list: (Record<string, string> & { name: string })[];
-  listElement?: <T = { name: string }>(item: T) => React.JSX.Element;
+  list: HashTagInfo[];
+  listElement?: (item: HashTagInfo) => React.JSX.Element;
   onWriteHash?: (text: string) => void;
-  onCompleteHash?: <T = { name: string }>(hash: T) => void;
+  onCompleteHash?: ({
+    allHashTag,
+    currentHashTag
+  }: {
+    allHashTag: HashTagInfo[];
+    currentHashTag: HashTagInfo;
+  }) => void;
   onCloseHashList?: () => void;
 };
 
@@ -111,7 +119,7 @@ class HashTag implements WpEditorPlugin {
   }: {
     selection: Selection;
     range: Range;
-    hash?: Record<string, string> & { name: string };
+    hash?: HashTagInfo;
   }) {
     const target = this.contentEditableEl.current;
     const targetHashId = this.hashId;
@@ -136,9 +144,11 @@ class HashTag implements WpEditorPlugin {
 
       const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
 
-      Object.entries(hash).forEach(([key, value]) => {
-        newHashTag.dataset[key] = value;
-      });
+      // Object.entries(hash).forEach(([key, value]) => {
+      //   newHashTag.dataset[key] = value;
+      // });
+
+      newHashTag.dataset.id = String(hash.id);
     } else {
       target.innerHTML = target.innerHTML.replace(
         hashRegex,
@@ -165,7 +175,14 @@ class HashTag implements WpEditorPlugin {
 
     const hash = this.postHashListRef.handleSubmit();
     this.leaveHashTag({ selection, range, hash });
-    this.config.onCompleteHash && this.config.onCompleteHash(hash);
+
+    const allHashTagEls = this.contentEditableEl.current.querySelectorAll('.hash.complete-hash');
+
+    const allHashTag = Array.from(allHashTagEls).map((hashTagEl) => {
+      return Object.fromEntries(Object.entries((hashTagEl as HTMLSpanElement).dataset));
+    }) as HashTagInfo[];
+
+    this.config.onCompleteHash && this.config.onCompleteHash({ allHashTag, currentHashTag: hash });
   }
 
   handleClick({
@@ -353,5 +370,5 @@ class HashTag implements WpEditorPlugin {
   }
 }
 
-export type { HashTagConfig };
+export type { HashTagConfig, HashTagInfo };
 export default HashTag;
