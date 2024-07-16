@@ -87,7 +87,7 @@ export const convertMarkdownToHtmlStr = (text: string) => {
 };
 
 export const convertHtmlToMarkdownStr = (text: string) => {
-  let convertStr = text.replace(/&nbsp;/g, ' ');
+  let convertStr = text.replace(/\\/g, '').replace(/&nbsp;/g, ' ');
 
   convertStr = convertStr.replace(/<div>/g, '<br />').replace(/<\/div>/g, '');
 
