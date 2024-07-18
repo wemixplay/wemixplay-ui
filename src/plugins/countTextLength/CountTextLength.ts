@@ -10,6 +10,7 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
   public commandKey = 'countTextLength';
   public config: CountTextLengthConfig = {};
   public contentEditableEl: MutableRefObject<HTMLDivElement>;
+  private observer: MutationObserver;
 
   constructor({ contentEditableEl }: { contentEditableEl: MutableRefObject<HTMLDivElement> }) {
     this.contentEditableEl = contentEditableEl;
@@ -42,6 +43,20 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
 
       parentEl.append(el);
     }
+
+    if (typeof window !== 'undefined') {
+      // MutationObserver 초기화
+      this.observer = new MutationObserver(() => {
+        this.countText();
+      });
+
+      // contentEditableEl 관찰 시작
+      this.observer.observe(this.contentEditableEl.current, {
+        characterData: true,
+        subtree: true,
+        childList: true
+      });
+    }
   }
 
   countText() {
@@ -72,12 +87,6 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
     return textContentLength;
   }
 
-  handleUndoRedo() {
-    this.countText();
-  }
-  handleChange() {
-    this.countText();
-  }
   handleKeyDown({ event }) {
     const currLength = this.countText();
     const maxLength = Number((this.contentEditableEl.current as JSONObject).ariaValueMax);
