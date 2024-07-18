@@ -16,6 +16,7 @@ import { makeCxFunc } from '@/utils/forReactUtils';
 import { SvgIcoHashtag } from '@/assets/svgs';
 import { HashTagInfo } from '../HashTag';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
+import useCheckDevice from '@/hooks/useCheckDevice';
 
 type HashListRef = HTMLDivElement & {
   handleArrowUp: () => void;
@@ -54,6 +55,8 @@ const HashList = forwardRef<HashListRef, Props>(
     const [boxDirection, setBoxDirection] = useState('bottom');
     const [position, setPosition] = useState<CSSProperties>({});
     const [focusIndex, setFoucsIndex] = useState(0);
+
+    const { isMobile } = useCheckDevice();
 
     const handleArrowUp = useCallback(() => {
       if (!(list ?? []).length) {
@@ -153,19 +156,23 @@ const HashList = forwardRef<HashListRef, Props>(
         switch (boxDirection) {
           case 'top':
             positionStyle.top = top - dropboxElHeight;
-            positionStyle.left = left;
+            positionStyle.left = isMobile ? '50%' : left;
             break;
           case 'bottom':
             positionStyle.top = top + offsetHeight;
-            positionStyle.left = left;
+            positionStyle.left = isMobile ? '50%' : left;
             break;
           default:
             break;
         }
 
+        if (isMobile) {
+          positionStyle.transform = 'translateX(-50%)';
+        }
+
         return positionStyle;
       },
-      [checkTopBottomSpace, boxDirection]
+      [checkTopBottomSpace, boxDirection, isMobile]
     );
 
     useImperativeHandle(ref, () => {
@@ -237,7 +244,9 @@ const HashList = forwardRef<HashListRef, Props>(
                   <SvgIcoHashtag width={24} height={24} className={cx('icon')} />
                   <div className={cx('info-area')}>
                     <strong className={cx('title')}>{item.name}</strong>
-                    <span className={cx('count')}>{toFormatterByInt(item.postCnt, 1)} Posts</span>
+                    {typeof item.postCnt !== 'undefined' && (
+                      <span className={cx('count')}>{toFormatterByInt(item.postCnt, 1)} Posts</span>
+                    )}
                   </div>
                 </>
               )}

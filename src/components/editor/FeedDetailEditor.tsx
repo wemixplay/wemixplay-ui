@@ -92,8 +92,8 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
     {
       className = '',
       textValue,
-      images = [],
-      media = [],
+      images,
+      media,
       ogMetaData,
       name,
       minLength = 10,
@@ -143,7 +143,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         images: uniqBy(imagesData, 'src'),
         media: uniqBy(mediaData, 'src')
       };
-    }, [textData, mediaData]);
+    }, [textData, imagesData, mediaData]);
 
     const handleUpdateImages = useCallback(
       (
@@ -355,8 +355,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       ]
     );
 
-    console.log('mediaData >>', mediaData);
-
     const handleEditorTextChange = useCallback(
       (value: string) => {
         const newData = {
@@ -376,11 +374,11 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
     useEffect(() => {
       setMediaData(media);
-    }, [media]);
+    }, [JSON.stringify(media)]);
 
     useEffect(() => {
       setImagesData(images);
-    }, [images]);
+    }, [JSON.stringify(images)]);
 
     useEffect(() => {
       if (textValue && !textData) {
@@ -495,7 +493,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             handleDeleteImg={({ deleteIndex }) => {
               const images = handleUpdateImages({ deleteIndex });
 
-              setMediaData((data) => ({ ...data, images }));
+              setImagesData(images);
             }}
           />
         )}

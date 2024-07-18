@@ -5,7 +5,7 @@ import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'r
 import HashList, { HashListRef } from './components/HashList';
 import HashContainer from './components/HashContainer';
 
-type HashTagInfo = { id: number; name: string; postCnt: number } & {
+type HashTagInfo = { id: number; name: string; postCnt?: number } & {
   [key: string]: string | number | undefined; // 추가적인 필드도 허용
 };
 
@@ -156,6 +156,10 @@ class HashTag implements WpEditorPlugin {
         hashRegex,
         `<span id="${targetHashId}" class="hash unknown-hash"$1$2>${selection.focusNode.textContent}</span>&nbsp;`
       );
+
+      const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
+
+      newHashTag.dataset.id = '0';
     }
 
     this.hashId = '';
@@ -238,6 +242,7 @@ class HashTag implements WpEditorPlugin {
     }
 
     if (event.code === 'Space' || event.code === 'ArrowRight') {
+      console.log('event.nativeEvent.isComposing', event.nativeEvent.isComposing);
       if (
         targetHashId &&
         focusInDecompleteHashTag &&

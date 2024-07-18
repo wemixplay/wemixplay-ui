@@ -27,15 +27,19 @@ export const Default: StoryComponent = {
     }
   },
   args: {
+    textValue: '12312312312312',
     config: {
       mention: {
         list: [
-          { id: '1', name: 'Easton' },
-          { id: '2', name: 'Derek' }
+          { id: 1, name: 'Easton' },
+          { id: 2, name: 'Derek' }
         ]
       },
       hash: {
-        list: [{ name: 'Derek' }, { name: 'Easton' }]
+        list: [
+          { id: 1, name: 'Derek' },
+          { id: 2, name: 'Easton' }
+        ]
       }
     }
   },

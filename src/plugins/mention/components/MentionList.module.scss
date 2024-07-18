@@ -4,13 +4,18 @@
   top: 100%;
   left: 0;
   width: 100%;
-  max-width: 270px;
+  max-width: calc(100% - $sp-16);
   padding: $sp-20;
   border-radius: 12px;
 
   // background-color: var(--semantic-static-white);
   background-color: white;
   box-shadow: 0 8px 16px 0 rgb(0 0 0 / 12%);
+
+  @include breakpoint-768 {
+    max-width: 300px;
+    width: fit-content;
+  }
 
   .mention-list-area {
     overflow: auto;
@@ -31,6 +36,7 @@
       cursor: pointer;
       transition: background 0.3s;
       user-select: none;
+      border-radius: var(--general-beta-08, 8px);
 
       .thumb {
         width: 36px;
@@ -47,6 +53,7 @@
 
         .item-title {
           @include ellipsis(2);
+          display: block;
         }
 
         svg {
@@ -55,14 +62,14 @@
         }
       }
 
-      &:hover {
-        border-radius: var(--general-beta-08, 8px);
-        background: var(--Background-Normal-Alternative, #f7f7f8);
-        color: var(--semantic-label-normal);
-      }
+      // &:hover {
+      //   background: var(--Background-Normal-Alternative, #f7f7f8);
+      //   color: var(--semantic-label-normal);
+      // }
 
       &.active {
-
+        background: var(--Background-Normal-Alternative, #f7f7f8);
+        color: var(--semantic-label-normal);
       }
     }
   }

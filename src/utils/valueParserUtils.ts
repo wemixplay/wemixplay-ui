@@ -106,7 +106,10 @@ export const convertHtmlToMarkdownStr = (text: string) => {
       /<span[^>]*\bclass="hash complete-hash\b[^>]*\bdata-id="(\d+)"[^>]*>#([^<]+)<\/span>/g,
       'WP#[$2]($1)'
     )
-    .replace(/<span[^>]*\bclass="hash unknown-hash\b[^>]*>@([^<]+)<\/span>/g, '$1')
+    .replace(
+      /<span[^>]*\bclass="hash unknown-hash\b[^>]*\bdata-id="(\d+)"[^>]*>#([^<]+)<\/span>/g,
+      'WP#[$2]($1)'
+    )
     .replace(/<span[^>]*\bclass="hash will-hash\b[^>]*>@([^<]+)<\/span>/g, '$1');
 
   convertStr = convertStr.replace(

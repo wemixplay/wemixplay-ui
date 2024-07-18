@@ -5,7 +5,7 @@ import MentionList, { MentionListRef } from './components/MentionList';
 import MentionContainer from './components/MentionContainer';
 import { WpEditorPlugin } from '@/components/editor/WpEditor';
 
-type MentionInfo = { id: number; name: string; profileImg?: string } & {
+type MentionInfo = { id: number; name: string; profileImg?: string; isOfficial?: boolean } & {
   [key: string]: string | number | undefined; // 추가적인 필드도 허용
 };
 

@@ -4,11 +4,16 @@
   top: 100%;
   left: 0;
   width: 100%;
-  max-width: 270px;
+  max-width: calc(100% - $sp-16);
   padding: $sp-20;
   border-radius: 12px;
   background-color: var(--semantic-static-white);
   box-shadow: 0 8px 16px 0 rgb(0 0 0 / 12%);
+
+  @include breakpoint-768 {
+    max-width: 300px;
+    width: fit-content;
+  }
 
   .hash-list-area {
     overflow: auto;
@@ -54,8 +59,7 @@
         }
       }
 
-      &.active,
-      &:hover {
+      &.active{
         background: var(--semantic-background-normal-alternative);
         color: var(--semantic-label-normal);
       }

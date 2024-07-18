@@ -67,10 +67,10 @@
         // style
       }
   
-      &.unkown-hash {
-        padding: 0 4px;
-        border: 1px dashed gray;
-        background-color: transparent;
+      &.unknown-hash {
+        color: var(--semantic-status-blue);
+    
+        @include body-01-reading-02-r;
       }
   
       &.complete-hash {

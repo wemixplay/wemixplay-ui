@@ -18,6 +18,7 @@ import Person from '@/components/avatars/Person';
 import WpImage from '@/components/image/WpImage';
 import { SvgIcoCertified } from '@/assets/svgs';
 import { MentionInfo } from '../Mention';
+import useCheckDevice from '@/hooks/useCheckDevice';
 
 type MentionListRef = HTMLDivElement & {
   handleArrowUp: () => void;
@@ -55,6 +56,8 @@ const MentionList = forwardRef<MentionListRef, Props>(
     const [boxDirection, setBoxDirection] = useState('bottom');
     const [position, setPosition] = useState<CSSProperties>({});
     const [focusIndex, setFoucsIndex] = useState(0);
+
+    const { isMobile } = useCheckDevice();
 
     const handleArrowUp = useCallback(() => {
       if (!(list ?? []).length) {
@@ -154,19 +157,23 @@ const MentionList = forwardRef<MentionListRef, Props>(
         switch (boxDirection) {
           case 'top':
             positionStyle.top = top - dropboxElHeight;
-            positionStyle.left = left;
+            positionStyle.left = isMobile ? '50%' : left;
             break;
           case 'bottom':
             positionStyle.top = top + offsetHeight;
-            positionStyle.left = left;
+            positionStyle.left = isMobile ? '50%' : left;
             break;
           default:
             break;
         }
 
+        if (isMobile) {
+          positionStyle.transform = 'translateX(-50%)';
+        }
+
         return positionStyle;
       },
-      [checkTopBottomSpace, boxDirection]
+      [checkTopBottomSpace, boxDirection, isMobile]
     );
 
     useImperativeHandle(ref, () => {
@@ -230,7 +237,7 @@ const MentionList = forwardRef<MentionListRef, Props>(
                   <Person src={item.profileImg} size={'custom'} className={cx('thumb')} />
                   <p className={cx('item-info')}>
                     <strong className={cx('item-title')}>{item.name}</strong>
-                    <SvgIcoCertified width={12} height={12} />
+                    {!!item.isOfficial && <SvgIcoCertified width={12} height={12} />}
                   </p>
                 </>
               )}
