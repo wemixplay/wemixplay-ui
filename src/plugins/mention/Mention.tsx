@@ -238,11 +238,12 @@ class Mention implements WpEditorPlugin {
       }
     }
 
-    if (event.code === 'Space' || event.code === 'ArrowRight') {
+    if (event.code === 'ArrowRight') {
       if (
         targetMentionId &&
         focusInDecompleteMentionTag &&
-        !selection.focusNode.parentElement.nextElementSibling
+        !selection.focusNode.parentElement.nextElementSibling &&
+        !event.nativeEvent.isComposing
       ) {
         event.preventDefault();
 
@@ -343,6 +344,12 @@ class Mention implements WpEditorPlugin {
 
     if (!isStartMention && !focusInMentionTag) {
       this.mentionId = '';
+    }
+
+    if (!isStartMention && focusInMentionTag && !focusNode.textContent.slice(-1).trim()) {
+      focusNode.textContent = focusNode.textContent.trim();
+
+      this.leaveMentionTag({ selection, range });
     }
 
     return false;

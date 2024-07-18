@@ -241,12 +241,12 @@ class HashTag implements WpEditorPlugin {
       }
     }
 
-    if (event.code === 'Space' || event.code === 'ArrowRight') {
-      console.log('event.nativeEvent.isComposing', event.nativeEvent.isComposing);
+    if (event.code === 'ArrowRight') {
       if (
         targetHashId &&
         focusInDecompleteHashTag &&
-        !selection.focusNode.parentElement.nextElementSibling
+        !selection.focusNode.parentElement.nextElementSibling &&
+        !event.nativeEvent.isComposing
       ) {
         event.preventDefault();
 
@@ -347,6 +347,12 @@ class HashTag implements WpEditorPlugin {
 
     if (!isStartHash && !focusInHashTag) {
       this.hashId = '';
+    }
+
+    if (!isStartHash && focusInHashTag && !focusNode.textContent.slice(-1).trim()) {
+      focusNode.textContent = focusNode.textContent.trim();
+
+      this.leaveHashTag({ selection, range });
     }
   }
 
