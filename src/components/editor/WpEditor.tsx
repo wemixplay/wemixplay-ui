@@ -119,6 +119,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
     },
     ref
   ) => {
+    const initValueStatus = useRef(false);
     const contentEditableEl = useRef<WpEditorRef>();
     const previousRevisions = useRef<{
       index: number;
@@ -417,10 +418,12 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
     }, [mutationObserver, handleUndoRedo]);
 
     useEffect(() => {
-      if (initialValue && !contentEditableEl.current.innerHTML) {
+      if (initialValue && !contentEditableEl.current.innerHTML && !initValueStatus.current) {
         contentEditableEl.current.innerHTML = initialValue;
 
         rangeMoveContentEnd();
+
+        initValueStatus.current = true;
       }
     }, [initialValue, rangeMoveContentEnd]);
 
