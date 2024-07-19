@@ -8,13 +8,13 @@ import { makeCxFunc } from '@/utils/forReactUtils';
 
 type Props = {
   className?: string;
-  iframes?: { type?: 'youtube' | 'twitch'; src: string }[];
+  media?: { type?: 'youtube' | 'twitch'; src?: string }[];
   handleDeleteIframe?: ({ deleteIndex }: { deleteIndex: number }) => void;
 };
 
 const cx = makeCxFunc(style);
 
-const FeedIframesView = ({ className = '', iframes = [], handleDeleteIframe }: Props) => {
+const FeedIframesView = ({ className = '', media = [], handleDeleteIframe }: Props) => {
   //logic
 
   return (
@@ -26,7 +26,7 @@ const FeedIframesView = ({ className = '', iframes = [], handleDeleteIframe }: P
         slidesPerView={'auto'}
         spaceBetween={10}
       >
-        {iframes.map((iframe, index) => (
+        {media.map((iframe, index) => (
           <div key={`${iframe.src}-${index}`}>
             {!!handleDeleteIframe && (
               <button

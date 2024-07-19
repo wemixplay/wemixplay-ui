@@ -63,26 +63,26 @@ type Props = Omit<WpEditorProps, 'plugin' | 'initialValue' | 'handleChange'> & {
   ogMetaData?: FeedLinkPreviewProps['ogMetaData'];
   name?: string;
   isOfficial?: boolean;
-  writerName?: string;
-  writerImg?: string;
-  channelName?: string;
-  channelImg?: string;
+  writerName: string;
+  writerImg: string;
+  channelName: string;
+  channelImg: string;
   categoryName?: string;
   selectChannelPopoverElement?: ReactElement;
   selectCategoryPopoverElement?: ReactElement;
   imageMaxCnt?: number;
   iframeMaxCnt?: number;
   loading?: boolean;
-  onMatchExternalUrl?: (url: string[]) => void;
+  handleExternalUrlChange?: (url: string) => void;
   onUserClick?: (e: MouseEvent<HTMLElement>) => void;
   onSelectChannelClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onSelectCategoryClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onMaxImageUploads?: () => void;
   onMaxIframeUploads?: () => void;
-  handleTextChange?: (value: string, name?: string) => void;
-  handleImageChange?: (value: PostEditorImageValue[], name?: string) => void;
-  handleMediaChange?: (value: PostEditorMediaValue[], name?: string) => void;
-  handleSubmit?: (value: FeedDetailEditorValue, name?: string) => void;
+  handleTextChange: (value: string, name?: string) => void;
+  handleImageChange: (value: PostEditorImageValue[], name?: string) => void;
+  handleMediaChange: (value: PostEditorMediaValue[], name?: string) => void;
+  handleSubmit: (value: FeedDetailEditorValue, name?: string) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -116,7 +116,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       handleImageChange,
       handleMediaChange,
       handleSubmit,
-      onMatchExternalUrl,
+      handleExternalUrlChange,
       onSelectChannelClick,
       onSelectCategoryClick,
       onUserClick,
@@ -334,7 +334,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         });
 
         if (externalUrl.length > 0) {
-          onMatchExternalUrl && onMatchExternalUrl(externalUrl);
+          handleExternalUrlChange && handleExternalUrlChange(externalUrl[0]);
         }
 
         setMediaData(newMedia);
@@ -351,7 +351,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         handleMediaChange,
         handleUpdateImages,
         handleUpdateMedia,
-        onMatchExternalUrl
+        handleExternalUrlChange
       ]
     );
 
@@ -362,7 +362,9 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           value
         };
 
-        excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) => value.includes(url));
+        excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) =>
+          wpEditorRef.current.textContent.includes(url)
+        );
 
         const convertValue = convertHtmlToMarkdownStr(value);
 
@@ -379,6 +381,10 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
     useEffect(() => {
       setImagesData(images);
     }, [JSON.stringify(images)]);
+
+    useEffect(() => {
+      setMetaData(ogMetaData);
+    }, [JSON.stringify(ogMetaData)]);
 
     useEffect(() => {
       if (textValue && !textData) {
@@ -494,24 +500,28 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               const images = handleUpdateImages({ deleteIndex });
 
               setImagesData(images);
+              handleImageChange && handleImageChange(images);
             }}
           />
         )}
         {memorizationData.media.length > 0 && (
           <FeedIframesView
-            iframes={memorizationData.media}
+            media={memorizationData.media}
             handleDeleteIframe={({ deleteIndex }) => {
-              const iframes = handleUpdateMedia({ deleteIndex });
+              const media = handleUpdateMedia({ deleteIndex });
 
-              setMediaData(iframes);
+              setMediaData(media);
+              handleMediaChange && handleMediaChange(media);
             }}
           />
         )}
-        {!!metaData && (
+        {!!ogMetaData && (
           <FeedLinkPreview
-            ogMetaData={metaData}
-            handleDeleteOgMetaData={(params) => {
+            ogMetaData={ogMetaData}
+            handleDeleteOgMetaData={({ urls }) => {
+              excludeOgSiteUrl.current.push(urls[0]);
               setMetaData(undefined);
+              handleExternalUrlChange(undefined);
             }}
           />
         )}

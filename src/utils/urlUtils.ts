@@ -17,9 +17,15 @@ export const convertIframeYouTubeURL = (url: string) => {
 
   // 정규식 매칭 및 변환
   if (shortUrlPattern.test(url)) {
-    return url.replace(shortUrlPattern, 'https://www.youtube.com/embed/$1');
+    return url.replace(
+      shortUrlPattern,
+      'https://www.youtube.com/embed/$1?controls=0&loop=1&modestbranding=1&iv_load_policy=1&showinfo=0'
+    );
   } else if (longUrlPattern.test(url)) {
-    return url.replace(longUrlPattern, 'https://www.youtube.com/embed/$1');
+    return url.replace(
+      longUrlPattern,
+      'https://www.youtube.com/embed/$1?controls=00&loop=1&modestbranding=1&iv_load_policy=1&showinfo=0'
+    );
   } else {
     return url; // 매칭되지 않으면 원래 URL 반환
   }

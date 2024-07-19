@@ -133,13 +133,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     const [plugins, setPlugins] = useState(constructEditorPlugin({ plugin, contentEditableEl }));
 
-    const mutationObserver = useMemo(() => {
-      return new MutationObserver(() => {
-        if (!contentEditableEl.current) {
-          return;
-        }
-
-        const recordStack = debounce(() => {
+    const recordStack = useMemo(
+      () =>
+        debounce(() => {
           if (
             previousRevisions.current.stack[previousRevisions.current.index] ===
             contentEditableEl.current.innerHTML
@@ -149,7 +145,15 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
           previousRevisions.current.stack.push(contentEditableEl.current.innerHTML);
           previousRevisions.current.index += 1;
-        }, 300);
+        }, 300),
+      []
+    );
+
+    const mutationObserver = useMemo(() => {
+      return new MutationObserver(() => {
+        if (!contentEditableEl.current) {
+          return;
+        }
 
         if (previousRevisions.current.disabled) {
           previousRevisions.current.disabled = false;
@@ -220,8 +224,28 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       (e: InputEvent | { inputType: string; preventDefault: () => void }) => {
         const { selection } = getSelection();
         let { range } = getSelection();
+        if (event.inputType === 'insertParagraph') {
+          const selection = window.getSelection();
+          if (selection.rangeCount > 0) {
+            const range = selection.getRangeAt(0);
+            const startContainer = range.startContainer;
 
-        if (e.inputType === 'historyUndo' || e.inputType === 'historyRedo') {
+            // Check if the cursor is inside an <a> tag
+            const anchorNode =
+              startContainer.nodeType === 3 ? startContainer.parentNode : startContainer;
+            if (anchorNode.tagName === 'A') {
+              event.preventDefault();
+
+              // Split the <a> tag and insert a new line
+              const newLine = document.createElement('br');
+              range.insertNode(newLine);
+              range.setStartAfter(newLine);
+              range.collapse(true);
+              selection.removeAllRanges();
+              selection.addRange(range);
+            }
+          }
+        } else if (e.inputType === 'historyUndo' || e.inputType === 'historyRedo') {
           e.preventDefault && e.preventDefault();
 
           const { index, stack } = previousRevisions.current;
@@ -275,7 +299,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         const { selection, range } = getSelection();
         const prevData = contentEditableEl.current.innerHTML;
 
-        if (e.code === 'KeyZ' && e.metaKey && e.shiftKey) {
+        if (e.code === 'KeyZ' && (e.metaKey || e.ctrlKey) && e.shiftKey) {
           handleUndoRedo({ ...e, inputType: 'historyRedo' });
 
           e.preventDefault();
@@ -284,6 +308,18 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         plugins.forEach((plugin) => {
           plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
         });
+
+        console.log(selection.focusNode, selection.focusOffset);
+
+        if (
+          e.code === 'Enter' &&
+          !e.nativeEvent.isComposing &&
+          selection.focusNode.nodeType === Node.ELEMENT_NODE &&
+          selection.focusOffset === 0
+        ) {
+          e.preventDefault();
+          return;
+        }
 
         if (
           e.code === 'Enter' &&
@@ -345,8 +381,10 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           handleChange(contentEditableEl.current.innerHTML.replace(/&nbsp;/g, ' '), name);
         textareaProps.onChange && textareaProps.onChange(e);
         textareaProps.onInput && textareaProps.onInput(e);
+
+        recordStack();
       },
-      [getSelection, handleChange, name, plugins, textareaProps]
+      [getSelection, handleChange, recordStack, name, plugins, textareaProps]
     );
 
     const handleClick = useCallback(
@@ -376,6 +414,19 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
     const handlePaste = useCallback(
       (e: ClipboardEvent<HTMLDivElement>) => {
         const { selection, range } = getSelection();
+
+        console.log(
+          previousRevisions.current.stack[previousRevisions.current.index],
+          contentEditableEl.current.innerHTML
+        );
+
+        if (
+          previousRevisions.current.stack[previousRevisions.current.index] !==
+          contentEditableEl.current.innerHTML
+        ) {
+          previousRevisions.current.stack.push(contentEditableEl.current.innerHTML);
+          previousRevisions.current.index += 1;
+        }
 
         plugins.forEach((plugin) => {
           plugin.handlePaste && plugin.handlePaste({ selection, range, event: e });

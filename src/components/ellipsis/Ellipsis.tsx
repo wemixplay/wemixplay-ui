@@ -110,7 +110,7 @@ const Ellipsis = ({
         ref={contentRef}
         className={cx('ellipsis-content')}
         style={contentStyle}
-        dangerouslySetInnerHTML={{ __html: sanitize(content) }}
+        dangerouslySetInnerHTML={{ __html: sanitize(content, { ADD_ATTR: ['target'] }) }}
       />
     ) : (
       <div ref={contentRef} className={cx('ellipsis-content')} style={contentStyle}>

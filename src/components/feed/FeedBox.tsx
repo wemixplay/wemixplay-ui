@@ -19,9 +19,9 @@ type Props = {
   writerName?: string;
   writerImg?: string;
   images?: string[];
-  iframes?: string[];
+  media?: { type?: 'youtube' | 'twitch'; src?: string }[];
   textContent?: string;
-  ogMetaData?: FeedLinkPreviewProps['ogMetaData'];
+  ogMetaData?: FeedLinkPreviewProps['ogMetaData'] | null;
   managePopoverElement?: null | ReactElement;
   emojiSelectPopoverElement?: null | ReactElement;
   categoryName?: string;
@@ -50,7 +50,7 @@ const FeedBox = ({
   certificated,
   textContent,
   images = [],
-  iframes = [],
+  media = [],
   ogMetaData,
   managePopoverElement = <></>,
   emojiSelectPopoverElement = <></>,
@@ -119,12 +119,7 @@ const FeedBox = ({
               images={images.map((src) => ({ src: src }))}
             />
           )}
-          {iframes.length > 0 && (
-            <FeedIframesView
-              className={cx('carousel')}
-              iframes={iframes.map((src) => ({ src: src }))}
-            />
-          )}
+          {media.length > 0 && <FeedIframesView className={cx('carousel')} media={media} />}
           {!!ogMetaData && <FeedLinkPreview ogMetaData={ogMetaData} />}
         </div>
 

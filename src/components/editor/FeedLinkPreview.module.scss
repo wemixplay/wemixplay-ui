@@ -1,64 +1,92 @@
-.og-meta-data-preview{
-  padding:  0 $sp-20;
-  .og-meta-data-content{
+.og-meta-data-preview {
+  padding: 0 $sp-20;
+  margin: $sp-12 0;
+
+  &.has-click-event {
+    cursor: pointer;
+
+    &:hover {
+      @media (hover: hover) and (pointer: fine) {
+        .preview-data {
+          * {
+            text-decoration: underline;
+          }
+        }
+      }
+    }
+  }
+
+  .og-meta-data-content {
     position: relative;
     display: inline-block;
-    border-radius: $rd-8; 
-    border: 1px solid var(--semantic-line-normal-neutral);
+    overflow: hidden;
     width: 100%;
+    border: 1px solid var(--semantic-line-normal-neutral);
+    border-radius: $rd-8;
+
     // padding: $sp-16;
     color: var(--semantic-label-alternative);
-    @include label-01-normal-r; 
-    overflow: hidden;
-    
+
+    @include label-01-normal-r;
 
     .preview-box {
-      display: flex; 
-      align-items: center;    
+      display: flex;
+      align-items: center;
+    }
 
-   
-    }   
     .preview-img {
-      max-width: 200px; 
-      width: 100%;
       position: relative;
-      height: 113px;
+      width: 100%;
+      max-width: 200px;
+      height: 120px;
+
+      :global {
+        .lazy-img-wrapper {
+          position: absolute;
+          z-index: 1;
+          inset: 0;
+        }
+      }
 
       img {
         max-width: 100%;
-        object-fit: cover;
         height: 100%;
+        object-fit: cover;
       }
-   }
+    }
 
-   .preview-data { 
-     padding: $sp-16 ;
-     display: flex; 
-     flex-direction: column;
+    .preview-data {
+      display: flex;
+      flex-direction: column;
+      padding: $sp-16;
 
-     .title {
-       @include label-01-normal-m; 
-       color: var(--semantic-label-normal);
-     }
-     .link {
-       @include label-01-normal-r; 
-       color: var(--semantic-label-alternative);
-     }
-     .description {
-       @include label-02-reading-r; 
-       margin-top: $sp-4;
-       color: var(--semantic-label-alternative);
-       @include ellipsis(2);
-     }
-   }
-    
+      .title {
+        @include label-01-normal-m;
 
+        color: var(--semantic-label-normal);
+      }
 
-    .btn-img-delete{
+      .link {
+        @include label-01-normal-r;
+
+        color: var(--semantic-label-alternative);
+      }
+
+      .description {
+        @include label-02-reading-r;
+
+        margin-top: $sp-4;
+        color: var(--semantic-label-alternative);
+
+        @include ellipsis(2);
+      }
+    }
+
+    .btn-img-delete {
       position: absolute;
-      top:0;
-      right:0;
       z-index: 1;
+      top: 0;
+      right: 0;
     }
   }
 }

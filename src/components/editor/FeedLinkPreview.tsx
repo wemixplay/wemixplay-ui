@@ -1,29 +1,46 @@
 'use client';
 
-import React from 'react';
-import classNames from 'classnames/bind';
+import React, { useCallback } from 'react';
 import style from './FeedLinkPreview.module.scss';
 import { SvgIcoDeleteX } from '@/assets/svgs';
 import WpImage from '../image/WpImage';
+import { makeCxFunc } from '@/utils/forReactUtils';
 
 type Props = {
   className?: string;
   ogMetaData: {
     title: string;
-    desdescription?: string;
+    description?: string;
     image?: string;
     url: string;
   };
   handleDeleteOgMetaData?: ({ urls, type }: { urls: string[]; type: 'add' | 'delete' }) => void;
 };
 
-const cx = classNames.bind(style);
+const cx = makeCxFunc(style);
 
 const FeedLinkPreview = ({ className = '', ogMetaData, handleDeleteOgMetaData }: Props) => {
-  //logic
+  const windowOpenExternalUrl = useCallback(() => {
+    if (!ogMetaData?.url || handleDeleteOgMetaData) {
+      return;
+    }
+
+    const anchorTag = document.createElement('a');
+
+    anchorTag.href = ogMetaData.url;
+    anchorTag.target = '_blank';
+
+    anchorTag.click();
+    anchorTag.remove();
+  }, [ogMetaData?.url, handleDeleteOgMetaData]);
 
   return (
-    <div className={cx(className, 'og-meta-data-preview')}>
+    <div
+      className={cx(className, 'og-meta-data-preview', {
+        'has-click-event': !handleDeleteOgMetaData
+      })}
+      onClick={windowOpenExternalUrl}
+    >
       <div className={cx('og-meta-data-content')}>
         {!!handleDeleteOgMetaData && (
           <button
@@ -44,14 +61,8 @@ const FeedLinkPreview = ({ className = '', ogMetaData, handleDeleteOgMetaData }:
           <div className={cx('preview-data')}>
             <strong className={cx('title')}>{ogMetaData.title || '-'}</strong>
             {!!ogMetaData.url && <p className={cx('link')}>{ogMetaData.url}</p>}
-            {!!ogMetaData.desdescription && (
-              <p className={cx('description')}>
-                @MIR4 I want some help to reach 45 level in a certain amount of time i am thinking
-                of putting money in the game and i wanna ask you what are the best items i can buy
-                to upgrade my exp gain?#MIR #LegnedofMIR @MIR4 I want some help to reach 45 level in
-                a certain amount of time i am thinking of putting money in the game and i wanna ask
-                you what are the best items i can buy to upgrade my exp gain?#MIR #LegnedofMIR
-              </p>
+            {!!ogMetaData.description && (
+              <p className={cx('description')}>{ogMetaData.description}</p>
             )}
           </div>
         </div>

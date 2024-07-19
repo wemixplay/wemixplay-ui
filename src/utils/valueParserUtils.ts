@@ -64,7 +64,7 @@ export const commaWithValue = (value: string | number) => {
 };
 
 export const convertMarkdownToHtmlStr = (text: string) => {
-  let convertStr = text;
+  let convertStr = text.replace(/&quot;/g, '"');
 
   convertStr = convertStr.replace(
     /WP@\[(.*?)\]\((\d+)\)/g,

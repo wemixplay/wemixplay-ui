@@ -60,7 +60,10 @@ const FeedTextContent = ({
           observingEnvs={[isMobile, isTablet, isDesktop]}
         />
       ) : (
-        <div className="text" dangerouslySetInnerHTML={{ __html: sanitize(htmlContent) }}></div>
+        <div
+          className="text"
+          dangerouslySetInnerHTML={{ __html: sanitize(htmlContent, { ALLOWED_ATTR: ['target'] }) }}
+        ></div>
       )}
     </WpEditorContents>
   );

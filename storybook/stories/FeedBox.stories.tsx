@@ -23,7 +23,8 @@ export const Default: StoryComponent = {
     }
   },
   args: {
-    textContent: "Former player and boyhood Arsenal fan, Carl Jenkinson was back at the <a href='https://naver.com' target='_blank'>https://naver.com</a> on Sunday to show his support."
+    textContent:
+      'WP#[123](15) [https://www.youtube.com/watch?v=IkC1Fonx8SQ](https://www.youtube.com/watch?v=IkC1Fonx8SQ)[:target=&quot;_blank&quot;] '
   },
   render: Template
 };
