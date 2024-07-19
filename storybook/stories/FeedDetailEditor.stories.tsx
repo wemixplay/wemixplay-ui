@@ -39,7 +39,10 @@ export const Default: StoryComponent = {
         list: [
           { id: 1, name: 'Derek' },
           { id: 2, name: 'Easton' }
-        ]
+        ],
+        onCompleteHash({ allHashTag, currentHashTag }) {
+          console.log(allHashTag);
+        }
       }
     }
   },

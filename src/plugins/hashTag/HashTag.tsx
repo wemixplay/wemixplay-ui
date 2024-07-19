@@ -18,7 +18,7 @@ type HashTagConfig = {
     currentHashTag
   }: {
     allHashTag: HashTagInfo[];
-    currentHashTag: HashTagInfo;
+    currentHashTag?: HashTagInfo;
   }) => void;
   onCloseHashList?: () => void;
 };
@@ -117,16 +117,18 @@ class HashTag implements WpEditorPlugin {
   leaveHashTag({
     selection,
     range,
-    hash
+    hash,
+    keepTag
   }: {
     selection: Selection;
     range: Range;
     hash?: HashTagInfo;
+    keepTag?: boolean;
   }) {
     const target = this.contentEditableEl.current;
     const targetHashId = this.hashId;
 
-    const hashTag = target.querySelector(`#${targetHashId}`);
+    const hashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
     const existOnlyAtMark = hashTag.firstChild?.textContent === '#' && !hash;
 
     const isWillHash = !!hashTag?.classList.contains('will-hash');
@@ -146,20 +148,30 @@ class HashTag implements WpEditorPlugin {
 
       const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
 
-      // Object.entries(hash).forEach(([key, value]) => {
-      //   newHashTag.dataset[key] = value;
-      // });
-
       newHashTag.dataset.id = String(hash.id);
-    } else {
+      newHashTag.dataset.name = hash.name;
+      newHashTag.textContent = `#${hash.name}`;
+    } else if (!keepTag) {
+      const hashText = selection.focusNode.textContent.trim();
+
       target.innerHTML = target.innerHTML.replace(
         hashRegex,
-        `<span id="${targetHashId}" class="hash unknown-hash"$1$2>${selection.focusNode.textContent}</span>&nbsp;`
+        `<span id="${targetHashId}" class="hash unknown-hash"$1$2>${hashText}</span>&nbsp;`
       );
 
       const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
 
       newHashTag.dataset.id = '0';
+      newHashTag.dataset.name = hashText;
+
+      this.config.onCompleteHash &&
+        this.config.onCompleteHash({
+          allHashTag: this.getAllHashTag(),
+          currentHashTag: {
+            id: Number(newHashTag.dataset.id),
+            name: newHashTag.dataset.name
+          }
+        });
     }
 
     this.hashId = '';
@@ -175,6 +187,17 @@ class HashTag implements WpEditorPlugin {
     this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
   }
 
+  getAllHashTag() {
+    const allHashTagEls = this.contentEditableEl.current.querySelectorAll('.hash:not(.will-hash)');
+
+    return Array.from(allHashTagEls).map((hashTagEl) => {
+      return {
+        ...Object.fromEntries(Object.entries((hashTagEl as HTMLSpanElement).dataset)),
+        name: hashTagEl.textContent.replace('#', '').trim()
+      };
+    }) as HashTagInfo[];
+  }
+
   selectHashItem() {
     const range = document.createRange();
     const selection = window.getSelection();
@@ -182,13 +205,8 @@ class HashTag implements WpEditorPlugin {
     const hash = this.postHashListRef.handleSubmit();
     this.leaveHashTag({ selection, range, hash });
 
-    const allHashTagEls = this.contentEditableEl.current.querySelectorAll('.hash.complete-hash');
-
-    const allHashTag = Array.from(allHashTagEls).map((hashTagEl) => {
-      return Object.fromEntries(Object.entries((hashTagEl as HTMLSpanElement).dataset));
-    }) as HashTagInfo[];
-
-    this.config.onCompleteHash && this.config.onCompleteHash({ allHashTag, currentHashTag: hash });
+    this.config.onCompleteHash &&
+      this.config.onCompleteHash({ allHashTag: this.getAllHashTag(), currentHashTag: hash });
   }
 
   handleClick({
@@ -202,16 +220,11 @@ class HashTag implements WpEditorPlugin {
   }) {
     const focusNode = selection.focusNode;
 
-    const focusInDecompleteHashTag =
-      !!focusNode?.parentElement?.classList?.contains?.('will-hash') ||
-      !!focusNode?.parentElement?.classList?.contains?.('unknown-hash');
+    const focusInHashTag = !!focusNode?.parentElement?.classList?.contains?.('hash');
 
     const collapseCheckRange = selection.getRangeAt(0);
 
-    if (
-      focusInDecompleteHashTag &&
-      collapseCheckRange.startOffset === collapseCheckRange.endOffset
-    ) {
+    if (focusInHashTag && collapseCheckRange.startOffset === collapseCheckRange.endOffset) {
       this.hashId = focusNode.parentElement.id;
     }
   }
@@ -227,16 +240,17 @@ class HashTag implements WpEditorPlugin {
   }) {
     const targetHashId = this.hashId;
 
+    const focusInHashTag = !!selection.focusNode?.parentElement?.classList?.contains?.('hash');
     const focusInDecompleteHashTag =
       !!selection.focusNode?.parentElement?.classList?.contains?.('will-hash') ||
       !!selection.focusNode?.parentElement?.classList?.contains?.('unknown-hash');
 
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
-      if (!targetHashId && focusInDecompleteHashTag) {
+      if (focusInHashTag && !targetHashId) {
         this.hashId = selection.focusNode.parentElement.id;
       } else if (targetHashId && selection.focusNode.firstChild?.textContent === '#') {
         this.leaveHashTag({ selection, range });
-      } else if (targetHashId && !focusInDecompleteHashTag) {
+      } else if (!focusInHashTag && targetHashId) {
         this.hashId = '';
       }
     }
@@ -332,7 +346,46 @@ class HashTag implements WpEditorPlugin {
         focusNode: target.querySelector(`#${this.hashId}`),
         focusOffset: 1
       });
-    } else if (focusInCompleteHashTag) {
+    } else if (focusInHashTag && focusNode.textContent.split(' ').length > 1) {
+      this.hashId = '';
+
+      const [tagText, normalText] = focusNode.textContent.split(' ');
+
+      const spaceNode = document.createTextNode('\u00A0');
+      const tagTextNode = document.createTextNode(`${tagText} `);
+      const normalTextNode = document.createTextNode(normalText);
+
+      focusNode.parentNode.parentNode.insertBefore(
+        normalTextNode,
+        focusNode.parentNode.nextSibling
+      );
+
+      if (focusOffset !== focusNode.textContent.length) {
+        focusNode.parentElement.replaceWith(tagTextNode);
+
+        range.setStartBefore(normalTextNode);
+        range.setEndBefore(normalTextNode);
+      } else {
+        focusNode.textContent = tagText;
+
+        focusNode.parentNode.parentNode.insertBefore(spaceNode, focusNode.parentNode.nextSibling);
+
+        range.setStartAfter(normalTextNode);
+        range.setEndAfter(normalTextNode);
+      }
+
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      this.config.onCompleteHash &&
+        this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
+
+      return;
+    } else if (
+      focusInCompleteHashTag &&
+      focusNode.parentElement.dataset.name.trim() !==
+        focusNode.parentElement.textContent.replace('#', '').trim()
+    ) {
       focusNode.parentElement.classList.replace('complete-hash', 'will-hash');
 
       // dataset의 모든 속성 삭제
@@ -349,10 +402,14 @@ class HashTag implements WpEditorPlugin {
       this.hashId = '';
     }
 
-    if (!isStartHash && focusInHashTag && !focusNode.textContent.slice(-1).trim()) {
+    if (!isStartHash && focusInHashTag && !focusInCompleteHashTag && !this.hashId) {
+      this.hashId = focusNode.parentElement.id;
+    }
+
+    if (!isStartHash && focusInHashTag && this.hashId && !focusNode.textContent.slice(-1).trim()) {
       focusNode.textContent = focusNode.textContent.trim();
 
-      this.leaveHashTag({ selection, range });
+      this.leaveHashTag({ selection, range, keepTag: focusInCompleteHashTag });
     }
   }
 

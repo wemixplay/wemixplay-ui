@@ -232,7 +232,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
             contentEditableEl.current.innerHTML = content;
 
-            handleChange && handleChange(content, name);
+            handleChange && handleChange(content.replace(/&nbsp;/g, ' '), name);
 
             range = rangeMoveContentEnd();
 
@@ -341,7 +341,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           document.execCommand('insertHTML', false, '');
         }
 
-        handleChange && handleChange(contentEditableEl.current.innerHTML, name);
+        handleChange &&
+          handleChange(contentEditableEl.current.innerHTML.replace(/&nbsp;/g, ' '), name);
         textareaProps.onChange && textareaProps.onChange(e);
         textareaProps.onInput && textareaProps.onInput(e);
       },

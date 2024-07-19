@@ -18,7 +18,7 @@ type MentionConfig = {
     currentMention
   }: {
     allMention: MentionInfo[];
-    currentMention: MentionInfo;
+    currentMention?: MentionInfo;
   }) => void;
   onCloseMentionList?: () => void;
 };
@@ -117,11 +117,13 @@ class Mention implements WpEditorPlugin {
   leaveMentionTag({
     selection,
     range,
-    mention
+    mention,
+    keepTag
   }: {
     selection: Selection;
     range: Range;
     mention?: MentionInfo;
+    keepTag?: boolean;
   }) {
     const target = this.contentEditableEl.current;
     const targetMentionId = this.mentionId;
@@ -147,10 +149,14 @@ class Mention implements WpEditorPlugin {
       const newMentionTag = target.querySelector(`#${targetMentionId}`) as HTMLSpanElement;
 
       newMentionTag.dataset.id = String(mention.id);
-    } else {
+      newMentionTag.dataset.name = mention.name;
+      newMentionTag.textContent = `@${mention.name}`;
+    } else if (!keepTag) {
+      const mentionText = selection.focusNode.textContent.trim();
+
       target.innerHTML = target.innerHTML.replace(
         mentionRegex,
-        `<span id="${targetMentionId}" class="mention unknown-mention"$1$2>${selection.focusNode.textContent}</span>&nbsp;`
+        `<span id="${targetMentionId}" class="mention unknown-mention"$1$2>${mentionText}</span>&nbsp;`
       );
     }
 
@@ -180,16 +186,14 @@ class Mention implements WpEditorPlugin {
   }) {
     const focusNode = selection.focusNode;
 
-    const focusInDecompleteMentionTag =
-      !!focusNode?.parentElement?.classList?.contains?.('will-mention') ||
-      !!focusNode?.parentElement?.classList?.contains?.('unknown-mention');
+    const focusInMentionTag = !!focusNode?.parentElement?.classList?.contains?.('mention');
+    // const focusInDecompleteMentionTag =
+    //   !!focusNode?.parentElement?.classList?.contains?.('will-mention') ||
+    //   !!focusNode?.parentElement?.classList?.contains?.('unknown-mention');
 
     const collapseCheckRange = selection.getRangeAt(0);
 
-    if (
-      focusInDecompleteMentionTag &&
-      collapseCheckRange.startOffset === collapseCheckRange.endOffset
-    ) {
+    if (focusInMentionTag && collapseCheckRange.startOffset === collapseCheckRange.endOffset) {
       this.mentionId = focusNode.parentElement.id;
     }
   }
@@ -206,7 +210,10 @@ class Mention implements WpEditorPlugin {
     );
 
     const allMention = Array.from(allMentionEls).map((mentionEl) => {
-      return Object.fromEntries(Object.entries((mentionEl as HTMLSpanElement).dataset));
+      return {
+        ...Object.fromEntries(Object.entries((mentionEl as HTMLSpanElement).dataset)),
+        name: mentionEl.textContent.replace('@', '').trim()
+      };
     }) as MentionInfo[];
 
     this.config.onCompleteMention &&
@@ -224,16 +231,18 @@ class Mention implements WpEditorPlugin {
   }) {
     const targetMentionId = this.mentionId;
 
+    const focusInMentionTag =
+      !!selection.focusNode?.parentElement?.classList?.contains?.('mention');
     const focusInDecompleteMentionTag =
       !!selection.focusNode?.parentElement?.classList?.contains?.('will-mention') ||
       !!selection.focusNode?.parentElement?.classList?.contains?.('unknown-mention');
 
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
-      if (!targetMentionId && focusInDecompleteMentionTag) {
+      if (!targetMentionId && focusInMentionTag) {
         this.mentionId = selection.focusNode.parentElement.id;
       } else if (targetMentionId && selection.focusNode.firstChild?.textContent === '@') {
         this.leaveMentionTag({ selection, range });
-      } else if (targetMentionId && !focusInDecompleteMentionTag) {
+      } else if (targetMentionId && !focusInMentionTag) {
         this.mentionId = '';
       }
     }
@@ -329,7 +338,56 @@ class Mention implements WpEditorPlugin {
         focusNode: target.querySelector(`#${this.mentionId}`),
         focusOffset: 1
       });
-    } else if (focusInCompleteMentionTag) {
+    } else if (focusInMentionTag && focusNode.textContent.split(' ').length > 1) {
+      this.mentionId = '';
+
+      const [tagText, normalText] = focusNode.textContent.split(' ');
+
+      const spaceNode = document.createTextNode('\u00A0');
+      const tagTextNode = document.createTextNode(`${tagText} `);
+      const normalTextNode = document.createTextNode(normalText);
+
+      focusNode.parentNode.parentNode.insertBefore(
+        normalTextNode,
+        focusNode.parentNode.nextSibling
+      );
+
+      if (focusOffset !== focusNode.textContent.length) {
+        focusNode.parentElement.replaceWith(tagTextNode);
+
+        range.setStartBefore(normalTextNode);
+        range.setEndBefore(normalTextNode);
+      } else {
+        focusNode.textContent = tagText;
+
+        focusNode.parentNode.parentNode.insertBefore(spaceNode, focusNode.parentNode.nextSibling);
+
+        range.setStartAfter(normalTextNode);
+        range.setEndAfter(normalTextNode);
+      }
+
+      selection.removeAllRanges();
+      selection.addRange(range);
+
+      const allMentionEls = this.contentEditableEl.current.querySelectorAll(
+        '.mention.complete-mention'
+      );
+
+      const allMention = Array.from(allMentionEls).map((mentionEl) => {
+        return {
+          ...Object.fromEntries(Object.entries((mentionEl as HTMLSpanElement).dataset)),
+          name: mentionEl.textContent.replace('@', '').trim()
+        };
+      }) as MentionInfo[];
+
+      this.config.onCompleteMention && this.config.onCompleteMention({ allMention });
+
+      return;
+    } else if (
+      focusInCompleteMentionTag &&
+      focusNode.parentElement.dataset.name.trim() !==
+        focusNode.parentElement.textContent.replace('@', '').trim()
+    ) {
       focusNode.parentElement.classList.replace('complete-mention', 'will-mention');
 
       // dataset의 모든 속성 삭제
@@ -346,10 +404,19 @@ class Mention implements WpEditorPlugin {
       this.mentionId = '';
     }
 
-    if (!isStartMention && focusInMentionTag && !focusNode.textContent.slice(-1).trim()) {
+    if (!isStartMention && focusInMentionTag && !focusInCompleteMentionTag && !this.mentionId) {
+      this.mentionId = focusNode.parentElement.id;
+    }
+
+    if (
+      !isStartMention &&
+      focusInMentionTag &&
+      this.mentionId &&
+      !focusNode.textContent.slice(-1).trim()
+    ) {
       focusNode.textContent = focusNode.textContent.trim();
 
-      this.leaveMentionTag({ selection, range });
+      this.leaveMentionTag({ selection, range, keepTag: focusInCompleteMentionTag });
     }
 
     return false;

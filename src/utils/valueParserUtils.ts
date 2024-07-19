@@ -68,12 +68,12 @@ export const convertMarkdownToHtmlStr = (text: string) => {
 
   convertStr = convertStr.replace(
     /WP@\[(.*?)\]\((\d+)\)/g,
-    '<span class="mention complete-mention" data-id="$2">@$1</span>'
+    '<span class="mention complete-mention" data-id="$2" data-name="$1">@$1</span>'
   );
 
   convertStr = convertStr.replace(
     /WP#\[(.*?)\]\((\d+)\)/g,
-    '<span class="hash complete-hash" data-id="$2">#$1</span>'
+    '<span class="hash complete-hash" data-id="$2" data-name="$1">#$1</span>'
   );
 
   convertStr = convertStr.replace(
@@ -95,22 +95,31 @@ export const convertHtmlToMarkdownStr = (text: string) => {
 
   convertStr = convertStr
     .replace(
-      /<span[^>]*\bclass="mention complete-mention\b[^>]*\bdata-id="(\d+)"[^>]*>@([^<]+)<\/span>/g,
-      'WP@[$2]($1)'
+      /<span[^>]*\bclass="mention complete-mention\b[^>]*\bdata-id="(\d+)"[^>]*(?:\s+data-[^>]*="[^"]*")*[^>]*>@([^<]+)<\/span>/g,
+      (match, p1, p2) => `WP@[${p2.trim()}](${p1.trim()})`
     )
-    .replace(/<span[^>]*\bclass="mention unknown-mention\b[^>]*>@([^<]+)<\/span>/g, '$1')
-    .replace(/<span[^>]*\bclass="mention will-mention\b[^>]*>@([^<]+)<\/span>/g, '$1');
+    .replace(
+      /<span[^>]*\bclass="mention unknown-mention\b[^>]*>(?:\s+data-[^>]*="[^"]*")*[^>]*>@([^<]+)<\/span>/g,
+      '$1'
+    )
+    .replace(
+      /<span[^>]*\bclass="mention will-mention\b[^>]*>(?:\s+data-[^>]*="[^"]*")*[^>]*>@([^<]+)<\/span>/g,
+      '$1'
+    );
 
   convertStr = convertStr
     .replace(
-      /<span[^>]*\bclass="hash complete-hash\b[^>]*\bdata-id="(\d+)"[^>]*>#([^<]+)<\/span>/g,
+      /<span[^>]*\bclass="hash complete-hash\b[^>]*\bdata-id="(\d+)"[^>]*(?:\s+data-[^>]*="[^"]*")*[^>]*>#([^<]+)<\/span>/g,
+      (match, p1, p2) => `WP#[${p2.trim()}](${p1.trim()})`
+    )
+    .replace(
+      /<span[^>]*\bclass="hash unknown-hash\b[^>]*\bdata-id="(\d+)"[^>]*(?:\s+data-[^>]*="[^"]*")*[^>]*>#([^<]+)<\/span>/g,
       'WP#[$2]($1)'
     )
     .replace(
-      /<span[^>]*\bclass="hash unknown-hash\b[^>]*\bdata-id="(\d+)"[^>]*>#([^<]+)<\/span>/g,
-      'WP#[$2]($1)'
-    )
-    .replace(/<span[^>]*\bclass="hash will-hash\b[^>]*>@([^<]+)<\/span>/g, '$1');
+      /<span[^>]*\bclass="hash will-hash\b[^>]*>(?:\s+data-[^>]*="[^"]*")*[^>]*>#([^<]+)<\/span>/g,
+      '$1'
+    );
 
   convertStr = convertStr.replace(
     /<a href="(.*?)" target="_blank">(.*?)<\/a>/g,
