@@ -13,8 +13,8 @@
   box-shadow: 0 8px 16px 0 rgb(0 0 0 / 12%);
 
   @include breakpoint-768 {
-    max-width: 300px;
     width: fit-content;
+    max-width: 300px;
   }
 
   .mention-list-area {
@@ -33,10 +33,10 @@
       box-sizing: border-box;
       align-items: center;
       padding: $sp-12;
+      border-radius: var(--general-beta-08, 8px);
       cursor: pointer;
       transition: background 0.3s;
       user-select: none;
-      border-radius: var(--general-beta-08, 8px);
 
       .thumb {
         width: 36px;
@@ -53,6 +53,7 @@
 
         .item-title {
           @include ellipsis(2);
+
           display: block;
         }
 
@@ -68,6 +69,7 @@
       // }
 
       &.active {
+        /* stylelint-disable-next-line custom-property-pattern */
         background: var(--Background-Normal-Alternative, #f7f7f8);
         color: var(--semantic-label-normal);
       }

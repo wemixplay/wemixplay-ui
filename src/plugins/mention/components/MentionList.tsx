@@ -52,6 +52,7 @@ const MentionList = forwardRef<MentionListRef, Props>(
     ref
   ) => {
     const elRef = useRef<MentionListRef>();
+    const scrollAreaRef = useRef<HTMLUListElement>();
 
     const [boxDirection, setBoxDirection] = useState('bottom');
     const [position, setPosition] = useState<CSSProperties>({});
@@ -64,11 +65,15 @@ const MentionList = forwardRef<MentionListRef, Props>(
         return;
       }
 
-      if (focusIndex === 0) {
-        setFoucsIndex(list.length - 1);
-      } else {
-        setFoucsIndex((focusIndex) => focusIndex - 1);
-      }
+      const nextFocusIndex = focusIndex === 0 ? list.length - 1 : focusIndex - 1;
+
+      setFoucsIndex(nextFocusIndex);
+
+      const activeItem = scrollAreaRef.current.querySelector(
+        `li:nth-child(${nextFocusIndex + 1})`
+      ) as HTMLLIElement;
+
+      scrollAreaRef.current.scrollTop = activeItem.offsetTop - 20;
     }, [focusIndex, list]);
 
     const handleArrowDown = useCallback(() => {
@@ -76,11 +81,15 @@ const MentionList = forwardRef<MentionListRef, Props>(
         return;
       }
 
-      if (focusIndex === list.length - 1) {
-        setFoucsIndex(0);
-      } else {
-        setFoucsIndex((focusIndex) => focusIndex + 1);
-      }
+      const nextFocusIndex = focusIndex === list.length - 1 ? 0 : focusIndex + 1;
+
+      setFoucsIndex(nextFocusIndex);
+
+      const activeItem = scrollAreaRef.current.querySelector(
+        `li:nth-child(${nextFocusIndex + 1})`
+      ) as HTMLLIElement;
+
+      scrollAreaRef.current.scrollTop = activeItem.offsetTop - 20;
     }, [list, focusIndex]);
 
     const handleSubmit = useCallback(() => {
@@ -221,7 +230,7 @@ const MentionList = forwardRef<MentionListRef, Props>(
         contentEditable={false}
         style={{ ...position, display: (list ?? []).length > 0 ? 'block' : 'none' }}
       >
-        <ul className={cx('mention-list-area')}>
+        <ul ref={scrollAreaRef} className={cx('mention-list-area')}>
           {(list ?? []).map((item, index) => (
             <li
               className={cx('mention-item', { active: focusIndex === index })}
