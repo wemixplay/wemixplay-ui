@@ -40,11 +40,19 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     event: KeyboardEvent<HTMLDivElement>;
   }) {
     const focusNode = selection.focusNode;
+    const selectionRange = selection.getRangeAt(0);
+
+    const offset = selectionRange.startOffset;
 
     const matchUrlFormatText = this.getUrlMatchList(focusNode.textContent).pop();
 
     if (event.code === 'Space' || event.code === 'Enter') {
-      if (matchUrlFormatText && focusNode.nodeType === Node.TEXT_NODE && this.config.onMatchUrl) {
+      if (
+        matchUrlFormatText &&
+        offset > 0 &&
+        focusNode.nodeType === Node.TEXT_NODE &&
+        this.config.onMatchUrl
+      ) {
         // 임시 div를 사용하여 HTML 문자열을 파싱
         const tempDiv = document.createElement('div');
         tempDiv.innerHTML = this.config.onMatchUrl([matchUrlFormatText])[0] || '';
