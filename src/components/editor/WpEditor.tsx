@@ -224,28 +224,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       (e: InputEvent | { inputType: string; preventDefault: () => void }) => {
         const { selection } = getSelection();
         let { range } = getSelection();
-        if (event.inputType === 'insertParagraph') {
-          const selection = window.getSelection();
-          if (selection.rangeCount > 0) {
-            const range = selection.getRangeAt(0);
-            const startContainer = range.startContainer;
 
-            // Check if the cursor is inside an <a> tag
-            const anchorNode =
-              startContainer.nodeType === 3 ? startContainer.parentNode : startContainer;
-            if (anchorNode.tagName === 'A') {
-              event.preventDefault();
-
-              // Split the <a> tag and insert a new line
-              const newLine = document.createElement('br');
-              range.insertNode(newLine);
-              range.setStartAfter(newLine);
-              range.collapse(true);
-              selection.removeAllRanges();
-              selection.addRange(range);
-            }
-          }
-        } else if (e.inputType === 'historyUndo' || e.inputType === 'historyRedo') {
+        if (e.inputType === 'historyUndo' || e.inputType === 'historyRedo') {
           e.preventDefault && e.preventDefault();
 
           const { index, stack } = previousRevisions.current;
@@ -309,16 +289,51 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
         });
 
-        console.log(selection.focusNode, selection.focusOffset);
+        if (e.code === 'Enter' && !e.nativeEvent.isComposing) {
+          const range = selection.getRangeAt(0);
+          const anchorNode = range.startContainer;
+          const offset = range.startOffset;
 
-        if (
-          e.code === 'Enter' &&
-          !e.nativeEvent.isComposing &&
-          selection.focusNode.nodeType === Node.ELEMENT_NODE &&
-          selection.focusOffset === 0
-        ) {
-          e.preventDefault();
-          return;
+          // 텍스트 노드의 시작 부분에 커서가 위치한 경우
+          if (
+            anchorNode.nodeType === Node.TEXT_NODE &&
+            offset === 0 &&
+            anchorNode.parentNode.nodeName !== 'DIV'
+          ) {
+            e.preventDefault();
+
+            // 부모 요소 앞에 <br> 태그 삽입
+            const br = document.createElement('br');
+            anchorNode.parentNode.parentNode.insertBefore(br, anchorNode.parentNode);
+
+            // 커서를 새로운 줄로 이동
+            range.setStartBefore(anchorNode);
+            range.setEndBefore(anchorNode);
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
+
+            return;
+          }
+          // 커서가 요소 노드의 시작 부분에 위치한 경우
+          else if (anchorNode.nodeType === Node.ELEMENT_NODE && anchorNode.nodeName !== 'DIV') {
+            e.preventDefault();
+
+            // 해당 요소 앞에 <br> 태그 삽입
+            const br = document.createElement('br');
+            anchorNode.parentNode.insertBefore(br, anchorNode);
+
+            // 커서를 새로운 줄로 이동
+            range.setStartBefore(anchorNode);
+            range.setEndBefore(anchorNode);
+            selection.removeAllRanges();
+            selection.addRange(range);
+
+            contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
+
+            return;
+          }
         }
 
         if (
@@ -330,8 +345,10 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           e.preventDefault();
           e.stopPropagation();
 
-          // e.preventDefault();
           document.execCommand('insertLineBreak');
+
+          // e.preventDefault();
+
           // const { focusNode, focusOffset } = selection;
           // const br = document.createElement('br');
           // const range = selection.getRangeAt(0);
