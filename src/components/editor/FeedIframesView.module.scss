@@ -1,13 +1,12 @@
 .feed-iframe-views {
-  margin: $sp-12 0 ;
-  
+  margin: $sp-12 0;
 
-  .iframe-preview-slider{
-    :global{
-      .swiper{
-        padding:  0 $sp-20;
+  .iframe-preview-slider {
+    :global {
+      .swiper {
+        padding: 0 $sp-20;
 
-        .swiper-slide{
+        .swiper-slide {
           position: relative;
           width: auto !important;
 
@@ -15,33 +14,62 @@
             margin-right: 0 !important;
           }
 
-          *{
+          * {
             user-select: none;
           }
         }
       }
     }
 
-    .btn-img-delete{
+    .btn-img-delete {
       position: absolute;
-      top:0;
-      right:0;
       z-index: 1;
+      top: 0;
+      right: 0;
     }
   }
 
-  .preview-iframe-box{
-    width: 100%; 
-    border-radius: $rd-12;
+  .preview-iframe-box {
+    position: relative;
     overflow: hidden;
+    width: 100%;
+    border-radius: $rd-12;
+
+    &::before,
+    &::after {
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      display: block;
+      width: calc(50% - 20px);
+      height: calc(100% - 80px);
+      content: "";
+      pointer-events: auto;
+      transform: translateY(-50%);
+    }
+
+    &::before {
+      left: 0;
+    }
+
+    &::after {
+      right: 0;
+    }
+
+    &.mouse-down {
+      &::before,
+      &::after {
+        pointer-events: auto;
+      }
+    }
+
     iframe {
       display: block;
+      width: 100%;
       min-width: 560px;
-      width: 100%; 
-      aspect-ratio: 16 / 9;
       height: 100%;
-      border:  0;
+      border: 0;
+      aspect-ratio: 16 / 9;
     }
- 
   }
 }

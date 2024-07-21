@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useCallback, useRef, MouseEvent, useState, useEffect } from 'react';
 import style from './FeedIframesView.module.scss';
 import Carousel from '../carousel/Carousel';
 import { SvgIcoDeleteX } from '@/assets/svgs';
@@ -15,8 +15,6 @@ type Props = {
 const cx = makeCxFunc(style);
 
 const FeedIframesView = ({ className = '', media = [], handleDeleteIframe }: Props) => {
-  //logic
-
   return (
     <div className={cx(className, 'feed-iframe-views')}>
       <Carousel
