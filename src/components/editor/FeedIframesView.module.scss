@@ -35,25 +35,23 @@
     width: 100%;
     border-radius: $rd-12;
 
-    &::before,
-    &::after {
+    .swipe-helper {
       position: absolute;
       z-index: 1;
       top: 50%;
       display: block;
       width: calc(50% - 20px);
       height: calc(100% - 80px);
-      content: "";
       pointer-events: auto;
       transform: translateY(-50%);
-    }
 
-    &::before {
-      left: 0;
-    }
+      &.before {
+        left: 0;
+      }
 
-    &::after {
-      right: 0;
+      &.after {
+        right: 0;
+      }
     }
 
     &.mouse-down {

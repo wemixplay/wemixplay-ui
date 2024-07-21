@@ -35,6 +35,8 @@ const FeedIframesView = ({ className = '', media = [], handleDeleteIframe }: Pro
               </button>
             )}
             <div key={iframe.src} className={cx('preview-iframe-box')}>
+              <span className={cx('swipe-helper', 'before')}></span>
+              <span className={cx('swipe-helper', 'after')}></span>
               <iframe src={iframe.src} />
             </div>
           </div>
