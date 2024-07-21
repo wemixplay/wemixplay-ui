@@ -3,7 +3,7 @@
 import React, { MouseEvent, ReactElement, useId } from 'react';
 import classNames from 'classnames/bind';
 import style from './FeedBox.module.scss';
-import FeedImagesView from '../editor/FeedImagesView';
+import FeedImagesView, { FeedImagesViewProps } from '../editor/FeedImagesView';
 import PopoverButton from '../popover/PopoverButton';
 import { SvgIcoVDots } from '@/assets/svgs';
 import FeedEmojiArea, { EmojiInfo } from './FeedEmojiArea';
@@ -38,6 +38,7 @@ type Props = {
   onEmojiSelectBtnClick?: null | ((e: MouseEvent<HTMLButtonElement>) => void);
   onEmojiClick?: (params: EmojiInfo) => void;
   onShareBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onImageClick?: FeedImagesViewProps['handleClickImage'];
 };
 
 const cx = classNames.bind(style);
@@ -66,7 +67,8 @@ const FeedBox = ({
   onManageBtnClick,
   onEmojiSelectBtnClick,
   onEmojiClick,
-  onShareBtnClick
+  onShareBtnClick,
+  onImageClick
 }: Props) => {
   const uid = useId();
 
@@ -117,6 +119,7 @@ const FeedBox = ({
             <FeedImagesView
               className={cx('carousel')}
               images={images.map((src) => ({ src: src }))}
+              handleClickImage={onImageClick}
             />
           )}
           {media.length > 0 && <FeedIframesView className={cx('carousel')} media={media} />}

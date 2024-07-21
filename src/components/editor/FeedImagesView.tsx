@@ -10,11 +10,17 @@ type Props = {
   className?: string;
   images?: { file?: File; src: string }[];
   handleDeleteImg?: ({ deleteIndex }: { deleteIndex: number }) => void;
+  handleClickImage?: ({ src, index }: { src: string; index: number }) => void;
 };
 
 const cx = classNames.bind(style);
 
-const FeedImagesView = ({ className = '', images = [], handleDeleteImg }: Props) => {
+const FeedImagesView = ({
+  className = '',
+  images = [],
+  handleDeleteImg,
+  handleClickImage
+}: Props) => {
   //logic
 
   return (
@@ -37,7 +43,11 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg }: Props)
               </button>
             )}
 
-            <div key={image.src} className={cx('preview-image-box')}>
+            <div
+              key={image.src}
+              className={cx('preview-image-box')}
+              onClick={() => handleClickImage && handleClickImage({ src: image.src, index })}
+            >
               <img src={image.src} alt={image.src} />
             </div>
           </div>
@@ -47,4 +57,5 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg }: Props)
   );
 };
 
+export type { Props as FeedImagesViewProps };
 export default FeedImagesView;
