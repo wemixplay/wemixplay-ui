@@ -29,6 +29,7 @@ type Props = {
   emojiList?: EmojiInfo[];
   commentCount?: number;
   likeCount?: number;
+  isMyLike?: boolean;
   createdAt?: number;
   updatedAt?: number;
   locale?: string;
@@ -39,6 +40,7 @@ type Props = {
   onEmojiClick?: (params: EmojiInfo) => void;
   onShareBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onImageClick?: FeedImagesViewProps['handleClickImage'];
+  onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const cx = classNames.bind(style);
@@ -58,6 +60,7 @@ const FeedBox = ({
   emojiList = [],
   commentCount = 0,
   likeCount = 0,
+  isMyLike,
   avatarSize = 36,
   createdAt,
   updatedAt,
@@ -68,7 +71,8 @@ const FeedBox = ({
   onEmojiSelectBtnClick,
   onEmojiClick,
   onShareBtnClick,
-  onImageClick
+  onImageClick,
+  onLikeBtnClick
 }: Props) => {
   const uid = useId();
 
@@ -138,6 +142,8 @@ const FeedBox = ({
             className={cx('feed-comments')}
             commentCount={commentCount}
             likeCount={likeCount}
+            isMyClick={isMyLike}
+            onLikeBtnClick={onLikeBtnClick}
             onShareBtnClick={onShareBtnClick}
           />
         </div>

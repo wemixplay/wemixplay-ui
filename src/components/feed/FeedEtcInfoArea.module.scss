@@ -8,9 +8,13 @@
     &:not(:first-child) {
       margin-left: $sp-24;
     }
+
+    &.active {
+      // 내가 좋아요 했을때 스타일
+    }
   }
 
-  .count{
+  .count {
     padding-left: $sp-4;
   }
 }

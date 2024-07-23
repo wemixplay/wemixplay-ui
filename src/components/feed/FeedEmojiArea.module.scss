@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
 
-  .emoji-img{
+  .emoji-img {
     background-color: transparent;
   }
 
@@ -11,14 +11,17 @@
       margin-left: $sp-12;
     }
 
-    &.no-exist-event{
+    &.no-exist-event {
       cursor: default;
       pointer-events: none;
     }
 
-    .count{
+    &.active {
+      // 내가 이모지를 클릭했을때 스타일
+    }
+
+    .count {
       padding-left: $sp-4;
     }
   }
-  
 }

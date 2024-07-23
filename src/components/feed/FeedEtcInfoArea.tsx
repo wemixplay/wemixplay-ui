@@ -1,7 +1,6 @@
 'use client';
 
 import React, { MouseEvent } from 'react';
-import classNames from 'classnames/bind';
 import style from './FeedEtcInfoArea.module.scss';
 import { SvgIcoComment, SvgIcoLike, SvgIcoShare } from '@/assets/svgs';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
@@ -11,21 +10,34 @@ type Props = {
   className?: string;
   commentCount: number;
   likeCount: number;
+  isMyClick?: boolean;
   onShareBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const cx = makeCxFunc(style);
 
-const FeedEtcInfoArea = ({ className = '', commentCount, likeCount, onShareBtnClick }: Props) => {
+const FeedEtcInfoArea = ({
+  className = '',
+  commentCount,
+  likeCount,
+  isMyClick,
+  onShareBtnClick,
+  onLikeBtnClick
+}: Props) => {
   //logic
 
   return (
-    <div className={cx('feed-comments')}>
+    <div className={cx(className, 'feed-comments')}>
       <button type="button" className={cx('btn-comment')}>
         <SvgIcoComment width={18} height={18} />
         <span className={cx('count')}>{toFormatterByInt(commentCount, 1)}</span>
       </button>
-      <button type="button" className={cx('btn-like')}>
+      <button
+        type="button"
+        className={cx('btn-like', { active: isMyClick })}
+        onClick={onLikeBtnClick}
+      >
         <SvgIcoLike />
         <span className={cx('count')}>{toFormatterByInt(likeCount, 1)}</span>
       </button>

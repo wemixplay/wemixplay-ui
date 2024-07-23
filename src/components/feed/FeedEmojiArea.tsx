@@ -9,9 +9,9 @@ import { makeCxFunc } from '@/utils/forReactUtils';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
 
 type EmojiInfo = {
-  emojiNo: number;
-  imageUrl: string;
-  clickCount: number;
+  emojiNo?: number;
+  imageUrl?: string;
+  clickCount?: number;
   isMyClick?: boolean;
 };
 
