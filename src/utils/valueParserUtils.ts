@@ -110,10 +110,7 @@ export const convertHtmlToMarkdownStr = (text: string) => {
       /<span[^>]*\bclass="mention complete-mention\b[^>]*\bdata-id="(\d+)"[^>]*(?:\s+data-[^>]*="[^"]*")*[^>]*>@([^<]+)<\/span>/g,
       (match, p1, p2) => `WP@[${p2.trim()}](${p1.trim()})`
     )
-    .replace(
-      /<span[^>]*\bclass="mention unknown-mention\b[^>]*>(?:\s+data-[^>]*="[^"]*")?[^>]*>@([^<]+)<\/span>/g,
-      '@$1'
-    )
+    .replace(/<span[^>]*\bclass="mention unknown-mention\b[^>]*>([^<]*)<\/span>/g, '@$1')
     .replace(
       /<span[^>]*\bclass="mention will-mention\b[^>]*>(?:\s+data-[^>]*="[^"]*")?[^>]*>@([^<]+)<\/span>/g,
       '@$1'
