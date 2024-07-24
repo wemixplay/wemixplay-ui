@@ -64,49 +64,62 @@ export const commaWithValue = (value: string | number) => {
 };
 
 export const convertMarkdownToHtmlStr = (text: string) => {
-  let convertStr = text.replace(/&quot;/g, '"');
+  // 변환된 문자열을 저장할 변수 초기화
+  let convertStr = text;
 
+  // &quot; 변환
+  convertStr = convertStr.replace(/&quot;/g, '"');
+
+  // WP@ 변환
   convertStr = convertStr.replace(
     /WP@\[(.*?)\]\((\d+)\)/g,
     '<span class="mention complete-mention" data-id="$2" data-name="$1">@$1</span>'
   );
 
+  // WP# 변환
   convertStr = convertStr.replace(
     /WP#\[(.*?)\]\((\d+)\)/g,
     '<span class="hash complete-hash" data-id="$2" data-name="$1">#$1</span>'
   );
 
+  // 링크 변환
   convertStr = convertStr.replace(
     /\[([^\]]+)\]\(([^)]+)\)\[:(target="_blank")\]/g,
     '<a href="$2" $3>$1</a>'
   );
 
+  // [LINEBREAK] 변환
   convertStr = convertStr.replace(/\[LINEBREAK\]/g, '<br />');
 
+  // 변환된 문자열 반환
   return convertStr;
 };
 
 export const convertHtmlToMarkdownStr = (text: string) => {
+  // 역슬래시와 &nbsp; 변환
   let convertStr = text.replace(/\\/g, '').replace(/&nbsp;/g, ' ');
 
+  // div => br 태그로 변환
   convertStr = convertStr.replace(/<div>/g, '<br />').replace(/<\/div>/g, '');
-
+  // br 태그 [LINEBREAK]로 변환
   convertStr = convertStr.replace(/<br\s*\/?>/gi, '[LINEBREAK]');
 
+  // 멘션 WP@ 변환
   convertStr = convertStr
     .replace(
       /<span[^>]*\bclass="mention complete-mention\b[^>]*\bdata-id="(\d+)"[^>]*(?:\s+data-[^>]*="[^"]*")*[^>]*>@([^<]+)<\/span>/g,
       (match, p1, p2) => `WP@[${p2.trim()}](${p1.trim()})`
     )
     .replace(
-      /<span[^>]*\bclass="mention unknown-mention\b[^>]*>(?:\s+data-[^>]*="[^"]*")*[^>]*>@([^<]+)<\/span>/g,
-      '$1'
+      /<span[^>]*\bclass="mention unknown-mention\b[^>]*>(?:\s+data-[^>]*="[^"]*")?[^>]*>@([^<]+)<\/span>/g,
+      '@$1'
     )
     .replace(
-      /<span[^>]*\bclass="mention will-mention\b[^>]*>(?:\s+data-[^>]*="[^"]*")*[^>]*>@([^<]+)<\/span>/g,
-      '$1'
+      /<span[^>]*\bclass="mention will-mention\b[^>]*>(?:\s+data-[^>]*="[^"]*")?[^>]*>@([^<]+)<\/span>/g,
+      '@$1'
     );
 
+  // 해시태그 WP# 변환
   convertStr = convertStr
     .replace(
       /<span[^>]*\bclass="hash complete-hash\b[^>]*\bdata-id="(\d+)"[^>]*(?:\s+data-[^>]*="[^"]*")*[^>]*>#([^<]+)<\/span>/g,
@@ -121,10 +134,8 @@ export const convertHtmlToMarkdownStr = (text: string) => {
       '$1'
     );
 
-  convertStr = convertStr.replace(
-    /<a href="(.*?)" target="_blank">(.*?)<\/a>/g,
-    '[$2]($1)[:target="_blank"]'
-  );
+  // a태그 markdown 형식으로 변환
+  convertStr = convertStr.replace(/<a href="(.*?)"(.*?)>(.*?)<\/a>/g, '[$3]($1)[:target="_blank"]');
 
   return convertStr;
 };
