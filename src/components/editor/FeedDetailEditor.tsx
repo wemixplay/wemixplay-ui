@@ -468,66 +468,67 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             </div>
           </div>
         </div>
-        <WpEditor
-          className={cx('editor', 'post-content')}
-          ref={wpEditorRef}
-          plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
-          initialValue={textData}
-          placeholder={placeholder}
-          maxLength={maxLength}
-          {...editorProps}
-          config={{
-            ...config,
-            pasteToPlainText: {
-              onMatchUrlReplace: onMatchUrl
-            },
-            autoUrlMatch: {
-              onMatchUrl: (urls) => {
-                return onMatchUrl({ textUrls: urls, mediaUrls: [] });
+        <div className={cx('post-detail-editor-body')}>
+          <WpEditor
+            className={cx('editor', 'post-content')}
+            ref={wpEditorRef}
+            plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
+            initialValue={textData}
+            placeholder={placeholder}
+            maxLength={maxLength}
+            {...editorProps}
+            config={{
+              ...config,
+              pasteToPlainText: {
+                onMatchUrlReplace: onMatchUrl
+              },
+              autoUrlMatch: {
+                onMatchUrl: (urls) => {
+                  return onMatchUrl({ textUrls: urls, mediaUrls: [] });
+                }
+              },
+              countTextLength: {
+                hideUi: true,
+                onChangeTextLength: setTextLength
               }
-            },
-            countTextLength: {
-              hideUi: true,
-              onChangeTextLength: setTextLength
-            }
-          }}
-          onDragOver={onDragOver}
-          onDrop={onInputDrop}
-          handleChange={handleEditorTextChange}
-        ></WpEditor>
-        {memorizationData.images.length > 0 && (
-          <FeedImagesView
-            images={memorizationData.images}
-            handleDeleteImg={({ deleteIndex }) => {
-              const images = handleUpdateImages({ deleteIndex });
-
-              setImagesData(images);
-              handleImageChange && handleImageChange(images);
             }}
-          />
-        )}
-        {memorizationData.media.length > 0 && (
-          <FeedIframesView
-            media={memorizationData.media}
-            handleDeleteIframe={({ deleteIndex }) => {
-              const media = handleUpdateMedia({ deleteIndex });
+            onDragOver={onDragOver}
+            onDrop={onInputDrop}
+            handleChange={handleEditorTextChange}
+          ></WpEditor>
+          {memorizationData.images.length > 0 && (
+            <FeedImagesView
+              images={memorizationData.images}
+              handleDeleteImg={({ deleteIndex }) => {
+                const images = handleUpdateImages({ deleteIndex });
 
-              setMediaData(media);
-              handleMediaChange && handleMediaChange(media);
-            }}
-          />
-        )}
-        {!!ogMetaData && (
-          <FeedLinkPreview
-            ogMetaData={ogMetaData}
-            handleDeleteOgMetaData={({ urls }) => {
-              excludeOgSiteUrl.current.push(urls[0]);
-              setMetaData(undefined);
-              handleExternalUrlChange(undefined);
-            }}
-          />
-        )}
+                setImagesData(images);
+                handleImageChange && handleImageChange(images);
+              }}
+            />
+          )}
+          {memorizationData.media.length > 0 && (
+            <FeedIframesView
+              media={memorizationData.media}
+              handleDeleteIframe={({ deleteIndex }) => {
+                const media = handleUpdateMedia({ deleteIndex });
 
+                setMediaData(media);
+                handleMediaChange && handleMediaChange(media);
+              }}
+            />
+          )}
+          {!!ogMetaData && (
+            <FeedLinkPreview
+              ogMetaData={ogMetaData}
+              handleDeleteOgMetaData={({ urls }) => {
+                excludeOgSiteUrl.current.push(urls[0]);
+                setMetaData(undefined);
+                handleExternalUrlChange(undefined);
+              }}
+            />
+          )}
+        </div>
         <div className={cx('control-box')}>
           <div className={cx('left')}>
             <label className={cx('btn-img-upload')}>
