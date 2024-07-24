@@ -87,14 +87,13 @@ const FeedBox = ({
             profileSize={avatarSize}
             categoryName={categoryName}
             certificated={certificated}
-            createdAt={createdAt}
+            createdAt={updatedAt || createdAt}
             locale={locale}
           />
 
           {/* Feed Management Button (삭제, 수정, 신고...) */}
           {!!managePopoverElement || !!onManageBtnClick ? (
             <div className={cx('btn-manage')}>
-              {updatedAt}
               <PopoverButton
                 anchorId={onManageBtnClick ? '' : `feed-manage-${uid.replace(/:/gi, '')}`}
                 id={`feed-manage-${uid.replace(/:/gi, '')}`}
