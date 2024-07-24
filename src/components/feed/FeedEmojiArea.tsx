@@ -10,6 +10,7 @@ import { toFormatterByInt } from '@/utils/valueParserUtils';
 
 type EmojiInfo = {
   emojiNo?: number;
+  imageNo?: number;
   imageUrl?: string;
   clickCount?: number;
   isMyClick?: boolean;
