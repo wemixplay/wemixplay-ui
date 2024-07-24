@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, useCallback, useEffect, useState } from 'react';
+import React, { MouseEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import useCheckDevice from '@/hooks/useCheckDevice';
 import WpEditorContents from '../editor/WpEditorContents';
 import Ellipsis from '../ellipsis/Ellipsis';
@@ -24,7 +24,9 @@ const FeedTextContent = ({
 }: Props) => {
   const { isDesktop, isMobile, isTablet } = useCheckDevice();
 
-  const [htmlContent, setHtmlContent] = useState('');
+  const htmlContent = useMemo(() => {
+    return convertMarkdownToHtmlStr(content ?? '');
+  }, [content]);
 
   const handleClick = useCallback(
     (e: MouseEvent<HTMLSpanElement>) => {
@@ -41,11 +43,6 @@ const FeedTextContent = ({
     },
     [onMentionClick, onHashTagClick]
   );
-
-  useEffect(() => {
-    const htmlStr = convertMarkdownToHtmlStr(content ?? '');
-    setHtmlContent(htmlStr);
-  }, [content]);
 
   return (
     <WpEditorContents className={className} onClick={handleClick}>
