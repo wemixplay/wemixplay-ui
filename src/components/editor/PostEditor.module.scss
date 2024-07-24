@@ -1,5 +1,11 @@
 .post-detail-editor {
-  .post-detail-editor-header {
+  height: 100%;
+
+  @include breakpoint-768 {
+    height: auto;
+  }
+
+  &-header {
     display: flex;
     align-items: center;
     padding: 0 $sp-20;
@@ -60,6 +66,18 @@
     }
   }
 
+  &-body {
+    overflow: auto;
+    max-height: calc(100% - 150px);
+    padding-bottom: $sp-24;
+
+    @include scroll-interaction;
+
+    @include breakpoint-768 {
+      max-height: 520px;
+    }
+  }
+
   .editor.post-content {
     min-height: 80px;
     padding: $sp-12 $sp-20 $sp-20  $sp-20;
@@ -70,7 +88,7 @@
     display: flex;
     padding: $sp-16 $sp-24;
     border-top: 1px solid var(--semantic-line-solid-normal);
-    margin-top: $sp-24;
+    margin-top: auto;
 
     .left {
       .btn-img-upload {
@@ -130,7 +148,6 @@
         height: 40px;
         padding: 0 $sp-20;
         border-radius: $sp-8;
-
         background: var(--Cool-Neutral-10, #171719);
         color: var(--semantic-static-white);
         text-align: center;
@@ -138,18 +155,18 @@
 
         @include body-02-normal-b;
 
-        &.loading{
-          .text{
+        &.loading {
+          .text {
             visibility: hidden;
           }
 
-          .spinner{
+          .spinner {
             position: absolute;
-            inset: 0;
             z-index: 1;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
+            inset: 0;
           }
         }
 
