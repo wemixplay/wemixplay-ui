@@ -131,7 +131,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
     const excludeOgSiteUrl = useRef<string[]>([]);
 
     const [textLength, setTextLength] = useState(textValue?.length ?? 0);
-    const [textData, setTextData] = useState(textValue);
+    const [textData, setTextData] = useState(convertMarkdownToHtmlStr(textValue));
     const [imagesData, setImagesData] = useState(images);
     const [mediaData, setMediaData] = useState(media);
     const [metaData, setMetaData] = useState(ogMetaData);
@@ -390,6 +390,8 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       if (textValue && !textData) {
         const htmlStr = convertMarkdownToHtmlStr(textValue);
 
+        console.log(htmlStr);
+
         setTextData(htmlStr);
       }
     }, [textValue, textData]);
@@ -470,7 +472,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           className={cx('editor', 'post-content')}
           ref={wpEditorRef}
           plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
-          initialValue={memorizationData?.textValue}
+          initialValue={textData}
           placeholder={placeholder}
           maxLength={maxLength}
           {...editorProps}

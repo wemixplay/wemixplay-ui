@@ -27,7 +27,8 @@ export const Default: StoryComponent = {
     }
   },
   args: {
-    textValue: '12312312312312',
+    textValue:
+      'awda wawd awd[LINEBREAK]a[LINEBREAK]wd [LINEBREAK]awd[LINEBREAK]aw[LINEBREAK]d[LINEBREAK][LINEBREAK][LINEBREAK]a[LINEBREAK]wdaw awd',
     config: {
       mention: {
         list: [
