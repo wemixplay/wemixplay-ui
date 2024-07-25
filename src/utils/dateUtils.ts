@@ -189,6 +189,7 @@ const HOUR = MINUTE * 60;
 const DAY = HOUR * 24;
 
 const DAYS_IN_A_YEAR = 365;
+const DAYS_IN_A_WEEK = 7;
 
 const pareLocale = (locale: string) => {
   switch (locale) {
@@ -331,9 +332,9 @@ export const getTimeString = (date: string | number, locale = 'en') => {
 
   const daysGap = Math.abs(getGapFromNow(targetTimeStamp, 'day'));
 
-  const isOneYearAgo = daysGap >= DAYS_IN_A_YEAR;
+  const isOneWeekAgo = daysGap >= DAYS_IN_A_WEEK;
 
-  return isOneYearAgo
+  return isOneWeekAgo
     ? dayjs(targetTimeStamp).format(defaultFormat)
     : formatRelativeTime(targetTimeStamp, locale);
 };
