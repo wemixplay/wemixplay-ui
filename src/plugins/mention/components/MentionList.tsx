@@ -54,7 +54,7 @@ const MentionList = forwardRef<MentionListRef, Props>(
     const elRef = useRef<MentionListRef>();
     const scrollAreaRef = useRef<HTMLUListElement>();
 
-    const [boxDirection, setBoxDirection] = useState('bottom');
+    const [boxDirection, setBoxDirection] = useState<'top' | 'bottom'>();
     const [position, setPosition] = useState<CSSProperties>({});
     const [focusIndex, setFoucsIndex] = useState(0);
 
@@ -129,6 +129,8 @@ const MentionList = forwardRef<MentionListRef, Props>(
       // 공간이 없다면 반대 방향(위 -> 아래, 아래 -> 위)으로 방향 전환
       if (top + clientHeight > windowBottom) {
         setBoxDirection('top');
+      } else {
+        setBoxDirection('bottom');
       }
     }, []);
 
@@ -204,7 +206,7 @@ const MentionList = forwardRef<MentionListRef, Props>(
       } else {
         setPosition({});
       }
-    }, [targetMentionId, calculatePosition]);
+    }, [targetMentionId, list.length, calculatePosition]);
 
     useEffect(() => {
       setFoucsIndex(0);
@@ -216,10 +218,13 @@ const MentionList = forwardRef<MentionListRef, Props>(
           closeMentionList();
         }
       };
+
       document.addEventListener('click', handleClickOutside);
+      window.addEventListener('resize', closeMentionList);
 
       return () => {
         document.removeEventListener('click', handleClickOutside);
+        window.removeEventListener('resize', closeMentionList);
       };
     }, [closeMentionList]);
 

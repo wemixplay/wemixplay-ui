@@ -53,7 +53,7 @@ const HashList = forwardRef<HashListRef, Props>(
     const elRef = useRef<HashListRef>();
     const scrollAreaRef = useRef<HTMLUListElement>();
 
-    const [boxDirection, setBoxDirection] = useState('bottom');
+    const [boxDirection, setBoxDirection] = useState<'top' | 'bottom'>();
     const [position, setPosition] = useState<CSSProperties>({});
     const [focusIndex, setFoucsIndex] = useState(0);
 
@@ -128,6 +128,8 @@ const HashList = forwardRef<HashListRef, Props>(
       // 공간이 없다면 반대 방향(위 -> 아래, 아래 -> 위)으로 방향 전환
       if (top + clientHeight > windowBottom) {
         setBoxDirection('top');
+      } else {
+        setBoxDirection('bottom');
       }
     }, []);
 
@@ -203,7 +205,7 @@ const HashList = forwardRef<HashListRef, Props>(
       } else {
         setPosition({});
       }
-    }, [targetHashId, calculatePosition]);
+    }, [targetHashId, list.length, calculatePosition]);
 
     useEffect(() => {
       setFoucsIndex(0);
@@ -215,10 +217,13 @@ const HashList = forwardRef<HashListRef, Props>(
           closeHashList();
         }
       };
+
       document.addEventListener('click', handleClickOutside);
+      window.addEventListener('resize', closeHashList);
 
       return () => {
         document.removeEventListener('click', handleClickOutside);
+        window.removeEventListener('resize', closeHashList);
       };
     }, [closeHashList]);
 
@@ -227,7 +232,7 @@ const HashList = forwardRef<HashListRef, Props>(
         ref={elRef}
         className={cx('hash-list')}
         contentEditable={false}
-        style={{ ...position, display: (list ?? []).length > 0 ? 'block' : 'none' }}
+        style={{ ...position, display: (list ?? []).length > 0 && boxDirection ? 'block' : 'none' }}
       >
         <ul ref={scrollAreaRef} className={cx('hash-list-area')}>
           {(list ?? []).map((item, index) => (
@@ -253,7 +258,7 @@ const HashList = forwardRef<HashListRef, Props>(
                   <SvgIcoHashtag width={24} height={24} className={cx('icon')} />
                   <div className={cx('info-area')}>
                     <strong className={cx('title')}>{item.name}</strong>
-                    {typeof item.postCnt !== 'undefined' && (
+                    {!!item.postCnt && (
                       <span className={cx('count')}>{toFormatterByInt(item.postCnt, 1)} Posts</span>
                     )}
                   </div>
