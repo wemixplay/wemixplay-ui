@@ -89,6 +89,11 @@ class HashTag implements WpEditorPlugin {
     );
   }
 
+  containsInvalidSpecialChars(str: string) {
+    const regex = /(^_|_$|[^\w\s])/g;
+    return regex.test(str);
+  }
+
   restoreSelection({
     selection,
     range,
@@ -376,6 +381,27 @@ class HashTag implements WpEditorPlugin {
 
       selection.removeAllRanges();
       selection.addRange(range);
+
+      this.config.onCompleteHash &&
+        this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
+
+      return;
+    } else if (
+      focusInHashTag &&
+      this.containsInvalidSpecialChars(focusNode.textContent.replace('#', ''))
+    ) {
+      this.hashId = '';
+      const cursorOffset = selection.getRangeAt(0).startOffset;
+
+      const normalTextNode = document.createTextNode(`${focusNode.textContent} `);
+
+      focusNode.parentElement.parentNode.replaceChild(normalTextNode, focusNode.parentNode);
+
+      const newRange = document.createRange();
+      newRange.setStart(normalTextNode, cursorOffset);
+      newRange.setEnd(normalTextNode, cursorOffset);
+      selection.removeAllRanges();
+      selection.addRange(newRange);
 
       this.config.onCompleteHash &&
         this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
