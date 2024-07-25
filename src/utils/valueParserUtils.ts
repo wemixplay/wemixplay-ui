@@ -134,5 +134,15 @@ export const convertHtmlToMarkdownStr = (text: string) => {
   // a태그 markdown 형식으로 변환
   convertStr = convertStr.replace(/<a href="(.*?)"(.*?)>(.*?)<\/a>/g, '[$3]($1)[:target="_blank"]');
 
+  const htmlTagPattern = /<\/?[^>]+(>|$)/;
+
+  if (htmlTagPattern.test(convertStr)) {
+    const tempEl = document.createElement('div');
+
+    tempEl.innerHTML = convertStr;
+
+    convertStr = tempEl.textContent;
+  }
+
   return convertStr;
 };
