@@ -1,6 +1,6 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.8.82",
+  "version": "1.8.83",
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
@@ -112,6 +112,7 @@
   },
   "dependencies": {
     "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
     "dayjs": "^1.11.11",
     "decimal.js": "^10.4.3",
     "isomorphic-dompurify": "^2.12.0",
