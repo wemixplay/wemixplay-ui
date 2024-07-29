@@ -4,21 +4,26 @@ import React, { MouseEvent, useCallback, useEffect, useMemo, useState } from 're
 import useCheckDevice from '@/hooks/useCheckDevice';
 import WpEditorContents from '../editor/WpEditorContents';
 import Ellipsis from '../ellipsis/Ellipsis';
-import { sanitize } from 'isomorphic-dompurify';
 import { convertMarkdownToHtmlStr } from '@/utils/valueParserUtils';
+import { makeCxFunc } from '@/utils/forReactUtils';
+import style from './FeedTextContent.module.scss';
 
 type Props = {
   className?: string;
   content: string;
   ellipsis?: boolean;
+  onTextClick?: (e: MouseEvent<HTMLSpanElement>) => void;
   onMentionClick?: (params: { name: string; id: string }) => void;
   onHashTagClick?: (params: { name: string; id: string }) => void;
 };
+
+const cx = makeCxFunc(style)
 
 const FeedTextContent = ({
   className,
   content,
   ellipsis,
+  onTextClick,
   onHashTagClick,
   onMentionClick
 }: Props) => {
@@ -39,13 +44,15 @@ const FeedTextContent = ({
         onMentionClick && onMentionClick({ id, name: name.replace('@', '') });
       } else if (target.classList.contains('hash') && target.classList.contains('complete-hash')) {
         onHashTagClick && onHashTagClick({ id, name: name.replace('#', '') });
+      }else if(target.tagName !== 'A'){
+        onTextClick && onTextClick(e);
       }
     },
     [onMentionClick, onHashTagClick]
   );
 
   return (
-    <WpEditorContents className={className} onClick={handleClick}>
+    <WpEditorContents className={cx(className, 'feed-text-content', { 'has-click-event': onTextClick })} onClick={handleClick}>
       {ellipsis ? (
         <Ellipsis
           className="text"
@@ -59,7 +66,7 @@ const FeedTextContent = ({
       ) : (
         <div
           className="text"
-          dangerouslySetInnerHTML={{ __html: sanitize(htmlContent, { ALLOWED_ATTR: ['target'] }) }}
+          dangerouslySetInnerHTML={{ __html: htmlContent }}
         ></div>
       )}
     </WpEditorContents>

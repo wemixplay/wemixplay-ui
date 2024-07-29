@@ -13,6 +13,7 @@ type Props = {
   isMyClick?: boolean;
   onShareBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onCommentBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -23,13 +24,14 @@ const FeedEtcInfoArea = ({
   likeCount,
   isMyClick,
   onShareBtnClick,
-  onLikeBtnClick
+  onLikeBtnClick,
+  onCommentBtnClick
 }: Props) => {
   //logic
 
   return (
     <div className={cx(className, 'feed-comments')}>
-      <button type="button" className={cx('btn-comment')}>
+      <button type="button" className={cx('btn-comment')} onClick={onCommentBtnClick}>
         <SvgIcoComment width={18} height={18} />
         <span className={cx('count')}>{toFormatterByInt(commentCount, 1)}</span>
       </button>

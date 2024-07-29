@@ -1,0 +1,17 @@
+.feed-text-content {
+  &.has-click-event {
+    cursor: pointer;
+  }
+
+  :global {
+    .mention.complete-mention,
+    .hash.complete-hash,
+    a {
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ import FeedWriterInfo from './FeedWriterInfo';
 import FeedTextContent from './FeedTextContent';
 import FeedLinkPreview, { FeedLinkPreviewProps } from '../editor/FeedLinkPreview';
 import FeedIframesView from '../editor/FeedIframesView';
+import { makeCxFunc } from '@/utils/forReactUtils';
 
 type Props = {
   className?: string;
@@ -30,9 +31,11 @@ type Props = {
   commentCount?: number;
   likeCount?: number;
   isMyLike?: boolean;
+  textEllipsis?: boolean;
   createdAt?: number;
   updatedAt?: number;
   locale?: string;
+  onClick?: (e: MouseEvent<HTMLSpanElement>) => void;
   onMentionClick?: (params: { name: string; id: string }) => void;
   onHashTagClick?: (params: { name: string; id: string }) => void;
   onManageBtnClick?: null | ((e: MouseEvent<HTMLButtonElement>) => void);
@@ -41,9 +44,10 @@ type Props = {
   onShareBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onImageClick?: FeedImagesViewProps['handleClickImage'];
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onCommentBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
-const cx = classNames.bind(style);
+const cx = makeCxFunc(style);
 
 const FeedBox = ({
   className = '',
@@ -65,6 +69,8 @@ const FeedBox = ({
   createdAt,
   updatedAt,
   locale = 'en',
+  textEllipsis = true,
+  onClick,
   onMentionClick,
   onHashTagClick,
   onManageBtnClick,
@@ -72,7 +78,8 @@ const FeedBox = ({
   onEmojiClick,
   onShareBtnClick,
   onImageClick,
-  onLikeBtnClick
+  onLikeBtnClick,
+  onCommentBtnClick
 }: Props) => {
   const uid = useId();
 
@@ -113,7 +120,8 @@ const FeedBox = ({
           <FeedTextContent
             className={cx('text-content')}
             content={textContent}
-            ellipsis={true}
+            ellipsis={textEllipsis}
+            onTextClick={onClick}
             onMentionClick={onMentionClick}
             onHashTagClick={onHashTagClick}
           />
@@ -144,6 +152,7 @@ const FeedBox = ({
             isMyClick={isMyLike}
             onLikeBtnClick={onLikeBtnClick}
             onShareBtnClick={onShareBtnClick}
+            onCommentBtnClick={onCommentBtnClick}
           />
         </div>
       </div>
