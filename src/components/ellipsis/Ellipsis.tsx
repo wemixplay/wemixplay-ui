@@ -13,6 +13,8 @@ import style from './Ellipsis.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import { SvgIcoEllipsisChevron } from '@/assets/svgs';
 
+if (typeof window === 'undefined') React.useLayoutEffect = React.useEffect;
+
 const cx = makeCxFunc(style);
 
 interface Props {
