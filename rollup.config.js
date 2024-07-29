@@ -12,6 +12,8 @@ const alias = require('@rollup/plugin-alias');
 const replace = require('@rollup/plugin-replace');
 const peerDepsExternal = require('rollup-plugin-peer-deps-external');
 const { visualizer } = require("rollup-plugin-visualizer");
+const packageJson = require('./package.json');
+const { optimizeLodashImports } = require("@optimize-lodash/rollup-plugin");
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -30,6 +32,7 @@ const plugins = [
       }
     }
   }),
+  optimizeLodashImports(),
   babel({
     babelHelpers: 'bundled',
     exclude: 'node_modules/**',
@@ -114,17 +117,34 @@ if (process.env.NODE_VI === 'OK') {
 }
 
 module.exports = {
-  external: id => ['react', 'react-dom', '@babel/runtime', '@babel/runtime-corejs3', 'lodash-es'].includes(id) || /fsevents/.test(id),
+  external: id => ['node_modules'].includes(id) || /fsevents/.test(id),
   plugins,
   input: './src/index.ts',
-  output: {
-    dir: 'dist',
-    format: 'esm',
-    sourcemap: process.env.NODE_ENV === 'development',
-    manualChunks(id) {
-      if (id.includes('node_modules')) {
-        return 'vendors';
+  output: [
+    {
+      dir: 'dist/esm',
+      format: 'esm',
+      sourcemap: process.env.NODE_ENV === 'development',
+      manualChunks(id) {
+        if (id.includes('node_modules')) {
+          return 'vendors';
+        }
+      }
+    },
+    {
+      dir: 'dist',
+      format: 'cjs',
+      sourcemap: process.env.NODE_ENV === 'development',
+      manualChunks(id) {
+        if (id.includes('node_modules')) {
+          return 'vendors';
+        }
       }
     }
-  }
+  ],
+	treeshake: {
+		moduleSideEffects: false,
+		propertyReadSideEffects: false,
+		unknownGlobalSideEffects: false,
+	},
 };
