@@ -1,5 +1,5 @@
 import Decimal from 'decimal.js';
-import { isNaN, isNumber } from 'lodash-es';
+import { isNaN, isNumber } from 'lodash';
 
 /**
  * 특정 길이만큼 앞에 특정값을 채움

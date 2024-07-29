@@ -21,7 +21,7 @@ import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import PasteToPlainText from '@/plugins/pasteToPlainText/PasteToPlainText';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
-import { orderBy, uniqBy } from 'lodash-es';
+import { orderBy, uniqBy } from 'lodash';
 import { imageFileUpload, readAsDataURLAsync } from '@/utils/fileUtils';
 import FeedImagesView from './FeedImagesView';
 import {

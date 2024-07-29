@@ -1,4 +1,4 @@
-import { get } from 'lodash-es';
+import { get } from 'lodash';
 
 /**
  * file 정보를 읽어 data64 형식의 url로 변환하여 반환

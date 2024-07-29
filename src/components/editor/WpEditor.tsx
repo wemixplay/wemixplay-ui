@@ -22,7 +22,7 @@ import style from './WpEditor.module.scss';
 import { MentionConfig } from '../../plugins/mention/Mention';
 import { HashTagConfig } from '../../plugins/hashTag/HashTag';
 import { AutoUrlMatchConfig } from '../../plugins/autoUrlMatch/AutoUrlMatch';
-import { debounce } from 'lodash-es';
+import { debounce } from 'lodash';
 import { PasteToPlainTextConfig } from '../../plugins/pasteToPlainText/PasteToPlainText';
 import { CountTextLengthConfig } from '../../plugins/countTextLength/CountTextLength';
 import WpEditorContents from './WpEditorContents';

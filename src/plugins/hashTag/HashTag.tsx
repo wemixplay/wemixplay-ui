@@ -1,6 +1,6 @@
 import React from 'react';
 import type { WpEditorPlugin } from '@/components/editor/WpEditor';
-import { uniqueId } from 'lodash-es';
+import { uniqueId } from 'lodash';
 import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'react';
 import HashList, { HashListRef } from './components/HashList';
 import HashContainer from './components/HashContainer';

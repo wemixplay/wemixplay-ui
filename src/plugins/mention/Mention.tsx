@@ -1,5 +1,5 @@
 import React from 'react';
-import { uniqueId } from 'lodash-es';
+import { uniqueId } from 'lodash';
 import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'react';
 import MentionList, { MentionListRef } from './components/MentionList';
 import MentionContainer from './components/MentionContainer';
