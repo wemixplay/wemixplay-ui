@@ -1,6 +1,14 @@
 'use client';
 
-import React, { MouseEvent, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
+import React, {
+  MouseEvent,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState
+} from 'react';
 import style from './Person.module.scss';
 import { SvgIcoKingMark } from '../../assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
@@ -53,7 +61,9 @@ const Person = ({
   bedgeElement,
   onClick
 }: Props) => {
-  const [loadStatus, setLoadStatus] = useState('loading');
+  const imgRef = useRef<HTMLImageElement>();
+
+  const [loadStatus, setLoadStatus] = useState('');
   const [imgSrc, setImgSrc] = useState(src || DEFAULT_IMAGE);
 
   /** 유저 레벨에 대한 bedge를 보여줄지 여부 */
@@ -76,7 +86,7 @@ const Person = ({
   }, []);
 
   useEffect(() => {
-    setLoadStatus('loading');
+    setLoadStatus(imgRef.current?.complete ? 'loaded' : 'loading');
     setImgSrc(src || DEFAULT_IMAGE);
   }, [src]);
 
@@ -101,6 +111,7 @@ const Person = ({
         </div>
         <div className={cx('avtr-img', loadStatus)}>
           <img
+            ref={imgRef}
             src={imgSrc}
             alt={name || 'user-avatar'}
             onLoad={handleImgLoaded}
