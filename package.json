@@ -1,6 +1,6 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.9.362",
+  "version": "1.9.363",
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
@@ -111,8 +111,7 @@
   },
   "peerDependencies": {
     "react": ">=16",
-    "react-dom": ">=16",
-    "swiper": ">=11"
+    "react-dom": ">=16"
   },
   "dependencies": {
     "@types/jsdom": "^21.1.7",
