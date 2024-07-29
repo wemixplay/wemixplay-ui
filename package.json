@@ -1,6 +1,6 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.8.925",
+  "version": "1.8.926",
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
@@ -42,6 +42,7 @@
     "@babel/runtime-corejs3": "^7.24.8",
     "@emotion/react": "^11.11.4",
     "@emotion/styled": "^11.11.0",
+    "@optimize-lodash/rollup-plugin": "^4.0.4",
     "@rollup/plugin-alias": "^5.1.0",
     "@rollup/plugin-babel": "^6.0.4",
     "@rollup/plugin-commonjs": "^25.0.7",
