@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import classNames from 'classnames/bind';
 import style from './FeedImagesView.module.scss';
 import Carousel from '../carousel/Carousel';
 import { SvgIcoDeleteX } from '@/assets/svgs';
+import { makeCxFunc } from '@/utils/forReactUtils';
 
 type Props = {
   className?: string;
@@ -13,7 +13,7 @@ type Props = {
   handleClickImage?: ({ src, index }: { src: string; index: number }) => void;
 };
 
-const cx = classNames.bind(style);
+const cx = makeCxFunc(style);
 
 const FeedImagesView = ({
   className = '',
