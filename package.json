@@ -1,6 +1,6 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.9.366",
+  "version": "1.9.367",
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
@@ -19,7 +19,8 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/esm/index.js",
       "require": "./dist/index.js"
-    }
+    },
+    "./styles.css": "./dist/styles.css"
   },
   "scripts": {
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
