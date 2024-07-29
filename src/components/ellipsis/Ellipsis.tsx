@@ -8,7 +8,6 @@ import React, {
   useRef,
   useState
 } from 'react';
-import { sanitize } from 'isomorphic-dompurify';
 
 import style from './Ellipsis.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
@@ -57,7 +56,7 @@ interface Props {
  */
 const Ellipsis = ({
   className,
-  content,
+  content = '',
   triggerMore = 'more',
   triggerLess = 'less',
   lineClamp = 2,
@@ -110,7 +109,9 @@ const Ellipsis = ({
         ref={contentRef}
         className={cx('ellipsis-content')}
         style={contentStyle}
-        dangerouslySetInnerHTML={{ __html: sanitize(content, { ADD_ATTR: ['target'] }) }}
+        dangerouslySetInnerHTML={{
+          __html: content
+        }}
       />
     ) : (
       <div ref={contentRef} className={cx('ellipsis-content')} style={contentStyle}>

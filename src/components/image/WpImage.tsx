@@ -15,6 +15,8 @@ import imageIntersectionObserver from './ImageIntersectionObserver';
 import style from './WpImage.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
+if (typeof window === 'undefined') React.useLayoutEffect = React.useEffect;
+
 const cx = makeCxFunc(style);
 
 /**
