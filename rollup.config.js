@@ -14,6 +14,7 @@ const peerDepsExternal = require('rollup-plugin-peer-deps-external');
 const { visualizer } = require("rollup-plugin-visualizer");
 const packageJson = require('./package.json');
 const { optimizeLodashImports } = require("@optimize-lodash/rollup-plugin");
+const renameNodeModules = require("rollup-plugin-rename-node-modules");
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -31,18 +32,33 @@ const plugins = [
         ]
       }
     }
-  }),
+  }),,
   optimizeLodashImports(),
   babel({
-    babelHelpers: 'bundled',
-    exclude: 'node_modules/**',
-    extensions,
-    presets: [
-      '@babel/preset-env',
-      '@babel/preset-react',
-      '@babel/preset-typescript'
-    ],
-  }),
+		babelHelpers: 'runtime',
+		exclude: 'node_modules/**',
+		extensions,
+		presets: [
+			[
+				'@babel/preset-env',
+				{
+					useBuiltIns: 'usage',
+					corejs: 3, // core-js version 3 사용
+				}
+			],
+			'@babel/preset-react',
+			'@babel/preset-typescript'
+		],
+		plugins: [
+			'@babel/plugin-transform-runtime'
+		],
+	}),
+  {
+    transform(code, id) {
+        return code.replace(/\/\*\* @class \*\//g, "\/*@__PURE__*\/");
+    }
+  },
+  renameNodeModules('ext', process.env.NODE_ENV === 'development'),
   svgr({
     prettier: false,
     svgo: true,
@@ -67,11 +83,13 @@ const plugins = [
             @import "./src/styles/abstracts/_variables.scss";
             @import "./src/styles/abstracts/_mixin.scss";
             @import "./src/styles/abstracts/_animation.scss";
+            @import "./src/styles/global.scss";
           `
         }
       ]
     ],
-    extract: false,
+    extract: 'styles.css',
+    inject: false,
     minimize: true,
     sourceMap: process.env.NODE_ENV === 'development'
   }),
@@ -88,7 +106,7 @@ const plugins = [
   replace({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
   }),
-  commonjs(),
+  commonjs()
 ]
 
 if (process.env.NODE_ENV === 'production') {
@@ -117,29 +135,23 @@ if (process.env.NODE_VI === 'OK') {
 }
 
 module.exports = {
-  external: id => ['node_modules'].includes(id) || /fsevents/.test(id),
+  external: [...Object.keys(packageJson.dependencies), /@babel\/runtime/, /fsevents/],
   plugins,
   input: './src/index.ts',
   output: [
     {
       dir: 'dist/esm',
       format: 'esm',
-      sourcemap: process.env.NODE_ENV === 'development',
-      manualChunks(id) {
-        if (id.includes('node_modules')) {
-          return 'vendors';
-        }
-      }
+      preserveModules: true, // indicate not create a single-file
+      preserveModulesRoot: 'src',
+      sourcemap: process.env.NODE_ENV === 'development'
     },
     {
       dir: 'dist',
       format: 'cjs',
-      sourcemap: process.env.NODE_ENV === 'development',
-      manualChunks(id) {
-        if (id.includes('node_modules')) {
-          return 'vendors';
-        }
-      }
+      preserveModules: true, // indicate not create a single-file
+      preserveModulesRoot: 'src',
+      sourcemap: process.env.NODE_ENV === 'development'
     }
   ],
 	treeshake: {
