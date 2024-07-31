@@ -230,7 +230,7 @@ const PopoverButton = forwardRef(
      * popoverElement에 props를 주입하고 popover를 감싸는 요소를 추가하여 반환
      */
     const PopoverComponent = useMemo(() => {
-      const props = typeof popoverElement.type === 'string' ? undefined : { close: handleClose };
+      const props = typeof popoverElement?.type === 'string' ? undefined : { close: handleClose };
 
       return (
         <div className={cx('popover-element-wrap')}>

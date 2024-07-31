@@ -45,6 +45,7 @@ type Props = {
   onImageClick?: FeedImagesViewProps['handleClickImage'];
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onCommentBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -79,7 +80,8 @@ const FeedBox = ({
   onShareBtnClick,
   onImageClick,
   onLikeBtnClick,
-  onCommentBtnClick
+  onCommentBtnClick,
+  onProfileClick
 }: Props) => {
   const uid = useId();
 
@@ -96,6 +98,7 @@ const FeedBox = ({
             certificated={certificated}
             createdAt={updatedAt || createdAt}
             locale={locale}
+            onProfileClick={onProfileClick}
           />
 
           {/* Feed Management Button (삭제, 수정, 신고...) */}

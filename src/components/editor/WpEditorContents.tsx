@@ -4,7 +4,9 @@ import React, { HTMLAttributes, forwardRef } from 'react';
 import classNames from 'classnames/bind';
 import style from './WpEditorContents.module.scss';
 
-type Props = HTMLAttributes<HTMLDivElement>;
+interface Props extends HTMLAttributes<HTMLDivElement> {
+  // type
+}
 
 const cx = classNames.bind(style);
 

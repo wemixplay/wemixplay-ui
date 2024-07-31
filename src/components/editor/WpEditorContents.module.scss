@@ -1,9 +1,8 @@
-.editor-contents{
+.editor-contents {
   color: var(--semantic-static-black);
 
   @include body-01-reading-02-r;
 
- 
   * {
     color: var(--semantic-static-black);
 
@@ -12,70 +11,72 @@
 
   a {
     color: var(--semantic-status-blue);
-  
+
     @include body-01-reading-02-r;
-  
+
     text-decoration: none;
-  
+
     & + a {
       margin-left: $sp-4;
     }
   }
 
-  &:global{
-    &:not(.editor){
-      .mention, .hash{
+  &:global {
+    &:not(.editor) {
+      .mention,
+      .hash {
         cursor: pointer;
       }
     }
   }
-  
 
   :global {
-    .ellipsis-wrap{
-      .ellipsis-content{
+    .ellipsis-wrap {
+      .ellipsis-content {
         color: var(--semantic-static-black);
-  
+
         @include body-01-reading-02-r;
       }
     }
 
     .mention {
       position: relative;
-  
+
       &.will-mention {
         // style
       }
-  
+
       &.unkown-mention {
         padding: 0 4px;
         border: 1px dashed gray;
         background-color: transparent;
       }
-  
+
       &.complete-mention {
         color: var(--semantic-status-blue);
-    
+
         @include body-01-reading-02-r;
       }
     }
-  
+
     .hash {
       position: relative;
-  
+
       &.will-hash {
-        // style
-      }
-  
-      &.unknown-hash {
         color: var(--semantic-status-blue);
-    
+
         @include body-01-reading-02-r;
       }
-  
+
+      &.unknown-hash {
+        color: var(--semantic-status-blue);
+
+        @include body-01-reading-02-r;
+      }
+
       &.complete-hash {
         color: var(--semantic-status-blue);
-    
+
         @include body-01-reading-02-r;
       }
     }

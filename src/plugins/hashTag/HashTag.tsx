@@ -77,8 +77,8 @@ class HashTag implements WpEditorPlugin {
             targetHashId={targetHashId}
             list={config.list}
             listElement={config.listElement}
-            selectHashItem={() => {
-              plugin.selectHashItem();
+            selectHashItem={(index) => {
+              plugin.selectHashItem(index);
             }}
             closeHashList={() => {
               this.hashId = '';
@@ -90,7 +90,8 @@ class HashTag implements WpEditorPlugin {
   }
 
   containsInvalidSpecialChars(str: string) {
-    const regex = /(^_|_$|[^\w\s])/g;
+    const regex =
+      /^#[\w\p{L}\p{N}\p{Mn}\p{Mc}\p{Pd}\u200d\u25aa-\u27b0\ufe0f\u1f000-\u1f9ff\u1fa70-\u1faff]+$/u;
     return regex.test(str);
   }
 
@@ -107,10 +108,14 @@ class HashTag implements WpEditorPlugin {
     focusOffset?: number;
     focusTopEnd?: boolean;
   }) {
+    if (!focusNode) {
+      return;
+    }
+
     if (focusTopEnd) {
       range.selectNodeContents(focusNode);
       range.collapse(false);
-    } else {
+    } else if (focusNode) {
       range.setStart(focusNode, focusOffset ?? 0);
       range.collapse(true);
     }
@@ -134,7 +139,7 @@ class HashTag implements WpEditorPlugin {
     const targetHashId = this.hashId;
 
     const hashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
-    const existOnlyAtMark = hashTag.firstChild?.textContent === '#' && !hash;
+    const existOnlyAtMark = hashTag.firstChild?.textContent?.trim() === '#' && !hash;
 
     const isWillHash = !!hashTag?.classList.contains('will-hash');
 
@@ -144,7 +149,21 @@ class HashTag implements WpEditorPlugin {
     );
 
     if (existOnlyAtMark) {
-      target.innerHTML = target.innerHTML.replace(hashRegex, `#`);
+      const shapText = document.createTextNode(hashTag.firstChild?.textContent);
+
+      hashTag.replaceWith(shapText);
+
+      const newRange = document.createRange();
+
+      newRange.setStartAfter(shapText);
+      newRange.setEndAfter(shapText);
+
+      selection.removeAllRanges();
+      selection.addRange(newRange);
+
+      this.hashId = '';
+
+      return;
     } else if (hash) {
       target.innerHTML = target.innerHTML.replace(
         hashRegex,
@@ -203,11 +222,11 @@ class HashTag implements WpEditorPlugin {
     }) as HashTagInfo[];
   }
 
-  selectHashItem() {
+  selectHashItem(index?: number) {
     const range = document.createRange();
     const selection = window.getSelection();
 
-    const hash = this.postHashListRef.handleSubmit();
+    const hash = this.postHashListRef.handleSubmit(index);
     this.leaveHashTag({ selection, range, hash });
 
     this.config.onCompleteHash &&
@@ -313,7 +332,10 @@ class HashTag implements WpEditorPlugin {
       !!focusNode?.parentElement?.classList?.contains?.('complete-hash');
 
     const isStartHash =
-      !prevCurrentInputChar?.trim() && !focusInHashTag && currentInputChar === '#';
+      !prevCurrentInputChar?.trim() &&
+      focusNode.nodeType === Node.TEXT_NODE &&
+      !focusInHashTag &&
+      currentInputChar === '#';
 
     if (this.hashId && focusInHashTag) {
       this.config.onWriteHash &&
@@ -433,9 +455,7 @@ class HashTag implements WpEditorPlugin {
     }
 
     if (!isStartHash && focusInHashTag && this.hashId && !focusNode.textContent.slice(-1).trim()) {
-      focusNode.textContent = focusNode.textContent.trim();
-
-      this.leaveHashTag({ selection, range, keepTag: focusInCompleteHashTag });
+      this.leaveHashTag({ selection, range });
     }
   }
 

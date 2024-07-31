@@ -1,7 +1,6 @@
 'use client';
 
-import React from 'react';
-import classNames from 'classnames/bind';
+import React, { MouseEvent } from 'react';
 import style from './FeedWriterInfo.module.scss';
 import { SvgIcoCertified } from '@/assets/svgs';
 import { getTimeString } from '@/utils/dateUtils';
@@ -17,6 +16,7 @@ type Props = {
   certificated?: boolean;
   createdAt?: number;
   locale?: string;
+  onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -29,15 +29,16 @@ const FeedWriterInfo = ({
   categoryName,
   certificated,
   createdAt,
-  locale
+  locale,
+  onProfileClick
 }: Props) => {
   //logic
 
   return (
-    <div className={cx(className, 'profile')}>
-      <Person src={profileImg} customSize={profileSize} />
+    <div className={cx(className, 'profile', { 'has-click-event': onProfileClick })}>
+      <Person src={profileImg} customSize={profileSize} onClick={onProfileClick} />
       <div className={cx('profile-text')}>
-        <strong className={cx('title')}>
+        <strong className={cx('title')} onClick={onProfileClick}>
           {name || '-'}
           {!!certificated && <SvgIcoCertified width={12} height={12} />}
         </strong>
@@ -50,4 +51,5 @@ const FeedWriterInfo = ({
   );
 };
 
+export type { Props as FeedWriterInfoProps };
 export default FeedWriterInfo;

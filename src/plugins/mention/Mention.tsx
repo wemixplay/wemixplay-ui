@@ -102,6 +102,10 @@ class Mention implements WpEditorPlugin {
     focusOffset?: number;
     focusTopEnd?: boolean;
   }) {
+    if (!focusNode) {
+      return;
+    }
+
     if (focusTopEnd) {
       range.selectNodeContents(focusNode);
       range.collapse(false);
@@ -129,7 +133,7 @@ class Mention implements WpEditorPlugin {
     const targetMentionId = this.mentionId;
 
     const mentionTag = target.querySelector(`#${targetMentionId}`);
-    const existOnlyAtMark = mentionTag.firstChild?.textContent === '@' && !mention;
+    const existOnlyAtMark = mentionTag.firstChild?.textContent?.trim() === '@' && !mention;
 
     const isWillMention = !!mentionTag?.classList.contains('will-mention');
 
@@ -139,7 +143,24 @@ class Mention implements WpEditorPlugin {
     );
 
     if (existOnlyAtMark) {
-      target.innerHTML = target.innerHTML.replace(mentionRegex, `@`);
+      const atMarkText = document.createTextNode(mentionTag.firstChild?.textContent);
+
+      mentionTag.replaceWith(atMarkText);
+
+      const newRange = document.createRange();
+
+      newRange.setStartAfter(atMarkText);
+      newRange.setEndAfter(atMarkText);
+
+      selection.removeAllRanges();
+      selection.addRange(newRange);
+
+      range.setStartAfter(atMarkText);
+      range.setEndAfter(atMarkText);
+
+      this.mentionId = '';
+
+      return;
     } else if (mention) {
       target.innerHTML = target.innerHTML.replace(
         mentionRegex,
@@ -198,11 +219,11 @@ class Mention implements WpEditorPlugin {
     }
   }
 
-  selectMentionItem() {
+  selectMentionItem(index?: number) {
     const range = document.createRange();
     const selection = window.getSelection();
 
-    const mention = this.postMentionListRef.handleSubmit();
+    const mention = this.postMentionListRef.handleSubmit(index);
     this.leaveMentionTag({ selection, range, mention });
 
     const allMentionEls = this.contentEditableEl.current.querySelectorAll(
@@ -300,7 +321,10 @@ class Mention implements WpEditorPlugin {
       !!focusNode?.parentElement?.classList?.contains?.('complete-mention');
 
     const isStartMention =
-      !prevCurrentInputChar?.trim() && !focusInMentionTag && currentInputChar === '@';
+      !prevCurrentInputChar?.trim() &&
+      focusNode.nodeType === Node.TEXT_NODE &&
+      !focusInMentionTag &&
+      currentInputChar === '@';
 
     if (this.mentionId && focusInMentionTag) {
       this.config.onWriteMention &&
@@ -414,9 +438,7 @@ class Mention implements WpEditorPlugin {
       this.mentionId &&
       !focusNode.textContent.slice(-1).trim()
     ) {
-      focusNode.textContent = focusNode.textContent.trim();
-
-      this.leaveMentionTag({ selection, range, keepTag: focusInCompleteMentionTag });
+      this.leaveMentionTag({ selection, range });
     }
 
     return false;

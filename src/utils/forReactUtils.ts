@@ -37,7 +37,9 @@ export const makeCxFunc = (style: { readonly [key: string]: string }) => {
       return acc;
     }, '');
 
-    const arr = `${classNames} ${clsx(args)}`.trim().split(' ');
+    args.push(style['wm-ui']);
+
+    const arr = `wm-ui ${classNames} ${clsx(args)}`.trim().split(' ');
 
     const uniqueArr = arr.filter((element, index) => {
       return arr.indexOf(element) === index;

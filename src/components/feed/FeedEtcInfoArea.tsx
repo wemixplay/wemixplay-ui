@@ -52,4 +52,5 @@ const FeedEtcInfoArea = ({
   );
 };
 
+export type { Props as FeedEtcInfoAreaProps };
 export default FeedEtcInfoArea;

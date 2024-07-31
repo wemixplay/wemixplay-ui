@@ -93,7 +93,8 @@ const Person = ({
   return (
     <div
       className={cx(className, 'avatar', size, {
-        'no-image': imgSrc === DEFAULT_IMAGE
+        'no-image': imgSrc === DEFAULT_IMAGE,
+        'has-click-event': onClick
       })}
       style={{ width: customSize, height: customSize }}
       onClick={onClick}

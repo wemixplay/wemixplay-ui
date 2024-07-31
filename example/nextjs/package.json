@@ -13,7 +13,7 @@
     "react": "^18",
     "react-dom": "^18",
     "swiper": "^11.1.8",
-    "wemixplay-ui": "^1.8.926"
+    "wemixplay-ui": "^1.9.39"
   },
   "devDependencies": {
     "@types/node": "^20",

@@ -1,4 +1,296 @@
-@import "./base/reset";
+.wm-ui {
+  :global {
+    font-size: 14px;
+
+    main {
+      display: block;
+    }
+
+    h1 {
+      margin: 0.67rem 0;
+      font-size: 2rem;
+    }
+
+    hr {
+      overflow: visible;
+      height: 0;
+      box-sizing: content-box;
+    }
+
+    pre {
+      font-family: monospace;
+      font-size: 1rem;
+    }
+
+    a {
+      background-color: transparent;
+    }
+
+    abbr[title] {
+      border-bottom: none;
+      text-decoration: underline;
+      text-decoration: underline dotted;
+    }
+
+    b,
+    strong {
+      font-weight: bolder;
+    }
+
+    code,
+    kbd,
+    samp {
+      font-family: monospace;
+      font-size: 1rem;
+    }
+
+    small {
+      font-size: 80%;
+    }
+
+    sub,
+    sup {
+      position: relative;
+      font-size: 75%;
+      line-height: 0;
+      vertical-align: baseline;
+    }
+
+    sub {
+      bottom: -0.25rem;
+    }
+
+    sup {
+      top: -0.5rem;
+    }
+
+    img {
+      border-style: none;
+    }
+    p { margin: 0; }
+
+    button,
+    input,
+    optgroup,
+    select,
+    textarea {
+      margin: 0;
+      font-family: inherit;
+      font-size: 1rem;
+      line-height: 1.15;
+    }
+
+    button,
+    input {
+      overflow: visible;
+    }
+
+    button,
+    select {
+      text-transform: none;
+    }
+
+    button,
+    [type="button"],
+    [type="reset"],
+    [type="submit"] {
+      appearance: button;
+    }
+
+    button::-moz-focus-inner,
+    [type="button"]::-moz-focus-inner,
+    [type="reset"]::-moz-focus-inner,
+    [type="submit"]::-moz-focus-inner {
+      padding: 0;
+      border-style: none;
+    }
+
+    button:-moz-focusring,
+    [type="button"]:-moz-focusring,
+    [type="reset"]:-moz-focusring,
+    [type="submit"]:-moz-focusring {
+      outline: 1px dotted ButtonText;
+    }
+
+    fieldset {
+      padding: 0.35rem 0.75rem 0.625rem;
+    }
+
+    legend {
+      display: table;
+      max-width: 100%;
+      box-sizing: border-box;
+      padding: 0;
+      color: inherit;
+      white-space: normal;
+    }
+
+    progress {
+      vertical-align: baseline;
+    }
+
+    textarea {
+      overflow: auto;
+    }
+
+    [type="checkbox"],
+    [type="radio"] {
+      box-sizing: border-box;
+      padding: 0;
+    }
+
+    [type="number"]::-webkit-inner-spin-button,
+    [type="number"]::-webkit-outer-spin-button {
+      height: auto;
+    }
+
+    [type="search"] {
+      appearance: textfield;
+      outline-offset: -2px;
+    }
+
+    [type="search"]::-webkit-search-decoration {
+      -webkit-appearance: none;
+    }
+
+    ::-webkit-file-upload-button {
+      -webkit-appearance: button;
+      font: inherit;
+    }
+
+    details {
+      display: block;
+    }
+
+    summary {
+      display: list-itrem;
+    }
+
+    template {
+      display: none;
+    }
+
+    [hidden] {
+      display: none;
+    }
+
+    /* HTML5 hidden-attribute fix for newer browsers */
+    * {
+      &[hidden] {
+        display: none;
+      }
+
+      /* Focus outline 안보이게 처리 */
+      &:focus {
+        outline: none;
+      }
+    }
+
+    ::selection {
+      background: #000;
+      color: #666;
+    }
+
+    table {
+      border-collapse: collapse;
+      border-spacing: 0;
+    }
+
+    /* screen out */
+    .blind {
+      position: absolute;
+      overflow: hidden;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      border: 0;
+      margin: -1px;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+    }
+
+    svg:not(:root) {
+      overflow: unset;
+    }
+
+    svg,
+    img {
+      display: block;
+    }
+
+    button {
+      padding: 0;
+      border: none;
+      margin: 0;
+      background: transparent;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+
+    input {
+      padding: 0;
+      border: none;
+      margin: 0;
+      background: transparent;
+
+      &::placeholder {
+        color: var(--gray02);
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+
+    /*  input 화살표 숨기기
+        크롬, 사파리, 엣지, 오페라
+    */
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+    }
+
+    /* 파이어폭스 */
+    input[type="number"] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    input:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0 1000px #111 inset;
+      -webkit-text-fill-color: var(--gray00);
+    }
+
+    .a11y {
+      @include a11y;
+    }
+
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+
+    // 디바이스 변경시 display none/block 방식을 사용하기 위한 클래스
+    .show {
+      display: block !important;
+    }
+
+    .hide {
+      display: none !important;
+    }
+
+    .show-flex {
+      display: flex !important;
+    }
+
+    .show-flex-inline {
+      display: flex !important;
+    }
+  }
+}
 
 .container {
   display: flex;

@@ -289,7 +289,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
         });
 
-        if (e.code === 'Enter' && !e.nativeEvent.isComposing) {
+        if (e.code === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+          console.log('here?!?@!?');
           const range = selection.getRangeAt(0);
           const anchorNode = range.startContainer;
           const offset = range.startOffset;

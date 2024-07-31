@@ -81,6 +81,7 @@
   .editor.post-content {
     min-height: 80px;
     padding: $sp-12 $sp-20 $sp-20  $sp-20;
+    border: none;
     margin: 0;
   }
 
@@ -148,6 +149,7 @@
         height: 40px;
         padding: 0 $sp-20;
         border-radius: $sp-8;
+        /* stylelint-disable-next-line custom-property-pattern */
         background: var(--Cool-Neutral-10, #171719);
         color: var(--semantic-static-white);
         text-align: center;

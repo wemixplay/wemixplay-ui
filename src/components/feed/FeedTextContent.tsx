@@ -62,6 +62,7 @@ const FeedTextContent = ({
           triggerLess="show less"
           triggerMore="show more"
           observingEnvs={[isMobile, isTablet, isDesktop]}
+          onShowMoreLessClick={() => {}}
         />
       ) : (
         <div
@@ -73,4 +74,5 @@ const FeedTextContent = ({
   );
 };
 
+export type { Props as FeedTextContentProps }
 export default FeedTextContent;

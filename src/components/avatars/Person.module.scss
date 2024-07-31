@@ -5,6 +5,10 @@
   display: inline-block;
   border-radius: 50%;
 
+  &.has-click-event {
+    cursor: pointer;
+  }
+
   &.no-image {
     background-color: #fafafa;
   }

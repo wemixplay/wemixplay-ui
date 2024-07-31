@@ -10,6 +10,10 @@ import FeedDetailEditor, {
 } from './components/editor/FeedDetailEditor';
 
 import FeedBox, { FeedBoxProps } from './components/feed/FeedBox';
+import FeedTextContent, { FeedTextContentProps } from './components/feed/FeedTextContent';
+import FeedEmojiArea, { FeedEmojiAreaProps } from './components/feed/FeedEmojiArea';
+import FeedEtcInfoArea, { FeedEtcInfoAreaProps } from './components/feed/FeedEtcInfoArea';
+import FeedWriterInfo, { FeedWriterInfoProps } from './components/feed/FeedWriterInfo';
 
 export type {
   WpEditorRef,
@@ -18,6 +22,18 @@ export type {
   PostEditorMediaValue,
   PostEditorImageValue,
   FeedDetailEditorValue,
-  FeedBoxProps
+  FeedBoxProps,
+  FeedTextContentProps,
+  FeedEmojiAreaProps,
+  FeedEtcInfoAreaProps,
+  FeedWriterInfoProps
 };
-export { WpEditor, FeedDetailEditor, FeedBox };
+export {
+  WpEditor,
+  FeedDetailEditor,
+  FeedBox,
+  FeedTextContent,
+  FeedEmojiArea,
+  FeedEtcInfoArea,
+  FeedWriterInfo
+};

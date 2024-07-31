@@ -43,6 +43,7 @@ interface Props {
    * 관측하는 디바이스의 환경 boolean 배열
    */
   observingEnvs?: boolean[];
+  onShowMoreLessClick?: () => void;
 }
 
 /**
@@ -63,7 +64,8 @@ const Ellipsis = ({
   triggerLess = 'less',
   lineClamp = 2,
   defaultShortened = false,
-  observingEnvs = []
+  observingEnvs = [],
+  onShowMoreLessClick
 }: Props) => {
   /**
    * 컨텐츠 영역의 높이와 컨텐츠 자체의 높이를 비교하기 위한 div DOM 요소 참조변수
@@ -221,7 +223,10 @@ const Ellipsis = ({
       {contentElement}
 
       {triggerVisibile && (
-        <button onClick={() => setShortened(!shortened)} className={cx('btn-ellipsis-trigger')}>
+        <button
+          onClick={onShowMoreLessClick ? onShowMoreLessClick : () => setShortened(!shortened)}
+          className={cx('btn-ellipsis-trigger')}
+        >
           {shortened ? triggerMore : triggerLess}
           <SvgIcoEllipsisChevron width={14} height={14} />
         </button>

@@ -23,7 +23,7 @@ import useCheckDevice from '@/hooks/useCheckDevice';
 type MentionListRef = HTMLDivElement & {
   handleArrowUp: () => void;
   handleArrowDown: () => void;
-  handleSubmit: () => MentionInfo;
+  handleSubmit: (index?: number) => MentionInfo;
 };
 
 type Props = {
@@ -92,13 +92,16 @@ const MentionList = forwardRef<MentionListRef, Props>(
       scrollAreaRef.current.scrollTop = activeItem.offsetTop - 20;
     }, [list, focusIndex]);
 
-    const handleSubmit = useCallback(() => {
-      if (!(list ?? []).length) {
-        return;
-      }
+    const handleSubmit = useCallback(
+      (index?: number) => {
+        if (!(list ?? []).length) {
+          return;
+        }
 
-      return list[focusIndex];
-    }, [focusIndex, list]);
+        return list[index ?? focusIndex];
+      },
+      [focusIndex, list]
+    );
 
     const handleHover = useCallback((index: number) => {
       if (!isDesktop) {
@@ -144,7 +147,7 @@ const MentionList = forwardRef<MentionListRef, Props>(
         if (!el) {
           return;
         }
-        const { offsetWidth, offsetHeight } = el;
+        const { offsetHeight } = el;
         const rect = el.getBoundingClientRect();
         const isBodyMinusPosition =
           document.body.style.position === 'fixed' &&
@@ -153,8 +156,11 @@ const MentionList = forwardRef<MentionListRef, Props>(
         const scrollY = isBodyMinusPosition
           ? Number(document.body.style.top.replace('px', '')) * -1
           : window.scrollY;
+
+        const overWidth = rect.left + elRef.current.offsetWidth - window.innerWidth;
+
         const top = rect.top + scrollY;
-        const { left } = rect;
+        const left = overWidth > 0 ? rect.left - overWidth - 10 : rect.left;
 
         const positionStyle: CSSProperties = {
           position: 'absolute',
@@ -167,8 +173,19 @@ const MentionList = forwardRef<MentionListRef, Props>(
 
         switch (boxDirection) {
           case 'top':
-            positionStyle.top = top - dropboxElHeight;
+            const elComputedStyle = window.getComputedStyle(elRef.current);
+            const elPaddingHeight =
+              Number(elComputedStyle.paddingTop.replace('px', '')) +
+              Number(elComputedStyle.paddingBottom.replace('px', ''));
+
+            positionStyle.top = top - dropboxElHeight < 0 ? 10 : top - dropboxElHeight;
             positionStyle.left = isMobile ? '50%' : left;
+
+            scrollAreaRef.current.style.height =
+              top - dropboxElHeight < 0
+                ? `${dropboxElHeight + top - dropboxElHeight - elPaddingHeight - 10}px`
+                : '';
+
             break;
           case 'bottom':
             positionStyle.top = top + offsetHeight;

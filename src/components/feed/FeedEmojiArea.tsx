@@ -28,7 +28,7 @@ const cx = makeCxFunc(style);
 
 const FeedEmojiArea = ({
   className = '',
-  emojiList,
+  emojiList = [],
   emojiSelectPopoverElement,
   onEmojiClick,
   onEmojiSelectBtnClick
