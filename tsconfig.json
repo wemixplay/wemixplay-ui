@@ -2,7 +2,7 @@
     "include": ["src", "global.d.ts", "src/types", "src/components/editor/editor.d.ts"],
     "exclude": ["node_modules", "dist"],
     "compilerOptions": {
-        "target": "es5",
+        "target": "es6",
         "module": "esnext" /* 모듈 시스템을 지정한다. */,
         "lib": ["dom", "esnext"],
         "typeRoots" : ["./node_modules/@types"],
