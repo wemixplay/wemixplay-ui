@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactElement, useCallback, useState } from 'react';
+import React, { ReactElement, useCallback, useEffect, useState } from 'react';
 import style from './CommentEditor.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import CommentWriterInfo from './CommentWriterInfo';
@@ -11,9 +11,13 @@ import HashTag from '@/plugins/hashTag/HashTag';
 import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import CountTextLength from '@/plugins/countTextLength/CountTextLength';
 import PasteToPlainText from '@/plugins/pasteToPlainText/PasteToPlainText';
-import { commaWithValue } from '@/utils/valueParserUtils';
+import {
+  commaWithValue,
+  convertHtmlToMarkdownStr,
+  convertMarkdownToHtmlStr
+} from '@/utils/valueParserUtils';
 
-type Props = Omit<WpEditorProps, 'plugin' | 'initialValue' | 'handleChange'> & {
+type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
   className?: string;
   writerName?: string;
   writerImg?: string;
@@ -33,13 +37,34 @@ const CommentEditor = ({
   minLength = 1,
   maxLength = 1000,
   placeholder,
+  name,
+  handleChange,
   ...editorProps
 }: Props) => {
+  const [text, setText] = useState(convertMarkdownToHtmlStr(value ?? ''));
   const [textLength, setTextLength] = useState(value?.length ?? 0);
 
   const onMatchUrl = useCallback(({ textUrls }: { textUrls: string[] }) => {
     return textUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`);
   }, []);
+
+  const handleEditorTextChange = useCallback(
+    (value: string, name?: string) => {
+      const convertValue = convertHtmlToMarkdownStr(value);
+
+      setText(convertValue);
+      handleChange && handleChange(convertValue, name);
+    },
+    [name, handleChange]
+  );
+
+  useEffect(() => {
+    if (value && !text) {
+      const htmlStr = convertMarkdownToHtmlStr(value);
+
+      setText(htmlStr);
+    }
+  }, [value, text]);
 
   return (
     <div className={cx(className, 'comment-editor')}>
@@ -64,8 +89,11 @@ const CommentEditor = ({
               onChangeTextLength: setTextLength
             }
           }}
-          initialValue={value}
+          name={name}
+          initialValue={text}
           placeholder={placeholder}
+          maxLength={maxLength}
+          handleChange={handleEditorTextChange}
           {...editorProps}
         />
       </div>

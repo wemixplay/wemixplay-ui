@@ -17,8 +17,9 @@
       border-radius: $rd-12;
       margin: 0;
       font-feature-settings: "ss10" on;
+      overflow-y: auto;
 
-      @include label-01-normal-m;
+      @include body-01-reading-02-r;
     }
   }
 
