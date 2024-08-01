@@ -150,6 +150,10 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
     );
 
     const mutationObserver = useMemo(() => {
+      if (typeof window === 'undefined') {
+        return;
+      }
+
       return new MutationObserver(() => {
         if (!contentEditableEl.current) {
           return;
@@ -470,21 +474,23 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
     }, [config, plugins]);
 
     useEffect(() => {
-      const contentElement = contentEditableEl.current;
+      if (mutationObserver) {
+        const contentElement = contentEditableEl.current;
 
-      mutationObserver.observe(contentElement, {
-        childList: true,
-        subtree: true,
-        characterData: true
-      });
+        mutationObserver.observe(contentElement, {
+          childList: true,
+          subtree: true,
+          characterData: true
+        });
 
-      contentElement.addEventListener('beforeinput', handleUndoRedo);
+        contentElement.addEventListener('beforeinput', handleUndoRedo);
 
-      return () => {
-        mutationObserver.disconnect();
+        return () => {
+          mutationObserver.disconnect();
 
-        contentElement.removeEventListener('beforeinput', handleUndoRedo);
-      };
+          contentElement.removeEventListener('beforeinput', handleUndoRedo);
+        };
+      }
     }, [mutationObserver, handleUndoRedo]);
 
     useEffect(() => {
