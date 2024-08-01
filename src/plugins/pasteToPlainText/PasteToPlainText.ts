@@ -67,13 +67,16 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
     );
 
     const matchUrlList = this.getUrlMatchList(plainTextData);
-    const replaceMatchUrlList = this.config.onMatchUrlReplace({
-      textUrls: matchUrlList,
-      mediaUrls: matchMediaList
-    });
+    const replaceMatchUrlList =
+      this.config.onMatchUrlReplace?.({
+        textUrls: matchUrlList,
+        mediaUrls: matchMediaList
+      }) ?? [];
 
     matchUrlList.forEach((url, index) => {
-      plainTextData = plainTextData.replace(url, replaceMatchUrlList[index]);
+      if (replaceMatchUrlList[index]) {
+        plainTextData = plainTextData.replace(url, replaceMatchUrlList[index]);
+      }
     });
 
     const ariaValueMax = this.contentEditableEl.current.getAttribute('aria-valuemax');
@@ -98,6 +101,8 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
     for (const child of Array.from(tempDiv.childNodes).reverse()) {
       range.insertNode(child);
     }
+
+    tempDiv.remove();
 
     // 커서를 수정된 텍스트의 끝으로 이동
     range.setStartAfter(element);
