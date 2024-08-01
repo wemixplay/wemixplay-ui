@@ -216,6 +216,8 @@ class Mention implements WpEditorPlugin {
 
     if (focusInMentionTag && collapseCheckRange.startOffset === collapseCheckRange.endOffset) {
       this.mentionId = focusNode.parentElement.id;
+      this.config.onWriteMention &&
+        this.config.onWriteMention(focusNode?.parentElement?.textContent?.replace('@', ''));
     }
   }
 
@@ -261,6 +263,10 @@ class Mention implements WpEditorPlugin {
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
       if (!targetMentionId && focusInMentionTag) {
         this.mentionId = selection.focusNode.parentElement.id;
+        this.config.onWriteMention &&
+          this.config.onWriteMention(
+            selection.focusNode?.parentElement?.textContent?.replace('@', '')
+          );
       } else if (targetMentionId && selection.focusNode.firstChild?.textContent === '@') {
         this.leaveMentionTag({ selection, range });
       } else if (targetMentionId && !focusInMentionTag) {
@@ -325,7 +331,6 @@ class Mention implements WpEditorPlugin {
       focusNode.nodeType === Node.TEXT_NODE &&
       !focusInMentionTag &&
       currentInputChar === '@';
-
     if (this.mentionId && focusInMentionTag) {
       this.config.onWriteMention &&
         this.config.onWriteMention(focusNode.parentElement.firstChild.textContent.replace('@', ''));

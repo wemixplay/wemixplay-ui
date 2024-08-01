@@ -1,0 +1,50 @@
+.comment-editor {
+  .editor-area {
+    margin-top: $sp-12;
+    margin-bottom: 0;
+
+    @include label-01-normal-m;
+
+    >div {
+      padding: 0;
+    }
+
+    .editor {
+      width: 100%;
+      height: 200px;
+      padding: $sp-24;
+      border: 1px solid var(--semantic-line-solid-normal);
+      border-radius: $rd-12;
+      margin: 0;
+      font-feature-settings: "ss10" on;
+
+      @include label-01-normal-m;
+    }
+  }
+
+  .editor-tool {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: $sp-12;
+    color: var(--semantic-label-alternative);
+    font-feature-settings: "ss10" on;
+    font-style: normal;
+    text-align: center;
+
+    @include label-01-normal-r;
+
+    .counter-current {
+      padding-right: $sp-4;
+      font-style: normal;
+    }
+
+    .counter-max {
+      padding-left: $sp-4;
+    }
+
+    .btn-post {
+      margin-left: $sp-12;
+    }
+  }
+}

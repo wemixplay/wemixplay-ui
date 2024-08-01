@@ -8,6 +8,11 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    cursor: default;
+
+    .has-click-event {
+      cursor: pointer;
+    }
 
     &:not(:first-child) {
       margin-left: $sp-24;

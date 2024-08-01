@@ -1,0 +1,18 @@
+.comment-etc-info {
+  margin: $sp-8 0 $sp-16;
+
+  .btn-like {
+    display: flex;
+    align-items: center;
+
+    &-ico {
+      margin-right: $sp-4;
+    }
+  }
+
+  button {
+    .count {
+      line-height: 1;
+    }
+  }
+}

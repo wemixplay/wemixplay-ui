@@ -1,0 +1,46 @@
+.comment-box {
+  width: 100%;
+  padding: $sp-20 0;
+
+  &:not(:last-of-type) {
+    border-bottom: 1px solid var(--semantic-line-solid-normal);
+  }
+
+  /* Comment Author */
+  .author {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  /* Comment Content */
+  .comment-content {
+    padding: $sp-10 0;
+    color: var(--semantic-label-strong);
+    font-feature-settings: "ss10" on;
+
+    @include body-01-reading-02-r;
+  }
+
+  .comment-btns {
+    margin: $sp-8 0 $sp-16;
+
+    .btn-like {
+      display: flex;
+      align-items: center;
+
+      &-ico {
+        margin-right: $sp-4;
+      }
+    }
+  }
+
+  &.deleted-comment {
+    color: var(--semantic-label-alternative);
+    font-feature-settings: "ss10" on;
+
+    @include body-02-normal-r;
+  }
+}

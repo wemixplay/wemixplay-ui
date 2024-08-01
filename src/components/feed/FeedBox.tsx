@@ -3,15 +3,15 @@
 import React, { MouseEvent, ReactElement, useId } from 'react';
 import classNames from 'classnames/bind';
 import style from './FeedBox.module.scss';
-import FeedImagesView, { FeedImagesViewProps } from '../editor/FeedImagesView';
+import FeedImagesView, { FeedImagesViewProps } from './FeedImagesView';
 import PopoverButton from '../popover/PopoverButton';
 import { SvgIcoVDots } from '@/assets/svgs';
 import FeedEmojiArea, { EmojiInfo } from './FeedEmojiArea';
 import FeedEtcInfoArea from './FeedEtcInfoArea';
 import FeedWriterInfo from './FeedWriterInfo';
 import FeedTextContent from './FeedTextContent';
-import FeedLinkPreview, { FeedLinkPreviewProps } from '../editor/FeedLinkPreview';
-import FeedIframesView from '../editor/FeedIframesView';
+import FeedLinkPreview, { FeedLinkPreviewProps } from './FeedLinkPreview';
+import FeedIframesView from './FeedIframesView';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
 type Props = {
@@ -96,7 +96,7 @@ const FeedBox = ({
             profileSize={avatarSize}
             categoryName={categoryName}
             certificated={certificated}
-            createdAt={updatedAt || createdAt}
+            createdAt={createdAt}
             locale={locale}
             onProfileClick={onProfileClick}
           />
@@ -107,7 +107,7 @@ const FeedBox = ({
               <PopoverButton
                 anchorId={onManageBtnClick ? '' : `feed-manage-${uid.replace(/:/gi, '')}`}
                 id={`feed-manage-${uid.replace(/:/gi, '')}`}
-                popoverStyle={{ right: -10, top: 10, zIndex: 9999 }}
+                popoverStyle={{ right: -10, top: 10, zIndex: 999 }}
                 popoverElement={managePopoverElement}
                 popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
                 onClick={onManageBtnClick}

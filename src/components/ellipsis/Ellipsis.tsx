@@ -219,7 +219,12 @@ const Ellipsis = ({
   }, [shortened, content, observingEnvs, resetContentElementAfterMeasuring]);
 
   return (
-    <div className={cx('ellipsis-wrap', className, { shortened })}>
+    <div
+      className={cx('ellipsis-wrap', className, {
+        shortened,
+        'enable-show-more': onShowMoreLessClick
+      })}
+    >
       {contentElement}
 
       {triggerVisibile && (

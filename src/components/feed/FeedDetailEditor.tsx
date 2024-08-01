@@ -13,15 +13,15 @@ import React, {
   useRef,
   useState
 } from 'react';
-import style from './PostEditor.module.scss';
-import WpEditor, { WpEditorProps, WpEditorRef } from './WpEditor';
+import style from './FeedDetailEditor.module.scss';
+import WpEditor, { WpEditorProps, WpEditorRef } from '../editor/WpEditor';
 import Mention from '@/plugins/mention/Mention';
 import HashTag from '@/plugins/hashTag/HashTag';
 import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import PasteToPlainText from '@/plugins/pasteToPlainText/PasteToPlainText';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
-import { orderBy, uniqBy } from 'lodash';
+import { uniqBy } from 'lodash';
 import { imageFileUpload, readAsDataURLAsync } from '@/utils/fileUtils';
 import FeedImagesView from './FeedImagesView';
 import {
@@ -168,7 +168,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             images.push(params.newImage);
           }
 
-          images = orderBy(images, 'src');
+          images = uniqBy(images, 'src');
         } else {
           images = images.filter((_, index) => params.deleteIndex !== index);
         }
@@ -258,7 +258,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             media.push(params.media);
           }
 
-          media = orderBy(media, 'src');
+          media = uniqBy(media, 'src');
 
           if (media.length > iframeMaxCnt) {
             onMaxIframeUploads
@@ -390,8 +390,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       if (textValue && !textData) {
         const htmlStr = convertMarkdownToHtmlStr(textValue);
 
-        console.log(htmlStr);
-
         setTextData(htmlStr);
       }
     }, [textValue, textData]);
@@ -408,7 +406,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
     });
 
     return (
-      <div className={cx(className, 'post-detail-editor')}>
+      <div className={cx(className, 'feed-detail-editor')}>
         <div
           className={cx('post-detail-editor-header', { 'exist-user-click-event': !!onUserClick })}
         >

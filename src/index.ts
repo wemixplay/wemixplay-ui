@@ -7,7 +7,7 @@ import FeedDetailEditor, {
   FeedDetailEditorValue,
   PostEditorImageValue,
   PostEditorMediaValue
-} from './components/editor/FeedDetailEditor';
+} from './components/feed/FeedDetailEditor';
 
 import FeedBox, { FeedBoxProps } from './components/feed/FeedBox';
 import FeedTextContent, { FeedTextContentProps } from './components/feed/FeedTextContent';

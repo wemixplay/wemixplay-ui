@@ -12,6 +12,7 @@ type Props = {
   className?: string;
   content: string;
   ellipsis?: boolean;
+  enableShowMore?: boolean;
   onTextClick?: (e: MouseEvent<HTMLSpanElement>) => void;
   onMentionClick?: (params: { name: string; id: string }) => void;
   onHashTagClick?: (params: { name: string; id: string }) => void;
@@ -23,6 +24,7 @@ const FeedTextContent = ({
   className,
   content,
   ellipsis,
+  enableShowMore,
   onTextClick,
   onHashTagClick,
   onMentionClick
@@ -62,7 +64,7 @@ const FeedTextContent = ({
           triggerLess="show less"
           triggerMore="show more"
           observingEnvs={[isMobile, isTablet, isDesktop]}
-          onShowMoreLessClick={() => {}}
+          onShowMoreLessClick={enableShowMore ? undefined : () => {}}
         />
       ) : (
         <div

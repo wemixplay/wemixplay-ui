@@ -1,5 +1,5 @@
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
-import FeedDetailEditor from '@/components/editor/FeedDetailEditor';
+import FeedDetailEditor from '@/components/feed/FeedDetailEditor';
 
 type StoryComponent = StoryObj<typeof FeedDetailEditor>;
 type StoryTemplate = StoryFn<typeof FeedDetailEditor>;

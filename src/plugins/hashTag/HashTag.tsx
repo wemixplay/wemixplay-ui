@@ -250,6 +250,8 @@ class HashTag implements WpEditorPlugin {
 
     if (focusInHashTag && collapseCheckRange.startOffset === collapseCheckRange.endOffset) {
       this.hashId = focusNode.parentElement.id;
+      this.config.onWriteHash &&
+        this.config.onWriteHash(focusNode?.parentElement?.textContent?.replace('@', ''));
     }
   }
 
@@ -272,6 +274,11 @@ class HashTag implements WpEditorPlugin {
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
       if (focusInHashTag && !targetHashId) {
         this.hashId = selection.focusNode.parentElement.id;
+
+        this.config.onWriteHash &&
+          this.config.onWriteHash(
+            selection.focusNode?.parentElement?.textContent?.replace('@', '')
+          );
       } else if (targetHashId && selection.focusNode.firstChild?.textContent === '#') {
         this.leaveHashTag({ selection, range });
       } else if (!focusInHashTag && targetHashId) {

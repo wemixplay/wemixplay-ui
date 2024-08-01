@@ -11,6 +11,16 @@
     }
   }
 
+  &.enable-show-more {
+    &.shortened {
+      .btn-ellipsis-trigger {
+        svg {
+          transform: rotate(0deg);
+        }
+      }
+    }
+  }
+
   .ellipsis-content {
     display: -webkit-box;
     overflow: hidden;

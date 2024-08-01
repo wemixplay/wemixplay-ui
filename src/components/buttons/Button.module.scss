@@ -12,6 +12,7 @@
   text-align: center;
   transition: background-color ease 0.25s;
 
+  @include word-break;
   @include body-01-normal-m;
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
@@ -80,18 +81,342 @@
     height: 40px;
     padding: 0 20px;
 
-    @include body-02-normal-b;
+    @include label-02-normal-b;
   }
 
   &.small {
     height: 32px;
     padding: 0 14px;
 
-    @include label-02-reading-m;
+    @include label-02-normal-b;
+  }
+
+  &.tiny {
+    height: 24px;
+    padding: 0 $sp-12;
+
+    @include label-02-normal-b;
   }
 
   // 컬러 타입에 따른 색상 정의
   &.secondary {
     background-color: var(--semantic-primary-normal);
+  }
+}
+
+/**
+* IconButton Style
+*/
+.btn-icon {
+  width: var(--size);
+  height: var(--size);
+  padding: 0;
+  border-radius: $rd-circle;
+  background: transparent;
+
+  svg rect {
+    fill: black;
+  }
+
+  &::before {
+    border-radius: $rd-circle;
+  }
+
+  // uiType Plain
+
+  // uiType Solid
+  &.solid {
+    background: var(--semantic-static-black);
+
+    svg rect {
+      fill: white;
+    }
+  }
+
+  // uiType Outline
+}
+
+/**
+* LineCapButton Style
+*/
+.btn-line-cap {
+  border: 1px solid var(--semantic-label-normal);
+  border-radius: 100px;
+  background-color: var(--semantic-static-white);
+  color: var(--semantic-label-normal);
+
+  // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
+  &::before {
+    border-radius: $rd-10;
+    background-color: var(--semantic-label-normal);
+  }
+
+  // 버튼 상태에 따른 스타일 정의
+  &:disabled {
+    border-color: var(--semantic-line-normal-normal);
+    background-color: var(--semantic-static-white);
+    color: var(--semantic-label-assistive);
+    cursor: not-allowed;
+  }
+
+  // 버튼 상태에 따른 스타일 정의 :disabled 아닌 경우
+  &:not(:disabled) {
+    &:hover {
+      @include hover {
+        &::before {
+          opacity: 0.05;
+        }
+      }
+    }
+
+    &:focus {
+      &::before {
+        opacity: 0.08;
+      }
+    }
+
+    &:active {
+      &::before {
+        opacity: 0.12;
+      }
+    }
+  }
+}
+
+/**
+* LineSquareButton Style
+*/
+.btn-line-square {
+  border: 1px solid var(--semantic-label-normal);
+  border-radius: $rd-10;
+  background-color: var(--semantic-static-white);
+  color: var(--semantic-label-normal);
+
+  // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
+  &::before {
+    border-radius: $rd-10;
+    background-color: var(--semantic-label-normal);
+  }
+
+  // 버튼 상태에 따른 스타일 정의
+  &:disabled {
+    border-color: var(--semantic-line-normal-normal);
+    background-color: var(--semantic-static-white);
+    color: var(--semantic-label-assistive);
+    cursor: not-allowed;
+  }
+
+  // 버튼 상태에 따른 스타일 정의 :disabled 아닌 경우
+  &:not(:disabled) {
+    &:hover {
+      @include hover {
+        &::before {
+          opacity: 0.05;
+        }
+      }
+    }
+
+    &:focus {
+      &::before {
+        opacity: 0.08;
+      }
+    }
+
+    &:active {
+      &::before {
+        opacity: 0.12;
+      }
+    }
+  }
+}
+
+/**
+* SolidCapButton Stye
+*/
+.btn-solid-cap {
+  border-radius: 100px;
+  background-color: var(--semantic-label-normal);
+  color: var(--semantic-static-white);
+
+  // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
+  &::before {
+    border-radius: $rd-10;
+    background-color: var(--semantic-label-normal);
+  }
+
+  // 버튼 상태에 따른 스타일 정의
+  &:disabled {
+    background-color: var(--semantic-interaction-disable) !important;
+    color: var(--semantic-label-assistive) !important;
+    cursor: not-allowed;
+  }
+
+  // 버튼 상태에 따른 스타일 정의 :disabled 아닌 경우
+  &:not(:disabled) {
+    &:hover {
+      @include hover {
+        &::before {
+          opacity: 0.075;
+        }
+      }
+    }
+
+    &:focus {
+      &::before {
+        opacity: 0.12;
+      }
+    }
+
+    &:active {
+      &::before {
+        opacity: 0.18;
+      }
+    }
+  }
+}
+
+/**
+* SolidSquareButton Style
+*/
+.btn-solid-square {
+  border-radius: $rd-10;
+  background-color: var(--semantic-label-normal);
+  color: var(--semantic-static-white);
+
+  // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
+  &::before {
+    border-radius: $rd-10;
+    background-color: var(--semantic-label-normal);
+  }
+
+  // 버튼 상태에 따른 스타일 정의
+  &:disabled {
+    background-color: var(--semantic-interaction-disable) !important;
+    color: var(--semantic-label-assistive) !important;
+    cursor: not-allowed;
+  }
+
+  // 버튼 상태에 따른 스타일 정의 :disabled 아닌 경우
+  &:not(:disabled) {
+    &:hover {
+      @include hover {
+        &::before {
+          opacity: 0.075;
+        }
+      }
+    }
+
+    &:focus {
+      &::before {
+        opacity: 0.12;
+      }
+    }
+
+    &:active {
+      &::before {
+        opacity: 0.18;
+      }
+    }
+  }
+}
+
+/**
+* AssistiveSquareButton Style
+  이 버튼스타일은 테이블 내부에 있는 버튼으로만 사용되고있습니다.
+*/
+.btn-assitive-square {
+  height: 24px;
+  padding: 0 $sp-12;
+  border: 1px solid var(--semantic-line-normal-normal);
+  border-radius: $rd-6;
+  background-color: var(--semantic-static-white);
+  color: var(--semantic-label-normal);
+
+  @include caption-01-r;
+
+  // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
+  &::before {
+    border-radius: 5px;
+    background-color: var(--semantic-label-normal);
+  }
+
+  // 버튼 상태에 따른 스타일 정의
+  &:disabled {
+    background-color: var(--semantic-static-white);
+    color: var(--semantic-label-disable);
+    cursor: not-allowed;
+  }
+
+  // 버튼 상태에 따른 스타일 정의 :disabled 아닌 경우
+  &:not(:disabled) {
+    &:hover {
+      @include hover {
+        &::before {
+          opacity: 0.075;
+        }
+      }
+    }
+
+    &:focus {
+      &::before {
+        opacity: 0.12;
+      }
+    }
+
+    &:active {
+      &::before {
+        opacity: 0.18;
+      }
+    }
+  }
+}
+
+/**
+* TextButton Style
+*/
+
+.btn-text {
+  position: relative;
+  display: inline-flex;
+  height: auto;
+  align-items: center;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background-color: transparent;
+  color: $black-100;
+  font-feature-settings: "calt" off;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 18px;
+
+  svg path {
+    fill: $black-48;
+  }
+
+  &::before {
+    position: absolute;
+    top: unset;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 1px;
+    background-color: var(--semantic-static-black) !important;
+    content: "";
+    transition: ease 0.25s;
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.5;
+  }
+
+  &:not(:disabled) {
+    &:hover {
+      @include hover {
+        &::before { width: 100%; }
+      }
+    }
   }
 }

@@ -44,7 +44,7 @@ const FeedEmojiArea = ({
       left = emojiList.length * -30;
     }
 
-    return { left: left < -80 ? -80 : left, top: 10, zIndex: 9999 };
+    return { left: left < -80 ? -80 : left, top: 10, zIndex: 999 };
   }, [emojiList.length]);
 
   return (
