@@ -367,7 +367,10 @@ class Mention implements WpEditorPlugin {
         focusNode: target.querySelector(`#${this.mentionId}`),
         focusOffset: 1
       });
-    } else if (focusInMentionTag && focusNode.textContent.split(' ').length > 1) {
+    } else if (
+      focusInMentionTag &&
+      focusNode.textContent.split(' ').filter((v) => !!v).length > 1
+    ) {
       this.mentionId = '';
 
       const [tagText, normalText] = focusNode.textContent.split(' ');

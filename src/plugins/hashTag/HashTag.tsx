@@ -380,7 +380,7 @@ class HashTag implements WpEditorPlugin {
         focusNode: target.querySelector(`#${this.hashId}`),
         focusOffset: 1
       });
-    } else if (focusInHashTag && focusNode.textContent.split(' ').length > 1) {
+    } else if (focusInHashTag && focusNode.textContent.split(' ').filter((v) => !!v).length > 1) {
       this.hashId = '';
 
       const [tagText, normalText] = focusNode.textContent.split(' ');
