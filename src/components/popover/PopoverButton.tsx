@@ -242,7 +242,7 @@ const PopoverButton = forwardRef(
                 ...animation
               }}
             >
-              {cloneElement(popoverElement, props)}
+              {cloneElement(popoverElement ?? <></>, props)}
             </div>
           )}
         </div>

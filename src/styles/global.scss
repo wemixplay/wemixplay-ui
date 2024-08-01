@@ -259,31 +259,10 @@
       -webkit-text-fill-color: var(--gray00);
     }
 
-    .a11y {
-      @include a11y;
-    }
-
     *,
     *::before,
     *::after {
       box-sizing: border-box;
-    }
-
-    // 디바이스 변경시 display none/block 방식을 사용하기 위한 클래스
-    .show {
-      display: block !important;
-    }
-
-    .hide {
-      display: none !important;
-    }
-
-    .show-flex {
-      display: flex !important;
-    }
-
-    .show-flex-inline {
-      display: flex !important;
     }
   }
 }

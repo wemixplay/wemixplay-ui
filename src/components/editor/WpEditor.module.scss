@@ -17,10 +17,10 @@
     &:empty {
       &::before {
         color: var(--semantic-label-alternative);
-
-        @include body-01-reading-02-m;
-
         content: attr(aria-placeholder);
+        font-size: inherit;
+        font-weight: inherit;
+        line-height: inherit;
       }
     }
 

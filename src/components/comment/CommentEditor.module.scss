@@ -19,7 +19,12 @@
       font-feature-settings: "ss10" on;
       overflow-y: auto;
 
-      @include body-01-reading-02-r;
+      &:empty {
+        &::before {
+          color: var(--semantic-label-alternative);
+          line-height: 1.5rem;
+        }
+      }
     }
   }
 

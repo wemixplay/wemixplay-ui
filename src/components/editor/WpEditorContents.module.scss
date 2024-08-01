@@ -32,6 +32,8 @@
 
   :global {
     .ellipsis-wrap {
+      @include body-01-reading-02-r;
+
       .ellipsis-content {
         color: var(--semantic-static-black);
 
