@@ -109,4 +109,5 @@ const CommentEditor = ({
   );
 };
 
+export type { Props as CommentEditorProps };
 export default CommentEditor;

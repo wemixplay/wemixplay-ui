@@ -29,4 +29,5 @@ const CommentEtcInfo = ({ className = '', likeCount, onLikeBtnClick }: Props) =>
   );
 };
 
+export type { Props as CommentEtcInfoProps };
 export default CommentEtcInfo;

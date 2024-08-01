@@ -47,4 +47,5 @@ const CommentWriterInfo = ({
   );
 };
 
+export type { Props as CommentWriterInfoProps };
 export default CommentWriterInfo;

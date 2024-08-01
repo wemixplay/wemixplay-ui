@@ -83,4 +83,5 @@ const CommentBox = ({
   );
 };
 
+export type { Props as CommentBoxProps };
 export default CommentBox;
