@@ -1,11 +1,19 @@
 'use client';
 
-import React, { ReactElement, useCallback, useEffect, useState } from 'react';
+import React, {
+  forwardRef,
+  ReactElement,
+  useCallback,
+  useEffect,
+  useImperativeHandle,
+  useRef,
+  useState
+} from 'react';
 import style from './CommentEditor.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import CommentWriterInfo from './CommentWriterInfo';
 import SolidCapButton from '../buttons/SolidCapButton';
-import WpEditor, { WpEditorProps } from '../editor/WpEditor';
+import WpEditor, { WpEditorProps, WpEditorRef } from '../editor/WpEditor';
 import Mention from '@/plugins/mention/Mention';
 import HashTag from '@/plugins/hashTag/HashTag';
 import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
@@ -27,87 +35,112 @@ type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
 
 const cx = makeCxFunc(style);
 
-const CommentEditor = ({
-  className = '',
-  writerName,
-  writerImg,
-  btnSubmitText = 'POST',
-  value,
-  config,
-  minLength = 1,
-  maxLength = 1000,
-  placeholder,
-  name,
-  handleChange,
-  ...editorProps
-}: Props) => {
-  const [text, setText] = useState(convertMarkdownToHtmlStr(value ?? ''));
-  const [textLength, setTextLength] = useState(value?.length ?? 0);
-
-  const onMatchUrl = useCallback(({ textUrls }: { textUrls: string[] }) => {
-    return textUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`);
-  }, []);
-
-  const handleEditorTextChange = useCallback(
-    (value: string, name?: string) => {
-      const convertValue = convertHtmlToMarkdownStr(value);
-
-      setText(convertValue);
-      handleChange && handleChange(convertValue, name);
+const CommentEditor = forwardRef<WpEditorRef, Props>(
+  (
+    {
+      className = '',
+      writerName,
+      writerImg,
+      btnSubmitText = 'POST',
+      value,
+      config,
+      minLength = 1,
+      maxLength = 1000,
+      placeholder,
+      name,
+      handleChange,
+      ...editorProps
     },
-    [name, handleChange]
-  );
+    ref
+  ) => {
+    const wpEditorRef = useRef<WpEditorRef>();
 
-  useEffect(() => {
-    if (value && !text) {
-      const htmlStr = convertMarkdownToHtmlStr(value);
+    const [text, setText] = useState(convertMarkdownToHtmlStr(value ?? ''));
+    const [textLength, setTextLength] = useState(value?.length ?? 0);
 
-      setText(htmlStr);
-    }
-  }, [value, text]);
+    const onMatchUrl = useCallback(({ textUrls }: { textUrls: string[] }) => {
+      return textUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`);
+    }, []);
 
-  return (
-    <div className={cx(className, 'comment-editor')}>
-      <CommentWriterInfo
-        className={cx('editor-profile')}
-        writerName={writerName}
-        writerImg={writerImg}
-      />
-      <div className={cx('editor-area')}>
-        <WpEditor
-          className={cx('editor')}
-          plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
-          config={{
-            ...config,
-            autoUrlMatch: {
-              onMatchUrl: (urls) => {
-                return onMatchUrl({ textUrls: urls });
-              }
-            },
-            countTextLength: {
-              hideUi: true,
-              onChangeTextLength: setTextLength
-            }
-          }}
-          name={name}
-          initialValue={text}
-          placeholder={placeholder}
-          maxLength={maxLength}
-          handleChange={handleEditorTextChange}
-          {...editorProps}
+    const handleEditorTextChange = useCallback(
+      (value: string, name?: string) => {
+        const convertValue = convertHtmlToMarkdownStr(value);
+
+        setText(convertValue);
+        handleChange && handleChange(convertValue, name);
+      },
+      [name, handleChange]
+    );
+
+    useEffect(() => {
+      if (value && !text) {
+        const htmlStr = convertMarkdownToHtmlStr(value);
+
+        setText(htmlStr);
+      }
+    }, [value, text]);
+
+    useImperativeHandle(ref, () => {
+      const { setData } = wpEditorRef.current;
+
+      wpEditorRef.current.setData = (data: string) => {
+        const htmlStr = convertMarkdownToHtmlStr(data);
+        setData(htmlStr);
+      };
+
+      return wpEditorRef.current;
+    });
+
+    return (
+      <div className={cx(className, 'comment-editor')}>
+        <CommentWriterInfo
+          className={cx('editor-profile')}
+          writerName={writerName}
+          writerImg={writerImg}
         />
-      </div>
+        <div className={cx('editor-area')}>
+          <WpEditor
+            ref={wpEditorRef}
+            className={cx('editor')}
+            plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
+            config={{
+              ...config,
+              autoUrlMatch: {
+                onMatchUrl: (urls) => {
+                  return onMatchUrl({ textUrls: urls });
+                }
+              },
+              countTextLength: {
+                hideUi: true,
+                onChangeTextLength: setTextLength
+              }
+            }}
+            name={name}
+            initialValue={text}
+            placeholder={placeholder}
+            maxLength={maxLength}
+            handleChange={handleEditorTextChange}
+            {...editorProps}
+          />
+        </div>
 
-      <div className={cx('editor-tool')}>
-        <em className={cx('counter-current')}>{commaWithValue(textLength)}</em>/
-        <span className={cx('counter-max')}>{commaWithValue(maxLength)}</span>
-        <SolidCapButton size={'small'} className={cx('btn-post')} disabled={minLength > textLength}>
-          {btnSubmitText}
-        </SolidCapButton>
+        <div className={cx('editor-tool')}>
+          <em className={cx('counter-current')}>{commaWithValue(textLength)}</em>/
+          <span className={cx('counter-max')}>{commaWithValue(maxLength)}</span>
+          <SolidCapButton
+            size={'small'}
+            className={cx('btn-post')}
+            disabled={minLength > textLength}
+          >
+            {btnSubmitText}
+          </SolidCapButton>
+        </div>
       </div>
-    </div>
-  );
-};
+    );
+  }
+);
+
+CommentEditor.displayName = 'CommentEditor';
 
 export type { Props as CommentEditorProps };
 export default CommentEditor;
