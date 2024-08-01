@@ -11,6 +11,8 @@
     padding: $sp-12 $sp-20;
     border: 1px solid #ddd;
     margin: $sp-12 0;
+    overflow-y: auto;
+    white-space: pre-wrap;
 
     &:empty {
       &::before {
