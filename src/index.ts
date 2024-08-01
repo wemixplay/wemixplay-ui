@@ -14,6 +14,10 @@ import FeedTextContent, { FeedTextContentProps } from './components/feed/FeedTex
 import FeedEmojiArea, { FeedEmojiAreaProps } from './components/feed/FeedEmojiArea';
 import FeedEtcInfoArea, { FeedEtcInfoAreaProps } from './components/feed/FeedEtcInfoArea';
 import FeedWriterInfo, { FeedWriterInfoProps } from './components/feed/FeedWriterInfo';
+import CommentBox, { CommentBoxProps } from './components/comment/CommentBox';
+import CommentEditor, { CommentEditorProps } from './components/comment/CommentEditor';
+import CommentEtcInfo, { CommentEtcInfoProps } from './components/comment/CommentEtcInfo';
+import CommentWriterInfo, { CommentWriterInfoProps } from './components/comment/CommentWriterInfo';
 
 export type {
   WpEditorRef,
@@ -26,7 +30,11 @@ export type {
   FeedTextContentProps,
   FeedEmojiAreaProps,
   FeedEtcInfoAreaProps,
-  FeedWriterInfoProps
+  FeedWriterInfoProps,
+  CommentBoxProps,
+  CommentEditorProps,
+  CommentEtcInfoProps,
+  CommentWriterInfoProps
 };
 export {
   WpEditor,
@@ -35,5 +43,9 @@ export {
   FeedTextContent,
   FeedEmojiArea,
   FeedEtcInfoArea,
-  FeedWriterInfo
+  FeedWriterInfo,
+  CommentBox,
+  CommentEditor,
+  CommentEtcInfo,
+  CommentWriterInfo
 };
