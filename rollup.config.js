@@ -83,8 +83,16 @@ const plugins = [
             @import "./src/styles/abstracts/_variables.scss";
             @import "./src/styles/abstracts/_mixin.scss";
             @import "./src/styles/abstracts/_animation.scss";
-            @import "./src/styles/global.scss";
           `
+        }
+      ],
+      [
+        'sass',
+        {
+          data: `
+            @import "./src/styles/global.scss";
+          `,
+          includePaths: ['./src/styles']
         }
       ]
     ],
