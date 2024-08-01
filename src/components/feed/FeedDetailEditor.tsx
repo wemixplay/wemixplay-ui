@@ -408,7 +408,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
     return (
       <div className={cx(className, 'feed-detail-editor')}>
         <div
-          className={cx('post-detail-editor-header', { 'exist-user-click-event': !!onUserClick })}
+          className={cx('feed-detail-editor-header', { 'exist-user-click-event': !!onUserClick })}
         >
           <Person
             src={writerImg}
@@ -466,7 +466,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             </div>
           </div>
         </div>
-        <div className={cx('post-detail-editor-body')}>
+        <div className={cx('feed-detail-editor-body')}>
           <WpEditor
             className={cx('editor', 'post-content')}
             ref={wpEditorRef}
