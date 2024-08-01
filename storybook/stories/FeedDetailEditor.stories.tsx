@@ -42,13 +42,13 @@ export const Default: StoryComponent = {
       },
       hash: {
         list: [
-          // { id: 1, name: 'Derek' },
-          // { id: 2, name: 'Easton' },
-          // { id: 3, name: 'Easton' },
-          // { id: 4, name: 'Easton' },
-          // { id: 5, name: 'Easton' },
-          // { id: 6, name: 'Easton' },
-          // { id: 7, name: 'Easton' }
+          { id: 1, name: 'Derek' },
+          { id: 2, name: 'Easton' },
+          { id: 3, name: 'Easton' },
+          { id: 4, name: 'Easton' },
+          { id: 5, name: 'Easton' },
+          { id: 6, name: 'Easton' },
+          { id: 7, name: 'Easton' }
         ],
         onCompleteHash({ allHashTag, currentHashTag }) {
           console.log(allHashTag);
