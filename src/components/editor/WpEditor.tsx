@@ -71,7 +71,7 @@ export interface WpEditorPluginConstructor {
 }
 
 type WpEditorRef = HTMLDivElement & {
-  setData: (data: string) => void;
+  setData: (data: string, option?: { keepRange?: boolean }) => void;
 };
 
 type Props = Omit<TextareaHTMLAttributes<HTMLDivElement>, 'aria-placeholder' | 'value'> & {
@@ -460,9 +460,12 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
     );
 
     const setData = useCallback(
-      (data: string) => {
+      (data: string, option: { keepRange?: boolean } = { keepRange: true }) => {
         contentEditableEl.current.innerHTML = data;
-        rangeMoveContentEnd();
+
+        if (option.keepRange) {
+          rangeMoveContentEnd();
+        }
       },
       [rangeMoveContentEnd]
     );
