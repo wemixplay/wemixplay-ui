@@ -26,12 +26,15 @@ export const Default: StoryComponent = {
     config: {
       mention: {
         list: [
-          { name: 'Derek', age: '30' },
-          { name: 'Easton', age: '30' }
+          { id: 1, name: 'Derek', age: '30' },
+          { id: 2, name: 'Easton', age: '30' }
         ]
       },
       hash: {
-        list: [{ name: 'Derek' }, { name: 'Easton' }]
+        list: [
+          { id: 1, name: 'Derek' },
+          { id: 2, name: 'Easton' }
+        ]
       }
     }
   },
