@@ -15,7 +15,7 @@ import CommentWriterInfo from './CommentWriterInfo';
 import SolidCapButton from '../buttons/SolidCapButton';
 import WpEditor, { WpEditorProps, WpEditorRef } from '../editor/WpEditor';
 import Mention from '@/plugins/mention/Mention';
-import HashTag from '@/plugins/hashTag/HashTag';
+// import HashTag from '@/plugins/hashTag/HashTag';
 import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import CountTextLength from '@/plugins/countTextLength/CountTextLength';
 import PasteToPlainText from '@/plugins/pasteToPlainText/PasteToPlainText';
@@ -31,6 +31,7 @@ type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
   writerImg?: string;
   btnSubmitText?: ReactElement | string;
   value?: string;
+  handleSubmit?: (value: string) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -49,6 +50,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
       placeholder,
       name,
       handleChange,
+      handleSubmit,
       ...editorProps
     },
     ref
@@ -72,6 +74,10 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
       [name, handleChange]
     );
 
+    const handleSubmitBtnClick = useCallback(() => {
+      handleSubmit && handleSubmit(text);
+    }, [handleSubmit]);
+
     useEffect(() => {
       if (value && !text) {
         const htmlStr = convertMarkdownToHtmlStr(value);
@@ -83,9 +89,9 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
     useImperativeHandle(ref, () => {
       const { setData } = wpEditorRef.current;
 
-      wpEditorRef.current.setData = (data: string) => {
+      wpEditorRef.current.setData = (data: string, option?: { keepRange?: boolean }) => {
         const htmlStr = convertMarkdownToHtmlStr(data);
-        setData(htmlStr);
+        setData(htmlStr, option);
       };
 
       return wpEditorRef.current;
@@ -100,9 +106,8 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
         />
         <div className={cx('editor-area')}>
           <WpEditor
-            ref={wpEditorRef}
             className={cx('editor')}
-            plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
+            plugin={[Mention, AutoUrlMatch, PasteToPlainText, CountTextLength]}
             config={{
               ...config,
               autoUrlMatch: {
@@ -121,6 +126,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
             maxLength={maxLength}
             handleChange={handleEditorTextChange}
             {...editorProps}
+            ref={wpEditorRef}
           />
         </div>
 
@@ -131,6 +137,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
             size={'small'}
             className={cx('btn-post')}
             disabled={minLength > textLength}
+            onClick={handleSubmitBtnClick}
           >
             {btnSubmitText}
           </SolidCapButton>
