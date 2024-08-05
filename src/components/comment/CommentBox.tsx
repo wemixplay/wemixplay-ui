@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, ReactElement } from 'react';
+import React, { MouseEvent, ReactElement, useId } from 'react';
 import style from './CommentBox.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import Person from '../avatars/Person';
@@ -15,12 +15,14 @@ type Props = {
   writerName?: string;
   writerImg?: string;
   follwerCount?: number;
+  follwersText?: string;
   comment?: string;
   likeCount?: number;
   createdAt?: number;
   updatedAt?: number;
   deletedMsg?: string;
   managePopoverElement?: ReactElement;
+  locale?: string;
   onManageBtnClick?: null | ((e: MouseEvent<HTMLButtonElement>) => void);
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
@@ -32,16 +34,18 @@ const CommentBox = ({
   writerName,
   writerImg,
   follwerCount,
+  follwersText,
   comment,
   likeCount,
   createdAt,
   updatedAt,
   managePopoverElement,
   deletedMsg,
+  locale,
   onManageBtnClick,
   onLikeBtnClick
 }: Props) => {
-  //logic
+  const uid = useId();
 
   return (
     <article className={cx(className, 'comment-box', { 'deleted-comment': deletedMsg })}>
@@ -53,14 +57,16 @@ const CommentBox = ({
               writerName={writerName}
               writerImg={writerImg}
               follwerCount={follwerCount}
+              follwersText={follwersText}
+              locale={locale}
               createdAt={createdAt}
               updatedAt={updatedAt}
             />
             {/* Feed Management Button (삭제, 수정, 신고...) */}
             <div className={cx('btn-manage')}>
               <PopoverButton
-                anchorId={onManageBtnClick ? '' : 'feed-manage'}
-                id="feed-manage"
+                anchorId={onManageBtnClick ? '' : `comment-manage-${uid.replace(/:/gi, '')}`}
+                id={`comment-manage-${uid.replace(/:/gi, '')}`}
                 popoverStyle={{ right: -10, top: 10, zIndex: 999 }}
                 popoverElement={managePopoverElement}
                 popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
