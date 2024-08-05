@@ -3,9 +3,8 @@
 import React, { MouseEvent, ReactElement, useId } from 'react';
 import style from './CommentBox.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
-import Person from '../avatars/Person';
 import PopoverButton from '../popover/PopoverButton';
-import { SvgIcoLike, SvgIcoVDots } from '@/assets/svgs';
+import { SvgIcoVDots } from '@/assets/svgs';
 import CommentWriterInfo from './CommentWriterInfo';
 import FeedTextContent from '../feed/FeedTextContent';
 import CommentEtcInfo from './CommentEtcInfo';
@@ -17,13 +16,17 @@ type Props = {
   follwerCount?: number;
   follwersText?: string;
   comment?: string;
-  likeCount?: number;
+  likeInfo?: {
+    likeCount: number;
+    isMyClick?: boolean;
+  };
   createdAt?: number;
   updatedAt?: number;
   deletedMsg?: string;
   managePopoverElement?: ReactElement;
   locale?: string;
   onManageBtnClick?: null | ((e: MouseEvent<HTMLButtonElement>) => void);
+  onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -36,13 +39,14 @@ const CommentBox = ({
   follwerCount,
   follwersText,
   comment,
-  likeCount,
+  likeInfo,
   createdAt,
   updatedAt,
   managePopoverElement,
   deletedMsg,
   locale,
   onManageBtnClick,
+  onProfileClick,
   onLikeBtnClick
 }: Props) => {
   const uid = useId();
@@ -82,7 +86,7 @@ const CommentBox = ({
             ellipsis={true}
             enableShowMore={true}
           />
-          <CommentEtcInfo likeCount={likeCount} onLikeBtnClick={onLikeBtnClick} />
+          <CommentEtcInfo likeInfo={likeInfo} onLikeBtnClick={onLikeBtnClick} />
         </>
       )}
     </article>

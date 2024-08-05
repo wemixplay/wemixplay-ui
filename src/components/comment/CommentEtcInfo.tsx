@@ -8,22 +8,29 @@ import { toFormatterByInt } from '@/utils/valueParserUtils';
 
 type Props = {
   className?: string;
-  likeCount?: number;
+  likeInfo?: {
+    likeCount: number;
+    isMyClick?: boolean;
+  };
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 };
 
 const cx = makeCxFunc(style);
 
-const CommentEtcInfo = ({ className = '', likeCount, onLikeBtnClick }: Props) => {
+const CommentEtcInfo = ({ className = '', likeInfo, onLikeBtnClick }: Props) => {
   //logic
 
   return (
     <div className={cx(className, 'comment-etc-info')}>
-      <button type="button" className={cx('btn-like')} onClick={onLikeBtnClick}>
+      <button
+        type="button"
+        className={cx('btn-like', { active: likeInfo?.isMyClick })}
+        onClick={onLikeBtnClick}
+      >
         <i className={cx('btn-like-ico')}>
           <SvgIcoLike />
         </i>
-        <span className={cx('count')}>{toFormatterByInt(likeCount, 1)}</span>
+        <span className={cx('count')}>{toFormatterByInt(likeInfo?.likeCount ?? 0, 1)}</span>
       </button>
     </div>
   );
