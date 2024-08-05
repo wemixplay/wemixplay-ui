@@ -208,7 +208,7 @@ const pareLocale = (locale: string) => {
  * 현재시간 및 default Format
  * UTC 시간 기준인지 확인 필요
  */
-export const defaultFormat = 'YYYY-MM-DD HH:mm:ss';
+export const defaultFormat = 'YYYY-MM-DD';
 
 export const getCurrentDate = (): Dayjs => {
   return dayjs(dayjs().format(defaultFormat));
@@ -334,7 +334,13 @@ export const getTimeString = (date: string | number, locale = 'en') => {
 
   const isOneWeekAgo = daysGap >= DAYS_IN_A_WEEK;
 
+  let dateFormat = locale === 'ko' ? 'YYYY년 MM월 DD일' : 'MMM D, YYYY';
+
+  if (daysGap < 365) {
+    dateFormat = locale === 'ko' ? 'MM월 DD일' : 'MMM D';
+  }
+
   return isOneWeekAgo
-    ? dayjs(targetTimeStamp).format(defaultFormat)
+    ? dayjs(targetTimeStamp).format(dateFormat)
     : formatRelativeTime(targetTimeStamp, locale);
 };
