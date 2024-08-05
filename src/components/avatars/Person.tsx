@@ -87,9 +87,14 @@ const Person = ({
 
   useEffect(() => {
     setLoadStatus(
-      imgRef.current?.complete ? (!!imgRef.current?.naturalWidth ? 'error' : 'loaded') : 'loading'
+      imgRef.current?.complete ? (!imgRef.current?.naturalWidth ? 'error' : 'loaded') : 'loading'
     );
-    setImgSrc(src || DEFAULT_IMAGE);
+
+    if (imgRef.current?.complete && !imgRef.current?.naturalWidth) {
+      setImgSrc(DEFAULT_IMAGE);
+    } else {
+      setImgSrc(src || DEFAULT_IMAGE);
+    }
   }, [src]);
 
   return (
