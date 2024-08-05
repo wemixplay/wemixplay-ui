@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import style from './CommentWriterInfo.module.scss';
 import Person from '../avatars/Person';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
@@ -16,6 +16,7 @@ type Props = {
   locale?: string;
   createdAt?: number;
   updatedAt?: number;
+  onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -28,17 +29,20 @@ const CommentWriterInfo = ({
   follwersText = 'Followers',
   locale,
   createdAt,
-  updatedAt
+  updatedAt,
+  onProfileClick
 }: Props) => {
   //logic
 
   return (
-    <div className={cx(className, 'author')}>
-      <div className={cx('author-avatar')}>
+    <div className={cx(className, 'author', { 'has-click-event': onProfileClick })}>
+      <div className={cx('author-avatar')} onClick={onProfileClick}>
         <Person src={writerImg} />
       </div>
       <div className={cx('author-info')}>
-        <strong className={cx('author-name')}>{writerName || '-'}</strong>
+        <strong className={cx('author-name')} onClick={onProfileClick}>
+          {writerName || '-'}
+        </strong>
         {typeof follwerCount !== 'undefined' && (
           <span className={cx('author-followers')}>
             {toFormatterByInt(follwerCount, 1)} {follwersText}

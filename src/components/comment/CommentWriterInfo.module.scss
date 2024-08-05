@@ -3,6 +3,13 @@
   display: flex;
   align-items: center;
 
+  &.has-click-event {
+    .author-avatar,
+    .author-name {
+      cursor: pointer;
+    }
+  }
+
   &-avatar {
     flex-shrink: 0;
     margin-right: $sp-12;
