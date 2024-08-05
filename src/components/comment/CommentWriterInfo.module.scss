@@ -14,33 +14,29 @@
   }
 
   &-info {
-    display: grid;
-    column-gap: $sp-12;
-    grid-template:
-      "author-name author-name"
-      "author-followers author-time"
-      / 1fr auto;
-    row-gap: -$sp-2;
+    display: flex;
+    flex-wrap: wrap;
 
     .author-name {
+      width: 100%;
       color: var(--semantic-label-normal);
-      grid-area: author-name;
 
       @include label-01-reading-sb;
     }
 
     .author-followers {
+      margin-top: -$sp-2;
+      margin-right: $sp-8;
       color: var(--semantic-label-normal);
       font-feature-settings: "ss10" on;
-      grid-area: author-followers;
 
       @include label-01-normal-r;
     }
 
     .author-time {
+      margin-top: -$sp-2;
       color: var(--semantic-label-alternative);
       font-feature-settings: "ss10" on;
-      grid-area: author-time;
 
       @include label-01-normal-r;
     }
