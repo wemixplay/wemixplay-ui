@@ -28,6 +28,8 @@ type Props = {
   onManageBtnClick?: null | ((e: MouseEvent<HTMLButtonElement>) => void);
   onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  onMentionClick?: (params: { name: string; id: string }) => void;
+  onHashTagClick?: (params: { name: string; id: string }) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -47,7 +49,9 @@ const CommentBox = ({
   locale,
   onManageBtnClick,
   onProfileClick,
-  onLikeBtnClick
+  onLikeBtnClick,
+  onMentionClick,
+  onHashTagClick
 }: Props) => {
   const uid = useId();
 
@@ -65,6 +69,7 @@ const CommentBox = ({
               locale={locale}
               createdAt={createdAt}
               updatedAt={updatedAt}
+              onProfileClick={onProfileClick}
             />
             {/* Feed Management Button (삭제, 수정, 신고...) */}
             <div className={cx('btn-manage')}>
@@ -85,6 +90,8 @@ const CommentBox = ({
             content={comment}
             ellipsis={true}
             enableShowMore={true}
+            onMentionClick={onMentionClick}
+            onHashTagClick={onHashTagClick}
           />
           <CommentEtcInfo likeInfo={likeInfo} onLikeBtnClick={onLikeBtnClick} />
         </>
