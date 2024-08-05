@@ -76,7 +76,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
 
     const handleSubmitBtnClick = useCallback(() => {
       handleSubmit && handleSubmit(text);
-    }, [handleSubmit]);
+    }, [text, handleSubmit]);
 
     useEffect(() => {
       if (value && !text) {
