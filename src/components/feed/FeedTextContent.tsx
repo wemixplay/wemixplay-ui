@@ -18,7 +18,7 @@ type Props = {
   onHashTagClick?: (params: { name: string; id: string }) => void;
 };
 
-const cx = makeCxFunc(style)
+const cx = makeCxFunc(style);
 
 const FeedTextContent = ({
   className,
@@ -46,7 +46,7 @@ const FeedTextContent = ({
         onMentionClick && onMentionClick({ id, name: name.replace('@', '') });
       } else if (target.classList.contains('hash') && target.classList.contains('complete-hash')) {
         onHashTagClick && onHashTagClick({ id, name: name.replace('#', '') });
-      }else if(target.tagName !== 'A'){
+      } else if (target.tagName !== 'A') {
         onTextClick && onTextClick(e);
       }
     },
@@ -54,7 +54,10 @@ const FeedTextContent = ({
   );
 
   return (
-    <WpEditorContents className={cx(className, 'feed-text-content', { 'has-click-event': onTextClick })} onClick={handleClick}>
+    <WpEditorContents
+      className={cx(className, 'feed-text-content', { 'has-click-event': onTextClick })}
+      onClick={handleClick}
+    >
       {ellipsis ? (
         <Ellipsis
           className="text"
@@ -67,14 +70,11 @@ const FeedTextContent = ({
           onShowMoreLessClick={enableShowMore ? undefined : () => {}}
         />
       ) : (
-        <div
-          className="text"
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
-        ></div>
+        <div className="text" dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
       )}
     </WpEditorContents>
   );
 };
 
-export type { Props as FeedTextContentProps }
+export type { Props as FeedTextContentProps };
 export default FeedTextContent;
