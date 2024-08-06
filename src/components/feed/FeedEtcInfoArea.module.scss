@@ -9,10 +9,10 @@
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    cursor: default;
+    cursor: default !important;
 
-    .has-click-event {
-      cursor: pointer;
+    &.has-click-event {
+      cursor: pointer !important;
     }
 
     &:not(:first-child) {
