@@ -437,11 +437,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       (e: ClipboardEvent<HTMLDivElement>) => {
         const { selection, range } = getSelection();
 
-        console.log(
-          previousRevisions.current.stack[previousRevisions.current.index],
-          contentEditableEl.current.innerHTML
-        );
-
         if (
           previousRevisions.current.stack[previousRevisions.current.index] !==
           contentEditableEl.current.innerHTML
@@ -462,6 +457,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
     const setData = useCallback(
       (data: string, option: { keepRange?: boolean } = { keepRange: true }) => {
         contentEditableEl.current.innerHTML = data;
+
+        contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
 
         if (option.keepRange) {
           rangeMoveContentEnd();
