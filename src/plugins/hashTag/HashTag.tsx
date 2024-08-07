@@ -332,15 +332,15 @@ class HashTag implements WpEditorPlugin {
     const focusNode = selection.focusNode;
     const focusOffset = selection.focusOffset;
 
-    const currentInputChar = focusNode.textContent[focusOffset - 1];
-    const prevCurrentInputChar = focusNode.textContent[focusOffset - 2];
+    const currentInputChar = focusNode?.textContent?.[focusOffset - 1];
+    const prevCurrentInputChar = focusNode?.textContent?.[focusOffset - 2];
     const focusInHashTag = !!focusNode?.parentElement?.classList?.contains?.('hash');
     const focusInCompleteHashTag =
       !!focusNode?.parentElement?.classList?.contains?.('complete-hash');
 
     const isStartHash =
       !prevCurrentInputChar?.trim() &&
-      focusNode.nodeType === Node.TEXT_NODE &&
+      focusNode?.nodeType === Node.TEXT_NODE &&
       !focusInHashTag &&
       currentInputChar === '#';
 
@@ -353,7 +353,7 @@ class HashTag implements WpEditorPlugin {
       this.hashId = `hash-${uniqueId()}`;
 
       // 방금 입력된 # 문자를 <span>으로 교체
-      const textContent = focusNode.textContent;
+      const textContent = focusNode?.textContent ?? '';
       const beforeText = textContent.slice(0, focusOffset - 1);
       const afterText = textContent.slice(focusOffset);
 

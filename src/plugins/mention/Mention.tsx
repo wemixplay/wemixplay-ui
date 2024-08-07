@@ -320,15 +320,15 @@ class Mention implements WpEditorPlugin {
     const focusNode = selection.focusNode;
     const focusOffset = selection.focusOffset;
 
-    const currentInputChar = focusNode.textContent[focusOffset - 1];
-    const prevCurrentInputChar = focusNode.textContent[focusOffset - 2];
+    const currentInputChar = focusNode?.textContent?.[focusOffset - 1];
+    const prevCurrentInputChar = focusNode?.textContent?.[focusOffset - 2];
     const focusInMentionTag = !!focusNode?.parentElement?.classList?.contains?.('mention');
     const focusInCompleteMentionTag =
       !!focusNode?.parentElement?.classList?.contains?.('complete-mention');
 
     const isStartMention =
       !prevCurrentInputChar?.trim() &&
-      focusNode.nodeType === Node.TEXT_NODE &&
+      focusNode?.nodeType === Node.TEXT_NODE &&
       !focusInMentionTag &&
       currentInputChar === '@';
     if (this.mentionId && focusInMentionTag) {
