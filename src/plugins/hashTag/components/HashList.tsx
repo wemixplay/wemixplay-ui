@@ -168,7 +168,7 @@ const HashList = forwardRef<HashListRef, Props>(
 
         const dropboxElHeight = elRef.current.clientHeight ?? 0;
 
-        checkTopBottomSpace(top, dropboxElHeight);
+        checkTopBottomSpace(rect.top + window.scrollY, dropboxElHeight);
 
         switch (boxDirection) {
           case 'top':
