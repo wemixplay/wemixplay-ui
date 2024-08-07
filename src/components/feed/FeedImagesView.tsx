@@ -45,7 +45,7 @@ const FeedImagesView = ({
 
             <div
               key={image.src}
-              className={cx('preview-image-box')}
+              className={cx('preview-image-box', { 'has-click-event': handleClickImage })}
               onClick={() => handleClickImage && handleClickImage({ src: image.src, index })}
             >
               <img src={image.src} alt={image.src} />
