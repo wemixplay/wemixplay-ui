@@ -3,46 +3,33 @@
 
   @include body-01-reading-02-r;
 
-  * {
-    color: var(--semantic-static-black);
-
-    @include body-01-reading-02-r;
-  }
-
-  a {
-    color: var(--semantic-status-blue);
-
-    @include body-01-reading-02-r;
-
-    text-decoration: none;
-
-    & + a {
-      margin-left: $sp-4;
-    }
-  }
-
   &:global {
     &:not(.editor) {
       .mention,
-      .hash {
+      .hash,
+      a {
         cursor: pointer;
+        text-decoration: underline;
       }
     }
   }
 
   :global {
-    .ellipsis-wrap {
-      @include body-01-reading-02-r;
+    a {
+      color: var(--semantic-status-blue);
+      text-decoration: none;
 
-      .ellipsis-content {
-        color: var(--semantic-static-black);
-
-        @include body-01-reading-02-r;
+      & + a {
+        margin-left: $sp-4;
       }
     }
 
     .mention {
       position: relative;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
 
       &.will-mention {
         // style
@@ -56,30 +43,26 @@
 
       &.complete-mention {
         color: var(--semantic-status-blue);
-
-        @include body-01-reading-02-r;
       }
     }
 
     .hash {
       position: relative;
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
 
       &.will-hash {
         color: var(--semantic-status-blue);
-
-        @include body-01-reading-02-r;
       }
 
       &.unknown-hash {
         color: var(--semantic-status-blue);
-
-        @include body-01-reading-02-r;
       }
 
       &.complete-hash {
         color: var(--semantic-status-blue);
-
-        @include body-01-reading-02-r;
       }
     }
   }
