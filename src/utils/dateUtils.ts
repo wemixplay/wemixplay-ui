@@ -324,7 +324,7 @@ export const getGapFromNow = (time: number, unit: QUnitType | OpUnitType) => {
 };
 
 /**
- * 인자 타임스탬프 값이 현재와 1년 이상 차이가 난다면 날짜를 그대로 보여주고 아닐 경우 1일전, 1주전, 1달전 등으로 파싱처리 하도록 분기하는 함수
+ * 인자 타임스탬프 값이 현재와 1주 이상 차이가 난다면 날짜를 그대로 보여주고 아닐 경우 1일전, 1주전, 1달전 등으로 파싱처리 하도록 분기하는 함수
  */
 export const getTimeString = (date: string | number, locale = 'en') => {
   locale = pareLocale(locale);
