@@ -294,7 +294,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         });
 
         if (e.code === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
-          console.log('here?!?@!?');
           const range = selection.getRangeAt(0);
           const anchorNode = range.startContainer;
           const offset = range.startOffset;
