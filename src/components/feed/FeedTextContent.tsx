@@ -60,7 +60,7 @@ const FeedTextContent = ({
     >
       {ellipsis ? (
         <Ellipsis
-          className="text"
+          className={cx('text')}
           content={htmlContent}
           defaultShortened
           lineClamp={3}
@@ -70,7 +70,10 @@ const FeedTextContent = ({
           onShowMoreLessClick={enableShowMore ? undefined : () => {}}
         />
       ) : (
-        <div className="text" dangerouslySetInnerHTML={{ __html: htmlContent }}></div>
+        <div
+          className={cx('text', 'full-text')}
+          dangerouslySetInnerHTML={{ __html: htmlContent }}
+        ></div>
       )}
     </WpEditorContents>
   );

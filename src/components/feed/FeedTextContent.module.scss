@@ -3,6 +3,10 @@
     cursor: pointer;
   }
 
+  .text {
+    word-break: break-word;
+  }
+
   :global {
     .mention.complete-mention,
     .hash.complete-hash,
