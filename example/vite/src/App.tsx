@@ -8,6 +8,8 @@ import { FeedDetailEditor } from 'wemixplay-ui';
 function App() {
 	const [count, setCount] = useState(0);
 
+	console.log('a')
+
 	return (
 		<>
 		<FeedDetailEditor />
