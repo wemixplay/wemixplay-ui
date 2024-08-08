@@ -1,7 +1,7 @@
 .editor-contents {
   color: var(--semantic-static-black);
 
-  @include body-01-reading-02-r;
+  @include body-01-reading-02-m;
 
   &:global {
     &:not(.editor) {
@@ -9,12 +9,18 @@
       .hash,
       a {
         cursor: pointer;
-        text-decoration: underline;
       }
     }
   }
 
   :global {
+    .ellipsis-wrap {
+      font-size: inherit;
+      font-weight: inherit;
+      letter-spacing: inherit;
+      line-height: inherit;
+    }
+
     a {
       color: var(--semantic-status-blue);
       text-decoration: none;
