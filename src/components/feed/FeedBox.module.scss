@@ -1,6 +1,7 @@
 .feed-box {
   position: relative;
   padding: $sp-16 0;
+  cursor: default;
 
   &::after {
     position: absolute;
