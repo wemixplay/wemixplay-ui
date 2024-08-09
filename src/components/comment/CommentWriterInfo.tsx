@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, ReactElement } from 'react';
 import style from './CommentWriterInfo.module.scss';
 import Person from '../avatars/Person';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
@@ -9,7 +9,7 @@ import { makeCxFunc } from '@/utils/forReactUtils';
 
 type Props = {
   className?: string;
-  writerName?: string;
+  writerName?: ReactElement | string;
   writerImg?: string;
   follwerCount?: number;
   follwersText?: string;

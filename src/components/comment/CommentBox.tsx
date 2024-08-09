@@ -11,7 +11,7 @@ import CommentEtcInfo from './CommentEtcInfo';
 
 type Props = {
   className?: string;
-  writerName?: string;
+  writerName?: ReactElement | string;
   writerImg?: string;
   follwerCount?: number;
   follwersText?: string;
