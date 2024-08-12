@@ -26,6 +26,7 @@ import { debounce } from 'lodash';
 import { PasteToPlainTextConfig } from '../../plugins/pasteToPlainText/PasteToPlainText';
 import { CountTextLengthConfig } from '../../plugins/countTextLength/CountTextLength';
 import WpEditorContents from './WpEditorContents';
+import { makeCxFunc } from '@/utils/forReactUtils';
 
 export interface WpEditorPlugin<C extends any = any> {
   commandKey: string;
@@ -91,7 +92,7 @@ type Props = Omit<TextareaHTMLAttributes<HTMLDivElement>, 'aria-placeholder' | '
   handleChange?: (value: string, name?: string) => void;
 };
 
-const cx = classNames.bind(style);
+const cx = makeCxFunc(style);
 
 const constructEditorPlugin = ({
   plugin,
@@ -137,8 +138,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       () =>
         debounce(() => {
           if (
+            !contentEditableEl.current ||
             previousRevisions.current.stack[previousRevisions.current.index] ===
-            contentEditableEl.current.innerHTML
+              contentEditableEl.current?.innerHTML
           ) {
             return;
           }
@@ -155,7 +157,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       }
 
       return new MutationObserver(() => {
-        if (!contentEditableEl.current) {
+        if (!contentEditableEl.current || !previousRevisions.current) {
           return;
         }
 
