@@ -134,7 +134,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
           <em className={cx('counter-current')}>{commaWithValue(textLength)}</em>/
           <span className={cx('counter-max')}>{commaWithValue(maxLength)}</span>
           <SolidCapButton
-            size={'small'}
+            size="medium"
             className={cx('btn-post')}
             disabled={minLength > textLength}
             onClick={handleSubmitBtnClick}
