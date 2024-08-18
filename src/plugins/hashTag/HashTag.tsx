@@ -20,6 +20,7 @@ type HashTagConfig = {
     allHashTag: HashTagInfo[];
     currentHashTag?: HashTagInfo;
   }) => void;
+  onOpenHashList?: () => void;
   onCloseHashList?: () => void;
 };
 
@@ -45,6 +46,8 @@ class HashTag implements WpEditorPlugin {
 
     if (!id) {
       this.config.onCloseHashList && this.config.onCloseHashList();
+    } else {
+      this.config.onOpenHashList && this.config.onOpenHashList();
     }
   }
 

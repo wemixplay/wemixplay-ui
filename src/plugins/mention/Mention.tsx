@@ -20,6 +20,7 @@ type MentionConfig = {
     allMention: MentionInfo[];
     currentMention?: MentionInfo;
   }) => void;
+  onOpenMentionList?: () => void;
   onCloseMentionList?: () => void;
 };
 
@@ -45,6 +46,8 @@ class Mention implements WpEditorPlugin {
 
     if (!id) {
       this.config.onCloseMentionList && this.config.onCloseMentionList();
+    } else {
+      this.config.onOpenMentionList && this.config.onOpenMentionList();
     }
   }
 
@@ -77,8 +80,8 @@ class Mention implements WpEditorPlugin {
             contentEditableEl={plugin.contentEditableEl}
             list={config.list}
             listElement={config.listElement}
-            selectMentionItem={() => {
-              plugin.selectMentionItem();
+            selectMentionItem={(index) => {
+              plugin.selectMentionItem(index);
             }}
             closeMentionList={() => {
               this.mentionId = '';

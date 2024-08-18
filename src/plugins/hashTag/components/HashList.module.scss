@@ -9,10 +9,11 @@
   border-radius: 12px;
   background-color: var(--semantic-static-white);
   box-shadow: 0 8px 16px 0 rgb(0 0 0 / 12%);
+  visibility: hidden;
 
   @include breakpoint-768 {
-    max-width: 300px;
     width: fit-content;
+    max-width: 300px;
   }
 
   .hash-list-area {
@@ -59,7 +60,7 @@
         }
       }
 
-      &.active{
+      &.active {
         background: var(--semantic-background-normal-alternative);
         color: var(--semantic-label-normal);
       }

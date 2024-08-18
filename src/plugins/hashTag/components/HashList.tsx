@@ -52,8 +52,11 @@ const HashList = forwardRef<HashListRef, Props>(
   ) => {
     const elRef = useRef<HashListRef>();
     const scrollAreaRef = useRef<HTMLUListElement>();
+    const touchStartPoint = useRef({
+      x: 0,
+      y: 0
+    });
 
-    const [boxDirection, setBoxDirection] = useState<'top' | 'bottom'>();
     const [position, setPosition] = useState<CSSProperties>({});
     const [focusIndex, setFoucsIndex] = useState(0);
 
@@ -119,24 +122,6 @@ const HashList = forwardRef<HashListRef, Props>(
     );
 
     /**
-     * HashList가 노출될 여유 공간을 체크하고 위로 노출할지 아래로 노출할지 결정하는 함수
-     *
-     * @param top SelectBox의 y 위치값
-     * @param clientHeight SelectBox의 높이값
-     */
-    const checkTopBottomSpace = useCallback((top: number, clientHeight: number) => {
-      const windowTop = window.scrollY;
-      const windowBottom = window.scrollY + window.innerHeight;
-
-      // 공간이 없다면 반대 방향(위 -> 아래, 아래 -> 위)으로 방향 전환
-      if (top + clientHeight > windowBottom) {
-        setBoxDirection('top');
-      } else {
-        setBoxDirection('bottom');
-      }
-    }, []);
-
-    /**
      * HashList의 위치값과 높이값 등을 계산하여 DropBox가 노출될 위치 좌표 값을 계산하는 함수
      *
      * @param el HashList의 element (HTMLDivElement)
@@ -159,31 +144,28 @@ const HashList = forwardRef<HashListRef, Props>(
         const overWidth = rect.left + elRef.current.offsetWidth - window.innerWidth;
 
         const top = rect.top + scrollY;
+        const bottom = rect.bottom + scrollY;
         const left = overWidth > 0 ? rect.left - overWidth - 10 : rect.left;
+
+        const viewPortTop = scrollY;
+        const viewPortBottom = scrollY + window.innerHeight;
+
+        const boxDirection = top - viewPortTop > viewPortBottom - bottom ? 'top' : 'bottom';
+        scrollAreaRef.current.style.height = `${boxDirection === 'top' ? top - viewPortTop - 32 : viewPortBottom - bottom - 32}px`;
 
         const positionStyle: CSSProperties = {
           position: 'absolute',
-          zIndex: '9999999'
+          zIndex: '9999999',
+          visibility: 'visible'
         };
 
         const dropboxElHeight = elRef.current.clientHeight ?? 0;
 
-        checkTopBottomSpace(rect.top + window.scrollY, dropboxElHeight);
-
         switch (boxDirection) {
           case 'top':
-            const elComputedStyle = window.getComputedStyle(elRef.current);
-            const elPaddingHeight =
-              Number(elComputedStyle.paddingTop.replace('px', '')) +
-              Number(elComputedStyle.paddingBottom.replace('px', ''));
-
-            positionStyle.top = top - dropboxElHeight < 0 ? 10 : top - dropboxElHeight;
+            positionStyle.top = top - dropboxElHeight;
             positionStyle.left = isMobile ? '50%' : left;
 
-            scrollAreaRef.current.style.height =
-              top - dropboxElHeight < 0
-                ? `${dropboxElHeight + top - dropboxElHeight - elPaddingHeight - 10}px`
-                : '';
             break;
           case 'bottom':
             positionStyle.top = top + offsetHeight;
@@ -199,8 +181,34 @@ const HashList = forwardRef<HashListRef, Props>(
 
         return positionStyle;
       },
-      [checkTopBottomSpace, boxDirection, isMobile]
+      [isMobile]
     );
+
+    const handleTouchStart = useCallback((e: TouchEvent) => {
+      touchStartPoint.current = {
+        x: e.changedTouches[0].clientX,
+        y: e.changedTouches[0].clientY
+      };
+    }, []);
+
+    const handleTouchMove = useCallback((e: TouchEvent) => {
+      const scrollTop = scrollAreaRef.current.scrollTop;
+      const scrollHeight = scrollAreaRef.current.scrollHeight;
+
+      if (
+        e.cancelable &&
+        scrollTop <= 0 &&
+        e.changedTouches[0].clientY - touchStartPoint.current.y > 0
+      ) {
+        e.preventDefault();
+      } else if (
+        e.cancelable &&
+        scrollTop >= scrollHeight - scrollAreaRef.current.clientHeight &&
+        touchStartPoint.current.y - e.changedTouches[0].clientY > 0
+      ) {
+        e.preventDefault();
+      }
+    }, []);
 
     useImperativeHandle(ref, () => {
       elRef.current.handleArrowUp = handleArrowUp;
@@ -243,12 +251,24 @@ const HashList = forwardRef<HashListRef, Props>(
       };
     }, [closeHashList]);
 
+    useEffect(() => {
+      const scrollEl = scrollAreaRef.current;
+
+      scrollEl.addEventListener('touchstart', handleTouchStart);
+      scrollEl.addEventListener('touchmove', handleTouchMove);
+
+      return () => {
+        scrollEl.removeEventListener('touchstart', handleTouchStart);
+        scrollEl.removeEventListener('touchmove', handleTouchMove);
+      };
+    }, [handleTouchStart, handleTouchMove]);
+
     return (
       <div
         ref={elRef}
         className={cx('hash-list')}
         contentEditable={false}
-        style={{ ...position, display: (list ?? []).length > 0 && boxDirection ? 'block' : 'none' }}
+        style={{ ...position, display: (list ?? []).length > 0 ? 'block' : 'none' }}
       >
         <ul ref={scrollAreaRef} className={cx('hash-list-area')}>
           {(list ?? []).map((item, index) => (
