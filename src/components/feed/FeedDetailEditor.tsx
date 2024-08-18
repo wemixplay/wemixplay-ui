@@ -44,7 +44,7 @@ import PopoverButton from '../popover/PopoverButton';
 import Spinner from '../loadings/Spinner';
 
 type PostEditorImageValue = { file?: File; loading?: boolean; src: string } & {
-  [key: string]: string | number | File | undefined; // 추가적인 필드도 허용
+  [key: string]: string | number | boolean | File | undefined; // 추가적인 필드도 허용
 };
 type PostEditorMediaValue = { type: 'youtube' | 'twitch'; src: string };
 
@@ -547,8 +547,10 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               <b>{commaWithValue(textLength)}</b> / {commaWithValue(maxLength)}
             </span>
             <button
-              className={cx('btn-submit', { loading })}
-              disabled={minLength > textLength || loading}
+              className={cx('btn-submit', {
+                loading: loading || images.some((img) => !!img.loading)
+              })}
+              disabled={minLength > textLength || loading || images.some((img) => !!img.loading)}
               onClick={() =>
                 handleSubmit(
                   {
