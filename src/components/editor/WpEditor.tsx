@@ -343,7 +343,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         }
 
         if (
-          e.code === 'Enter' &&
+          (e.code === 'Enter' || e.code === 'NumpadEnter') &&
           !e.shiftKey &&
           !e.nativeEvent.isComposing &&
           contentEditableEl.current.innerHTML === prevData
@@ -353,6 +353,25 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
           document.execCommand('insertLineBreak');
 
+          let range = selection.getRangeAt(0);
+          range = range.cloneRange();
+          range.setStart(range.startContainer, 0);
+
+          // 현재 커서 위치가 뷰포트에 노출되었는지 확인
+          const cursorPosition = range.getBoundingClientRect();
+          const containerRect = contentEditableEl.current.getBoundingClientRect();
+
+          // 커서가 컨테이너의 하단을 벗어났는지 확인
+          const isCursorBelowView = cursorPosition.bottom > containerRect.bottom;
+
+          // 커서가 화면에 보이지 않으면 스크롤을 이동
+          if (isCursorBelowView) {
+            // 커서가 컨테이너 하단을 벗어났을 때
+            const scrollOffset = cursorPosition.bottom - containerRect.bottom;
+            contentEditableEl.current.scrollTo({
+              top: contentEditableEl.current.scrollTop + scrollOffset * 2
+            }); // 아래로 스크롤 이동
+          }
           // e.preventDefault();
 
           // const { focusNode, focusOffset } = selection;
@@ -395,9 +414,11 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           plugin.handleChange && plugin.handleChange({ selection, range, event: e });
         }
 
-        if (!contentEditableEl.current.textContent) {
+        if (!e.target.textContent) {
           contentEditableEl.current.innerHTML = '';
-          document.execCommand('insertHTML', false, '');
+          setTimeout(() => {
+            document.execCommand('insertHTML', false, '');
+          }, 0);
         }
 
         handleChange &&
