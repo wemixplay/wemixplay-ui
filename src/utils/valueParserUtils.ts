@@ -105,7 +105,7 @@ export const convertHtmlToMarkdownStr = (text: string) => {
   convertStr = convertStr.replace(/<br\s*\/?>/gi, '[LINEBREAK]').replace(/\n/g, '[LINEBREAK]');
 
   // 문자열 마지막의 여러 개의 [LINEBREAK]를 빈 문자열로 대체
-  convertStr = convertStr.replace(/(\[LINEBREAK\])+$/g, '');
+  // convertStr = convertStr.replace(/(\[LINEBREAK\])+$/g, '');
 
   // 멘션 WP@ 변환
   convertStr = convertStr
