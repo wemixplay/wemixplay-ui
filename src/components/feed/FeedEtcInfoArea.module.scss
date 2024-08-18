@@ -21,6 +21,11 @@
 
     &.active {
       // 내가 좋아요 했을때 스타일
+      svg {
+        path {
+          fill: var(--semantic-primary-normal);
+        }
+      }
     }
   }
 

@@ -24,6 +24,15 @@
     .profile {
       // style
     }
+
+    .btn-manage {
+      :global {
+        .btn-popover {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
   }
 
   .feed-body {

@@ -30,4 +30,15 @@
       padding-left: $sp-4;
     }
   }
+
+  .btn-add-emoji {
+    margin-top: $sp-4;
+
+    :global {
+      .btn-popover {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
 }
