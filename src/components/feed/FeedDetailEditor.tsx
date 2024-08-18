@@ -43,7 +43,9 @@ import Person from '../avatars/Person';
 import PopoverButton from '../popover/PopoverButton';
 import Spinner from '../loadings/Spinner';
 
-type PostEditorImageValue = { file?: File; src: string };
+type PostEditorImageValue = { file?: File; loading?: boolean; src: string } & {
+  [key: string]: string | number | File | undefined; // 추가적인 필드도 허용
+};
 type PostEditorMediaValue = { type: 'youtube' | 'twitch'; src: string };
 
 type FeedDetailEditorValue = {
