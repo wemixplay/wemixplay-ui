@@ -27,7 +27,7 @@ import {
 
 type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
   className?: string;
-  writerName?: string;
+  writerName?: string | ReactElement;
   writerImg?: string;
   btnSubmitText?: ReactElement | string;
   value?: string;
