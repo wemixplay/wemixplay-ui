@@ -548,9 +548,11 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             </span>
             <button
               className={cx('btn-submit', {
-                loading: loading || images.some((img) => !!img.loading)
+                loading: loading || (images ?? []).some((img) => !!img.loading)
               })}
-              disabled={minLength > textLength || loading || images.some((img) => !!img.loading)}
+              disabled={
+                minLength > textLength || loading || (images ?? []).some((img) => !!img.loading)
+              }
               onClick={() =>
                 handleSubmit(
                   {
