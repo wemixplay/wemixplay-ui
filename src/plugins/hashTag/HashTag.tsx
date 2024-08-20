@@ -230,6 +230,15 @@ class HashTag implements WpEditorPlugin {
     const selection = window.getSelection();
 
     const hash = this.postHashListRef.handleSubmit(index);
+
+    const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
+
+    if (maxLength <= hash.name.length + this.contentEditableEl.current.textContent.length) {
+      this.hashId = '';
+
+      return;
+    }
+
     this.leaveHashTag({ selection, range, hash });
 
     this.config.onCompleteHash &&

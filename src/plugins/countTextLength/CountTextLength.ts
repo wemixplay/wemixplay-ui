@@ -1,5 +1,5 @@
 import { WpEditorPlugin } from '@/components/editor/WpEditor';
-import type { MutableRefObject } from 'react';
+import type { ChangeEvent, MutableRefObject } from 'react';
 
 type CountTextLengthConfig = {
   hideUi?: boolean;
@@ -106,6 +106,51 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
       ) {
         event.preventDefault();
       }
+    }
+  }
+
+  handleChange({ event }) {
+    const currLength = this.countText();
+    const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
+
+    if (currLength > maxLength) {
+      // 현재 선택된 범위를 가져옵니다.
+      const selection = window.getSelection();
+      const range = selection?.getRangeAt(0);
+
+      if (range) {
+        // 커서가 위치한 노드와 오프셋을 찾습니다.
+        const startContainer = range.startContainer;
+        const startOffset = range.startOffset;
+
+        // 초과된 문자 수를 계산합니다.
+        const excessLength = currLength - maxLength;
+
+        // 커서 위치 앞의 텍스트 노드를 찾기
+        if (startContainer.nodeType === Node.TEXT_NODE) {
+          const textNode = startContainer as Text;
+
+          if (startOffset > 0) {
+            // 커서 위치에서 초과된 문자 수만큼 삭제
+            const newStartOffset = Math.max(startOffset - excessLength, 0);
+            textNode.nodeValue =
+              textNode.nodeValue?.slice(0, newStartOffset) +
+                textNode.nodeValue?.slice(startOffset) || '';
+
+            // 커서를 원위치로 이동
+            const newRange = document.createRange();
+            const newSelection = window.getSelection();
+
+            newRange.setStart(textNode, newStartOffset);
+            newRange.collapse(true);
+
+            newSelection?.removeAllRanges();
+            newSelection?.addRange(newRange);
+          }
+        }
+      }
+
+      event.preventDefault();
     }
   }
 }

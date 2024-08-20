@@ -229,6 +229,15 @@ class Mention implements WpEditorPlugin {
     const selection = window.getSelection();
 
     const mention = this.postMentionListRef.handleSubmit(index);
+
+    const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
+
+    if (maxLength <= mention.name.length + this.contentEditableEl.current.textContent.length) {
+      this.mentionId = '';
+
+      return;
+    }
+
     this.leaveMentionTag({ selection, range, mention });
 
     const allMentionEls = this.contentEditableEl.current.querySelectorAll(

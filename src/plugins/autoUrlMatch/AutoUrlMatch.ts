@@ -39,18 +39,21 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     range: Range;
     event: KeyboardEvent<HTMLDivElement>;
   }) {
+    const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
+    const currentValueLength = this.contentEditableEl.current.textContent?.length || 0;
     const focusNode = selection.focusNode;
     const selectionRange = selection.getRangeAt(0);
 
     const offset = selectionRange.startOffset;
 
-    const matchUrlFormatText = this.getUrlMatchList(focusNode.textContent).pop();
+    const matchUrlFormatText = this.getUrlMatchList(focusNode.textContent).pop() ?? '';
 
     if (event.code === 'Space' || event.code === 'Enter') {
       if (
         matchUrlFormatText &&
         offset > 0 &&
         focusNode.nodeType === Node.TEXT_NODE &&
+        maxLength >= currentValueLength + 1 &&
         this.config.onMatchUrl
       ) {
         // 임시 div를 사용하여 HTML 문자열을 파싱
