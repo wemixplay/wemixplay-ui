@@ -16,11 +16,13 @@
 
     &:empty {
       &::before {
+        display: inline-block;
         color: var(--semantic-label-alternative);
         content: attr(aria-placeholder);
         font-size: inherit;
         font-weight: inherit;
         line-height: inherit;
+        white-space: pre;
       }
     }
 
