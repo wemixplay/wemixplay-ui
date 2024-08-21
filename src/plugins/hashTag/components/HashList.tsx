@@ -154,7 +154,7 @@ const HashList = forwardRef<HashListRef, Props>(
 
         let dropboxElHeight = elRef.current.clientHeight ?? 0;
 
-        if (dropboxElHeight > top - viewPortTop) {
+        if (dropboxElHeight > viewPortBottom - bottom) {
           boxDirection = top - viewPortTop > viewPortBottom - bottom ? 'top' : 'bottom';
         }
 
