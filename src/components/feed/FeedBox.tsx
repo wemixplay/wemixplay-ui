@@ -110,6 +110,7 @@ const FeedBox = ({
                 popoverStyle={{ right: -10, top: 10, zIndex: 999 }}
                 popoverElement={managePopoverElement}
                 popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
+                whenWindowScrollClose={true}
                 onClick={onManageBtnClick}
               >
                 <SvgIcoVDots width={22} height={22} />

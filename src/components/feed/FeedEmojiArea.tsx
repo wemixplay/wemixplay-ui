@@ -76,6 +76,7 @@ const FeedEmojiArea = ({
             popoverStyle={popoverStyle}
             popoverElement={emojiSelectPopoverElement}
             popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
+            whenWindowScrollClose={true}
             onClick={onEmojiSelectBtnClick}
           >
             <SvgIcoAddEmoji width={24} height={24} />
