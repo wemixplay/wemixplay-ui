@@ -151,16 +151,25 @@ const MentionList = forwardRef<MentionListRef, Props>(
         const viewPortTop = scrollY;
         const viewPortBottom = scrollY + window.innerHeight;
 
-        const boxDirection = top - viewPortTop > viewPortBottom - bottom ? 'top' : 'bottom';
-        scrollAreaRef.current.style.height = `${boxDirection === 'top' ? top - viewPortTop - 32 : viewPortBottom - bottom - 32}px`;
+        let boxDirection = 'bottom';
+
+        let dropboxElHeight = elRef.current.clientHeight ?? 0;
+
+        if (dropboxElHeight > top - viewPortTop) {
+          boxDirection = top - viewPortTop > viewPortBottom - bottom ? 'top' : 'bottom';
+        }
+
+        if (dropboxElHeight > top - viewPortTop && dropboxElHeight > viewPortBottom - bottom) {
+          scrollAreaRef.current.style.height = `${boxDirection === 'top' ? top - viewPortTop - 32 : viewPortBottom - bottom - 32}px`;
+        }
+
+        dropboxElHeight = elRef.current.clientHeight ?? 0;
 
         const positionStyle: CSSProperties = {
           position: 'absolute',
           zIndex: '9999999',
           visibility: 'visible'
         };
-
-        const dropboxElHeight = elRef.current.clientHeight ?? 0;
 
         switch (boxDirection) {
           case 'top':
