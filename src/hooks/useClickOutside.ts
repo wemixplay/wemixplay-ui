@@ -38,7 +38,7 @@ import { ForwardedRef, MutableRefObject, useEffect } from 'react';
 const useClickOutside = (
   ref: MutableRefObject<JSONObject> | HTMLElement,
   handler: (e: MouseEvent | TouchEvent) => void,
-  option?: { offTouchEvent?: boolean }
+  option?: { offTouchEvent?: boolean; event?: 'click' | 'mousedown' | 'mouseup' }
 ) => {
   useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
@@ -55,10 +55,10 @@ const useClickOutside = (
       handler(event);
     };
 
-    document.addEventListener('click', listener);
+    document.addEventListener(option?.event || 'click', listener);
     if (!option?.offTouchEvent) document.addEventListener('touchstart', listener);
     return () => {
-      document.removeEventListener('click', listener);
+      document.removeEventListener(option?.event || 'click', listener);
       document.removeEventListener('touchstart', listener);
     };
   }, [ref, handler, option]);
