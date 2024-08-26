@@ -32,7 +32,9 @@ const FeedTextContent = ({
   const { isDesktop, isMobile, isTablet } = useCheckDevice();
 
   const htmlContent = useMemo(() => {
-    return convertMarkdownToHtmlStr(content ?? '');
+    return (
+      <pre dangerouslySetInnerHTML={{ __html: convertMarkdownToHtmlStr(content ?? '') }}></pre>
+    );
   }, [content]);
 
   const handleClick = useCallback(
@@ -49,6 +51,8 @@ const FeedTextContent = ({
       } else if (target.tagName !== 'A') {
         onTextClick && onTextClick(e);
       }
+
+      e.stopPropagation();
     },
     [onMentionClick, onHashTagClick]
   );
@@ -70,10 +74,7 @@ const FeedTextContent = ({
           onShowMoreLessClick={enableShowMore ? undefined : () => {}}
         />
       ) : (
-        <div
-          className={cx('text', 'full-text')}
-          dangerouslySetInnerHTML={{ __html: htmlContent }}
-        ></div>
+        <div className={cx('text', 'full-text')}>{htmlContent}</div>
       )}
     </WpEditorContents>
   );

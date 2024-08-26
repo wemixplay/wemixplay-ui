@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { MouseEvent, useCallback, useEffect, useRef } from 'react';
 import style from './FeedImagesView.module.scss';
 import Carousel from '../carousel/Carousel';
 import { SvgIcoDeleteX } from '@/assets/svgs';
@@ -11,18 +11,23 @@ type Props = {
   className?: string;
   images?: { file?: File; loading?: boolean; src: string }[];
   handleDeleteImg?: ({ deleteIndex }: { deleteIndex: number }) => void;
-  handleClickImage?: ({ src, index }: { src: string; index: number }) => void;
+  onImageClick?: ({ src, index }: { src: string; index: number }) => void;
 };
 
 const cx = makeCxFunc(style);
 
-const FeedImagesView = ({
-  className = '',
-  images = [],
-  handleDeleteImg,
-  handleClickImage
-}: Props) => {
+const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageClick }: Props) => {
   const curentImagesRef = useRef(images);
+
+  const handleImageClick = useCallback(
+    ({ src, index, e }: { src: string; index: number; e: MouseEvent<HTMLDivElement> }) => {
+      e.stopPropagation();
+
+      onImageClick && onImageClick({ src, index });
+    },
+    [onImageClick]
+  );
+
   return (
     <div className={cx(className, 'images-upload-preview')}>
       <Carousel
@@ -54,8 +59,8 @@ const FeedImagesView = ({
 
             <div
               key={image.src}
-              className={cx('preview-image-box', { 'has-click-event': handleClickImage })}
-              onClick={() => handleClickImage && handleClickImage({ src: image.src, index })}
+              className={cx('preview-image-box', { 'has-click-event': onImageClick })}
+              onClick={(e) => handleImageClick({ src: image.src, index, e })}
             >
               {!!image.loading && (
                 <div className={cx('loading')}>

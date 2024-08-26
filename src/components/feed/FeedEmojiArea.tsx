@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ReactElement, MouseEvent, useId, useMemo } from 'react';
+import React, { ReactElement, MouseEvent, useId, useMemo, useCallback } from 'react';
 import style from './FeedEmojiArea.module.scss';
 import WpImage from '../image/WpImage';
 import { SvgIcoAddEmoji } from '@/assets/svgs';
@@ -47,6 +47,24 @@ const FeedEmojiArea = ({
     return { left: left < -80 ? -80 : left, top: 10, zIndex: 999 };
   }, [emojiList.length]);
 
+  const handleEmojiClick = useCallback(
+    ({ emojiInfo, e }: { emojiInfo: EmojiInfo; e: MouseEvent<HTMLButtonElement> }) => {
+      e.stopPropagation();
+
+      onEmojiClick && onEmojiClick(emojiInfo);
+    },
+    [onEmojiClick]
+  );
+
+  const handleEmojiSelectBtnClick = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+
+      onEmojiSelectBtnClick && onEmojiSelectBtnClick(e);
+    },
+    [onEmojiSelectBtnClick]
+  );
+
   return (
     <div className={cx(className, 'feed-reactions')}>
       {emojiList.map((emoji) => (
@@ -54,7 +72,7 @@ const FeedEmojiArea = ({
           key={emoji.emojiNo}
           type="button"
           className={cx({ active: emoji.isMyClick, 'no-exist-event': !onEmojiClick })}
-          onClick={() => onEmojiClick(emoji)}
+          onClick={(e) => handleEmojiClick({ emojiInfo: emoji, e })}
         >
           <WpImage
             className={cx('emoji-img')}
@@ -77,7 +95,7 @@ const FeedEmojiArea = ({
             popoverElement={emojiSelectPopoverElement}
             popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
             whenWindowScrollClose={true}
-            onClick={onEmojiSelectBtnClick}
+            onClick={handleEmojiSelectBtnClick}
           >
             <SvgIcoAddEmoji width={24} height={24} />
           </PopoverButton>

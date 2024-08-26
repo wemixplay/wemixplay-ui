@@ -1,6 +1,7 @@
 'use client';
 import React, {
   CSSProperties,
+  MouseEvent,
   ReactNode,
   useCallback,
   useLayoutEffect,
@@ -181,6 +182,11 @@ const Ellipsis = ({
     [defaultShortened, allocateContentElementStyle]
   );
 
+  const handleToggleShortEnd = useCallback((e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setShortened((shortened) => !shortened);
+  }, []);
+
   useLayoutEffect(() => {
     // 이 effect는 content가 변경되었을 때 발동합니다. 말줄임 처리를 true로 변환하고 말줄임 처리가 필요한지 판별합니다.
     const { current: contentEl } = contentRef;
@@ -229,7 +235,7 @@ const Ellipsis = ({
 
       {triggerVisibile && (
         <button
-          onClick={onShowMoreLessClick ? onShowMoreLessClick : () => setShortened(!shortened)}
+          onClick={onShowMoreLessClick ? onShowMoreLessClick : handleToggleShortEnd}
           className={cx('btn-ellipsis-trigger')}
         >
           {shortened ? triggerMore : triggerLess}

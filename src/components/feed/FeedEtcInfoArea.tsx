@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent } from 'react';
+import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedEtcInfoArea.module.scss';
 import { SvgIcoComment, SvgIcoLike, SvgIcoShare } from '@/assets/svgs';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
@@ -27,14 +27,39 @@ const FeedEtcInfoArea = ({
   onLikeBtnClick,
   onCommentBtnClick
 }: Props) => {
-  //logic
+  const handleShareBtnClick = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+
+      onShareBtnClick && onShareBtnClick(e);
+    },
+    [onShareBtnClick]
+  );
+
+  const handleCommentClick = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+
+      onCommentBtnClick && onCommentBtnClick(e);
+    },
+    [onCommentBtnClick]
+  );
+
+  const handleLikeBtnClick = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+
+      onLikeBtnClick && onLikeBtnClick(e);
+    },
+    [onLikeBtnClick]
+  );
 
   return (
     <div className={cx(className, 'feed-comments')}>
       <button
         type="button"
         className={cx('btn-comment', { 'has-click-event': onCommentBtnClick })}
-        onClick={onCommentBtnClick}
+        onClick={handleCommentClick}
       >
         <SvgIcoComment width={18} height={18} />
         <span className={cx('count')}>{toFormatterByInt(commentCount, 1)}</span>
@@ -42,7 +67,7 @@ const FeedEtcInfoArea = ({
       <button
         type="button"
         className={cx('btn-like', { active: isMyClick, 'has-click-event': onLikeBtnClick })}
-        onClick={onLikeBtnClick}
+        onClick={handleLikeBtnClick}
       >
         <SvgIcoLike />
         <span className={cx('count')}>{toFormatterByInt(likeCount, 1)}</span>
@@ -51,7 +76,7 @@ const FeedEtcInfoArea = ({
         <button
           type="button"
           className={cx('btn-share', 'has-click-event')}
-          onClick={onShareBtnClick}
+          onClick={handleShareBtnClick}
         >
           <SvgIcoShare width={22} height={22} />
         </button>
