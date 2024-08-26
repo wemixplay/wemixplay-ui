@@ -126,14 +126,9 @@ export const convertHtmlToMarkdownStr = (text: string) => {
       (match, p1, p2) => `WP#[${p2.trim()}](${p1.trim()})`
     )
     .replace(
-      /<span[^>]*\bclass="hash unknown-hash\b[^>]*\bdata-id="(\d+)"[^>]*(?:\s+data-[^>]*="[^"]*")*[^>]*>#([^<]+)<\/span>/g,
+      /<span[^>]*\bclass="hash\b[^>]*\bdata-id="(\d+)"[^>]*(?:\s+data-[^>]*="[^"]*")*[^>]*>#([^<]+)<\/span>/g,
       'WP#[$2]($1)'
-    )
-    .replace(
-      /<span[^>]*\bclass="hash will-hash\b[^>]*>(?:\s+data-[^>]*="[^"]*")*[^>]*>#([^<]+)<\/span>/g,
-      '$1'
     );
-
   // a태그 markdown 형식으로 변환
   convertStr = convertStr.replace(/<a href="(.*?)"(.*?)>(.*?)<\/a>/g, '[$3]($1)[:target="_blank"]');
 
