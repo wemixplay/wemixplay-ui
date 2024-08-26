@@ -68,6 +68,7 @@
 
       .link {
         @include label-01-normal-r;
+        @include ellipsis(1);
 
         color: var(--semantic-label-alternative);
       }
