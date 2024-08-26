@@ -54,22 +54,11 @@
 
     .hash {
       position: relative;
+      color: var(--semantic-status-blue);
       font-size: inherit;
       font-weight: inherit;
       letter-spacing: inherit;
       line-height: inherit;
-
-      &.will-hash {
-        color: var(--semantic-status-blue);
-      }
-
-      &.unknown-hash {
-        color: var(--semantic-status-blue);
-      }
-
-      &.complete-hash {
-        color: var(--semantic-status-blue);
-      }
     }
   }
 }
