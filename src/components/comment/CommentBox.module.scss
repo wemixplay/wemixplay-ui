@@ -6,6 +6,10 @@
     border-bottom: 1px solid var(--semantic-line-solid-normal);
   }
 
+  &.has-click-event {
+    cursor: pointer;
+  }
+
   /* Comment Author */
   .author {
     position: relative;

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, ReactElement, useId } from 'react';
+import React, { MouseEvent, ReactElement, useCallback, useId } from 'react';
 import style from './CommentBox.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import PopoverButton from '../popover/PopoverButton';
@@ -30,6 +30,7 @@ type Props = {
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onMentionClick?: (params: { name: string; id: string }) => void;
   onHashTagClick?: (params: { name: string; id: string }) => void;
+  onClick?: (e: MouseEvent<HTMLElement>) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -51,12 +52,27 @@ const CommentBox = ({
   onProfileClick,
   onLikeBtnClick,
   onMentionClick,
-  onHashTagClick
+  onHashTagClick,
+  onClick
 }: Props) => {
   const uid = useId();
 
+  const handleManageBtnClick = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+      onManageBtnClick && onManageBtnClick(e);
+    },
+    [onManageBtnClick]
+  );
+
   return (
-    <article className={cx(className, 'comment-box', { 'deleted-comment': deletedMsg })}>
+    <article
+      className={cx(className, 'comment-box', {
+        'deleted-comment': deletedMsg,
+        'has-click-event': onClick
+      })}
+      onClick={onClick}
+    >
       {deletedMsg}
       {!deletedMsg && (
         <>
@@ -79,7 +95,7 @@ const CommentBox = ({
                 popoverStyle={{ right: -10, top: 10, zIndex: 999 }}
                 popoverElement={managePopoverElement}
                 popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
-                onClick={onManageBtnClick}
+                onClick={handleManageBtnClick}
               >
                 <SvgIcoVDots width={22} height={22} />
               </PopoverButton>
@@ -92,6 +108,7 @@ const CommentBox = ({
             enableShowMore={true}
             onMentionClick={onMentionClick}
             onHashTagClick={onHashTagClick}
+            onTextClick={onClick}
           />
           <CommentEtcInfo likeInfo={likeInfo} onLikeBtnClick={onLikeBtnClick} />
         </>
