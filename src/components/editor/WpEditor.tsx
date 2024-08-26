@@ -5,6 +5,7 @@
 import React, {
   ChangeEvent,
   ClipboardEvent,
+  FocusEvent,
   KeyboardEvent,
   MouseEvent,
   MutableRefObject,
@@ -59,6 +60,16 @@ export interface WpEditorPlugin<C extends any = any> {
     selection: Selection;
     range: Range;
     event: ClipboardEvent<HTMLDivElement>;
+  }) => void;
+  handleFocus?: (params: {
+    selection: Selection;
+    range: Range;
+    event: FocusEvent<HTMLDivElement>;
+  }) => void;
+  handleBlur?: (params: {
+    selection: Selection;
+    range: Range;
+    event: FocusEvent<HTMLDivElement>;
   }) => void;
   handleUndoRedo?: (params: { selection: Selection; range: Range }) => void;
 }
@@ -476,6 +487,32 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       [getSelection, plugins, textareaProps]
     );
 
+    const handleFocus = useCallback(
+      (e: FocusEvent<HTMLDivElement>) => {
+        const { selection, range } = getSelection();
+
+        plugins.forEach((plugin) => {
+          plugin.handleFocus && plugin.handleFocus({ selection, range, event: e });
+        });
+
+        textareaProps.onFocus && textareaProps.onFocus(e);
+      },
+      [getSelection, plugins, textareaProps]
+    );
+
+    const handleBlur = useCallback(
+      (e: FocusEvent<HTMLDivElement>) => {
+        const { selection, range } = getSelection();
+
+        plugins.forEach((plugin) => {
+          plugin.handleBlur && plugin.handleBlur({ selection, range, event: e });
+        });
+
+        textareaProps.onBlur && textareaProps.onBlur(e);
+      },
+      [getSelection, plugins, textareaProps]
+    );
+
     const setData = useCallback(
       (data: string, option: { keepRange?: boolean } = { keepRange: true }) => {
         contentEditableEl.current.innerHTML = data;
@@ -548,6 +585,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           onPaste={handlePaste}
           onCopy={handleCopy}
           onKeyDown={handleKeyDown}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
           onClick={handleClick}
         ></WpEditorContents>
         {plugins.map((plugin, index) =>
