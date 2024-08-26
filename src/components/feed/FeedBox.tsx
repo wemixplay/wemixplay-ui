@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, ReactElement, useId } from 'react';
+import React, { MouseEvent, ReactElement, useCallback, useId } from 'react';
 import classNames from 'classnames/bind';
 import style from './FeedBox.module.scss';
 import FeedImagesView, { FeedImagesViewProps } from './FeedImagesView';
@@ -42,7 +42,7 @@ type Props = {
   onEmojiSelectBtnClick?: null | ((e: MouseEvent<HTMLButtonElement>) => void);
   onEmojiClick?: (params: EmojiInfo) => void;
   onShareBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  onImageClick?: FeedImagesViewProps['handleClickImage'];
+  onImageClick?: FeedImagesViewProps['onImageClick'];
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onCommentBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
@@ -85,8 +85,29 @@ const FeedBox = ({
 }: Props) => {
   const uid = useId();
 
+  const handleProfileClick = useCallback(
+    (e: MouseEvent<HTMLElement>) => {
+      e.stopPropagation();
+
+      onProfileClick && onProfileClick(e);
+    },
+    [onProfileClick]
+  );
+
+  const handleManageBtnClick = useCallback(
+    (e: MouseEvent<HTMLButtonElement>) => {
+      e.stopPropagation();
+
+      onManageBtnClick && onManageBtnClick(e);
+    },
+    [onManageBtnClick]
+  );
+
   return (
-    <article className={cx(className, 'feed-box')}>
+    <article
+      className={cx(className, 'feed-box', { 'has-click-event': onClick })}
+      onClick={onClick}
+    >
       <div className={cx('feed-box-container')}>
         <div className={cx('feed-header')}>
           <FeedWriterInfo
@@ -98,7 +119,7 @@ const FeedBox = ({
             certificated={certificated}
             createdAt={createdAt}
             locale={locale}
-            onProfileClick={onProfileClick}
+            onProfileClick={handleProfileClick}
           />
 
           {/* Feed Management Button (삭제, 수정, 신고...) */}
@@ -111,7 +132,7 @@ const FeedBox = ({
                 popoverElement={managePopoverElement}
                 popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
                 whenWindowScrollClose={true}
-                onClick={onManageBtnClick}
+                onClick={handleManageBtnClick}
               >
                 <SvgIcoVDots width={22} height={22} />
               </PopoverButton>
@@ -134,7 +155,7 @@ const FeedBox = ({
             <FeedImagesView
               className={cx('carousel')}
               images={images.map((src) => ({ src: src }))}
-              handleClickImage={onImageClick}
+              onImageClick={onImageClick}
             />
           )}
           {media.length > 0 && <FeedIframesView className={cx('carousel')} media={media} />}
