@@ -250,22 +250,26 @@ const PopoverButton = forwardRef(
     }, [animation, handleClose, open, popoverElement, popoverStyle, status]);
 
     // popover button과 popoverElement 영역외에 다른 영역을 클릭했을때 popover가 닫히도록 하는 hook
-    useClickOutside(popoverRef, (e: Event) => {
-      const els = [...excludeOutSideIds, anchorId]
-        .filter((id) => !!id)
-        .concat(defaultExcludeOutSideIds)
-        .map((id) => document.querySelector(`#${id}`))
-        .filter((el) => el);
+    useClickOutside(
+      popoverRef,
+      (e: Event) => {
+        const els = [...excludeOutSideIds, anchorId]
+          .filter((id) => !!id)
+          .concat(defaultExcludeOutSideIds)
+          .map((id) => document.querySelector(`#${id}`))
+          .filter((el) => el);
 
-      const target = e.target as HTMLElement;
+        const target = e.target as HTMLElement;
 
-      if (!document.body.contains(target)) return;
-      if (els.some((el) => el?.contains(target))) return;
+        if (!document.body.contains(target)) return;
+        if (els.some((el) => el?.contains(target))) return;
 
-      if (open) {
-        handleClose();
-      }
-    });
+        if (open) {
+          handleClose();
+        }
+      },
+      { event: 'mouseup' }
+    );
 
     // whenWindowScrollClose가 true일때 스크롤시 popover가 닫히는 이벤트를 등록
     useEffect(() => {
