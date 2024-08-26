@@ -18,14 +18,17 @@ type Props = {
 const cx = makeCxFunc(style);
 
 const CommentEtcInfo = ({ className = '', likeInfo, onLikeBtnClick }: Props) => {
-  //logic
+  const handleLikeBtnClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    onLikeBtnClick && onLikeBtnClick(e);
+  };
 
   return (
     <div className={cx(className, 'comment-etc-info')}>
       <button
         type="button"
         className={cx('btn-like', { active: likeInfo?.isMyClick })}
-        onClick={onLikeBtnClick}
+        onClick={handleLikeBtnClick}
       >
         <i className={cx('btn-like-ico')}>
           <SvgIcoLike />

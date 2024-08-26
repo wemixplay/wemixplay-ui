@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, ReactElement } from 'react';
+import React, { MouseEvent, ReactElement, useCallback } from 'react';
 import style from './CommentWriterInfo.module.scss';
 import Person from '../avatars/Person';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
@@ -32,15 +32,18 @@ const CommentWriterInfo = ({
   updatedAt,
   onProfileClick
 }: Props) => {
-  //logic
+  const handleProfileClick = (e: MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
+    onProfileClick && onProfileClick(e);
+  };
 
   return (
     <div className={cx(className, 'author', { 'has-click-event': onProfileClick })}>
-      <div className={cx('author-avatar')} onClick={onProfileClick}>
+      <div className={cx('author-avatar')} onClick={handleProfileClick}>
         <Person src={writerImg} />
       </div>
       <div className={cx('author-info')}>
-        <strong className={cx('author-name')} onClick={onProfileClick}>
+        <strong className={cx('author-name')} onClick={handleProfileClick}>
           {writerName || '-'}
         </strong>
         {typeof follwerCount !== 'undefined' && (
