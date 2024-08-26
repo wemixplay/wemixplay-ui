@@ -92,10 +92,12 @@ class HashTag implements WpEditorPlugin {
     );
   }
 
-  containsInvalidSpecialChars(str: string) {
-    const regex =
-      /^#[\w\p{L}\p{N}\p{Mn}\p{Mc}\p{Pd}\u200d\u25aa-\u27b0\ufe0f\u1f000-\u1f9ff\u1fa70-\u1faff]+$/u;
-    return regex.test(str);
+  checkValidHashTag(str: string) {
+    // 정규식: 해시태그가 '#'로 시작하고, 그 뒤에 국가 문자, 숫자, 밑줄, 이모지가 올 수 있도록 허용
+    const regex = /^#[\p{L}\p{N}_\u200d\p{Emoji_Presentation}\uFE0F]*$/u;
+
+    // 해시태그가 '#'만 있어도 true를 반환
+    return str === '#' || regex.test(str);
   }
 
   restoreSelection({
@@ -144,10 +146,8 @@ class HashTag implements WpEditorPlugin {
     const hashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
     const existOnlyAtMark = hashTag.firstChild?.textContent?.trim() === '#' && !hash;
 
-    const isWillHash = !!hashTag?.classList.contains('will-hash');
-
     const hashRegex = new RegExp(
-      `<span\\s+id="${targetHashId}"([^>]*)class="hash ${isWillHash ? 'will-hash' : 'unknown-hash'}"([^>]*)>(.*?)<\\/span>`,
+      `<span\\s+id="${targetHashId}"([^>]*)class="hash"([^>]*)>(.*?)<\\/span>`,
       'g'
     );
 
@@ -183,7 +183,7 @@ class HashTag implements WpEditorPlugin {
 
       target.innerHTML = target.innerHTML.replace(
         hashRegex,
-        `<span id="${targetHashId}" class="hash unknown-hash"$1$2>${hashText}</span>&nbsp;`
+        `<span id="${targetHashId}" class="hash"$1$2>${hashText}</span>&nbsp;`
       );
 
       const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
@@ -215,7 +215,7 @@ class HashTag implements WpEditorPlugin {
   }
 
   getAllHashTag() {
-    const allHashTagEls = this.contentEditableEl.current.querySelectorAll('.hash:not(.will-hash)');
+    const allHashTagEls = this.contentEditableEl.current.querySelectorAll('.hash');
 
     return Array.from(allHashTagEls).map((hashTagEl) => {
       return {
@@ -233,7 +233,10 @@ class HashTag implements WpEditorPlugin {
 
     const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
 
-    if (maxLength <= hash.name.length + this.contentEditableEl.current.textContent.length) {
+    if (
+      maxLength <=
+      (hash?.name ?? '').length + this.contentEditableEl.current.textContent.length
+    ) {
       this.hashId = '';
 
       return;
@@ -280,8 +283,7 @@ class HashTag implements WpEditorPlugin {
 
     const focusInHashTag = !!selection.focusNode?.parentElement?.classList?.contains?.('hash');
     const focusInDecompleteHashTag =
-      !!selection.focusNode?.parentElement?.classList?.contains?.('will-hash') ||
-      !!selection.focusNode?.parentElement?.classList?.contains?.('unknown-hash');
+      focusInHashTag && !selection.focusNode?.parentElement?.classList?.contains?.('complete-hash');
 
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
       if (focusInHashTag && !targetHashId) {
@@ -348,7 +350,7 @@ class HashTag implements WpEditorPlugin {
     const prevCurrentInputChar = focusNode?.textContent?.[focusOffset - 2];
     const focusInHashTag = !!focusNode?.parentElement?.classList?.contains?.('hash');
     const focusInCompleteHashTag =
-      !!focusNode?.parentElement?.classList?.contains?.('complete-hash');
+      focusInHashTag && !!focusNode?.parentElement?.classList?.contains?.('complete-hash');
 
     const isStartHash =
       !prevCurrentInputChar?.trim() &&
@@ -372,8 +374,10 @@ class HashTag implements WpEditorPlugin {
       // 새로운 span 요소 생성
       const span = document.createElement('span');
       span.id = this.hashId;
-      span.className = 'hash will-hash';
+      span.className = 'hash';
       span.textContent = '#';
+      span.dataset.id = '0';
+      span.dataset.name = textContent;
 
       // 기존 텍스트 노드 업데이트
       focusNode.textContent = beforeText;
@@ -423,14 +427,9 @@ class HashTag implements WpEditorPlugin {
       selection.removeAllRanges();
       selection.addRange(range);
 
-      this.config.onCompleteHash &&
-        this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
-
       return;
-    } else if (
-      focusInHashTag &&
-      this.containsInvalidSpecialChars(focusNode.textContent.replace('#', ''))
-    ) {
+    } else if (focusInHashTag && !this.checkValidHashTag(focusNode.textContent.trim())) {
+      console.log('awdawdawdawdawdadw');
       this.hashId = '';
       const cursorOffset = selection.getRangeAt(0).startOffset;
 
@@ -444,16 +443,18 @@ class HashTag implements WpEditorPlugin {
       selection.removeAllRanges();
       selection.addRange(newRange);
 
-      this.config.onCompleteHash &&
-        this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
-
       return;
     } else if (
       focusInCompleteHashTag &&
       focusNode.parentElement.dataset.name.trim() !==
         focusNode.parentElement.textContent.replace('#', '').trim()
     ) {
-      focusNode.parentElement.classList.replace('complete-hash', 'will-hash');
+      focusNode.parentElement.classList.replace('complete-hash', '');
+
+      focusNode.parentElement.dataset.id = '0';
+      focusNode.parentElement.dataset.name = focusNode.parentElement.textContent
+        .replace('#', '')
+        .trim();
 
       // dataset의 모든 속성 삭제
       for (const key in focusNode.parentElement.dataset) {
@@ -463,6 +464,9 @@ class HashTag implements WpEditorPlugin {
       this.hashId = focusNode.parentElement.id;
 
       this.restoreSelection({ selection, range, focusNode: focusNode, focusOffset });
+
+      this.config.onCompleteHash &&
+        this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
     }
 
     if (!isStartHash && !focusInHashTag) {
@@ -475,6 +479,11 @@ class HashTag implements WpEditorPlugin {
 
     if (!isStartHash && focusInHashTag && this.hashId && !focusNode.textContent.slice(-1).trim()) {
       this.leaveHashTag({ selection, range });
+    }
+
+    if (focusInHashTag) {
+      this.config.onCompleteHash &&
+        this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
     }
   }
 
