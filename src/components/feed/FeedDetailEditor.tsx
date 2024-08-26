@@ -254,6 +254,11 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         let media = [...memorizationData.media];
 
         if ('media' in params) {
+          if (media.length >= iframeMaxCnt) {
+            onMaxIframeUploads && onMaxIframeUploads();
+            return media;
+          }
+
           if (Array.isArray(params.media)) {
             media = [...media, ...params.media];
           } else {
@@ -263,10 +268,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           media = uniqBy(media, 'src');
 
           if (media.length > iframeMaxCnt) {
-            onMaxIframeUploads
-              ? onMaxIframeUploads()
-              : alert(`영상은 최대 ${iframeMaxCnt}까지 업로드가 가능합니다.`);
-
+            onMaxIframeUploads && onMaxIframeUploads();
             return;
           }
         } else {
