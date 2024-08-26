@@ -11,6 +11,7 @@ type MentionInfo = { id: number; name: string; profileImg?: string; isOfficial?:
 
 type MentionConfig = {
   list: MentionInfo[];
+  maxMentionCnt?: number;
   listElement?: (item: MentionInfo) => React.JSX.Element;
   onWriteMention?: (text: string) => void;
   onCompleteMention?: ({
@@ -22,6 +23,7 @@ type MentionConfig = {
   }) => void;
   onOpenMentionList?: () => void;
   onCloseMentionList?: () => void;
+  onMaxMaxMentionList?: () => void | Promise<void>;
 };
 
 class Mention implements WpEditorPlugin {
@@ -224,7 +226,7 @@ class Mention implements WpEditorPlugin {
     }
   }
 
-  selectMentionItem(index?: number) {
+  async selectMentionItem(index?: number) {
     const range = document.createRange();
     const selection = window.getSelection();
 
@@ -232,17 +234,35 @@ class Mention implements WpEditorPlugin {
 
     const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
 
-    if (maxLength <= mention.name.length + this.contentEditableEl.current.textContent.length) {
+    if (
+      maxLength <=
+      (mention?.name ?? '').length + this.contentEditableEl.current.textContent.length
+    ) {
       this.mentionId = '';
 
       return;
     }
 
-    this.leaveMentionTag({ selection, range, mention });
-
     const allMentionEls = this.contentEditableEl.current.querySelectorAll(
       '.mention.complete-mention'
     );
+
+    if (this.config.maxMentionCnt && this.config.maxMentionCnt <= allMentionEls.length) {
+      this.mentionId = '';
+      this.contentEditableEl.current.blur();
+
+      if (this.config.onMaxMaxMentionList) {
+        await this.config.onMaxMaxMentionList();
+      } else {
+        alert(`최대 ${this.config.maxMentionCnt}개 까지 작성이 가능합니다.`);
+      }
+
+      this.contentEditableEl.current.blur();
+
+      return;
+    }
+
+    this.leaveMentionTag({ selection, range, mention });
 
     const allMention = Array.from(allMentionEls).map((mentionEl) => {
       return {
@@ -338,17 +358,28 @@ class Mention implements WpEditorPlugin {
     const focusInCompleteMentionTag =
       !!focusNode?.parentElement?.classList?.contains?.('complete-mention');
 
+    const allMentionEls = this.contentEditableEl.current.querySelectorAll(
+      '.mention.complete-mention'
+    );
+
     const isStartMention =
       !prevCurrentInputChar?.trim() &&
       focusNode?.nodeType === Node.TEXT_NODE &&
       !focusInMentionTag &&
       currentInputChar === '@';
+
     if (this.mentionId && focusInMentionTag) {
       this.config.onWriteMention &&
         this.config.onWriteMention(focusNode.parentElement.firstChild.textContent.replace('@', ''));
     }
 
-    if (isStartMention) {
+    if (isStartMention && (allMentionEls ?? []).length >= this.config.maxMentionCnt) {
+      if (this.config.onMaxMaxMentionList) {
+        this.config.onMaxMaxMentionList();
+      } else {
+        alert(`최대 ${this.config.maxMentionCnt}개 까지 작성이 가능합니다.`);
+      }
+    } else if (isStartMention) {
       this.mentionId = `mention-${uniqueId()}`;
 
       // 방금 입력된 @ 문자를 <span>으로 교체
