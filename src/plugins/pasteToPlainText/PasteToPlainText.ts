@@ -43,8 +43,7 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
   }
 
   getUrlMatchList(str: string) {
-    const urlRegex =
-      /(?<!["'])\b(https?:\/\/[^\s/$.?#].[^\s]*)(?!["'])|(?<!["'])\b(www\.[^\s/$.?#].[^\s]*)(?!["'])|(?<!["'])\b(ftp:\/\/[^\s/$.?#].[^\s]*)(?!["'])/gi;
+    const urlRegex = /\bhttps?:\/\/[^\s"']+|www\.[^\s"']+|ftp:\/\/[^\s"']+/gi;
 
     return (str ?? '').match(urlRegex)?.map((item) => item.trim()) ?? [];
   }
@@ -61,6 +60,10 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
     const originHtmlTextData = event.nativeEvent.clipboardData.getData('text/html');
 
     let plainTextData = event.nativeEvent.clipboardData.getData('text/plain');
+    plainTextData = plainTextData.replace(
+      /<img[^>]*src="([^"]*)"[^>]*>|<video[^>]*>.*?<\/video>|<iframe[^>]*>.*?<\/iframe>/gi,
+      '$1'
+    );
 
     const matchMediaList = this.getMediaMatchUrlList(
       this.checkHTMLFormat(originTextData) ? originTextData : originHtmlTextData
@@ -95,7 +98,7 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
 
     // 수정된 데이터를 contenteditable 요소에 삽입
     const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = `${plainTextData.replace(/<img[^>]*>|<video[^>]*>.*?<\/video>|<iframe[^>]*>.*?<\/iframe>/gi, '')}&nbsp;`;
+    tempDiv.innerHTML = `${plainTextData.replace(/<script\b[^>]*>([\s\S]*?)<\/script>|<style\b[^>]*>([\s\S]*?)<\/style>/gi, '').trim()}&nbsp;`;
     const element = tempDiv.lastChild;
 
     for (const child of Array.from(tempDiv.childNodes).reverse()) {
