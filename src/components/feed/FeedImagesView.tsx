@@ -38,9 +38,9 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
   }, []);
 
   useEffect(() => {
-    setErrorStatus(() => {
+    setErrorStatus((errorStatus) => {
       return images.reduce((acc, cur) => {
-        acc[cur.src] = !!acc[cur.src];
+        acc[cur.src] = errorStatus[cur.src];
         return acc;
       }, {});
     });
