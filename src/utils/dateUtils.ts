@@ -16,8 +16,9 @@ export const ENGLISH_LOCALE_OBJECT = {
   name: 'en',
   relativeTime: {
     future: 'in %s',
-    past: '%s ago',
-    s: 'few seconds',
+    past: '$s ago',
+    s: '1 seconds',
+    ss: '%d seconds',
     m: '1 min',
     mm: '%d min',
     h: '1 hour',
@@ -38,7 +39,8 @@ export const KOREAN_LOCALE_OBJECT = {
   relativeTime: {
     future: '%s 이후',
     past: '%s 전',
-    s: '방금',
+    s: '1 초',
+    ss: '%d 초',
     m: '1 분',
     mm: '%d 분',
     h: '1 시간',
@@ -59,7 +61,8 @@ export const JAPAN_LOCALE_OBJECT = {
   relativeTime: {
     future: '%s後',
     past: '%s前',
-    s: '数秒',
+    s: '1秒',
+    ss: '%d秒',
     m: '1分钟',
     mm: '%d分',
     h: '一時間',
@@ -80,7 +83,8 @@ export const PORT_LOCALE_OBJECT = {
   relativeTime: {
     future: '%s depois',
     past: '%s atrás',
-    s: 'um pouco mais',
+    s: '1 segundo',
+    ss: '%d segundo',
     m: 'um minuto',
     mm: '%d minutos',
     h: 'uma hora',
@@ -101,7 +105,8 @@ export const ZH_CN__LOCALE_OBJECT = {
   relativeTime: {
     future: '%s後',
     past: '%s前',
-    s: '刚才以',
+    s: '1秒',
+    ss: '%d秒',
     m: '1分钟',
     mm: '%d分钟',
     h: '一小时',
@@ -122,7 +127,8 @@ export const ZH_TW__LOCALE_OBJECT = {
   relativeTime: {
     future: '%s後',
     past: '%s前',
-    s: '剛纔',
+    s: '1秒',
+    ss: '%d秒',
     m: '1分鐘',
     mm: '%d分鐘',
     h: '一小時',
@@ -141,6 +147,7 @@ export const ZH_TW__LOCALE_OBJECT = {
 export const RELATIVE_TIME_CONFIG = {
   thresholds: [
     { l: 's', r: 1 },
+    { l: 'ss', r: 59, d: 'second' },
     { l: 'm', r: 1 },
     { l: 'mm', r: 59, d: 'minute' },
     { l: 'h', r: 1 },
