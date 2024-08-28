@@ -427,9 +427,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
         if (!e.target.textContent) {
           contentEditableEl.current.innerHTML = '';
-          setTimeout(() => {
-            document.execCommand('insertHTML', false, '');
-          }, 0);
+          contentEditableEl.current.setAttribute('style', '');
         }
 
         handleChange &&
