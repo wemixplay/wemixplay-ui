@@ -9,6 +9,7 @@ declare module '*.svg' {
 interface Window {
   android?: any;
   webkit?: any;
+  feedIframeIo?: IntersectionObserver;
 }
 
 declare type JSONObject = any;
