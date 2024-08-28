@@ -37,7 +37,8 @@ import CountTextLength from '@/plugins/countTextLength/CountTextLength';
 import {
   commaWithValue,
   convertHtmlToMarkdownStr,
-  convertMarkdownToHtmlStr
+  convertMarkdownToHtmlStr,
+  removeSpaceAndLineBreak
 } from '@/utils/valueParserUtils';
 import Person from '../avatars/Person';
 import PopoverButton from '../popover/PopoverButton';
@@ -146,6 +147,22 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         media: uniqBy(mediaData, 'src')
       };
     }, [textData, imagesData, mediaData]);
+
+    const buttonStatus = useMemo(() => {
+      const isFillText = !!removeSpaceAndLineBreak(memorizationData.textValue);
+      const isFillImages = !!(memorizationData.images ?? []).length;
+      const isFillMedia = !!(memorizationData.media ?? []).length;
+      const isImageLoading = (memorizationData.images ?? []).some((img) => !!img.loading);
+
+      return {
+        loading: loading || isImageLoading,
+        disalbed:
+          minLength > textLength ||
+          loading ||
+          isImageLoading ||
+          (!isFillMedia && !isFillImages && !isFillText)
+      };
+    }, [loading, minLength, textLength, memorizationData]);
 
     const handleUpdateImages = useCallback(
       (
@@ -550,11 +567,9 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             </span>
             <button
               className={cx('btn-submit', {
-                loading: loading || (images ?? []).some((img) => !!img.loading)
+                loading: buttonStatus.loading
               })}
-              disabled={
-                minLength > textLength || loading || (images ?? []).some((img) => !!img.loading)
-              }
+              disabled={buttonStatus.disalbed}
               onClick={() =>
                 handleSubmit(
                   {

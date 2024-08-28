@@ -22,7 +22,8 @@ import PasteToPlainText from '@/plugins/pasteToPlainText/PasteToPlainText';
 import {
   commaWithValue,
   convertHtmlToMarkdownStr,
-  convertMarkdownToHtmlStr
+  convertMarkdownToHtmlStr,
+  removeSpaceAndLineBreak
 } from '@/utils/valueParserUtils';
 
 type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
@@ -136,7 +137,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
           <SolidCapButton
             size="medium"
             className={cx('btn-post')}
-            disabled={minLength > textLength}
+            disabled={minLength > textLength || !removeSpaceAndLineBreak(text)}
             onClick={handleSubmitBtnClick}
           >
             {btnSubmitText}
