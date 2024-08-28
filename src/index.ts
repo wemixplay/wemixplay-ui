@@ -9,7 +9,7 @@ import FeedDetailEditor, {
   PostEditorMediaValue
 } from './components/feed/FeedDetailEditor';
 
-import FeedBox, { FeedBoxProps } from './components/feed/FeedBox';
+import FeedBox, { FeedBoxProps, FeedBoxRef } from './components/feed/FeedBox';
 import FeedTextContent, { FeedTextContentProps } from './components/feed/FeedTextContent';
 import FeedEmojiArea, { FeedEmojiAreaProps } from './components/feed/FeedEmojiArea';
 import FeedEtcInfoArea, { FeedEtcInfoAreaProps } from './components/feed/FeedEtcInfoArea';
@@ -18,6 +18,7 @@ import CommentBox, { CommentBoxProps } from './components/comment/CommentBox';
 import CommentEditor, { CommentEditorProps } from './components/comment/CommentEditor';
 import CommentEtcInfo, { CommentEtcInfoProps } from './components/comment/CommentEtcInfo';
 import CommentWriterInfo, { CommentWriterInfoProps } from './components/comment/CommentWriterInfo';
+import { FeedIframesViewRef, IframePlayState } from './components/feed/FeedIframesView';
 
 export type {
   WpEditorRef,
@@ -26,6 +27,9 @@ export type {
   PostEditorMediaValue,
   PostEditorImageValue,
   FeedDetailEditorValue,
+  FeedBoxRef,
+  FeedIframesViewRef,
+  IframePlayState,
   FeedBoxProps,
   FeedTextContentProps,
   FeedEmojiAreaProps,
