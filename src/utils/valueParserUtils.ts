@@ -63,6 +63,25 @@ export const commaWithValue = (value: string | number) => {
   return '0';
 };
 
+export const removeSpaceAndLineBreak = (str: string) => {
+  return str.replace(/\[LINEBREAK\]/g, '').replace(/\s+/g, '');
+};
+
+export const decodeHtmlEntities = (str: string) => {
+  const entityMap = {
+    '&amp;': '&',
+    '&lt;': '<',
+    '&gt;': '>',
+    '&quot;': '"',
+    '&#39;': "'",
+    '&#x2F;': '/',
+    '&#x60;': '`',
+    '&#x3D;': '='
+  };
+
+  return str.replace(/&[#\w]+;/g, (match) => entityMap[match] || match);
+};
+
 export const convertMarkdownToHtmlStr = (text: string) => {
   // 변환된 문자열을 저장할 변수 초기화
   let convertStr = text;
@@ -92,12 +111,12 @@ export const convertMarkdownToHtmlStr = (text: string) => {
   convertStr = convertStr.replace(/\[LINEBREAK\]/g, '<br />');
 
   // 변환된 문자열 반환
-  return convertStr;
+  return decodeHtmlEntities(convertStr);
 };
 
 export const convertHtmlToMarkdownStr = (text: string) => {
   // 역슬래시와 &nbsp; 변환
-  let convertStr = text.replace(/\\/g, '').replace(/&nbsp;/g, ' ');
+  let convertStr = text.replace(/&nbsp;/g, ' ');
 
   // div => br 태그로 변환
   convertStr = convertStr.replace(/<div>/g, '<br />').replace(/<\/div>/g, '');
