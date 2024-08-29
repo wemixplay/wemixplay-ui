@@ -11,12 +11,15 @@ import utc from 'dayjs/plugin/utc';
 
 import 'dayjs/locale/en';
 import 'dayjs/locale/ko';
+import 'dayjs/locale/pt';
+import 'dayjs/locale/zh-cn';
+import 'dayjs/locale/zh-tw';
 
 export const ENGLISH_LOCALE_OBJECT = {
   name: 'en',
   relativeTime: {
     future: 'in %s',
-    past: '$s ago',
+    past: '%s ago',
     s: '1 seconds',
     ss: '%d seconds',
     m: '1 min',
