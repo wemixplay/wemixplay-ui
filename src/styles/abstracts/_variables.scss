@@ -74,19 +74,24 @@ $sp-6: 0.375rem;  // 6px
 $sp-8: 0.5rem;  // 8px
 $sp-10: 0.625rem;  // 10px
 $sp-12: 0.75rem; // 12px
-$sp-14: 0.875rem;  // 14px
+$sp-14: 0.875rem; // 14px
 $sp-16: 1rem; // 16px
 $sp-18: 1.125rem; // 18px
 $sp-20: 1.25rem;   // 20px
 $sp-24: 1.5rem; // 24px
 $sp-28: 1.75rem; // 28px
+$sp-30: 1.875rem; // 30px
 $sp-32: 2rem; // 32px
+$sp-34: 2.125rem; // 34px
+$sp-38: 2.375rem;   // 38px
 $sp-40: 2.5rem;   // 40px
+$sp-44: 2.75rem; // 44px
 $sp-48: 3rem; // 48px
 $sp-56: 3.5rem; // 56px
 $sp-60: 3.75rem;   // 60px
 $sp-72: 4.5rem; // 72px
 $sp-80: 5rem;   // 80px
+$sp-88: 5.5rem;   // 88px
 
 /* Radius */
 $rd-2: 0.125rem;  // 2px
@@ -99,7 +104,16 @@ $rd-12: 0.75rem; // 12px
 $rd-16: 1rem; // 16px
 $rd-20: 1.25rem;   // 20px
 $rd-24: 1.5rem; // 24px
+$rd-40: 2.5rem; // 40px
+$rd-100: 6.25rem; // 100px
 $rd-circle: 50%; // circle
+
+/* Max Width */
+$max-width: 1360px;
+$max-width-desktop: 1080px;
+$max-width-tablet: 1040px;
+$max-width-720: 720px;
+$max-width-900: 900px;
 
 /*
   Color Palette * Global
@@ -308,6 +322,7 @@ $color-global-opacity-12: 12%;
 $color-global-opacity-16: 16%;
 $color-global-opacity-22: 22%;
 $color-global-opacity-28: 28%;
+$color-global-opacity-32: 32%;
 $color-global-opacity-35: 35%;
 $color-global-opacity-43: 43%;
 $color-global-opacity-52: 52%;
