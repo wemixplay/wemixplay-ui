@@ -13,6 +13,26 @@
   button {
     background-color: transparent;
 
+    .icon {
+      display: block;
+    }
+
+    .icon-pressed {
+      display: none;
+    }
+
+    &.active {
+      // 내가 좋아요 했을때 스타일
+      .icon {
+        display: none;
+      }
+
+      .icon-pressed {
+        display: block;
+      }
+    }
+
+
     .count {
       line-height: 1;
     }

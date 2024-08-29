@@ -2,7 +2,7 @@
 
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedEtcInfoArea.module.scss';
-import { SvgIcoComment, SvgIcoLike, SvgIcoShare } from '@/assets/svgs';
+import { SvgIcoComment, SvgIcoLike, SvgIcoLikePressed, SvgIcoShare } from '@/assets/svgs';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
@@ -69,7 +69,12 @@ const FeedEtcInfoArea = ({
         className={cx('btn-like', { active: isMyClick, 'has-click-event': onLikeBtnClick })}
         onClick={handleLikeBtnClick}
       >
-        <SvgIcoLike />
+        <span className={cx('icon')}>
+          <SvgIcoLike />
+        </span>
+        <span className={cx('icon-pressed')}>
+          <SvgIcoLikePressed />
+        </span>
         <span className={cx('count')}>{toFormatterByInt(likeCount, 1)}</span>
       </button>
       {!!onShareBtnClick && (
