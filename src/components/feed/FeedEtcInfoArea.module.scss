@@ -19,12 +19,22 @@
       margin-left: $sp-24;
     }
 
+    .icon {
+      display: block;
+    }
+
+    .icon-pressed {
+      display: none;
+    }
+
     &.active {
       // 내가 좋아요 했을때 스타일
-      svg {
-        path {
-          fill: var(--semantic-primary-normal);
-        }
+      .icon {
+        display: none;
+      }
+
+      .icon-pressed {
+        display: block;
       }
     }
   }
