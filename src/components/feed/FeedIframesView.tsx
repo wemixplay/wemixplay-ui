@@ -25,7 +25,14 @@ type Props = {
   handleDeleteIframe?: ({ deleteIndex }: { deleteIndex: number }) => void;
 };
 
-export type IframePlayState = 'NOT_YET' | 'ENDED' | 'PLAYING' | 'PAUSED' | 'BUFFERING' | 'CUED';
+export type IframePlayState =
+  | 'NOT_YET'
+  | 'ENDED'
+  | 'PLAYING'
+  | 'AUTO_PAUSED'
+  | 'PAUSED'
+  | 'BUFFERING'
+  | 'CUED';
 
 export type FeedIframesViewRef = HTMLDivElement & {
   playState: IframePlayState;
@@ -33,36 +40,21 @@ export type FeedIframesViewRef = HTMLDivElement & {
   pauseVideo: () => void;
 };
 
+const WP_YOTUBE_IS_MUTE_KEY = 'wp_ui_youtube_is_mute';
+
 const cx = makeCxFunc(style);
 
 const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
   ({ className = '', media = [], intersectionVideo, handleDeleteIframe }, ref) => {
     const youtubeRef = useRef<YouTubePlayer>();
     const iframePreviewBoxRef = useRef<FeedIframesViewRef>();
+    const playStateRef = useRef<IframePlayState>('NOT_YET');
+    const timeoutId = useRef({
+      playTimeoutId: 0,
+      pauseTimeoutId: 0
+    });
 
-    const [playState, setPlayState] = useState<IframePlayState>('NOT_YET');
     const [ready, setReady] = useState(false);
-
-    const io = useMemo(() => {
-      if (typeof window === 'undefined' || !intersectionVideo) {
-        return;
-      }
-
-      if (window.IntersectionObserver) {
-        return new IntersectionObserver(
-          (entries) => {
-            if (entries[0]?.intersectionRatio > 0.8) {
-              youtubeRef.current.playVideo();
-            } else {
-              youtubeRef.current.pauseVideo();
-            }
-          },
-          {
-            threshold: [0, 0.25, 0.5, 0.75, 1.0]
-          }
-        );
-      }
-    }, [intersectionVideo]);
 
     const getYoutubeVideoId = useCallback((src: string) => {
       const [url] = src.split('?');
@@ -70,19 +62,29 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
       return url.split('/').pop();
     }, []);
 
-    const handleYoutubePlayStateChange = useCallback((event: YouTubeEvent<number>) => {
+    const handleYoutubeStateChange = useCallback((event: YouTubeEvent<number>) => {
+      const isMuted = Number(localStorage.getItem(WP_YOTUBE_IS_MUTE_KEY) || 0);
+
+      console.log();
+
+      if (isMuted) {
+        youtubeRef.current.mute();
+      } else {
+        youtubeRef.current.unMute();
+      }
+
       if (event.data === -1) {
-        setPlayState('NOT_YET');
+        playStateRef.current = 'NOT_YET';
       } else if (event.data === 0) {
-        setPlayState('ENDED');
+        playStateRef.current = 'ENDED';
       } else if (event.data === 1) {
-        setPlayState('PLAYING');
+        playStateRef.current = 'PLAYING';
       } else if (event.data === 2) {
-        setPlayState('PAUSED');
+        playStateRef.current = 'PAUSED';
       } else if (event.data === 3) {
-        setPlayState('BUFFERING');
+        playStateRef.current = 'BUFFERING';
       } else if (event.data === 5) {
-        setPlayState('CUED');
+        playStateRef.current = 'CUED';
       }
     }, []);
 
@@ -98,20 +100,71 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
       }
     }, []);
 
+    const handleYoutubeVolumeChange = useCallback(() => {
+      if (!localStorage.getItem(WP_YOTUBE_IS_MUTE_KEY)) {
+        youtubeRef.current.mute();
+        localStorage.setItem(WP_YOTUBE_IS_MUTE_KEY, '1');
+      } else if (youtubeRef.current.isMuted()) {
+        localStorage.setItem(WP_YOTUBE_IS_MUTE_KEY, '1');
+      } else {
+        localStorage.setItem(WP_YOTUBE_IS_MUTE_KEY, '0');
+      }
+    }, []);
+
+    const io = useMemo(() => {
+      if (typeof window === 'undefined' || !intersectionVideo) {
+        return;
+      }
+
+      if (window.IntersectionObserver) {
+        return new IntersectionObserver(
+          (entries) => {
+            if (entries[0]?.intersectionRatio > 0) {
+              youtubeRef.current.addEventListener('onVolumeChange', handleYoutubeVolumeChange);
+            } else {
+              youtubeRef.current.removeEventListener('onVolumeChange', handleYoutubeVolumeChange);
+            }
+
+            if (entries[0]?.intersectionRatio > 0.8 && playStateRef.current !== 'PAUSED') {
+              window.clearTimeout(timeoutId.current.pauseTimeoutId);
+              window.clearTimeout(timeoutId.current.playTimeoutId);
+
+              timeoutId.current.playTimeoutId = window.setTimeout(() => {
+                youtubeRef.current.playVideo();
+              }, 200);
+            } else if (playStateRef.current === 'PLAYING') {
+              youtubeRef.current.pauseVideo();
+
+              window.clearTimeout(timeoutId.current.pauseTimeoutId);
+              window.clearTimeout(timeoutId.current.playTimeoutId);
+              timeoutId.current.pauseTimeoutId = window.setTimeout(() => {
+                playStateRef.current = 'AUTO_PAUSED';
+              }, 200);
+            }
+          },
+          {
+            threshold: [0, 0.25, 0.5, 0.75, 1.0]
+          }
+        );
+      }
+    }, [intersectionVideo, handleYoutubeVolumeChange]);
+
     useEffect(() => {
       const el = iframePreviewBoxRef.current;
+      const player = youtubeRef.current;
 
       if (io && ready) {
         io.observe(el);
 
         return () => {
+          player.removeEventListener('onVolumeChange', handleYoutubeVolumeChange);
           io.disconnect();
         };
       }
-    }, [ready]);
+    }, [ready, handleYoutubeVolumeChange]);
 
     useImperativeHandle(ref, () => {
-      iframePreviewBoxRef.current.playState = playState;
+      iframePreviewBoxRef.current.playState = playStateRef.current;
       iframePreviewBoxRef.current.playVideo = playVideo;
       iframePreviewBoxRef.current.pauseVideo = pauseVideo;
 
@@ -141,7 +194,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
                 ref={iframePreviewBoxRef}
                 key={iframe.src}
                 data-src={iframe.src}
-                className={cx('preview-iframe-box', playState)}
+                className={cx('preview-iframe-box')}
               >
                 {/* <span className={cx('swipe-helper', 'before')}></span>
                 <span className={cx('swipe-helper', 'after')}></span> */}
@@ -165,7 +218,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
                       youtubeRef.current = e.target;
                       setReady(true);
                     }}
-                    onStateChange={handleYoutubePlayStateChange}
+                    onStateChange={handleYoutubeStateChange}
                   />
                 )}
                 {iframe.type === 'twitch' && <iframe src={iframe.src} />}
