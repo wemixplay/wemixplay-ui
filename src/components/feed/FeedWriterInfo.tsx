@@ -40,7 +40,7 @@ const FeedWriterInfo = ({
       <div className={cx('profile-text')}>
         <strong className={cx('title')} onClick={onProfileClick}>
           {name || '-'}
-          {!!certificated && <SvgIcoCertified width={12} height={12} />}
+          {!!certificated && <SvgIcoCertified width={20} height={20} />}
         </strong>
         <div className={cx('info')}>
           {!!categoryName && <span className={cx('category')}>{categoryName}</span>}

@@ -13,7 +13,7 @@
     align-items: center;
     color: var(--semantic-label-normal);
 
-    @include label-01-reading-sb;
+    @include add-title-18-b ;
 
     svg {
       margin-left: 4px;
@@ -21,10 +21,12 @@
   }
 
   &-text {
-    margin-left: $sp-12;
+    margin-left: $sp-8;
   }
 
   .info {
+    margin-top: $sp-4;
+
     > span {
       position: relative;
 
@@ -53,7 +55,7 @@
     .date {
       color: var(--semantic-label-alternative);
 
-      @include label-01-normal-r;
+      @include add-body-text-15-m;
     }
   }
 }
