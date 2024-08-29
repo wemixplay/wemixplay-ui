@@ -164,6 +164,10 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
     }, [ready, handleYoutubeVolumeChange]);
 
     useImperativeHandle(ref, () => {
+      if (!iframePreviewBoxRef.current) {
+        return iframePreviewBoxRef.current;
+      }
+
       iframePreviewBoxRef.current.playState = playStateRef.current;
       iframePreviewBoxRef.current.playVideo = playVideo;
       iframePreviewBoxRef.current.pauseVideo = pauseVideo;
