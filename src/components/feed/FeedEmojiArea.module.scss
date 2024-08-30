@@ -2,19 +2,29 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  gap: 0 4px;
 
   .emoji-img {
+    width: 22px;
+    height: 22px;
     background-color: transparent;
+
+    @include breakpoint-768 {
+      width: 32px !important;
+      height: 32px !important;
+    }
   }
 
   > button {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    margin-top: $sp-4;
+    padding: $sp-2 $sp-6;
 
-    &:not(:last-child) {
-      margin-right: $sp-12;
+    &:hover {
+      @include hover {
+        background: var(--semantic-fill-normal);
+      }
     }
 
     &.no-exist-event {
@@ -27,20 +37,33 @@
     }
 
     .count {
-      padding-left: $sp-4;
+      color: var(--semantic-label-normal);
+      font-feature-settings: "ss10" on;
+      font-size: 13px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 100%;
     }
   }
 
   .btn-add-emoji {
-    padding: 0 $sp-8;
     border-radius: 100px;
-    margin-top: $sp-4;
-    background: var(--semantic-fill-normal);
+    transition: 0.25s;
+
+    svg {
+      @include breakpoint-768 {
+        width: 48px;
+        height: 36px;
+      }
+    }
+
+    &:hover {
+      background: var(--semantic-fill-normal);
+    }
 
     :global {
       .btn-popover {
-        width: 32px;
-        height: 32px;
+        background: transparent;
       }
     }
   }

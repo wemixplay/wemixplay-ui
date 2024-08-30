@@ -39,8 +39,9 @@ const FeedWriterInfo = ({
       <Person src={profileImg} customSize={profileSize} onClick={onProfileClick} />
       <div className={cx('profile-text')}>
         <strong className={cx('title')} onClick={onProfileClick}>
-          {name || '-'}
+          {name || '-'}Elon
           {!!certificated && <SvgIcoCertified width={20} height={20} />}
+          <SvgIcoCertified width={20} height={20} />
         </strong>
         <div className={cx('info')}>
           {!!categoryName && <span className={cx('category')}>{categoryName}</span>}

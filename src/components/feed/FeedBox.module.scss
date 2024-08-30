@@ -1,10 +1,15 @@
 .feed-box {
   position: relative;
+  padding: $sp-16 $sp-14 $sp-10;
   border-radius: $sp-12;
   border-bottom: 0.7px solid rgb(0 0 0 / 10%);
   background: #fff;
   box-shadow: 0 5.6px 19.601px 0 rgb(0 0 0 / 6%);
   cursor: default;
+
+  @include breakpoint-768 {
+    padding: $sp-24 $sp-20 $sp-16;
+  }
 
   &.has-click-event {
     cursor: pointer;
@@ -14,7 +19,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: $sp-16 $sp-14 $sp-8 $sp-14;
 
     .profile {
       // style
@@ -23,19 +27,37 @@
     .btn-manage {
       :global {
         .btn-popover {
-          width: 32px;
-          height: 32px;
+          background: transparent;
+
+          svg {
+            width: 22px;
+            height: 22px;
+
+            @include breakpoint-768 {
+              width: 32px;
+              height: 32px;
+            }
+          }
         }
       }
     }
   }
 
   .feed-body {
-    margin-top: $sp-8;
+    min-height: 38px;
+    padding: $sp-6 $sp-6 $sp-14;
+    margin-top: $sp-6;
 
     .text-content {
-      padding: 0 $sp-20 0 52px;
       margin: 0;
+
+      @include add-body-text-14-m;
+
+      @include breakpoint-768 {
+        @include add-body-text-18-m;
+
+        padding: 0 $sp-20 0 52px;
+      }
     }
 
     .carousel {
@@ -78,8 +100,9 @@
   }
 
   .feed-footer {
-    padding: $sp-4 $sp-20 $sp-16 $sp-20;
-    margin-top: $sp-32;
+    // padding: $sp-4 $sp-20 $sp-16 $sp-20;
+    // margin-top: $sp-32;
+    margin-top: $sp-16;
 
     &-container {
       display: flex;
@@ -111,6 +134,11 @@
       padding-top: $sp-10;
       border-top: 1px solid var(--semantic-line-normal-alternative);
       margin-top: $sp-10;
+
+      @include breakpoint-768 {
+        padding-right: $sp-24;
+        padding-left: $sp-24;
+      }
     }
   }
 

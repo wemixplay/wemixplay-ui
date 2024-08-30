@@ -12,8 +12,15 @@
     display: flex;
     align-items: center;
     color: var(--semantic-label-normal);
+    font-feature-settings: "ss10" on;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%;
 
-    @include add-title-18-b ;
+    @include breakpoint-768 {
+      @include add-title-18-b ;
+    }
 
     svg {
       margin-left: 4px;
@@ -25,7 +32,7 @@
   }
 
   .info {
-    margin-top: $sp-4;
+    margin-top: 1px;
 
     > span {
       position: relative;
