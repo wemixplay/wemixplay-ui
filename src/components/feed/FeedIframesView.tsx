@@ -63,9 +63,11 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
     }, []);
 
     const handleYoutubeStateChange = useCallback((event: YouTubeEvent<number>) => {
-      const isMuted = Number(localStorage.getItem(WP_YOTUBE_IS_MUTE_KEY) || 0);
+      if (!youtubeRef.current) {
+        return;
+      }
 
-      console.log();
+      const isMuted = Number(localStorage.getItem(WP_YOTUBE_IS_MUTE_KEY) || 0);
 
       if (isMuted) {
         youtubeRef.current.mute();
@@ -101,6 +103,10 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
     }, []);
 
     const handleYoutubeVolumeChange = useCallback(() => {
+      if (!youtubeRef.current) {
+        return;
+      }
+
       if (!localStorage.getItem(WP_YOTUBE_IS_MUTE_KEY)) {
         youtubeRef.current.mute();
         localStorage.setItem(WP_YOTUBE_IS_MUTE_KEY, '1');
@@ -119,27 +125,26 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
       if (window.IntersectionObserver) {
         return new IntersectionObserver(
           (entries) => {
-            if (entries[0]?.intersectionRatio > 0) {
-              youtubeRef.current.addEventListener('onVolumeChange', handleYoutubeVolumeChange);
-            } else {
-              youtubeRef.current.removeEventListener('onVolumeChange', handleYoutubeVolumeChange);
-            }
+            window.clearTimeout(timeoutId.current.playTimeoutId);
 
-            if (entries[0]?.intersectionRatio > 0.8 && playStateRef.current !== 'PAUSED') {
-              window.clearTimeout(timeoutId.current.pauseTimeoutId);
-              window.clearTimeout(timeoutId.current.playTimeoutId);
+            if (youtubeRef.current) {
+              if (entries[0]?.intersectionRatio > 0) {
+                youtubeRef.current.addEventListener('onVolumeChange', handleYoutubeVolumeChange);
+              } else {
+                youtubeRef.current.removeEventListener('onVolumeChange', handleYoutubeVolumeChange);
+              }
 
-              timeoutId.current.playTimeoutId = window.setTimeout(() => {
-                youtubeRef.current.playVideo();
-              }, 200);
-            } else if (playStateRef.current === 'PLAYING') {
-              youtubeRef.current.pauseVideo();
+              if (entries[0]?.intersectionRatio > 0.8 && playStateRef.current !== 'PAUSED') {
+                timeoutId.current.playTimeoutId = window.setTimeout(() => {
+                  youtubeRef.current.playVideo();
+                }, 200);
+              } else if (playStateRef.current === 'PLAYING') {
+                youtubeRef.current.pauseVideo();
 
-              window.clearTimeout(timeoutId.current.pauseTimeoutId);
-              window.clearTimeout(timeoutId.current.playTimeoutId);
-              timeoutId.current.pauseTimeoutId = window.setTimeout(() => {
-                playStateRef.current = 'AUTO_PAUSED';
-              }, 200);
+                timeoutId.current.pauseTimeoutId = window.setTimeout(() => {
+                  playStateRef.current = 'AUTO_PAUSED';
+                }, 200);
+              }
             }
           },
           {
@@ -151,17 +156,15 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
 
     useEffect(() => {
       const el = iframePreviewBoxRef.current;
-      const player = youtubeRef.current;
 
       if (io && ready) {
         io.observe(el);
 
         return () => {
-          player.removeEventListener('onVolumeChange', handleYoutubeVolumeChange);
           io.disconnect();
         };
       }
-    }, [ready, handleYoutubeVolumeChange]);
+    }, [ready]);
 
     useImperativeHandle(ref, () => {
       if (!iframePreviewBoxRef.current) {
