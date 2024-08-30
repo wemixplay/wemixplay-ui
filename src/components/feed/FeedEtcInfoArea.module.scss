@@ -6,11 +6,49 @@
 
   button {
     display: inline-flex;
-    min-height: 36px;
+    min-height: 26px;
     align-items: center;
     justify-content: center;
+    border-radius: $rd-100;
     background-color: transparent;
     cursor: default !important;
+
+    @include breakpoint-768 {
+      min-height: 36px;
+    }
+
+    &:hover {
+      background: var(--semantic-fill-normal);
+    }
+
+    &:not(.btn-share) {
+      height: 26px;
+      padding: 0 6px;
+      border-radius: $rd-100;
+
+      @include breakpoint-768 {
+        padding-left: $sp-8;
+      }
+
+      svg {
+        width: 22px;
+        height: 22px;
+
+        @include breakpoint-768 {
+          width: 32px;
+          height: 32px;
+        }
+      }
+    }
+
+    &.btn-share {
+      svg {
+        @include breakpoint-768 {
+          width: 52px;
+          height: 24px;
+        }
+      }
+    }
 
     &.has-click-event {
       cursor: pointer !important;
@@ -41,8 +79,15 @@
   }
 
   .count {
-    // padding-left: $sp-4;
+    color: #222;
+    font-feature-settings: "ss10" on;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 100%; /* 13px */
 
-    @include add-body-text-16-sb;
+    @include breakpoint-768 {
+      @include add-body-text-16-sb;
+    }
   }
 }

@@ -6,8 +6,20 @@
   .text {
     word-break: break-word;
 
+    @include add-body-text-14-m;
+
+    @include breakpoint-768 {
+      @include add-body-text-18-m;
+    }
+
     pre {
       white-space: pre-wrap;
+
+      @include add-body-text-14-m;
+
+      @include breakpoint-768 {
+        @include add-body-text-18-m;
+      }
     }
   }
 

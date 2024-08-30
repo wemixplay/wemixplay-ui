@@ -1,14 +1,17 @@
 .feed-detail-editor {
   height: 100%;
+  padding: $sp-16 $sp-14 $sp-10;
 
   @include breakpoint-768 {
     height: auto;
+    padding: $sp-24 $sp-20 $sp-16;
   }
 
   &-header {
     display: flex;
     align-items: center;
-    padding: 0 $sp-20;
+
+    // padding: 0 $sp-20;
 
     &.exist-user-click-event {
       .user-name,
@@ -18,8 +21,6 @@
     }
 
     .profile-info {
-      padding: $sp-6 $sp-12;
-
       .user-name {
         @include body-02-normal-sb;
 
@@ -69,7 +70,9 @@
   &-body {
     overflow: auto;
     max-height: calc(100% - 150px);
-    padding-bottom: $sp-24;
+
+    // padding-bottom: $sp-24;
+    margin-top: $sp-20;
 
     @include scroll-interaction;
 
@@ -82,12 +85,19 @@
     min-height: 80px;
     padding: $sp-12 $sp-20 $sp-20  $sp-20;
     border: none;
+    border-radius: 12px;
     margin: 0;
+    background: var(--Background-Elevated-Alternative, #f7f7f8);
+
+    @include add-body-text-14-m;
+
+    @include breakpoint-768 {
+      @include add-body-text-18-m;
+    }
   }
 
   .control-box {
     display: flex;
-    padding: $sp-16 $sp-24;
     border-top: 1px solid var(--semantic-line-solid-normal);
     margin-top: auto;
 
