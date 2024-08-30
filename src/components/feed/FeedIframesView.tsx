@@ -127,7 +127,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
           (entries) => {
             window.clearTimeout(timeoutId.current.playTimeoutId);
 
-            if (youtubeRef.current) {
+            if (youtubeRef.current?.playerInfo) {
               if (entries[0]?.intersectionRatio > 0) {
                 youtubeRef.current.addEventListener('onVolumeChange', handleYoutubeVolumeChange);
               } else {
@@ -137,8 +137,8 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
               if (entries[0]?.intersectionRatio > 0.8 && playStateRef.current !== 'PAUSED') {
                 timeoutId.current.playTimeoutId = window.setTimeout(() => {
                   youtubeRef.current.playVideo();
-                }, 200);
-              } else if (playStateRef.current === 'PLAYING') {
+                }, 500);
+              } else if (entries[0]?.intersectionRatio <= 0.8) {
                 youtubeRef.current.pauseVideo();
 
                 timeoutId.current.pauseTimeoutId = window.setTimeout(() => {
