@@ -1,6 +1,9 @@
 .feed-box {
   position: relative;
-  padding: $sp-16 0;
+  border-radius: $sp-12;
+  border-bottom: 0.7px solid rgb(0 0 0 / 10%);
+  background: #fff;
+  box-shadow: 0 5.6px 19.601px 0 rgb(0 0 0 / 6%);
   cursor: default;
 
   &.has-click-event {
@@ -11,7 +14,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 $sp-20;
+    padding: $sp-16 $sp-14 $sp-8 $sp-14;
 
     .profile {
       // style
@@ -28,10 +31,10 @@
   }
 
   .feed-body {
-    margin-top: $sp-12;
+    margin-top: $sp-8;
 
     .text-content {
-      padding: 0 $sp-20;
+      padding: 0 $sp-20 0 52px;
       margin: 0;
     }
 
@@ -75,10 +78,13 @@
   }
 
   .feed-footer {
-    display: flex;
-    flex-direction: column;
-    padding: $sp-4 $sp-20 0 $sp-20;
-    margin-top: $sp-16;
+    padding: $sp-4 $sp-20 $sp-16 $sp-20;
+    margin-top: $sp-32;
+
+    &-container {
+      display: flex;
+      flex-direction: column;
+    }
 
     button {
       display: flex;
@@ -100,8 +106,11 @@
     }
 
     .feed-comments {
-      // style
-      margin-top: $sp-8;
+      width: 100%;
+      justify-content: space-between;
+      padding-top: $sp-10;
+      border-top: 1px solid var(--semantic-line-normal-alternative);
+      margin-top: $sp-10;
     }
   }
 

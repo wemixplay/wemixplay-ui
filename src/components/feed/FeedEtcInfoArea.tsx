@@ -61,7 +61,7 @@ const FeedEtcInfoArea = ({
         className={cx('btn-comment', { 'has-click-event': onCommentBtnClick })}
         onClick={handleCommentClick}
       >
-        <SvgIcoComment width={18} height={18} />
+        <SvgIcoComment width={32} height={32} />
         <span className={cx('count')}>{toFormatterByInt(commentCount, 1)}</span>
       </button>
       <button
@@ -70,7 +70,7 @@ const FeedEtcInfoArea = ({
         onClick={handleLikeBtnClick}
       >
         <span className={cx('icon')}>
-          <SvgIcoLike />
+          <SvgIcoLike width={32} height={32} />
         </span>
         <span className={cx('icon-pressed')}>
           <SvgIcoLikePressed />
@@ -83,7 +83,7 @@ const FeedEtcInfoArea = ({
           className={cx('btn-share', 'has-click-event')}
           onClick={handleShareBtnClick}
         >
-          <SvgIcoShare width={22} height={22} />
+          <SvgIcoShare />
         </button>
       )}
     </div>

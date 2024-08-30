@@ -13,7 +13,7 @@ import React, {
 import style from './FeedBox.module.scss';
 import FeedImagesView, { FeedImagesViewProps } from './FeedImagesView';
 import PopoverButton from '../popover/PopoverButton';
-import { SvgIcoVDots } from '@/assets/svgs';
+import { SvgIcoHDots, SvgIcoVDots } from '@/assets/svgs';
 import FeedEmojiArea, { EmojiInfo } from './FeedEmojiArea';
 import FeedEtcInfoArea from './FeedEtcInfoArea';
 import FeedWriterInfo from './FeedWriterInfo';
@@ -81,7 +81,7 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
       commentCount = 0,
       likeCount = 0,
       isMyLike,
-      avatarSize = 36,
+      avatarSize = 32,
       intersectionVideo,
       createdAt,
       updatedAt,
@@ -162,7 +162,7 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
                   whenWindowScrollClose={true}
                   onClick={handleManageBtnClick}
                 >
-                  <SvgIcoVDots width={22} height={22} />
+                  <SvgIcoHDots width={32} height={32} />
                 </PopoverButton>
               </div>
             ) : (
@@ -198,22 +198,24 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
           </div>
 
           <div className={cx('feed-footer')}>
-            <FeedEmojiArea
-              className={cx('feed-reactions')}
-              emojiList={emojiList}
-              emojiSelectPopoverElement={emojiSelectPopoverElement}
-              onEmojiClick={onEmojiClick}
-              onEmojiSelectBtnClick={onEmojiSelectBtnClick}
-            />
-            <FeedEtcInfoArea
-              className={cx('feed-comments')}
-              commentCount={commentCount}
-              likeCount={likeCount}
-              isMyClick={isMyLike}
-              onLikeBtnClick={onLikeBtnClick}
-              onShareBtnClick={onShareBtnClick}
-              onCommentBtnClick={onCommentBtnClick}
-            />
+            <div className={cx('feed-footer-container')}>
+              <FeedEmojiArea
+                className={cx('feed-reactions')}
+                emojiList={emojiList}
+                emojiSelectPopoverElement={emojiSelectPopoverElement}
+                onEmojiClick={onEmojiClick}
+                onEmojiSelectBtnClick={onEmojiSelectBtnClick}
+              />
+              <FeedEtcInfoArea
+                className={cx('feed-comments')}
+                commentCount={commentCount}
+                likeCount={likeCount}
+                isMyClick={isMyLike}
+                onLikeBtnClick={onLikeBtnClick}
+                onShareBtnClick={onShareBtnClick}
+                onCommentBtnClick={onCommentBtnClick}
+              />
+            </div>
           </div>
         </div>
       </article>

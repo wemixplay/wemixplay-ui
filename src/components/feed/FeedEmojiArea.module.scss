@@ -32,12 +32,15 @@
   }
 
   .btn-add-emoji {
+    padding: 0 $sp-8;
+    border-radius: 100px;
     margin-top: $sp-4;
+    background: var(--semantic-fill-normal);
 
     :global {
       .btn-popover {
-        width: 24px;
-        height: 24px;
+        width: 32px;
+        height: 32px;
       }
     }
   }

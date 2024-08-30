@@ -6,6 +6,7 @@
 
   button {
     display: inline-flex;
+    min-height: 36px;
     align-items: center;
     justify-content: center;
     background-color: transparent;
@@ -40,6 +41,8 @@
   }
 
   .count {
-    padding-left: $sp-4;
+    // padding-left: $sp-4;
+
+    @include add-body-text-16-sb;
   }
 }

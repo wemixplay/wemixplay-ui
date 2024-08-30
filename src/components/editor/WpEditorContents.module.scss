@@ -1,7 +1,7 @@
 .editor-contents {
-  color: var(--semantic-static-black);
+  color: var(--semantic-label-normal);
 
-  @include body-01-reading-02-m;
+  @include add-body-text-18-m;
 
   &:global {
     &:not(.editor) {
