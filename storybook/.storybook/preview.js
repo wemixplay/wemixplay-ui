@@ -1,19 +1,24 @@
 // import '@/styles/theme.scss';
 // import '@/styles/base/_reset.scss';
 // import '@/styles/global.scss';
+import { useEffect } from 'react'
 import '../styles/storybook.scss';
-import {pretendard, twkEverett} from '@/constants/font.c'
+import {pretendard, twkEverett} from '@/constants/font.c';
 
 const preview = {
   parameters: {
     actions: { argTypesRegex: '^(on|handle)(?!Icon)[A-Z].*' },
     backgrounds: {
-      default: 'white',
+      default: 'light',
       values: [
         {
-          name: 'white',
+          name: 'light',
           value: '#ffffff',
         },
+        {
+          name: 'dark',
+          value: '#141415',
+        }
       ],
     },
     controls: {
@@ -24,7 +29,13 @@ const preview = {
     },
   },
   decorators: [
-    (Story) => {
+    (Story, context) => {
+      const backgrounds = context.backgrounds;
+
+      useEffect(() => {
+        document.body.setAttribute('data-theme', backgrounds === '#141415' ? 'dark' : 'light');
+      }, [backgrounds]);
+
       return (
         <div className={`storybook-font ${pretendard.variable} ${twkEverett.variable}`}>
           <Story />
