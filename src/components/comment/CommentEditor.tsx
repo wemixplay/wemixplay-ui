@@ -107,7 +107,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
         />
         <div className={cx('editor-area')}>
           <WpEditor
-            className={cx('editor')}
+            className={cx('editor', { filled: text.length })}
             plugin={[Mention, AutoUrlMatch, PasteToPlainText, CountTextLength]}
             config={{
               ...config,

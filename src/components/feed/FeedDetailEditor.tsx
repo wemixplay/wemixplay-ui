@@ -489,7 +489,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         </div>
         <div className={cx('feed-detail-editor-body')}>
           <WpEditor
-            className={cx('editor', 'post-content')}
+            className={cx('editor', 'post-content', { filled: textData.length })}
             ref={wpEditorRef}
             plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
             initialValue={textData}
