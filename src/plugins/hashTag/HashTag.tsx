@@ -186,37 +186,51 @@ class HashTag implements WpEditorPlugin {
 
       return;
     } else if (hash) {
-      target.innerHTML = target.innerHTML.replace(
-        hashRegex,
-        `<span id="${targetHashId}" class="hash complete-hash"$1$2>#${hash.name}</span>&nbsp;`
-      );
+      if (this.currentHashList.every((hashTag) => hashTag.name !== hash.name)) {
+        target.innerHTML = target.innerHTML.replace(
+          hashRegex,
+          `<span id="${targetHashId}" class="hash complete-hash"$1$2>#${hash.name}</span>&nbsp;`
+        );
 
-      const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
+        const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
 
-      newHashTag.dataset.id = String(hash.id);
-      newHashTag.dataset.name = hash.name;
-      newHashTag.textContent = `#${hash.name}`;
+        newHashTag.dataset.id = String(hash.id);
+        newHashTag.dataset.name = hash.name;
+        newHashTag.textContent = `#${hash.name}`;
+      } else {
+        target.innerHTML = target.innerHTML.replace(
+          hashRegex,
+          `<span id="${targetHashId}" class="duplicate-hash"$1$2>#${hash.name}</span>&nbsp;`
+        );
+      }
     } else if (!keepTag) {
       const hashText = selection.focusNode.textContent.trim();
 
-      target.innerHTML = target.innerHTML.replace(
-        hashRegex,
-        `<span id="${targetHashId}" class="hash"$1$2>${hashText}</span>&nbsp;`
-      );
+      if (this.currentHashList.every((hash) => hash.name !== hashText.replace('#', ''))) {
+        target.innerHTML = target.innerHTML.replace(
+          hashRegex,
+          `<span id="${targetHashId}" class="hash"$1$2>${hashText}</span>&nbsp;`
+        );
 
-      const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
+        const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
 
-      newHashTag.dataset.id = '0';
-      newHashTag.dataset.name = hashText;
+        newHashTag.dataset.id = '0';
+        newHashTag.dataset.name = hashText.replace('#', '');
 
-      this.config.onCompleteHash &&
-        this.config.onCompleteHash({
-          allHashTag: this.getAllHashTag(),
-          currentHashTag: {
-            id: Number(newHashTag.dataset.id),
-            name: newHashTag.dataset.name
-          }
-        });
+        this.config.onCompleteHash &&
+          this.config.onCompleteHash({
+            allHashTag: this.getAllHashTag(),
+            currentHashTag: {
+              id: Number(newHashTag.dataset.id),
+              name: newHashTag.dataset.name
+            }
+          });
+      } else {
+        target.innerHTML = target.innerHTML.replace(
+          hashRegex,
+          `<span id="${targetHashId}" class="duplicate-hash"$1$2>${hashText}</span>&nbsp;`
+        );
+      }
     }
 
     this.hashId = '';
