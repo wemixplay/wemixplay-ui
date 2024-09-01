@@ -289,8 +289,13 @@ class Mention implements WpEditorPlugin {
       };
     }) as MentionInfo[];
 
+    this.currentMentionList = [...allMention, mention];
+
     this.config.onCompleteMention &&
-      this.config.onCompleteMention({ allMention, currentMention: mention });
+      this.config.onCompleteMention({
+        allMention: this.currentMentionList,
+        currentMention: mention
+      });
   }
 
   handleKeyDown({
