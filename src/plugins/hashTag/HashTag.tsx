@@ -30,6 +30,7 @@ class HashTag implements WpEditorPlugin {
   private setTargetHashId: (targetHashId: string) => void;
   public contentEditableEl: MutableRefObject<HTMLDivElement>;
   private postHashListRef: HashListRef;
+  private currentHashList: HashTagInfo[] = [];
   private _config: HashTagConfig = {
     list: [],
     onWriteHash: (text) => {}
@@ -129,6 +130,23 @@ class HashTag implements WpEditorPlugin {
     selection.addRange(range);
   }
 
+  getAllHashTag() {
+    const allHashTagEls = this.contentEditableEl.current.querySelectorAll('.hash');
+
+    return Array.from(allHashTagEls).map((hashTagEl) => {
+      return {
+        ...Object.fromEntries(Object.entries((hashTagEl as HTMLSpanElement).dataset)),
+        name: hashTagEl.textContent.replace('#', '').trim()
+      };
+    }) as HashTagInfo[];
+  }
+
+  getCurrentHashList() {
+    this.currentHashList = this.getAllHashTag();
+
+    this.config.onCompleteHash && this.config.onCompleteHash({ allHashTag: this.currentHashList });
+  }
+
   leaveHashTag({
     selection,
     range,
@@ -212,17 +230,6 @@ class HashTag implements WpEditorPlugin {
     });
 
     this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
-  }
-
-  getAllHashTag() {
-    const allHashTagEls = this.contentEditableEl.current.querySelectorAll('.hash');
-
-    return Array.from(allHashTagEls).map((hashTagEl) => {
-      return {
-        ...Object.fromEntries(Object.entries((hashTagEl as HTMLSpanElement).dataset)),
-        name: hashTagEl.textContent.replace('#', '').trim()
-      };
-    }) as HashTagInfo[];
   }
 
   selectHashItem(index?: number) {
@@ -429,7 +436,6 @@ class HashTag implements WpEditorPlugin {
 
       return;
     } else if (focusInHashTag && !this.checkValidHashTag(focusNode.textContent.trim())) {
-      console.log('awdawdawdawdawdadw');
       this.hashId = '';
       const cursorOffset = selection.getRangeAt(0).startOffset;
 
@@ -464,9 +470,6 @@ class HashTag implements WpEditorPlugin {
       this.hashId = focusNode.parentElement.id;
 
       this.restoreSelection({ selection, range, focusNode: focusNode, focusOffset });
-
-      this.config.onCompleteHash &&
-        this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
     }
 
     if (!isStartHash && !focusInHashTag) {
@@ -481,9 +484,8 @@ class HashTag implements WpEditorPlugin {
       this.leaveHashTag({ selection, range });
     }
 
-    if (focusInHashTag) {
-      this.config.onCompleteHash &&
-        this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
+    if (this.currentHashList.length !== this.getAllHashTag().length) {
+      this.getCurrentHashList();
     }
   }
 

@@ -32,6 +32,7 @@ class Mention implements WpEditorPlugin {
   private setTargetMentionId: (targetMentionId: string) => void;
   public contentEditableEl: MutableRefObject<HTMLDivElement>;
   private postMentionListRef: MentionListRef;
+  private currentMentionList: MentionInfo[] = [];
   private _config: MentionConfig = {
     list: [],
     onWriteMention: (text) => {}
@@ -121,6 +122,23 @@ class Mention implements WpEditorPlugin {
 
     selection.removeAllRanges();
     selection.addRange(range);
+  }
+
+  getCurrentMentionList() {
+    const allMentionEls = this.contentEditableEl.current.querySelectorAll(
+      '.mention.complete-mention'
+    );
+
+    const allMention = Array.from(allMentionEls).map((mentionEl) => {
+      return {
+        ...Object.fromEntries(Object.entries((mentionEl as HTMLSpanElement).dataset)),
+        name: mentionEl.textContent.replace('@', '').trim()
+      };
+    }) as MentionInfo[];
+
+    this.currentMentionList = allMention;
+
+    this.config.onCompleteMention && this.config.onCompleteMention({ allMention });
   }
 
   leaveMentionTag({
@@ -444,19 +462,6 @@ class Mention implements WpEditorPlugin {
       selection.removeAllRanges();
       selection.addRange(range);
 
-      const allMentionEls = this.contentEditableEl.current.querySelectorAll(
-        '.mention.complete-mention'
-      );
-
-      const allMention = Array.from(allMentionEls).map((mentionEl) => {
-        return {
-          ...Object.fromEntries(Object.entries((mentionEl as HTMLSpanElement).dataset)),
-          name: mentionEl.textContent.replace('@', '').trim()
-        };
-      }) as MentionInfo[];
-
-      this.config.onCompleteMention && this.config.onCompleteMention({ allMention });
-
       return;
     } else if (
       focusInCompleteMentionTag &&
@@ -490,6 +495,10 @@ class Mention implements WpEditorPlugin {
       !focusNode.textContent.slice(-1).trim()
     ) {
       this.leaveMentionTag({ selection, range });
+    }
+
+    if (this.currentMentionList.length !== allMentionEls.length) {
+      this.getCurrentMentionList();
     }
 
     return false;
