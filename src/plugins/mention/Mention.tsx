@@ -12,6 +12,7 @@ type MentionInfo = { id: number; name: string; profileImg?: string; isOfficial?:
 type MentionConfig = {
   list: MentionInfo[];
   maxMentionCnt?: number;
+  detectDuplicate?: boolean;
   listElement?: (item: MentionInfo) => React.JSX.Element;
   onWriteMention?: (text: string) => void;
   onCompleteMention?: ({
@@ -81,7 +82,13 @@ class Mention implements WpEditorPlugin {
             }}
             targetMentionId={targetMentionId}
             contentEditableEl={plugin.contentEditableEl}
-            list={config.list}
+            list={
+              config.detectDuplicate
+                ? config.list.filter((item) =>
+                    this.currentMentionList.every((mention) => mention.name !== item.name)
+                  )
+                : config.list
+            }
             listElement={config.listElement}
             selectMentionItem={(index) => {
               plugin.selectMentionItem(index);
