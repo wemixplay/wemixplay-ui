@@ -11,6 +11,7 @@ type HashTagInfo = { id: number; name: string; postCnt?: number } & {
 
 type HashTagConfig = {
   list: HashTagInfo[];
+  detectDuplicate?: boolean;
   listElement?: (item: HashTagInfo) => React.JSX.Element;
   onWriteHash?: (text: string) => void;
   onCompleteHash?: ({
@@ -79,9 +80,7 @@ class HashTag implements WpEditorPlugin {
             }}
             contentEditableEl={plugin.contentEditableEl}
             targetHashId={targetHashId}
-            list={config.list.filter((item) =>
-              this.currentHashList.every((hash) => hash.name !== item.name)
-            )}
+            list={config.list}
             listElement={config.listElement}
             selectHashItem={(index) => {
               plugin.selectHashItem(index);
@@ -188,7 +187,15 @@ class HashTag implements WpEditorPlugin {
 
       return;
     } else if (hash) {
-      if (this.currentHashList.every((hashTag) => hashTag.name !== hash.name)) {
+      if (
+        this.config.detectDuplicate &&
+        this.currentHashList.some((hashTag) => hashTag.name === hash.name)
+      ) {
+        target.innerHTML = target.innerHTML.replace(
+          hashRegex,
+          `<span id="${targetHashId}" class="duplicate-hash"$1$2>#${hash.name}</span>&nbsp;`
+        );
+      } else {
         target.innerHTML = target.innerHTML.replace(
           hashRegex,
           `<span id="${targetHashId}" class="hash complete-hash"$1$2>#${hash.name}</span>&nbsp;`
@@ -199,16 +206,19 @@ class HashTag implements WpEditorPlugin {
         newHashTag.dataset.id = String(hash.id);
         newHashTag.dataset.name = hash.name;
         newHashTag.textContent = `#${hash.name}`;
-      } else {
-        target.innerHTML = target.innerHTML.replace(
-          hashRegex,
-          `<span id="${targetHashId}" class="duplicate-hash"$1$2>#${hash.name}</span>&nbsp;`
-        );
       }
     } else if (!keepTag) {
       const hashText = selection.focusNode.textContent.trim();
 
-      if (this.currentHashList.every((hash) => hash.name !== hashText.replace('#', ''))) {
+      if (
+        this.config.detectDuplicate &&
+        this.currentHashList.some((hashTag) => hashTag.name === hash.name)
+      ) {
+        target.innerHTML = target.innerHTML.replace(
+          hashRegex,
+          `<span id="${targetHashId}" class="duplicate-hash"$1$2>${hashText}</span>&nbsp;`
+        );
+      } else {
         target.innerHTML = target.innerHTML.replace(
           hashRegex,
           `<span id="${targetHashId}" class="hash"$1$2>${hashText}</span>&nbsp;`
@@ -227,11 +237,6 @@ class HashTag implements WpEditorPlugin {
               name: newHashTag.dataset.name
             }
           });
-      } else {
-        target.innerHTML = target.innerHTML.replace(
-          hashRegex,
-          `<span id="${targetHashId}" class="duplicate-hash"$1$2>${hashText}</span>&nbsp;`
-        );
       }
     }
 
