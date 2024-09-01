@@ -187,6 +187,32 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       return { selection, range };
     }, []);
 
+    const removeFontTagAtCursor = () => {
+      const selection = window.getSelection();
+      if (selection.rangeCount > 0) {
+        const range = selection.getRangeAt(0);
+        const parent = range.startContainer.parentNode;
+
+        // 부모가 font 태그인지 확인
+        if ('tagName' in parent && (parent.tagName as string).toLowerCase() === 'font') {
+          // font 태그의 내용을 가져옴
+          const fontContent = parent.textContent;
+
+          // font 태그를 제거하고 그 내용을 삽입
+          const fragment = document.createDocumentFragment();
+          const textNode = document.createTextNode(fontContent);
+          fragment.appendChild(textNode);
+          parent.parentNode.replaceChild(fragment, parent);
+
+          // 커서를 새로 생성된 텍스트 노드의 끝으로 이동
+          range.setStart(textNode, fontContent.length);
+          range.setEnd(textNode, fontContent.length);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+      }
+    };
+
     const insertLineBreak = useCallback(() => {
       const { selection } = getSelection();
 
@@ -296,6 +322,10 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         const { selection, range } = getSelection();
         const prevData = contentEditableEl.current.innerHTML;
 
+        if ((e.ctrlKey && e.code === 'KeyB') || (e.metaKey && e.code === 'KeyB')) {
+          e.preventDefault();
+        }
+
         if (e.code === 'KeyZ' && (e.metaKey || e.ctrlKey) && e.shiftKey) {
           handleUndoRedo({ ...e, inputType: 'historyRedo' });
 
@@ -383,33 +413,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
               top: contentEditableEl.current.scrollTop + scrollOffset * 2
             }); // 아래로 스크롤 이동
           }
-          // e.preventDefault();
-
-          // const { focusNode, focusOffset } = selection;
-          // const br = document.createElement('br');
-          // const range = selection.getRangeAt(0);
-          // range.deleteContents(); // 선택된 내용을 삭제
-          // const frag = document.createDocumentFragment();
-          // const subBr = document.createElement('br');
-          // if (
-          //   focusNode.nodeType === Node.TEXT_NODE &&
-          //   focusNode.textContent.length === focusOffset
-          // ) {
-          //   frag.appendChild(subBr);
-          // }
-          // frag.appendChild(br);
-          // range.insertNode(frag);
-          // range.setStartAfter(br);
-          // range.setEndAfter(br);
-          // selection.removeAllRanges();
-          // selection.addRange(range);
-          // range.collapse(false);
-          // const brRect = br.getBoundingClientRect();
-          // const editableRect = contentEditableEl.current.getBoundingClientRect();
-          // if (brRect.bottom >= editableRect.bottom) {
-          //   contentEditableEl.current.scrollTop +=
-          //     brRect.bottom - editableRect.bottom + brRect.height;
-          // }
         }
 
         textareaProps.onKeyDown && textareaProps.onKeyDown(e);
@@ -421,23 +424,15 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       (e: ChangeEvent<HTMLDivElement>) => {
         const { selection, range } = getSelection();
 
-        for (const plugin of plugins) {
-          plugin.handleChange && plugin.handleChange({ selection, range, event: e });
-        }
-
-        if (!e.target.textContent) {
+        if (!e.target.innerHTML) {
           // 전체 HTML을 제거하여 초기화
           contentEditableEl.current.innerHTML = '';
+        }
 
-          // 스타일을 명시적으로 제거
-          const range = document.createRange();
-          range.selectNodeContents(contentEditableEl.current);
-          const selection = window.getSelection();
-          selection.removeAllRanges();
-          selection.addRange(range);
+        removeFontTagAtCursor();
 
-          // execCommand를 사용해서 기본 포맷을 제거 (안전장치)
-          document.execCommand('removeFormat', false, null);
+        for (const plugin of plugins) {
+          plugin.handleChange && plugin.handleChange({ selection, range, event: e });
         }
 
         handleChange &&
