@@ -33,6 +33,10 @@
             width: 22px;
             height: 22px;
 
+            path {
+              fill: var(--semantic-label-normal);
+            }
+
             @include breakpoint-768 {
               width: 32px;
               height: 32px;
@@ -112,12 +116,12 @@
     button {
       display: flex;
       align-items: center;
+      padding: $sp-2 $sp-8;
       color: var(--semantic-label-normal);
       font-feature-settings: "ss10" on;
+      text-align: center;
 
       @include label-01-normal-m;
-
-      text-align: center;
 
       .count {
         padding-left: $sp-4;

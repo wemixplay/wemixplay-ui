@@ -13,7 +13,9 @@
   transition: background-color ease 0.25s;
 
   @include word-break;
-  @include body-01-normal-m;
+
+  // @include body-01-normal-m;
+  @include body-02-normal-b;
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {

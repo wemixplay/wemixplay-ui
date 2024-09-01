@@ -473,9 +473,9 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                 >
                   <span className={cx('selected-channel')}>
                     {!!channelImg && (
-                      <Person src={channelImg} size={'xsmall'} className={cx('avatar')} />
+                      <Person src={channelImg} size={'custom'} className={cx('avatar')} />
                     )}
-                    {channelName || '-'}
+                    {channelName || '내 채널에 포스트'}
                     {selectChannelPopoverElement || onSelectChannelClick ? (
                       <SvgIcoChevronDown />
                     ) : (

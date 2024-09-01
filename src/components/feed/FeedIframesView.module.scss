@@ -26,6 +26,12 @@
       z-index: 1;
       top: 0;
       right: 0;
+
+      svg {
+        rect {
+          fill: var(--semantic-label-neutral);
+        }
+      }
     }
   }
 

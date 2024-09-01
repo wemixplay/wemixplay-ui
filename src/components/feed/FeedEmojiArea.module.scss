@@ -5,8 +5,8 @@
   gap: 0 4px;
 
   .emoji-img {
-    width: 22px;
-    height: 22px;
+    width: 22px !important;
+    height: 22px !important;
     background-color: transparent;
 
     @include breakpoint-768 {
@@ -20,6 +20,7 @@
     align-items: center;
     justify-content: center;
     padding: $sp-2 $sp-6;
+    background: transparent;
 
     &:hover {
       @include hover {
@@ -39,18 +40,23 @@
     .count {
       color: var(--semantic-label-normal);
       font-feature-settings: "ss10" on;
-      font-size: 13px;
-      font-style: normal;
-      font-weight: 500;
-      line-height: 100%;
+
+      @include add-body-text-16-m;
     }
   }
 
   .btn-add-emoji {
     border-radius: 100px;
+    background: transparent;
     transition: 0.25s;
 
     svg {
+      path {
+        &:not([class*="exclude"]) {
+          fill: var(--semantic-label-normal);
+        }
+      }
+
       @include breakpoint-768 {
         width: 48px;
         height: 36px;

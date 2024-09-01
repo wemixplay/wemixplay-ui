@@ -41,6 +41,13 @@
       }
     }
 
+    svg {
+      path,
+      rect {
+        fill: var(--semantic-label-normal);
+      }
+    }
+
     &.btn-share {
       svg {
         @include breakpoint-768 {

@@ -1,15 +1,23 @@
 .feed-detail-editor {
   height: 100%;
-  padding: $sp-16 $sp-14 $sp-10;
+
+  //  padding: 0 $sp-20;
 
   @include breakpoint-768 {
     height: auto;
-    padding: $sp-24 $sp-20 $sp-16;
+
+    // padding: $sp-24 $sp-20 $sp-16;
   }
 
   &-header {
     display: flex;
     align-items: center;
+    padding: 0 $sp-20;
+    gap: 0 12px;
+
+    @include breakpoint-768 {
+      padding: $sp-20;
+    }
 
     // padding: 0 $sp-20;
 
@@ -22,7 +30,8 @@
 
     .profile-info {
       .user-name {
-        @include body-02-normal-sb;
+        // @include body-02-normal-sb;
+        @include headline-01-b;
 
         color: var(--semantic-label-normal);
       }
@@ -44,18 +53,28 @@
     }
 
     .avatar {
-      width: 36px;
-      height: 36px;
+      width: 44px;
+      height: 44px;
       flex-shrink: 0;
     }
 
     .selected-channel {
       display: flex;
       align-items: center;
-
-      @include label-02-normal-m;
-
+      padding: $sp-4 $sp-8;
+      border-radius: $rd-8;
+      background: var(--semantic-background-normal-alternative);
       color: var(--semantic-label-normal);
+
+      @include label-01-normal-m;
+
+      svg {
+        margin-left: $sp-8;
+
+        path {
+          fill: var(--semantic-label-normal);
+        }
+      }
 
       .avatar {
         width: 18px;
@@ -70,34 +89,46 @@
   &-body {
     overflow: auto;
     max-height: calc(100% - 150px);
+    padding: 0 $sp-20;
 
     // padding-bottom: $sp-24;
-    margin-top: $sp-20;
+    margin-top: $sp-12;
 
     @include scroll-interaction;
 
     @include breakpoint-768 {
       max-height: 520px;
+      margin-top: 0;
     }
   }
 
   .editor.post-content {
     min-height: 80px;
-    padding: $sp-12 $sp-20 $sp-20  $sp-20;
+    padding: 0;
     border: none;
-    border-radius: 12px;
     margin: 0;
-    background: var(--Background-Elevated-Alternative, #f7f7f8);
 
-    @include add-body-text-14-m;
+    @include body-01-reading-02-r;
 
     @include breakpoint-768 {
-      @include add-body-text-18-m;
+      @include add-body-text-16-m;
+
+      padding: $sp-12;
+      border: 1px solid transparent;
+      border-radius: $sp-12;
+      background: var(--semantic-background-normal-alternative);
+      transition: 0.25s;
+
+      &:focus {
+        border: 1px solid var(--semantic-label-normal);
+        border-radius: $rd-12;
+      }
     }
   }
 
   .control-box {
     display: flex;
+    padding: $sp-16 $sp-20;
     border-top: 1px solid var(--semantic-line-solid-normal);
     margin-top: auto;
 
@@ -110,6 +141,10 @@
         align-items: center;
         justify-content: center;
         cursor: pointer;
+
+        svg path {
+          fill: var(--semantic-label-normal);
+        }
 
         &::before {
           position: absolute;
