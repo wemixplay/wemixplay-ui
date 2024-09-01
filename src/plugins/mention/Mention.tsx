@@ -81,7 +81,9 @@ class Mention implements WpEditorPlugin {
             }}
             targetMentionId={targetMentionId}
             contentEditableEl={plugin.contentEditableEl}
-            list={config.list}
+            list={config.list.filter((item) =>
+              this.currentMentionList.every((mention) => mention.name !== item.name)
+            )}
             listElement={config.listElement}
             selectMentionItem={(index) => {
               plugin.selectMentionItem(index);

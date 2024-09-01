@@ -79,7 +79,9 @@ class HashTag implements WpEditorPlugin {
             }}
             contentEditableEl={plugin.contentEditableEl}
             targetHashId={targetHashId}
-            list={config.list}
+            list={config.list.filter((item) =>
+              this.currentHashList.every((hash) => hash.name !== item.name)
+            )}
             listElement={config.listElement}
             selectHashItem={(index) => {
               plugin.selectHashItem(index);
