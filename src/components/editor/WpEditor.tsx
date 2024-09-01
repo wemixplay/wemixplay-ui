@@ -426,8 +426,18 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         }
 
         if (!e.target.textContent) {
+          // 전체 HTML을 제거하여 초기화
           contentEditableEl.current.innerHTML = '';
-          contentEditableEl.current.setAttribute('style', '');
+
+          // 스타일을 명시적으로 제거
+          const range = document.createRange();
+          range.selectNodeContents(contentEditableEl.current);
+          const selection = window.getSelection();
+          selection.removeAllRanges();
+          selection.addRange(range);
+
+          // execCommand를 사용해서 기본 포맷을 제거 (안전장치)
+          document.execCommand('removeFormat', false, null);
         }
 
         handleChange &&
