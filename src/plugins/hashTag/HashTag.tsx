@@ -390,6 +390,7 @@ class HashTag implements WpEditorPlugin {
       !prevCurrentInputChar?.trim() &&
       focusNode?.nodeType === Node.TEXT_NODE &&
       !focusInHashTag &&
+      focusNode?.textContent.trim() === currentInputChar &&
       currentInputChar === '#';
 
     if (this.hashId && focusInHashTag) {
@@ -430,6 +431,27 @@ class HashTag implements WpEditorPlugin {
         focusNode: target.querySelector(`#${this.hashId}`),
         focusOffset: 1
       });
+    } else if (focusInHashTag && focusOffset === 1 && currentInputChar === ' ') {
+      this.hashId = '';
+
+      const selection = window.getSelection();
+      const range = selection.getRangeAt(0);
+      const hashTagNode = range.startContainer.parentNode;
+
+      // 공백이 있는지 확인
+
+      // 태그 내의 공백 제거
+      hashTagNode.textContent = hashTagNode.textContent.trimStart();
+
+      // 태그 이전에 공백 노드를 생성하여 삽입
+      const spaceNode = document.createTextNode(' ');
+      hashTagNode.parentNode.insertBefore(spaceNode, hashTagNode);
+
+      // 커서를 새로 삽입된 공백 노드 앞으로 위치
+      range.setStartBefore(spaceNode);
+      range.setEndBefore(spaceNode);
+      selection.removeAllRanges();
+      selection.addRange(range);
     } else if (focusInHashTag && focusNode.textContent.split(' ').filter((v) => !!v).length > 1) {
       this.hashId = '';
 

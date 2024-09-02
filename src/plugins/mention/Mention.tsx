@@ -395,6 +395,7 @@ class Mention implements WpEditorPlugin {
     const isStartMention =
       !prevCurrentInputChar?.trim() &&
       focusNode?.nodeType === Node.TEXT_NODE &&
+      focusNode?.textContent.trim() === currentInputChar &&
       !focusInMentionTag &&
       currentInputChar === '@';
 
@@ -440,6 +441,27 @@ class Mention implements WpEditorPlugin {
         focusNode: target.querySelector(`#${this.mentionId}`),
         focusOffset: 1
       });
+    } else if (focusInMentionTag && focusOffset === 1 && currentInputChar === ' ') {
+      this.mentionId = '';
+
+      const selection = window.getSelection();
+      const range = selection.getRangeAt(0);
+      const mentionNode = range.startContainer.parentNode;
+
+      // 공백이 있는지 확인
+
+      // 태그 내의 공백 제거
+      mentionNode.textContent = mentionNode.textContent.trimStart();
+
+      // 태그 이전에 공백 노드를 생성하여 삽입
+      const spaceNode = document.createTextNode(' ');
+      mentionNode.parentNode.insertBefore(spaceNode, mentionNode);
+
+      // 커서를 새로 삽입된 공백 노드 앞으로 위치
+      range.setStartBefore(spaceNode);
+      range.setEndBefore(spaceNode);
+      selection.removeAllRanges();
+      selection.addRange(range);
     } else if (
       focusInMentionTag &&
       focusNode.textContent.split(' ').filter((v) => !!v).length > 1
