@@ -4,28 +4,19 @@
   }
 
   .text {
+    margin: 0;
+    font-family: inherit;
+    white-space: pre-wrap;
     word-break: break-word;
 
     @include add-body-text-14-m;
 
-    @include breakpoint-768 {
-      @include add-body-text-18-m;
+    * {
+      font-family: inherit !important;
     }
 
-    pre {
-      margin: 0;
-      font-family: inherit;
-      white-space: pre-wrap;
-
-      @include add-body-text-14-m;
-
-      * {
-        font-family: inherit !important;
-      }
-
-      @include breakpoint-768 {
-        @include add-body-text-18-m;
-      }
+    @include breakpoint-768 {
+      @include add-body-text-18-m;
     }
   }
 

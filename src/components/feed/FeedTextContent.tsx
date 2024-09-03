@@ -32,9 +32,7 @@ const FeedTextContent = ({
   const { isDesktop, isMobile, isTablet } = useCheckDevice();
 
   const htmlContent = useMemo(() => {
-    return (
-      <pre dangerouslySetInnerHTML={{ __html: convertMarkdownToHtmlStr(content ?? '') }}></pre>
-    );
+    return convertMarkdownToHtmlStr(content ?? '');
   }, [content]);
 
   const handleClick = useCallback(
@@ -74,7 +72,10 @@ const FeedTextContent = ({
           onShowMoreLessClick={enableShowMore ? undefined : () => {}}
         />
       ) : (
-        <div className={cx('text', 'full-text')}>{htmlContent}</div>
+        <div
+          className={cx('text', 'full-text')}
+          dangerouslySetInnerHTML={{ __html: htmlContent }}
+        ></div>
       )}
     </WpEditorContents>
   );
