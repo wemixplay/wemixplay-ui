@@ -355,6 +355,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         });
 
         if (externalUrl.length > 0) {
+          console.log('dddd', externalUrl[0]);
           handleExternalUrlChange && handleExternalUrlChange(externalUrl[0]);
         }
 
@@ -385,7 +386,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           wpEditorRef.current.textContent.includes(url)
         );
 
-        if (metaData?.url && !value.includes(metaData?.url)) {
+        if (metaData?.url && value && !value.includes(metaData?.url)) {
           handleExternalUrlChange(undefined);
         }
 
@@ -394,7 +395,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         setTextData(convertValue);
         handleTextChange && handleTextChange(convertValue, name);
       },
-      [name, memorizationData, metaData?.url, handleTextChange, handleExternalUrlChange]
+      [name, metaData?.url, handleTextChange, handleExternalUrlChange]
     );
 
     useEffect(() => {
@@ -505,6 +506,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               },
               autoUrlMatch: {
                 onMatchUrl: (urls) => {
+                  console.log('urls >>', urls);
                   return onMatchUrl({ textUrls: urls, mediaUrls: [] });
                 }
               },
