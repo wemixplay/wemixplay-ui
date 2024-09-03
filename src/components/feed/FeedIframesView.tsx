@@ -210,6 +210,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
                     videoId={getYoutubeVideoId(iframe.src)}
                     opts={
                       {
+                        host: 'https://www.youtube-nocookie.com',
                         playerVars: {
                           autoplay: 0,
                           rel: 0,
@@ -217,7 +218,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
                           modestbranding: 1,
                           loop: 1,
                           enablejsapi: 1,
-                          origin: 'https://www.youtube.com'
+                          origin: 'http://www.youtube-nocookie.com'
                         }
                       } as YouTubeProps['opts']
                     }
