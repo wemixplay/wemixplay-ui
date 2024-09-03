@@ -146,6 +146,7 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
               categoryName={categoryName}
               certificated={certificated}
               createdAt={createdAt}
+              updatedAt={updatedAt}
               locale={locale}
               onProfileClick={handleProfileClick}
             />
