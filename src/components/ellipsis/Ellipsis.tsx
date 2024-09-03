@@ -174,7 +174,7 @@ const Ellipsis = ({
         closeHeight
       });
 
-      setTriggerVisible(closeHeight < openHeight);
+      setTriggerVisible(closeHeight + 10 < openHeight);
       setShortened(defaultShortened);
 
       isMeasuringRef.current = false;
