@@ -126,7 +126,7 @@
       }
 
       &.filled {
-        border: 1px solid var(--semantic-label-normal);
+        border: 1px solid var(--semantic-label-normal) !important;
         background: transparent;
       }
     }

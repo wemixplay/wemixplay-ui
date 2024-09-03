@@ -258,6 +258,6 @@
   --semantic-color-hover: #{rgba(112, 115, 124, 0.08)};
 
   // 모바일 선택한 Filter Chip 스크롤 오른쪽 그라데이션 효과
-  --semantic-scroll: #{rgba($color-global-common-100, $color-global-opacity-5)};
-  --semantic-filter-scroll-gradient: #{rgba($color-global-common-100, $color-global-opacity-0)};
+  --semantic-scroll: #{rgba($color-global-common-0, $color-global-opacity-5)};
+  --semantic-filter-scroll-gradient: #{rgba($color-global-common-0, $color-global-opacity-0)};
 }
