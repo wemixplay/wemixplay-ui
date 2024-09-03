@@ -7,6 +7,16 @@
 
     &-ico {
       margin-right: $sp-4;
+
+      svg {
+        width: 22px;
+        height: 22px;
+
+        @include breakpoint-768 {
+          width: 32px;
+          height: 32px;
+        }
+      }
     }
   }
 
@@ -31,7 +41,6 @@
         display: block;
       }
     }
-
 
     .count {
       line-height: 1;
