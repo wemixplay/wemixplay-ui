@@ -83,10 +83,12 @@ $sp-28: 1.75rem; // 28px
 $sp-30: 1.875rem; // 30px
 $sp-32: 2rem; // 32px
 $sp-34: 2.125rem; // 34px
+$sp-36: 2.25rem; // 36px
 $sp-38: 2.375rem;   // 38px
 $sp-40: 2.5rem;   // 40px
 $sp-44: 2.75rem; // 44px
 $sp-48: 3rem; // 48px
+$sp-52: 3.25rem; // 52px
 $sp-56: 3.5rem; // 56px
 $sp-60: 3.75rem;   // 60px
 $sp-72: 4.5rem; // 72px
@@ -105,6 +107,7 @@ $rd-16: 1rem; // 16px
 $rd-20: 1.25rem;   // 20px
 $rd-24: 1.5rem; // 24px
 $rd-40: 2.5rem; // 40px
+$rd-70: 4.375rem; // 70px
 $rd-100: 6.25rem; // 100px
 $rd-circle: 50%; // circle
 
@@ -112,6 +115,7 @@ $rd-circle: 50%; // circle
 $max-width: 1360px;
 $max-width-desktop: 1080px;
 $max-width-tablet: 1040px;
+$max-width-600: 600px;
 $max-width-720: 720px;
 $max-width-900: 900px;
 
@@ -1196,7 +1200,7 @@ $icon-chennel-certified: #3d6aff;
 
 @mixin add-body-text-14 {
   font-feature-settings: "ss10" on;
-  line-height: 100%;
+  line-height: 132%;
 
   @include font-size(14);
 }

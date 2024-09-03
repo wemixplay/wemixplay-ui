@@ -11,13 +11,21 @@
 
     .editor {
       width: 100%;
-      height: 200px;
-      padding: $sp-24;
-      border: 1px solid var(--semantic-line-solid-normal);
+      height: 140px;
+      padding: $sp-12;
+      border: 1px solid var(--semantic-line-normal-alternative);
       border-radius: $rd-12;
       margin: 0;
+      background: var(--semantic-normal-alternative);
+      color: var(--semantic-label-normal);
       font-feature-settings: "ss10" on;
       overflow-y: auto;
+
+      @include add-body-text-14-m;
+
+      &.filled {
+        border-color: var(--semantic-label-alternative) !important;
+      }
 
       &:empty {
         &::before {
@@ -33,15 +41,16 @@
     align-items: center;
     justify-content: flex-end;
     margin-top: $sp-12;
-    color: var(--semantic-label-alternative);
+    color: var(--semantic-label-assistive);
     font-feature-settings: "ss10" on;
     font-style: normal;
     text-align: center;
 
-    @include label-01-normal-r;
+    @include add-body-text-13-m;
 
     .counter-current {
       padding-right: $sp-4;
+      color: var(--semantic-label-normal);
       font-style: normal;
     }
 

@@ -113,6 +113,7 @@
     @include breakpoint-768 {
       @include add-body-text-16-m;
 
+      min-height: 120px;
       padding: $sp-12;
       border: 1px solid transparent;
       border-radius: $sp-12;
@@ -121,7 +122,12 @@
 
       &:focus {
         border: 1px solid var(--semantic-label-normal);
-        border-radius: $rd-12;
+        background: transparent;
+      }
+
+      &.filled {
+        border: 1px solid var(--semantic-label-normal) !important;
+        background: transparent;
       }
     }
   }

@@ -3,7 +3,7 @@
   padding: $sp-16 $sp-14 $sp-10;
   border-radius: $sp-12;
   border-bottom: 0.7px solid rgb(0 0 0 / 10%);
-  background: #fff;
+  background: var(--semantic-background-elevated-normal);
   box-shadow: 0 5.6px 19.601px 0 rgb(0 0 0 / 6%);
   cursor: default;
 
@@ -52,15 +52,25 @@
     padding: $sp-6 $sp-6 $sp-14;
     margin-top: $sp-6;
 
+    @include breakpoint-768 {
+      padding-top: $sp-8;
+      padding-right: 0;
+      padding-left: 0;
+      margin-top: $sp-8;
+    }
+
     .text-content {
       margin: 0;
 
       @include add-body-text-14-m;
 
+      font-family: inherit;
+
       @include breakpoint-768 {
         @include add-body-text-18-m;
 
-        padding: 0 $sp-20 0 52px;
+        padding-bottom: $sp-20;
+        padding-left: 52px;
       }
     }
 

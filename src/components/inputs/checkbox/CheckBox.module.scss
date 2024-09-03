@@ -6,6 +6,7 @@
   position: relative;
   display: inline-flex;
   align-items: center;
+  color: var(--semantic-label-normal);
   cursor: pointer;
 
   // font-size, font-weight, line-height, font-feature-settings, font-family, color는 .text로 전달되어 지기 때문에
