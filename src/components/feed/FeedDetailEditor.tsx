@@ -305,7 +305,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         textUrls: string[];
         mediaUrls: { tag: 'img' | 'video' | 'iframe'; src: string }[];
       }) => {
-        const imagePattern = /\.(jpg|jpeg|png|gif|webp)$/i;
+        const imagePattern = /\.(jpg|jpeg|png|gif|webp|avif)$/i;
 
         const testUrlList = [...textUrls, ...mediaUrls.map((item) => item.src)];
 
@@ -355,7 +355,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         });
 
         if (externalUrl.length > 0) {
-          console.log('dddd', externalUrl[0]);
           handleExternalUrlChange && handleExternalUrlChange(externalUrl[0]);
         }
 
@@ -386,16 +385,12 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           wpEditorRef.current.textContent.includes(url)
         );
 
-        if (metaData?.url && value && !value.includes(metaData?.url)) {
-          handleExternalUrlChange(undefined);
-        }
-
         const convertValue = convertHtmlToMarkdownStr(value);
 
         setTextData(convertValue);
         handleTextChange && handleTextChange(convertValue, name);
       },
-      [name, metaData?.url, handleTextChange, handleExternalUrlChange]
+      [name, handleTextChange]
     );
 
     useEffect(() => {
@@ -506,8 +501,15 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               },
               autoUrlMatch: {
                 onMatchUrl: (urls) => {
-                  console.log('urls >>', urls);
                   return onMatchUrl({ textUrls: urls, mediaUrls: [] });
+                },
+                onChangeMatchUrls: (urls) => {
+                  const imagePattern = /\.(jpg|jpeg|png|gif|webp|avif)$/i;
+                  const normalUrls = urls.filter((url) => !imagePattern.test(url));
+
+                  if (metaData?.url !== normalUrls[0]) {
+                    handleExternalUrlChange(normalUrls[0]);
+                  }
                 }
               },
               countTextLength: {

@@ -3,10 +3,12 @@ import { WpEditorPlugin } from '@/components/editor/WpEditor';
 
 type AutoUrlMatchConfig = {
   onMatchUrl?: (urls: string[]) => string[];
+  onChangeMatchUrls?: (urls: string[]) => void;
 };
 
 class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
   public commandKey = 'autoUrlMatch';
+  private urls: string[] = [];
   public config: AutoUrlMatchConfig = {
     onMatchUrl: (urls: string[]) => {
       return urls;
@@ -125,6 +127,10 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
           selection.addRange(range);
         }
 
+        if (!beforeSpaceText) {
+          focusNode.parentElement.remove();
+        }
+
         this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
       } else if (
         matchUrlFormatText &&
@@ -184,7 +190,45 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     const focusNode = selection.focusNode;
 
     if (focusNode.parentElement?.tagName === 'A') {
-      (focusNode.parentElement as HTMLAnchorElement).href = focusNode.textContent;
+      if (!this.getUrlMatchList(focusNode.textContent).length) {
+        // 현재 <a> 태그의 위치와 텍스트를 기억합니다.
+        const anchorElement = focusNode.parentElement as HTMLAnchorElement;
+        const textContent = anchorElement.textContent || '';
+
+        // <a> 태그를 제거하고 텍스트 노드로 치환합니다.
+        const textNode = document.createTextNode(textContent);
+        const parentElement = anchorElement.parentElement;
+
+        if (parentElement) {
+          // a 태그를 텍스트 노드로 교체
+          parentElement.replaceChild(textNode, anchorElement);
+
+          // 새로운 텍스트 노드에서 커서를 유지하기 위해 Range 객체를 사용
+          const range = document.createRange();
+          const selection = window.getSelection();
+
+          // 커서를 텍스트 노드의 끝으로 위치시킵니다.
+          range.setStart(textNode, textNode.length);
+          range.collapse(true);
+
+          // 현재 선택 범위를 새로 설정한 위치로 이동합니다.
+          selection?.removeAllRanges();
+          selection?.addRange(range);
+        }
+      } else {
+        (focusNode.parentElement as HTMLAnchorElement).href = focusNode.textContent;
+      }
+    }
+
+    const matchAtagsUrls = (event.target.innerHTML || '').match(/<a[^>]*>(.*?)<\/a>/g) ?? [];
+    const matchUrls = matchAtagsUrls.map((match) => match.match(/<a[^>]*>(.*?)<\/a>/)[1]);
+
+    if (
+      matchUrls.length !== this.urls.length ||
+      !matchUrls.every((url) => this.urls.includes(url))
+    ) {
+      this.urls = [...matchUrls];
+      this.config.onChangeMatchUrls && this.config.onChangeMatchUrls(matchUrls);
     }
   }
 }
