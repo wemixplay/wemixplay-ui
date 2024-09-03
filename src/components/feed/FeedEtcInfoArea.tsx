@@ -70,7 +70,7 @@ const FeedEtcInfoArea = ({
         onClick={handleLikeBtnClick}
       >
         <span className={cx('icon')}>
-          <SvgIcoLike width={32} height={32} />
+          <SvgIcoLike />
         </span>
         <span className={cx('icon-pressed')}>
           <SvgIcoLikePressed />

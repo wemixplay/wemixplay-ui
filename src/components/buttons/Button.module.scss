@@ -7,14 +7,12 @@
   padding: 0 28px;
   border-radius: $rd-10;
   background-color: var(--semantic-label-normal);
-  color: var(--semantic-static-white);
+  color: var(--semantic-label-inverse-normal);
   cursor: pointer;
   text-align: center;
   transition: background-color ease 0.25s;
 
   @include word-break;
-
-  // @include body-01-normal-m;
   @include body-02-normal-b;
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
@@ -29,6 +27,10 @@
     content: "";
     opacity: 0;
     transition: opacity 0.2s;
+  }
+
+  &.loading {
+    pointer-events: none;
   }
 
   [class*="spinner"] {
@@ -76,21 +78,21 @@
 
   /* 버튼 사이즈별 스타일 정의 */
   &.large {
-    height: 48px;
+    height: 44px;
   }
 
   &.medium {
     height: 40px;
     padding: 0 20px;
 
-    @include label-02-normal-b;
+    @include body-02-normal-b;
   }
 
   &.small {
     height: 32px;
     padding: 0 14px;
 
-    @include label-02-normal-b;
+    @include caption-01-b;
   }
 
   &.tiny {
@@ -128,7 +130,7 @@
 
   // uiType Solid
   &.solid {
-    background: var(--semantic-static-black);
+    background: var(--semantic-label-normal);
 
     svg rect {
       fill: white;
@@ -144,7 +146,7 @@
 .btn-line-cap {
   border: 1px solid var(--semantic-label-normal);
   border-radius: 100px;
-  background-color: var(--semantic-static-white);
+  background-color: var(--semantic-background-normal-normal);
   color: var(--semantic-label-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
@@ -156,7 +158,7 @@
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
     border-color: var(--semantic-line-normal-normal);
-    background-color: var(--semantic-static-white);
+    background-color: transparent;
     color: var(--semantic-label-assistive);
     cursor: not-allowed;
   }
@@ -191,19 +193,18 @@
 .btn-line-square {
   border: 1px solid var(--semantic-label-normal);
   border-radius: $rd-10;
-  background-color: var(--semantic-static-white);
+  background-color: transparent;
   color: var(--semantic-label-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
     border-radius: $rd-10;
-    background-color: var(--semantic-label-normal);
   }
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
     border-color: var(--semantic-line-normal-normal);
-    background-color: var(--semantic-static-white);
+    background-color: transparent;
     color: var(--semantic-label-assistive);
     cursor: not-allowed;
   }
@@ -237,19 +238,17 @@
 */
 .btn-solid-cap {
   border-radius: 100px;
-  background-color: var(--semantic-label-normal);
-  color: var(--semantic-static-white);
+  color: var(--semantic-label-inverse-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
     border-radius: $rd-10;
-    background-color: var(--semantic-label-normal);
   }
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
     background-color: var(--semantic-interaction-disable) !important;
-    color: var(--semantic-label-assistive) !important;
+    color: var(--semantic-label-assistive);
     cursor: not-allowed;
   }
 
@@ -283,18 +282,18 @@
 .btn-solid-square {
   border-radius: $rd-10;
   background-color: var(--semantic-label-normal);
-  color: var(--semantic-static-white);
+  color: var(--semantic-background-normal-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
     border-radius: $rd-10;
-    background-color: var(--semantic-label-normal);
+    background-color: var(--semantic-background-normal-normal);
   }
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
     background-color: var(--semantic-interaction-disable) !important;
-    color: var(--semantic-label-assistive) !important;
+    color: var(--semantic-label-assistive);
     cursor: not-allowed;
   }
 
@@ -331,21 +330,22 @@
   padding: 0 $sp-12;
   border: 1px solid var(--semantic-line-normal-normal);
   border-radius: $rd-6;
-  background-color: var(--semantic-static-white);
-  color: var(--semantic-label-normal);
+  background-color: transparent;
+  color: var(--semantic-background-normal-normal);
 
   @include caption-01-r;
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
     border-radius: 5px;
-    background-color: var(--semantic-label-normal);
+    background-color: transparent;
   }
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
-    background-color: var(--semantic-static-white);
-    color: var(--semantic-label-disable);
+    border-color: var(--semantic-line-normal-normal);
+    background-color: transparent;
+    color: var(--semantic-label-assistive);
     cursor: not-allowed;
   }
 
@@ -419,6 +419,72 @@
       @include hover {
         &::before { width: 100%; }
       }
+    }
+  }
+}
+
+/**
+  * EventPromaryButton
+  프로모션페이지에서 사용되는 3.0버전의 버튼 스타일 (이벤트 종료후 삭제)
+*/
+.btn-event-primary {
+  border-radius: 100px;
+  background: #f06;
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 24px;
+
+  // 버튼 상태에 따른 스타일 정의
+  &:disabled {
+    background: rgb(255 255 255 / 8%);
+    color: rgb(255 255 255 / 16%);
+    cursor: not-allowed;
+  }
+
+  // 버튼 상태에 따른 스타일 정의 :disabled 아닌 경우
+  &:not(:disabled) {
+    &:hover {
+      @include hover {
+        background: #cc0052;
+      }
+    }
+
+    &:focus {
+      background: #cc0052;
+    }
+  }
+}
+
+.btn-event-secondary {
+  border: 1px solid rgb(255 255 255 / 24%);
+  border-radius: 100px;
+  background-color: transparent;
+  color: #fff;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 24px;
+
+  // 버튼 상태에 따른 스타일 정의
+  &:disabled {
+    border: 1px solid rgb(255 255 255 / 8%);
+    background: transparent;
+    color: rgb(255 255 255 / 16%);
+    cursor: not-allowed;
+  }
+
+  // 버튼 상태에 따른 스타일 정의 :disabled 아닌 경우
+  &:not(:disabled) {
+    &:hover {
+      @include hover {
+        border: 1px solid white;
+      }
+    }
+
+    &:focus {
+      border: 1px solid white;
     }
   }
 }

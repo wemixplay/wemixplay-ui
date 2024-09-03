@@ -13,8 +13,12 @@
     background-color: transparent;
     cursor: default !important;
 
+    @include add-body-text-13-sb;
+
     @include breakpoint-768 {
       min-height: 36px;
+
+      @include add-body-text-16-sb;
     }
 
     &:hover {
@@ -41,18 +45,24 @@
       }
     }
 
-    svg {
-      path,
-      rect {
-        fill: var(--semantic-label-normal);
-      }
-    }
-
     &.btn-share {
       svg {
         @include breakpoint-768 {
           width: 52px;
           height: 24px;
+        }
+      }
+    }
+
+    svg {
+      path,
+      rect {
+        &[class*="fill"] {
+          fill: var(--semantic-label-normal);
+        }
+
+        &[class*="stroke"] {
+          stroke: var(--semantic-label-normal);
         }
       }
     }
@@ -86,12 +96,10 @@
   }
 
   .count {
-    color: #222;
+    color: var(--semantic-label-normal);
     font-feature-settings: "ss10" on;
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 100%; /* 13px */
+
+    @include add-body-text-13-sb;
 
     @include breakpoint-768 {
       @include add-body-text-16-sb;
