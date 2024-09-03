@@ -15,6 +15,7 @@ type Props = {
   categoryName?: string;
   certificated?: boolean;
   createdAt?: number;
+  updatedAt?: number;
   locale?: string;
   onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
 };
@@ -29,6 +30,7 @@ const FeedWriterInfo = ({
   categoryName,
   certificated,
   createdAt,
+  updatedAt,
   locale,
   onProfileClick
 }: Props) => {
