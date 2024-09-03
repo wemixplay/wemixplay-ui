@@ -363,7 +363,10 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         handleMediaChange && handleMediaChange(newMedia, name);
         handleImageChange && handleImageChange(newImages, name);
 
-        return textUrls.map((url) => `<a href="${url}" target="_blank">${url}</a>`);
+        return textUrls.map(
+          (url) =>
+            `<a href="${url.startsWith('http') ? url : `https://${url}`}" target="_blank">${url}</a>`
+        );
       },
       [
         name,
@@ -554,7 +557,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               <input
                 ref={imgInputRef}
                 type="file"
-                accept="image/png, image/gif, image/jpeg, image/jpg, image/webp"
+                accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/avif"
                 onChange={onImageFileChange}
               />
 
