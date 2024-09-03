@@ -336,52 +336,52 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
         });
 
-        if (e.code === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
-          const range = selection.getRangeAt(0);
-          const anchorNode = range.startContainer;
-          const offset = range.startOffset;
+        // if (e.code === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
+        //   const range = selection.getRangeAt(0);
+        //   const anchorNode = range.startContainer;
+        //   const offset = range.startOffset;
 
-          // 텍스트 노드의 시작 부분에 커서가 위치한 경우
-          if (
-            anchorNode.nodeType === Node.TEXT_NODE &&
-            offset === 0 &&
-            anchorNode.parentNode.nodeName !== 'DIV'
-          ) {
-            e.preventDefault();
+        //   // 텍스트 노드의 시작 부분에 커서가 위치한 경우
+        //   if (
+        //     anchorNode.nodeType === Node.TEXT_NODE &&
+        //     offset === 0 &&
+        //     anchorNode.parentNode.nodeName !== 'DIV'
+        //   ) {
+        //     e.preventDefault();
 
-            // 부모 요소 앞에 <br> 태그 삽입
-            const br = document.createElement('br');
-            anchorNode.parentNode.parentNode.insertBefore(br, anchorNode.parentNode);
+        //     // 부모 요소 앞에 <br> 태그 삽입
+        //     const br = document.createElement('br');
+        //     anchorNode.parentNode.parentNode.insertBefore(br, anchorNode.parentNode);
 
-            // 커서를 새로운 줄로 이동
-            range.setStartBefore(anchorNode);
-            range.setEndBefore(anchorNode);
-            selection.removeAllRanges();
-            selection.addRange(range);
+        //     // 커서를 새로운 줄로 이동
+        //     range.setStartBefore(anchorNode);
+        //     range.setEndBefore(anchorNode);
+        //     selection.removeAllRanges();
+        //     selection.addRange(range);
 
-            contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
+        //     contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
 
-            return;
-          }
-          // 커서가 요소 노드의 시작 부분에 위치한 경우
-          else if (anchorNode.nodeType === Node.ELEMENT_NODE && anchorNode.nodeName !== 'DIV') {
-            e.preventDefault();
+        //     return;
+        //   }
+        //   // 커서가 요소 노드의 시작 부분에 위치한 경우
+        //   else if (anchorNode.nodeType === Node.ELEMENT_NODE && anchorNode.nodeName !== 'DIV') {
+        //     e.preventDefault();
 
-            // 해당 요소 앞에 <br> 태그 삽입
-            const br = document.createElement('br');
-            anchorNode.parentNode.insertBefore(br, anchorNode);
+        //     // 해당 요소 앞에 <br> 태그 삽입
+        //     const br = document.createElement('br');
+        //     anchorNode.parentNode.insertBefore(br, anchorNode);
 
-            // 커서를 새로운 줄로 이동
-            range.setStartBefore(anchorNode);
-            range.setEndBefore(anchorNode);
-            selection.removeAllRanges();
-            selection.addRange(range);
+        //     // 커서를 새로운 줄로 이동
+        //     range.setStartBefore(anchorNode);
+        //     range.setEndBefore(anchorNode);
+        //     selection.removeAllRanges();
+        //     selection.addRange(range);
 
-            contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
+        //     contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
 
-            return;
-          }
-        }
+        //     return;
+        //   }
+        // }
 
         if (
           (e.code === 'Enter' || e.code === 'NumpadEnter') &&
