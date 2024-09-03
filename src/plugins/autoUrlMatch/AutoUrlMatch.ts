@@ -48,17 +48,96 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
 
     const matchUrlFormatText = this.getUrlMatchList(focusNode.textContent).pop() ?? '';
 
-    if (event.code === 'Space' || event.code === 'Enter') {
-      if (
+    if (event.code === 'Space' || event.code === 'Enter' || event.code === 'NumpadEnter') {
+      if (focusNode.parentElement?.tagName === 'A') {
+        // 현재 커서 위치 가져오기
+        const range = selection.getRangeAt(0);
+        const cursorPosition = range.startOffset;
+
+        // <a> 태그 내부의 전체 텍스트
+        const linkText = focusNode.textContent;
+
+        // 공백 전후로 텍스트 분리
+        const beforeSpaceText = linkText.slice(0, cursorPosition);
+        const afterSpaceText = linkText.slice(cursorPosition);
+
+        // 기존 <a> 태그에서 텍스트 변경
+        focusNode.textContent = beforeSpaceText;
+        (focusNode.parentElement as HTMLAnchorElement).href = beforeSpaceText;
+
+        if (event.code === 'Space') {
+          event.preventDefault();
+
+          if (afterSpaceText) {
+            const isUrlLink = !!this.getUrlMatchList(afterSpaceText)[0];
+
+            if (isUrlLink) {
+              // 새로운 <a> 태그 생성 및 공백 이후의 텍스트 설정
+              const newLink = document.createElement('a');
+              newLink.href = afterSpaceText; // 기존 링크와 같은 href 사용
+              newLink.textContent = afterSpaceText.startsWith('http')
+                ? afterSpaceText
+                : `https://${afterSpaceText}`;
+
+              // 기존 <a> 태그 바로 뒤에 새로운 <a> 태그 추가
+              focusNode.parentElement.insertAdjacentElement('afterend', newLink);
+            } else {
+              focusNode.parentElement.parentNode.insertBefore(
+                document.createTextNode(afterSpaceText),
+                focusNode.parentElement.nextSibling
+              );
+            }
+          }
+
+          // 공백 노드 추가
+          const spaceNode = document.createTextNode(' ');
+          focusNode.parentElement.parentNode.insertBefore(
+            spaceNode,
+            focusNode.parentElement.nextSibling
+          );
+
+          // 커서를 새로운 <a> 태그 바로 뒤로 이동
+          range.setStartAfter(spaceNode);
+          range.setEndAfter(spaceNode);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        } else {
+          event.preventDefault();
+
+          if (afterSpaceText) {
+            focusNode.parentElement.parentNode.insertBefore(
+              document.createTextNode(afterSpaceText),
+              focusNode.parentElement.nextSibling
+            );
+          }
+
+          // 공백 노드 추가
+          const lineBreakNode = document.createElement('br');
+          focusNode.parentElement.parentNode.insertBefore(
+            lineBreakNode,
+            focusNode.parentElement.nextSibling
+          );
+
+          // 커서를 새로운 <a> 태그 바로 뒤로 이동
+          range.setStartAfter(lineBreakNode);
+          range.setEndAfter(lineBreakNode);
+          selection.removeAllRanges();
+          selection.addRange(range);
+        }
+
+        this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
+      } else if (
         matchUrlFormatText &&
         offset > 0 &&
         focusNode.nodeType === Node.TEXT_NODE &&
         maxLength >= currentValueLength + 1 &&
         this.config.onMatchUrl
       ) {
+        this.config.onMatchUrl([matchUrlFormatText]);
+
         // 임시 div를 사용하여 HTML 문자열을 파싱
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = this.config.onMatchUrl([matchUrlFormatText])[0] || '';
+        tempDiv.innerHTML = `<a href="${matchUrlFormatText}" target="_blank">${matchUrlFormatText}</a>`;
         const childNodes = Array.from(tempDiv.childNodes);
 
         if (childNodes.length > 0) {
@@ -90,6 +169,22 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
           this.contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
         }
       }
+    }
+  }
+
+  handleChange({
+    selection,
+    range,
+    event
+  }: {
+    selection: Selection;
+    range: Range;
+    event: ChangeEvent<HTMLDivElement>;
+  }) {
+    const focusNode = selection.focusNode;
+
+    if (focusNode.parentElement?.tagName === 'A') {
+      (focusNode.parentElement as HTMLAnchorElement).href = focusNode.textContent;
     }
   }
 }

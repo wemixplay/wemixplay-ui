@@ -395,7 +395,6 @@ class Mention implements WpEditorPlugin {
     const isStartMention =
       !prevCurrentInputChar?.trim() &&
       focusNode?.nodeType === Node.TEXT_NODE &&
-      focusNode?.textContent.trim() === currentInputChar &&
       !focusInMentionTag &&
       currentInputChar === '@';
 

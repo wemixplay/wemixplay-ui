@@ -381,21 +381,20 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
     const handleEditorTextChange = useCallback(
       (value: string) => {
-        const newData = {
-          ...memorizationData,
-          value
-        };
-
         excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) =>
           wpEditorRef.current.textContent.includes(url)
         );
+
+        if (metaData?.url && !value.includes(metaData?.url)) {
+          handleExternalUrlChange(undefined);
+        }
 
         const convertValue = convertHtmlToMarkdownStr(value);
 
         setTextData(convertValue);
         handleTextChange && handleTextChange(convertValue, name);
       },
-      [name, memorizationData, handleTextChange]
+      [name, memorizationData, metaData?.url, handleTextChange, handleExternalUrlChange]
     );
 
     useEffect(() => {

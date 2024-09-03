@@ -390,7 +390,6 @@ class HashTag implements WpEditorPlugin {
       !prevCurrentInputChar?.trim() &&
       focusNode?.nodeType === Node.TEXT_NODE &&
       !focusInHashTag &&
-      focusNode?.textContent.trim() === currentInputChar &&
       currentInputChar === '#';
 
     if (this.hashId && focusInHashTag) {
