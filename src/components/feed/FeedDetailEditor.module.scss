@@ -123,6 +123,11 @@
       &:focus {
         border: 1px solid var(--semantic-label-normal);
         background: transparent;
+
+        // focus > placeholder 숨김
+        &::before {
+          font-size: 0;
+        }
       }
 
       &.filled {

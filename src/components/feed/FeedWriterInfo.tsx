@@ -47,6 +47,13 @@ const FeedWriterInfo = ({
         <div className={cx('info')}>
           {!!categoryName && <span className={cx('category')}>{categoryName}</span>}
           <span className={cx('date')}>{getTimeString(createdAt, locale)}</span>
+          <div className={cx('from-info')}>
+            <Person src={profileImg} customSize={18} onClick={onProfileClick} />
+            <div className={cx('channel')}>
+              <span className={cx('channel-name')}>Night Crows Global</span>
+              <SvgIcoCertified width={12} height={12} />
+            </div>
+          </div>
         </div>
       </div>
     </div>
