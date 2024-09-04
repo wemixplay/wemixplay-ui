@@ -14,7 +14,7 @@ type Props = {
     loading?: boolean;
     src: string;
     isError?: boolean;
-    isInapposite?: boolean;
+    inappositeMsg?: string;
   }[];
   handleDeleteImg?: ({ deleteIndex }: { deleteIndex: number }) => void;
   onImageClick?: ({ src, index }: { src: string; index: number }) => void;
@@ -95,14 +95,18 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
                   <Spinner />
                 </div>
               )}
-              <div className={cx('senstive-content-layer')}>
-                <div className={cx('senstive-content')}>
-                  <SvgIcoSenstive />
-                  <p>Sensitive Content</p>
+
+              {!!image.inappositeMsg && (
+                <div className={cx('senstive-content-layer')}>
+                  <div className={cx('senstive-content')}>
+                    <SvgIcoSenstive />
+                    <p>{image.inappositeMsg}</p>
+                  </div>
                 </div>
-              </div>
+              )}
+
               <img src={image.src} alt={image.src} onError={handleOnImageError} />
-              {!!image.isInapposite && <div>부적절한 이미지</div>}
+
               {!!errorStatus[image.src] && (
                 <div className={cx('no-image')}>
                   <SvgNoimagePlaceholder />

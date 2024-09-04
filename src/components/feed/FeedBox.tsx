@@ -30,7 +30,7 @@ type Props = {
   channelName?: string;
   channelImg?: string;
   channelIsOfficial?: boolean;
-  images?: (string | { src: string; isInapposite?: boolean })[];
+  images?: (string | { src: string; inappositeMsg?: string })[];
   media?: { type?: 'youtube' | 'twitch'; src?: string }[];
   textContent?: string;
   ogMetaData?: FeedLinkPreviewProps['ogMetaData'] | null;
@@ -189,7 +189,7 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
                 images={images.map((img) =>
                   typeof img === 'string'
                     ? { src: img }
-                    : { src: img.src, isInapposite: img.isInapposite }
+                    : { src: img.src, inappositeMsg: img.inappositeMsg }
                 )}
                 onImageClick={onImageClick}
               />
