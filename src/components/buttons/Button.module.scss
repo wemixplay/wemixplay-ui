@@ -105,6 +105,7 @@
   // 컬러 타입에 따른 색상 정의
   &.secondary {
     background-color: var(--semantic-primary-normal);
+    color: var(--semantic-static-white);
   }
 }
 
