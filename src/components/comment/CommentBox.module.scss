@@ -43,9 +43,11 @@
   }
 
   &.deleted-comment {
+    padding: $sp-18 0;
     color: var(--semantic-label-alternative);
     font-feature-settings: "ss10" on;
+    text-align: center;
 
-    @include body-02-normal-r;
+    @include add-body-text-12-m;
   }
 }
