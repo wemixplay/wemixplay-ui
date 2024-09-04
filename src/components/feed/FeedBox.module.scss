@@ -1,7 +1,7 @@
 .feed-box {
   position: relative;
 
-  //TEMP
+  // TEMP
   max-width: 640px;
   padding: $sp-16 $sp-14 $sp-10;
   border-radius: $sp-12;
@@ -52,7 +52,7 @@
 
   .feed-body {
     min-height: 38px;
-    padding: $sp-6 $sp-6 $sp-14;
+    padding: $sp-6 $sp-6 0;
     margin-top: $sp-6;
 
     @include breakpoint-768 {
@@ -80,6 +80,7 @@
       overflow: hidden;
       width: 100%;
       margin-top: $sp-12;
+      margin-bottom: 0;
 
       :global {
         .carousel-swiper {
@@ -117,7 +118,7 @@
   .feed-footer {
     // padding: $sp-4 $sp-20 $sp-16 $sp-20;
     // margin-top: $sp-32;
-    margin-top: $sp-16;
+    margin-top: $sp-32;
 
     &-container {
       display: flex;
