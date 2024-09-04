@@ -47,13 +47,13 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
   }, [images]);
 
   return (
-    <div className={cx(className, 'images-upload-preview')}>
+    <div className={cx(className, 'images-upload-preview', { 'is-preview': !!handleDeleteImg })}>
       <Carousel
         className={cx('image-preview-slider')}
-        freeMode
+        freeMode={!handleDeleteImg}
         loop={false}
-        slidesPerView={'auto'}
-        spaceBetween={10}
+        slidesPerView={handleDeleteImg ? 'auto' : 1}
+        spaceBetween={handleDeleteImg ? 10 : 0}
         onSlidesLengthChange={(swiper) => {
           if (curentImagesRef.current.length < images.length) {
             setTimeout(() => {
