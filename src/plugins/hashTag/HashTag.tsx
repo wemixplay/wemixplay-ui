@@ -300,7 +300,7 @@ class HashTag implements WpEditorPlugin {
     if (focusInHashTag && collapseCheckRange.startOffset === collapseCheckRange.endOffset) {
       this.hashId = focusNode.parentElement.id;
       this.config.onWriteHash &&
-        this.config.onWriteHash(focusNode?.parentElement?.textContent?.replace('@', ''));
+        this.config.onWriteHash(focusNode?.parentElement?.textContent?.replace('#', ''));
     }
   }
 
@@ -325,7 +325,7 @@ class HashTag implements WpEditorPlugin {
 
         this.config.onWriteHash &&
           this.config.onWriteHash(
-            selection.focusNode?.parentElement?.textContent?.replace('@', '')
+            selection.focusNode?.parentElement?.textContent?.replace('#', '')
           );
       } else if (targetHashId && selection.focusNode.firstChild?.textContent === '#') {
         this.leaveHashTag({ selection, range });
@@ -395,6 +395,9 @@ class HashTag implements WpEditorPlugin {
     if (this.hashId && focusInHashTag) {
       this.config.onWriteHash &&
         this.config.onWriteHash(focusNode.parentElement.firstChild.textContent.replace('#', ''));
+
+      this.config.onCompleteHash &&
+        this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
     }
 
     if (isStartHash) {
