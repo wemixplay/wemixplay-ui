@@ -2,12 +2,37 @@
   margin: $sp-12 0 $sp-12 0;
 
   .image-preview-slider {
+    overflow: hidden;
+    align-items: center;
+
     :global {
       .swiper {
+        border-radius: $rd-12;
+        background: var(--semantic-static-black);
+
+        .swiper-wrapper {
+          display: flex;
+          align-items: center;
+        }
+
         .swiper-slide {
           position: relative;
-          width: auto !important;
+          overflow: hidden;
+          width: 100%;
           max-width: 100%;
+          height: 100%;
+          max-height: 304px;
+          border-radius: $rd-12;
+
+          > div {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          @include breakpoint-768 {
+            max-height: 560px;
+          }
 
           &:last-of-type {
             margin-right: 0 !important;
@@ -15,6 +40,49 @@
 
           * {
             user-select: none;
+          }
+        }
+      }
+
+      [class*="swiper-pagination"] {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: $sp-8;
+        gap: 0 $sp-2;
+
+        > span {
+          display: flex;
+          width: 20px;
+          height: 24px;
+          align-items: center;
+          justify-content: center;
+
+          &[class*="active"] {
+            width: 28px;
+
+            &::after {
+              width: 20px;
+              background: var(--semantic-label-normal);
+
+              @include breakpoint-768 {
+                width: 24px;
+              }
+            }
+          }
+
+          &::after {
+            width: 6px;
+            height: 6px;
+            border-radius: $rd-100;
+            background: var(--semantic-label-assistive);
+            content: "";
+            transition: 0.25s;
+
+            @include breakpoint-768 {
+              width: 8px;
+              height: 8px;
+            }
           }
         }
       }
@@ -88,10 +156,121 @@
     }
 
     img {
-      width: 100%;
-      height: 177px;
-      object-fit: cover;
+      // width: 100%;
+      // height: 100%;
+      max-width: 100%;
+      max-height: 304px;
+      object-fit: contain;
       object-position: center;
+
+      @include breakpoint-768 {
+        max-height: 560px;
+      }
+    }
+  }
+
+  // 에디터내부 preview
+  &.is-preview {
+    .image-preview-slider {
+      max-height: 177px;
+
+      :global {
+        .swiper {
+          background: transparent;
+
+          .swiper-slide {
+            position: relative;
+            overflow: hidden;
+            width: auto !important;
+            height: 177px;
+            max-height: unset;
+
+            &:last-of-type {
+              margin-right: 0 !important;
+            }
+
+            * {
+              user-select: none;
+            }
+          }
+        }
+      }
+
+      .btn-img-delete {
+        position: absolute;
+        z-index: 2;
+        top: 0;
+        right: 0;
+        background-color: transparent;
+      }
+    }
+
+    .preview-image-box {
+      position: relative;
+      overflow: hidden;
+
+      // border-radius: $rd-12;
+
+      &.has-click-event {
+        cursor: pointer;
+      }
+
+      &.error {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: rgb(0 0 0 / 40%);
+
+        img {
+          opacity: 1;
+        }
+
+        .no-image {
+          display: flex;
+        }
+      }
+
+      .no-image {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        left: 0;
+        display: none;
+        width: 100%;
+        height: 100%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        >span {
+          color: #d7d7d7;
+
+          @include caption-01-m;
+        }
+      }
+
+      .loading {
+        position: absolute;
+        z-index: 3;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: inherit;
+        background-color: rgb(0 0 0 / 40%);
+        inset: 0;
+
+        >svg {
+          stroke: white;
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        max-height: 177px;
+        object-fit: contain;
+        object-position: center;
+      }
     }
   }
 }
