@@ -50,7 +50,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
     <div className={cx(className, 'images-upload-preview', { 'is-preview': !!handleDeleteImg })}>
       <Carousel
         className={cx('image-preview-slider')}
-        freeMode={handleDeleteImg}
+        freeMode={handleDeleteImg ? true : false}
         pagination={!handleDeleteImg}
         loop={false}
         slidesPerView={handleDeleteImg ? 'auto' : 1}
