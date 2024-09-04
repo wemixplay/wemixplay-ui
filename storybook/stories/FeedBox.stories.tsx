@@ -23,8 +23,15 @@ export const Default: StoryComponent = {
     }
   },
   args: {
-    textContent:
-      'WP#[123](15) [https://www.youtube.com/watch?v=IkC1Fonx8SQ](https://www.youtube.com/watch?v=IkC1Fonx8SQ)[:target=&quot;_blank&quot;] '
+    textContent: 'Commit Message',
+    images: [
+      'https://placehold.co/60',
+      'https://images.unsplash.com/photo-1529390304330-ee6c3d638802?q=80&w=3012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1481134803835-48d6de104072?q=80&w=3569&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+      'https://images.unsplash.com/photo-1571988840298-3b5301d5109b?q=80&w=3174&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+      // 'https://images.unsplash.com/photo-1472053092455-ee16a8b358b9?q=80&w=3067&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+    ]
   },
+
   render: Template
 };
