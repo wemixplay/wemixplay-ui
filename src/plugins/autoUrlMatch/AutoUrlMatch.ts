@@ -107,10 +107,24 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
           event.preventDefault();
 
           if (afterSpaceText) {
-            focusNode.parentElement.parentNode.insertBefore(
-              document.createTextNode(afterSpaceText),
-              focusNode.parentElement.nextSibling
-            );
+            const isUrlLink = !!this.getUrlMatchList(afterSpaceText)[0];
+
+            if (isUrlLink) {
+              // 새로운 <a> 태그 생성 및 공백 이후의 텍스트 설정
+              const newLink = document.createElement('a');
+              newLink.href = afterSpaceText; // 기존 링크와 같은 href 사용
+              newLink.textContent = afterSpaceText.startsWith('http')
+                ? afterSpaceText
+                : `https://${afterSpaceText}`;
+
+              // 기존 <a> 태그 바로 뒤에 새로운 <a> 태그 추가
+              focusNode.parentElement.insertAdjacentElement('afterend', newLink);
+            } else {
+              focusNode.parentElement.parentNode.insertBefore(
+                document.createTextNode(afterSpaceText),
+                focusNode.parentElement.nextSibling
+              );
+            }
           }
 
           // 공백 노드 추가
