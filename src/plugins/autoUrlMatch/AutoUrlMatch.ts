@@ -157,7 +157,7 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
 
         // 임시 div를 사용하여 HTML 문자열을 파싱
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = `<a href="${matchUrlFormatText}" target="_blank">${matchUrlFormatText}</a>`;
+        tempDiv.innerHTML = `<a href="${matchUrlFormatText.startsWith('http') ? matchUrlFormatText : `https://${matchUrlFormatText}`}" target="_blank">${matchUrlFormatText}</a>`;
         const childNodes = Array.from(tempDiv.childNodes);
 
         if (childNodes.length > 0) {
