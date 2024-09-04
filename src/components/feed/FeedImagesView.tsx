@@ -9,7 +9,13 @@ import Spinner from '../loadings/Spinner';
 
 type Props = {
   className?: string;
-  images?: { file?: File; loading?: boolean; src: string; isError?: boolean }[];
+  images?: {
+    file?: File;
+    loading?: boolean;
+    src: string;
+    isError?: boolean;
+    isInapposite?: boolean;
+  }[];
   handleDeleteImg?: ({ deleteIndex }: { deleteIndex: number }) => void;
   onImageClick?: ({ src, index }: { src: string; index: number }) => void;
 };
@@ -90,10 +96,13 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
                 </div>
               )}
               <img src={image.src} alt={image.src} onError={handleOnImageError} />
-              <div className={cx('no-image')}>
-                <SvgNoimagePlaceholder />
-                <span>No Image</span>
-              </div>
+              {!!image.isInapposite && <div>부적절한 이미지</div>}
+              {!!errorStatus[image.src] && (
+                <div className={cx('no-image')}>
+                  <SvgNoimagePlaceholder />
+                  <span>No Image</span>
+                </div>
+              )}
             </div>
           </div>
         ))}

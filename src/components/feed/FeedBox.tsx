@@ -27,7 +27,10 @@ type Props = {
   avatarSize?: number;
   writerName?: string;
   writerImg?: string;
-  images?: string[];
+  fromChannelName?: string;
+  fromChannelImg?: string;
+  fromChannelIsOfficial?: boolean;
+  images?: (string | { src: string; isInapposite?: boolean })[];
   media?: { type?: 'youtube' | 'twitch'; src?: string }[];
   textContent?: string;
   ogMetaData?: FeedLinkPreviewProps['ogMetaData'] | null;
@@ -55,6 +58,7 @@ type Props = {
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onCommentBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
+  onFromChannelClick?: (e: MouseEvent<HTMLElement>) => void;
 };
 
 type FeedBoxRef = HTMLElement & {
@@ -69,6 +73,9 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
       className = '',
       writerName,
       writerImg,
+      fromChannelName,
+      fromChannelImg,
+      fromChannelIsOfficial,
       categoryName,
       certificated,
       textContent,
@@ -97,7 +104,8 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
       onImageClick,
       onLikeBtnClick,
       onCommentBtnClick,
-      onProfileClick
+      onProfileClick,
+      onFromChannelClick
     },
     ref
   ) => {
@@ -105,15 +113,6 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
 
     const elRef = useRef<FeedBoxRef>();
     const iframeRef = useRef<FeedIframesViewRef>();
-
-    const handleProfileClick = useCallback(
-      (e: MouseEvent<HTMLElement>) => {
-        e.stopPropagation();
-
-        onProfileClick && onProfileClick(e);
-      },
-      [onProfileClick]
-    );
 
     const handleManageBtnClick = useCallback(
       (e: MouseEvent<HTMLButtonElement>) => {
@@ -143,12 +142,16 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
               name={writerName}
               profileImg={writerImg}
               profileSize={avatarSize}
+              fromChannelName={fromChannelName}
+              fromChannelImg={fromChannelImg}
+              fromChannelIsOfficial={fromChannelIsOfficial}
               categoryName={categoryName}
               certificated={certificated}
               createdAt={createdAt}
               updatedAt={updatedAt}
               locale={locale}
-              onProfileClick={handleProfileClick}
+              onProfileClick={onProfileClick}
+              onFromChannelClick={onFromChannelClick}
             />
 
             {/* Feed Management Button (삭제, 수정, 신고...) */}
@@ -183,7 +186,11 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
             {images.length > 0 && (
               <FeedImagesView
                 className={cx('carousel')}
-                images={images.map((src) => ({ src: src }))}
+                images={images.map((img) =>
+                  typeof img === 'string'
+                    ? { src: img }
+                    : { src: img.src, isInapposite: img.isInapposite }
+                )}
                 onImageClick={onImageClick}
               />
             )}
