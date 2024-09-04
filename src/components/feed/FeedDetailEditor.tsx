@@ -11,7 +11,8 @@ import React, {
   useImperativeHandle,
   useMemo,
   useRef,
-  useState
+  useState,
+  ClipboardEvent
 } from 'react';
 import style from './FeedDetailEditor.module.scss';
 import WpEditor, { WpEditorProps, WpEditorRef } from '../editor/WpEditor';
@@ -379,6 +380,21 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       ]
     );
 
+    const handlePaste = useCallback(
+      async (e: ClipboardEvent<HTMLDivElement>) => {
+        const item = e.clipboardData.items[0];
+
+        if (item.type.indexOf('image') === 0) {
+          const file = item.getAsFile();
+
+          const url = await readAsDataURLAsync(file);
+
+          handleUpdateImages({ newImage: { file, src: url } });
+        }
+      },
+      [handleUpdateImages]
+    );
+
     const handleEditorTextChange = useCallback(
       (value: string) => {
         excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) =>
@@ -519,6 +535,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             }}
             onDragOver={onDragOver}
             onDrop={onInputDrop}
+            onPaste={handlePaste}
             handleChange={handleEditorTextChange}
           ></WpEditor>
           {memorizationData.images.length > 0 && (
