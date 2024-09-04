@@ -1,12 +1,6 @@
 .ellipsis-wrap {
   color: var(--semantic-label-strong);
 
-  @include add-body-text-14-m;
-
-  @include breakpoint-768 {
-    @include add-body-text-18-m;
-  }
-
   &.shortened {
     .btn-ellipsis-trigger {
       svg {
@@ -38,6 +32,12 @@
     text-overflow: ellipsis;
     transition: height 0.3s;
     will-change: height;
+
+    @include add-body-text-14-m;
+
+    @include breakpoint-768 {
+      @include add-body-text-18-m;
+    }
   }
 
   .btn-ellipsis-trigger {

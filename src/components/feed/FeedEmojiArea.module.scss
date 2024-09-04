@@ -46,20 +46,33 @@
   }
 
   .btn-add-emoji {
-    border-radius: 100px;
+    display: flex;
+    width: 34px;
+    height: 26px;
+    align-items: center;
+    justify-content: center;
+    border-radius: $rd-100;
     background: transparent;
     transition: 0.25s;
 
+    @include breakpoint-768 {
+      width: 48px;
+      height: 36px;
+    }
+
     svg {
+      width: 22px;
+      height: 22px;
+
+      @include breakpoint-768 {
+        width: 32px;
+        height: 32px;
+      }
+
       path {
         &:not([class*="exclude"]) {
           fill: var(--semantic-label-normal);
         }
-      }
-
-      @include breakpoint-768 {
-        width: 48px;
-        height: 36px;
       }
     }
 

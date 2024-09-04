@@ -147,11 +147,6 @@
       padding-top: $sp-10;
       border-top: 1px solid var(--semantic-line-normal-alternative);
       margin-top: $sp-10;
-
-      @include breakpoint-768 {
-        padding-right: $sp-24;
-        padding-left: $sp-24;
-      }
     }
   }
 
