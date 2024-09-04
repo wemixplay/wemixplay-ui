@@ -22,23 +22,31 @@
     overflow: hidden;
     width: 100%;
     border: 1px solid var(--semantic-line-normal-neutral);
-    border-radius: $rd-8;
-
-    // padding: $sp-16;
+    border-radius: $rd-12;
+    background: var(--semantic-background-normal-alternative);
     color: var(--semantic-label-alternative);
 
     @include label-01-normal-r;
 
     .preview-box {
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
+
+      @include breakpoint-768 {
+        flex-wrap: nowrap;
+      }
     }
 
     .preview-img {
       position: relative;
       width: 100%;
-      max-width: 200px;
-      height: 120px;
+      height: 162px;
+
+      @include breakpoint-768 {
+        max-width: 200px;
+        height: 120px;
+      }
 
       :global {
         .lazy-img-wrapper {
@@ -57,11 +65,16 @@
 
     .preview-data {
       display: flex;
+      width: 100%;
       flex-direction: column;
       padding: $sp-16;
 
+      @include breakpoint-768 {
+        padding: $sp-12 $sp-16;
+      }
+
       .title {
-        @include label-01-normal-m;
+        @include headline-02-b;
 
         color: var(--semantic-label-normal);
       }
@@ -71,6 +84,10 @@
         @include ellipsis(1);
 
         color: var(--semantic-label-alternative);
+
+        @include breakpoint-768 {
+          margin-top: $sp-4;
+        }
       }
 
       .description {
@@ -80,6 +97,10 @@
         color: var(--semantic-label-alternative);
 
         @include ellipsis(2);
+
+        @include breakpoint-768 {
+          margin-top: $sp-8;
+        }
       }
     }
 
