@@ -2,7 +2,11 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 0 4px;
+  gap: 0 $sp-4;
+
+  @include breakpoint-768 {
+    gap: 0 $sp-8;
+  }
 
   .emoji-img {
     width: 22px !important;
@@ -20,12 +24,11 @@
     align-items: center;
     justify-content: center;
     padding: $sp-2 $sp-6;
+    border-radius: $rd-100;
     background: transparent;
 
     &:hover {
-      @include hover {
-        background: var(--semantic-fill-normal);
-      }
+      background: var(--semantic-fill-normal);
     }
 
     &.no-exist-event {
