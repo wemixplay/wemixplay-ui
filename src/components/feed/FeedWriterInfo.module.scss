@@ -1,11 +1,17 @@
 .profile {
   display: flex;
+  width: 100%;
+  min-width: 0;
   align-items: center;
 
   &.has-click-event {
     .title {
       cursor: pointer;
     }
+  }
+
+  [class*="avatar"] {
+    flex-shrink: 0;
   }
 
   .title {
@@ -28,11 +34,23 @@
   }
 
   &-text {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
     margin-left: $sp-8;
   }
 
   .info {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
     margin-top: 1px;
+
+    @include breakpoint-768 {
+      flex-direction: unset;
+      align-items: center;
+    }
 
     > span {
       position: relative;
@@ -60,9 +78,40 @@
     }
 
     .date {
+      padding-right: $sp-4;
       color: var(--semantic-label-alternative);
 
       @include add-body-text-15-m;
+    }
+
+    .from-info {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      margin-top: $sp-8;
+      gap: 0 $sp-4;
+
+      @include breakpoint-768 {
+        margin-top: 0;
+      }
+
+      .channel {
+        display: flex;
+        width: 100%;
+        min-width: 0;
+        align-items: center;
+        gap: 0 $sp-4;
+
+        &-name {
+          @include label-02-normal-m;
+
+          display: block;
+          max-width: calc(100% - 24px);
+          color: var(--semantic-label-normal);
+
+          @include ellipsis(1);
+        }
+      }
     }
   }
 }

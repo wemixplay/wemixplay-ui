@@ -21,7 +21,12 @@
       font-feature-settings: "ss10" on;
       overflow-y: auto;
 
+      @include scroll(3px, var(--semantic-fill-strong), transparent);
       @include add-body-text-14-m;
+
+      &:focus {
+        // border: 1px solid red;
+      }
 
       &.filled {
         border-color: var(--semantic-label-alternative) !important;

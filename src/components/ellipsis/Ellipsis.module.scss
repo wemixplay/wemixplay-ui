@@ -1,7 +1,11 @@
 .ellipsis-wrap {
   color: var(--semantic-label-strong);
 
-  @include label-02-normal-r;
+  @include add-body-text-14-m;
+
+  @include breakpoint-768 {
+    @include add-body-text-18-m;
+  }
 
   &.shortened {
     .btn-ellipsis-trigger {
@@ -41,6 +45,7 @@
     height: 32px;
     align-items: center;
     margin-top: $sp-8;
+    background: transparent;
     color: inherit;
     color: var(--semantic-label-alternative);
     font-size: inherit;
