@@ -103,7 +103,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
     }, []);
 
     const handleYoutubeVolumeChange = useCallback(() => {
-      if (!youtubeRef.current) {
+      if (!youtubeRef.current || !youtubeRef.current.playerInfo || !youtubeRef.current.g?.src) {
         return;
       }
 
@@ -127,7 +127,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
           (entries) => {
             window.clearTimeout(timeoutId.current.playTimeoutId);
 
-            if (youtubeRef.current?.playerInfo) {
+            if (youtubeRef.current && youtubeRef.current.playerInfo && youtubeRef.current.g?.src) {
               if (entries[0]?.intersectionRatio > 0) {
                 youtubeRef.current.addEventListener('onVolumeChange', handleYoutubeVolumeChange);
               } else {
