@@ -3,7 +3,7 @@
   padding: $sp-20 0;
 
   &:not(:last-of-type) {
-    border-bottom: 1px solid var(--semantic-line-solid-normal);
+    border-bottom: 1px solid var(--semantic-line-normal-neutral);
   }
 
   &.has-click-event {
@@ -21,7 +21,8 @@
 
   /* Comment Content */
   .comment-content {
-    padding: $sp-10 0;
+    padding: $sp-6 $sp-6 $sp-14;
+    margin-top: $sp-6;
     color: var(--semantic-label-strong);
     font-feature-settings: "ss10" on;
 
