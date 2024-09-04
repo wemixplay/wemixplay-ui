@@ -5,6 +5,10 @@
 
     @include label-01-normal-m;
 
+    @include breakpoint-768 {
+      margin-top: $sp-20;
+    }
+
     >div {
       padding: 0;
     }
@@ -23,6 +27,12 @@
 
       @include scroll(3px, var(--semantic-fill-strong), transparent);
       @include add-body-text-14-m;
+
+      @include breakpoint-768 {
+        border: 1px solid var(--semantic-label-alternative);
+
+        @include add-body-text-16-m;
+      }
 
       &:focus {
         // border: 1px solid red;
@@ -52,6 +62,10 @@
     text-align: center;
 
     @include add-body-text-13-m;
+
+    @include breakpoint-768 {
+      margin-top: $sp-20;
+    }
 
     .counter-current {
       padding-right: $sp-4;

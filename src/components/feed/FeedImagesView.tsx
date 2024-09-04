@@ -3,7 +3,7 @@
 import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import style from './FeedImagesView.module.scss';
 import Carousel from '../carousel/Carousel';
-import { SvgIcoDeleteX, SvgNoimagePlaceholder } from '@/assets/svgs';
+import { SvgIcoDeleteX, SvgIcoSenstive, SvgNoimagePlaceholder } from '@/assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import Spinner from '../loadings/Spinner';
 
@@ -95,6 +95,12 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
                   <Spinner />
                 </div>
               )}
+              <div className={cx('senstive-content-layer')}>
+                <div className={cx('senstive-content')}>
+                  <SvgIcoSenstive />
+                  <p>Sensitive Content</p>
+                </div>
+              </div>
               <img src={image.src} alt={image.src} onError={handleOnImageError} />
               {!!image.isInapposite && <div>부적절한 이미지</div>}
               {!!errorStatus[image.src] && (

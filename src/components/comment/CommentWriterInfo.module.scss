@@ -14,6 +14,15 @@
     flex-shrink: 0;
     margin-right: $sp-12;
 
+    :global {
+      .avatar {
+        @include breakpoint-768 {
+          width: 44px;
+          height: 44px;
+        }
+      }
+    }
+
     >div {
       display: inline-block;
       vertical-align: middle;
@@ -28,7 +37,16 @@
       width: 100%;
       color: var(--semantic-label-normal);
 
-      @include label-01-reading-sb;
+      @include add-body-text-15-b;
+
+      @include breakpoint-768 {
+        display: flex;
+        min-height: 24px;
+        align-items: center;
+        margin-bottom: $sp-4;
+
+        @include add-title-18-b;
+      }
     }
 
     .author-followers {
@@ -37,7 +55,11 @@
       color: var(--semantic-label-normal);
       font-feature-settings: "ss10" on;
 
-      @include label-01-normal-r;
+      @include add-body-text-13-m;
+
+      @include breakpoint-768 {
+        @include add-body-text-15-m;
+      }
     }
 
     .author-time {
@@ -45,7 +67,13 @@
       color: var(--semantic-label-alternative);
       font-feature-settings: "ss10" on;
 
-      @include label-01-normal-r;
+      @include add-body-text-13-m;
+
+      @include breakpoint-768 {
+        @include add-body-text-15-m;
+
+        margin-top: 0;
+      }
     }
   }
 }
