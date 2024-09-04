@@ -27,9 +27,9 @@ type Props = {
   avatarSize?: number;
   writerName?: string;
   writerImg?: string;
-  fromChannelName?: string;
-  fromChannelImg?: string;
-  fromChannelIsOfficial?: boolean;
+  channelName?: string;
+  channelImg?: string;
+  channelIsOfficial?: boolean;
   images?: (string | { src: string; isInapposite?: boolean })[];
   media?: { type?: 'youtube' | 'twitch'; src?: string }[];
   textContent?: string;
@@ -57,8 +57,8 @@ type Props = {
   onImageClick?: FeedImagesViewProps['onImageClick'];
   onLikeBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
   onCommentBtnClick?: (e: MouseEvent<HTMLButtonElement>) => void;
-  onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
-  onFromChannelClick?: (e: MouseEvent<HTMLElement>) => void;
+  onWriterProfileClick?: (e: MouseEvent<HTMLElement>) => void;
+  onChannelClick?: (e: MouseEvent<HTMLElement>) => void;
 };
 
 type FeedBoxRef = HTMLElement & {
@@ -73,9 +73,9 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
       className = '',
       writerName,
       writerImg,
-      fromChannelName,
-      fromChannelImg,
-      fromChannelIsOfficial,
+      channelName,
+      channelImg,
+      channelIsOfficial,
       categoryName,
       certificated,
       textContent,
@@ -104,8 +104,8 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
       onImageClick,
       onLikeBtnClick,
       onCommentBtnClick,
-      onProfileClick,
-      onFromChannelClick
+      onWriterProfileClick,
+      onChannelClick
     },
     ref
   ) => {
@@ -142,16 +142,16 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
               name={writerName}
               profileImg={writerImg}
               profileSize={avatarSize}
-              fromChannelName={fromChannelName}
-              fromChannelImg={fromChannelImg}
-              fromChannelIsOfficial={fromChannelIsOfficial}
+              channelName={channelName}
+              channelImg={channelImg}
+              channelIsOfficial={channelIsOfficial}
               categoryName={categoryName}
               certificated={certificated}
               createdAt={createdAt}
               updatedAt={updatedAt}
               locale={locale}
-              onProfileClick={onProfileClick}
-              onFromChannelClick={onFromChannelClick}
+              onWriterProfileClick={onWriterProfileClick}
+              onChannelClick={onChannelClick}
             />
 
             {/* Feed Management Button (삭제, 수정, 신고...) */}

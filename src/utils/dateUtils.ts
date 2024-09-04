@@ -354,3 +354,46 @@ export const getTimeString = (date: string | number, locale = 'en') => {
     ? dayjs(targetTimeStamp).format(dateFormat)
     : formatRelativeTime(targetTimeStamp, locale);
 };
+
+/**
+ * 인자 타임스탬프 값이 현재와 24시간 이상 차이가 난다면 빈값을 반환하는 함수 (수정된 날짜를 보여줄때 사용)
+ */
+export const getModifyTimeString = ({
+  createdAt,
+  updatedAt,
+  locale = 'en'
+}: {
+  createdAt: string | number;
+  updatedAt?: string | number;
+  locale?: string;
+}) => {
+  if (!updatedAt || createdAt === updatedAt) {
+    return getTimeString(createdAt, locale);
+  }
+
+  locale = pareLocale(locale);
+  const targetTimeStamp = typeof updatedAt === 'string' ? getDateUnix(updatedAt) : updatedAt;
+
+  const hoursGap = Math.abs(getGapFromNow(targetTimeStamp, 'hour'));
+
+  if (hoursGap < 24) {
+    const timeStr = formatRelativeTime(targetTimeStamp, locale);
+
+    switch (locale) {
+      case 'ko':
+        return `${timeStr}에 수정됨`;
+      case 'ja':
+        return `${timeStr}修正`;
+      case 'pt':
+        return `Editado há ${timeStr}`;
+      case 'zh-Hans':
+        return `${timeStr}编辑`;
+      case 'zh-Hant':
+        return `${timeStr}編輯`;
+      default:
+        return `Modified ${timeStr}`;
+    }
+  }
+
+  return getTimeString(createdAt, locale);
+};

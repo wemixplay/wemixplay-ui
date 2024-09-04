@@ -3,7 +3,7 @@
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedWriterInfo.module.scss';
 import { SvgIcoCertified } from '@/assets/svgs';
-import { getTimeString } from '@/utils/dateUtils';
+import { getModifyTimeString, getTimeString } from '@/utils/dateUtils';
 import Person from '../avatars/Person';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
@@ -12,16 +12,16 @@ type Props = {
   name?: string;
   profileImg?: string;
   profileSize?: number;
-  fromChannelName?: string;
-  fromChannelImg?: string;
-  fromChannelIsOfficial?: boolean;
+  channelName?: string;
+  channelImg?: string;
+  channelIsOfficial?: boolean;
   categoryName?: string;
   certificated?: boolean;
   createdAt?: number;
   updatedAt?: number;
   locale?: string;
-  onProfileClick?: (e: MouseEvent<HTMLElement>) => void;
-  onFromChannelClick?: (e: MouseEvent<HTMLElement>) => void;
+  onWriterProfileClick?: (e: MouseEvent<HTMLElement>) => void;
+  onChannelClick?: (e: MouseEvent<HTMLElement>) => void;
 };
 
 const cx = makeCxFunc(style);
@@ -31,52 +31,54 @@ const FeedWriterInfo = ({
   name,
   profileImg,
   profileSize,
-  fromChannelName,
-  fromChannelImg,
-  fromChannelIsOfficial,
+  channelName,
+  channelImg,
+  channelIsOfficial,
   categoryName,
   certificated,
   createdAt,
   updatedAt,
   locale,
-  onProfileClick,
-  onFromChannelClick
+  onWriterProfileClick,
+  onChannelClick
 }: Props) => {
-  const handleProfileClick = useCallback(
+  const handleWriterProfileClick = useCallback(
     (e: MouseEvent<HTMLElement>) => {
       e.stopPropagation();
 
-      onProfileClick && onProfileClick(e);
+      onWriterProfileClick && onWriterProfileClick(e);
     },
-    [onProfileClick]
+    [onWriterProfileClick]
   );
 
-  const handleFromChannelClick = useCallback(
+  const handleChannelClick = useCallback(
     (e: MouseEvent<HTMLElement>) => {
       e.stopPropagation();
 
-      onFromChannelClick && onFromChannelClick(e);
+      onChannelClick && onChannelClick(e);
     },
-    [onFromChannelClick]
+    [onChannelClick]
   );
 
   return (
-    <div className={cx(className, 'profile', { 'has-click-event': onProfileClick })}>
-      <Person src={profileImg} customSize={profileSize} onClick={handleProfileClick} />
+    <div className={cx(className, 'profile', { 'has-click-event': onWriterProfileClick })}>
+      <Person src={profileImg} customSize={profileSize} onClick={handleWriterProfileClick} />
       <div className={cx('profile-text')}>
-        <strong className={cx('title')} onClick={handleProfileClick}>
+        <strong className={cx('title')} onClick={handleWriterProfileClick}>
           {name || '-'}
           {!!certificated && <SvgIcoCertified width={20} height={20} />}
         </strong>
         <div className={cx('info')}>
           {!!categoryName && <span className={cx('category')}>{categoryName}</span>}
-          <span className={cx('date')}>{getTimeString(createdAt, locale)}</span>
-          {!!fromChannelName && (
-            <div className={cx('from-info', { 'has-click-event': onFromChannelClick })}>
-              <Person src={fromChannelImg} customSize={18} onClick={handleFromChannelClick} />
+          <span className={cx('date')}>
+            {getModifyTimeString({ createdAt, updatedAt, locale })}
+          </span>
+          {!!channelName && (
+            <div className={cx('from-info', { 'has-click-event': onChannelClick })}>
+              <Person src={channelImg} customSize={18} onClick={handleChannelClick} />
               <div className={cx('channel')}>
-                <span className={cx('channel-name')}>{fromChannelName}</span>
-                {!!fromChannelIsOfficial && <SvgIcoCertified width={12} height={12} />}
+                <span className={cx('channel-name')}>{channelName}</span>
+                {!!channelIsOfficial && <SvgIcoCertified width={12} height={12} />}
               </div>
             </div>
           )}
