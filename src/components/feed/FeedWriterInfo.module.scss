@@ -95,6 +95,10 @@
         margin-top: 0;
       }
 
+      &.has-click-event {
+        cursor: pointer;
+      }
+
       .channel {
         display: flex;
         width: 100%;
