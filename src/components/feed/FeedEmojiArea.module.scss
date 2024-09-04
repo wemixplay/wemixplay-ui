@@ -4,6 +4,10 @@
   align-items: center;
   gap: 0 $sp-4;
 
+  @include breakpoint-768 {
+    gap: 0 $sp-8;
+  }
+
   .emoji-img {
     width: 22px !important;
     height: 22px !important;
