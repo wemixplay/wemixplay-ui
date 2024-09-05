@@ -20,7 +20,7 @@
       border: 1px solid var(--semantic-line-normal-alternative);
       border-radius: $rd-12;
       margin: 0;
-      background: var(--semantic-normal-alternative);
+      background: var(--semantic-background-normal-alternative);
       color: var(--semantic-label-normal);
       font-feature-settings: "ss10" on;
       overflow-y: auto;
@@ -29,13 +29,13 @@
       @include add-body-text-14-m;
 
       @include breakpoint-768 {
-        border: 1px solid var(--semantic-label-alternative);
+        // border: 1px solid var(--semantic-label-alternative);
 
         @include add-body-text-16-m;
       }
 
       &:focus {
-        // border: 1px solid red;
+        border: 1px solid var(--semantic-label-alternative);
       }
 
       &.filled {
