@@ -62,7 +62,12 @@ const FeedWriterInfo = ({
 
   return (
     <div className={cx(className, 'profile', { 'has-click-event': onWriterProfileClick })}>
-      <Person src={profileImg} customSize={profileSize} onClick={handleWriterProfileClick} />
+      <Person
+        src={profileImg}
+        customSize={profileSize}
+        onClick={handleWriterProfileClick}
+        className={cx('writer-avatar')}
+      />
       <div className={cx('profile-text')}>
         <strong className={cx('title')} onClick={handleWriterProfileClick}>
           {name || '-'}
