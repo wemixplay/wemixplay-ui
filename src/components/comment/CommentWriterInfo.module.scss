@@ -17,8 +17,8 @@
     :global {
       .avatar {
         @include breakpoint-768 {
-          width: 44px;
-          height: 44px;
+          width: 44px !important;
+          height: 44px !important;
         }
       }
     }
@@ -43,14 +43,12 @@
         display: flex;
         min-height: 24px;
         align-items: center;
-        margin-bottom: $sp-4;
 
         @include add-title-18-b;
       }
     }
 
     .author-followers {
-      margin-top: -$sp-2;
       margin-right: $sp-8;
       color: var(--semantic-label-normal);
       font-feature-settings: "ss10" on;
@@ -63,7 +61,7 @@
     }
 
     .author-time {
-      margin-top: -$sp-2;
+      margin-top: $sp-4;
       color: var(--semantic-label-alternative);
       font-feature-settings: "ss10" on;
 
@@ -71,8 +69,6 @@
 
       @include breakpoint-768 {
         @include add-body-text-15-m;
-
-        margin-top: 0;
       }
     }
   }

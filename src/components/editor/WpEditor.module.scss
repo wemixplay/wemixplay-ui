@@ -9,7 +9,7 @@
   .wp-editor-content {
     display: block;
     padding: $sp-12 $sp-20;
-    border: 1px solid #ddd;
+    border: 1px solid var(--semantic-line-normal-alternative);
     margin: $sp-12 0;
     overflow-y: auto;
     white-space: pre-wrap;
@@ -17,12 +17,15 @@
     &:empty:not(:focus) {
       &::before {
         display: inline-block;
-        color: var(--semantic-label-alternative);
+        color: var(--semantic-label-assistive);
         content: attr(aria-placeholder);
         font-size: inherit;
         font-weight: inherit;
         line-height: inherit;
         pointer-events: none;
+
+        @include add-body-text-14-m;
+
         white-space: pre-wrap;
       }
     }
