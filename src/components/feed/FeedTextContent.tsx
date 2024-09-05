@@ -65,7 +65,7 @@ const FeedTextContent = ({
           className={cx('text')}
           content={htmlContent}
           defaultShortened
-          lineClamp={3}
+          lineClamp={5}
           triggerLess="show less"
           triggerMore="show more"
           observingEnvs={[isMobile, isTablet, isDesktop]}
