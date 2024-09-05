@@ -34,12 +34,16 @@
   }
 
   .modified {
-    @include add-body-text-14-m;
-
     display: flex;
     height: 24px;
     align-items: center;
     color: var(--semantic-label-alternative);
+
+    @include add-body-text-12-m;
+
+    @include breakpoint-768 {
+      @include add-body-text-14-m;
+    }
   }
 
   .show-more {
@@ -49,8 +53,11 @@
     margin-top: $sp-20;
     color: var(--semantic-label-neutral);
 
-    @include add-body-text-14-m;
+    @include add-body-text-12-m;
 
+    @include breakpoint-768 {
+      @include add-body-text-14-m;
+    }
 
     svg {
       transform: rotate(270deg);
