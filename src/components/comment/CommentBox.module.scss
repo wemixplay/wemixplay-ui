@@ -50,4 +50,12 @@
 
     @include add-body-text-12-m;
   }
+
+  .btn-manage {
+    svg {
+      path {
+        fill: var(--semantic-label-normal);
+      }
+    }
+  }
 }
