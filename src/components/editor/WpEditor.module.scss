@@ -14,7 +14,7 @@
     overflow-y: auto;
     white-space: pre-wrap;
 
-    &:empty {
+    &:empty:not(:focus) {
       &::before {
         display: inline-block;
         color: var(--semantic-label-alternative);
