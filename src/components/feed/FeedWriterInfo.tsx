@@ -74,8 +74,11 @@ const FeedWriterInfo = ({
             {getModifyTimeString({ createdAt, updatedAt, locale })}
           </span>
           {!!channelName && (
-            <div className={cx('from-info', { 'has-click-event': onChannelClick })}>
-              <Person src={channelImg} customSize={18} onClick={handleChannelClick} />
+            <div
+              className={cx('from-info', { 'has-click-event': onChannelClick })}
+              onClick={handleChannelClick}
+            >
+              <Person src={channelImg} customSize={18} />
               <div className={cx('channel')}>
                 <span className={cx('channel-name')}>{channelName}</span>
                 {!!channelIsOfficial && <SvgIcoCertified width={12} height={12} />}
