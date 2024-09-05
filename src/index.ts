@@ -19,6 +19,7 @@ import CommentEditor, { CommentEditorProps } from './components/comment/CommentE
 import CommentEtcInfo, { CommentEtcInfoProps } from './components/comment/CommentEtcInfo';
 import CommentWriterInfo, { CommentWriterInfoProps } from './components/comment/CommentWriterInfo';
 import { FeedIframesViewRef, IframePlayState } from './components/feed/FeedIframesView';
+import { convertHtmlToMarkdownStr, convertMarkdownToHtmlStr } from './utils/valueParserUtils';
 
 export type {
   WpEditorRef,
@@ -51,5 +52,7 @@ export {
   CommentBox,
   CommentEditor,
   CommentEtcInfo,
-  CommentWriterInfo
+  CommentWriterInfo,
+  convertMarkdownToHtmlStr,
+  convertHtmlToMarkdownStr
 };
