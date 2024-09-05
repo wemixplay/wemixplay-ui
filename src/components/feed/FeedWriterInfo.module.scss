@@ -2,7 +2,7 @@
   display: flex;
   width: 100%;
   min-width: 0;
-  align-items: center;
+  align-items: flex-start;
 
   &.has-click-event {
     .title {
@@ -16,29 +16,20 @@
 
   > .writer-avatar {
     :global {
-      @include breakpoint-768 {
-        width: 44px !important;
-        height: 44px !important;
-      }
+      width: 44px !important;
+      height: 44px !important;
     }
   }
 
   .title {
     display: flex;
     min-height: 17px;
+    min-height: 24px;
     align-items: center;
     color: var(--semantic-label-normal);
     font-feature-settings: "ss10" on;
-    font-size: 15px;
-    font-style: normal;
-    font-weight: 700;
-    line-height: 100%;
 
-    @include breakpoint-768 {
-      @include add-title-18-b ;
-
-      min-height: 24px;
-    }
+    @include add-title-18-b;
 
     svg {
       margin-left: 4px;
@@ -56,8 +47,9 @@
   .info {
     display: flex;
     width: 100%;
-    flex-direction: column;
-    margin-top: $sp-4;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 5px;
 
     @include breakpoint-768 {
       flex-direction: unset;
@@ -89,27 +81,10 @@
       @include label-01-normal-r;
     }
 
-    .date {
-      padding-right: $sp-4;
-      color: var(--semantic-label-alternative);
-
-      @include add-body-text-13-m;
-
-      @include breakpoint-768 {
-        @include add-body-text-15-m;
-      }
-    }
-
     .from-info {
       display: flex;
       flex: 1;
       align-items: center;
-      margin-top: $sp-8;
-      gap: 0 $sp-4;
-
-      @include breakpoint-768 {
-        margin-top: 0;
-      }
 
       &.has-click-event {
         cursor: pointer;
@@ -126,12 +101,18 @@
           @include label-02-normal-m;
 
           display: block;
-          max-width: calc(100% - 24px);
           color: var(--semantic-label-normal);
 
           @include ellipsis(1);
         }
       }
     }
+  }
+
+  .date {
+    margin-top: 2px;
+    color: var(--semantic-label-alternative);
+
+    @include add-body-text-15-m;
   }
 }

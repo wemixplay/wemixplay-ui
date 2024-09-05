@@ -2,7 +2,7 @@
 
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedWriterInfo.module.scss';
-import { SvgIcoCertified } from '@/assets/svgs';
+import { SvgIcoCertified, SvgIcoFromArrow } from '@/assets/svgs';
 import { getModifyTimeString, getTimeString } from '@/utils/dateUtils';
 import Person from '../avatars/Person';
 import { makeCxFunc } from '@/utils/forReactUtils';
@@ -75,14 +75,13 @@ const FeedWriterInfo = ({
         </strong>
         <div className={cx('info')}>
           {!!categoryName && <span className={cx('category')}>{categoryName}</span>}
-          <span className={cx('date')}>
-            {getModifyTimeString({ createdAt, updatedAt, locale })}
-          </span>
+
           {!!channelName && (
             <div
               className={cx('from-info', { 'has-click-event': onChannelClick })}
               onClick={handleChannelClick}
             >
+              <SvgIcoFromArrow />
               <Person src={channelImg} customSize={18} />
               <div className={cx('channel')}>
                 <span className={cx('channel-name')}>{channelName}</span>
@@ -91,6 +90,7 @@ const FeedWriterInfo = ({
             </div>
           )}
         </div>
+        <span className={cx('date')}>{getModifyTimeString({ createdAt, updatedAt, locale })}</span>
       </div>
     </div>
   );
