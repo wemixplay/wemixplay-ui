@@ -21,6 +21,19 @@
   button {
     background-color: transparent;
 
+    svg {
+      path,
+      rect {
+        &[class*="fill"] {
+          fill: var(--semantic-label-normal);
+        }
+
+        &[class*="stroke"] {
+          stroke: var(--semantic-label-normal);
+        }
+      }
+    }
+
     .icon {
       display: block;
     }
