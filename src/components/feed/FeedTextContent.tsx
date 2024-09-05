@@ -84,8 +84,6 @@ const FeedTextContent = ({
         dangerouslySetInnerHTML={{ __html: htmlContent }}
       ></div>
 
-      <p className={cx('modified')}>(Modified)</p>
-
       <p className={cx('show-more')}>
         Show More <SvgIcoEllipsisChevron width={14} height={14} />
       </p>
