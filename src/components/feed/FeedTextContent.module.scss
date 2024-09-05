@@ -10,6 +10,7 @@
     word-break: break-word;
 
     @include add-body-text-14-m;
+    @include ellipsis(3);
 
     @include breakpoint-768 {
       @include add-body-text-18-m;
@@ -29,6 +30,41 @@
 
     .btn-ellipsis-trigger {
       background-color: transparent;
+    }
+  }
+
+  .modified {
+    display: flex;
+    height: 24px;
+    align-items: center;
+    color: var(--semantic-label-alternative);
+
+    @include add-body-text-12-m;
+
+    @include breakpoint-768 {
+      @include add-body-text-14-m;
+    }
+  }
+
+  .show-more {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    margin-top: $sp-20;
+    color: var(--semantic-label-neutral);
+
+    @include add-body-text-12-m;
+
+    @include breakpoint-768 {
+      @include add-body-text-14-m;
+    }
+
+    svg {
+      transform: rotate(270deg);
+
+      path {
+        fill: var(--semantic-label-neutral);
+      }
     }
   }
 }
