@@ -12,10 +12,14 @@
 
   [class*="avatar"] {
     flex-shrink: 0;
+  }
 
-    @include breakpoint-768 {
-      width: 44px !important;
-      height: 44px !important;
+  > .writer-avatar {
+    :global {
+      @include breakpoint-768 {
+        width: 44px !important;
+        height: 44px !important;
+      }
     }
   }
 
