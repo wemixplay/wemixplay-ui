@@ -10,7 +10,6 @@
     word-break: break-word;
 
     @include add-body-text-14-m;
-    @include ellipsis(3);
 
     @include breakpoint-768 {
       @include add-body-text-18-m;
