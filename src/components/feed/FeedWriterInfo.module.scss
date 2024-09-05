@@ -41,6 +41,7 @@
     min-width: 0;
     flex: 1;
     flex-direction: column;
+    padding-right: $sp-20;
     margin-left: $sp-8;
   }
 
@@ -83,6 +84,7 @@
 
     .from-info {
       display: flex;
+      min-width: 0;
       flex: 1;
       align-items: center;
 
@@ -107,6 +109,7 @@
           @include label-02-normal-m;
 
           display: block;
+          padding-left: $sp-4;
           color: var(--semantic-label-normal);
 
           @include ellipsis(1);
