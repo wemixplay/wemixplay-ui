@@ -521,7 +521,9 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                 },
                 onChangeMatchUrls: (urls) => {
                   const imagePattern = /\.(jpg|jpeg|png|gif|webp|avif)$/i;
-                  const normalUrls = urls.filter((url) => !imagePattern.test(url));
+                  const normalUrls = urls.filter(
+                    (url) => !imagePattern.test(url) && !isYouTubeURL(url) && !isTwitchURL(url)
+                  );
 
                   if (metaData?.url !== normalUrls[0]) {
                     handleExternalUrlChange(normalUrls[0]);

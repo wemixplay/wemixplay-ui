@@ -1,19 +1,21 @@
 export const isYouTubeURL = (url: string) => {
   // 정규식 패턴 정의
   const youTubePattern =
-    /^(https:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]+(\?.*)?$/;
+    /^(https:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]+(\?[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+(&[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*)?$/;
+
+  console.log(youTubePattern.test(url));
 
   // 정규식 테스트
   return youTubePattern.test(url);
 };
 
 export const convertIframeYouTubeURL = (url: string) => {
-  // 정규식 패턴 정의 (쿼리 매개변수를 허용하도록 수정)
-  const shortUrlPattern = /https:\/\/youtu\.be\/([a-zA-Z0-9_-]+)(\?.*)?/; // 쿼리 매개변수를 포함한 패턴
+  // 정규식 패턴 정의
+  const shortUrlPattern =
+    /https:\/\/youtu\.be\/([a-zA-Z0-9_-]+)(?:\?[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*/;
 
-  const longUrlPattern = /https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)(\&.*)?/;
-
-  console.log(shortUrlPattern.test(url));
+  const longUrlPattern =
+    /https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)(?:&[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*/;
 
   // 정규식 매칭 및 변환
   if (shortUrlPattern.test(url)) {
