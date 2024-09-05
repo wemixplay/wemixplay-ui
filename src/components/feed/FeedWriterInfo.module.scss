@@ -12,10 +12,16 @@
 
   [class*="avatar"] {
     flex-shrink: 0;
+
+    @include breakpoint-768 {
+      width: 44px !important;
+      height: 44px !important;
+    }
   }
 
   .title {
     display: flex;
+    min-height: 17px;
     align-items: center;
     color: var(--semantic-label-normal);
     font-feature-settings: "ss10" on;
@@ -26,6 +32,8 @@
 
     @include breakpoint-768 {
       @include add-title-18-b ;
+
+      min-height: 24px;
     }
 
     svg {
@@ -45,7 +53,7 @@
     display: flex;
     width: 100%;
     flex-direction: column;
-    margin-top: 1px;
+    margin-top: $sp-4;
 
     @include breakpoint-768 {
       flex-direction: unset;
@@ -81,7 +89,11 @@
       padding-right: $sp-4;
       color: var(--semantic-label-alternative);
 
-      @include add-body-text-15-m;
+      @include add-body-text-13-m;
+
+      @include breakpoint-768 {
+        @include add-body-text-15-m;
+      }
     }
 
     .from-info {

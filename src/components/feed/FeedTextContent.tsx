@@ -7,6 +7,7 @@ import Ellipsis from '../ellipsis/Ellipsis';
 import { convertMarkdownToHtmlStr } from '@/utils/valueParserUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import style from './FeedTextContent.module.scss';
+import { SvgIcoEllipsisChevron } from '@/assets/svgs';
 
 type Props = {
   className?: string;
@@ -60,7 +61,7 @@ const FeedTextContent = ({
       className={cx(className, 'feed-text-content', { 'has-click-event': onTextClick })}
       onClick={handleClick}
     >
-      {ellipsis ? (
+      {/* {ellipsis ? (
         <Ellipsis
           className={cx('text')}
           content={htmlContent}
@@ -76,7 +77,18 @@ const FeedTextContent = ({
           className={cx('text', 'full-text')}
           dangerouslySetInnerHTML={{ __html: htmlContent }}
         ></div>
-      )}
+      )} */}
+
+      <div
+        className={cx('text', 'full-text')}
+        dangerouslySetInnerHTML={{ __html: htmlContent }}
+      ></div>
+
+      <p className={cx('modified')}>(Modified)</p>
+
+      <p className={cx('show-more')}>
+        Show More <SvgIcoEllipsisChevron width={14} height={14} />
+      </p>
     </WpEditorContents>
   );
 };
