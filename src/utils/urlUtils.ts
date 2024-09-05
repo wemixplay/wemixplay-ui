@@ -1,7 +1,7 @@
 export const isYouTubeURL = (url: string) => {
   // 정규식 패턴 정의
   const youTubePattern =
-    /^(https:\/\/)?(www\.)?(youtube\.com\/watch\?v=|youtu\.be\/)[a-zA-Z0-9_-]+(\?[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+(&[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*)?$/;
+    /^(https:\/\/)?(www\.)?(youtube\.com\/watch\?v=[a-zA-Z0-9_-]+(&.*)?|youtu\.be\/[a-zA-Z0-9_-]+)(\?.*)?$/;
 
   console.log(youTubePattern.test(url));
 
