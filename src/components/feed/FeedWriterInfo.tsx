@@ -77,13 +77,10 @@ const FeedWriterInfo = ({
           {!!categoryName && <span className={cx('category')}>{categoryName}</span>}
 
           {!!channelName && (
-            <div
-              className={cx('from-info', { 'has-click-event': onChannelClick })}
-              onClick={handleChannelClick}
-            >
-              <SvgIcoFromArrow />
-              <Person src={channelImg} customSize={18} />
-              <div className={cx('channel')}>
+            <div className={cx('from-info', { 'has-click-event': onChannelClick })}>
+              <SvgIcoFromArrow className={cx('ico-from-arrow')} />
+              <Person src={channelImg} customSize={18} onClick={handleChannelClick} />
+              <div className={cx('channel')} onClick={handleChannelClick}>
                 <span className={cx('channel-name')}>{channelName}</span>
                 {!!channelIsOfficial && <SvgIcoCertified width={12} height={12} />}
               </div>

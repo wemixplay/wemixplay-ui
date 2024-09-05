@@ -87,7 +87,13 @@
       align-items: center;
 
       &.has-click-event {
-        cursor: pointer;
+        > * {
+          cursor: pointer;
+        }
+      }
+
+      .ico-from-arrow {
+        cursor: default;
       }
 
       .channel {
