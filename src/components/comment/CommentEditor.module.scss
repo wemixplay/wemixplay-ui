@@ -36,6 +36,7 @@
 
       &:focus {
         border: 1px solid var(--semantic-label-alternative);
+        background: transparent;
       }
 
       &.filled {
