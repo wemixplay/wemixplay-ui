@@ -3,20 +3,14 @@
 
   &.shortened {
     .btn-ellipsis-trigger {
-      svg {
-        transform: rotate(0deg);
-      }
+
     }
   }
 
   &.enable-show-more {
     &.shortened {
       .btn-ellipsis-trigger {
-        svg {
-          width: 12px;
-          margin-top: 2.5px;
-          transform: rotate(270deg);
-        }
+
       }
     }
   }
@@ -42,21 +36,36 @@
 
   .btn-ellipsis-trigger {
     display: flex;
-    height: 32px;
+    height: 18px;
     align-items: center;
     margin-top: $sp-8;
     background: transparent;
     color: inherit;
-    color: var(--semantic-label-alternative);
+    color: var(--semantic-label-neutral);
     font-size: inherit;
     font-style: normal;
     font-weight: inherit;
     line-height: inherit;
 
+    @include add-body-text-12-m;
+
+    @include breakpoint-768 {
+      height: 20px;
+
+      @include add-body-text-14-m;
+    }
+
     svg {
-      margin-left: $sp-4;
-      transform: rotate(180deg);
       transition: transform 0.25s;
+
+      path {
+        fill: var(--semantic-label-neutral);
+      }
+
+      @include breakpoint-768 {
+        width: 20px;
+        height: 20px;
+      }
     }
   }
 }
