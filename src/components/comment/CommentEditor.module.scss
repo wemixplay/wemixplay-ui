@@ -41,6 +41,7 @@
 
       &.filled {
         border-color: var(--semantic-label-alternative) !important;
+        background: transparent;
       }
 
       &:empty {
