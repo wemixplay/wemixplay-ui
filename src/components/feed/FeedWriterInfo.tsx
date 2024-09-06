@@ -1,11 +1,12 @@
 'use client';
 
-import React, { MouseEvent, useCallback } from 'react';
+import React, { MouseEvent, useCallback, useEffect, useState } from 'react';
 import style from './FeedWriterInfo.module.scss';
 import { SvgIcoCertified, SvgIcoFromArrow } from '@/assets/svgs';
 import { getModifyTimeString, getTimeString } from '@/utils/dateUtils';
 import Person from '../avatars/Person';
 import { makeCxFunc } from '@/utils/forReactUtils';
+import ClientOnly from '../clientOnly/ClientOnly';
 
 type Props = {
   className?: string;
@@ -42,6 +43,8 @@ const FeedWriterInfo = ({
   onWriterProfileClick,
   onChannelClick
 }: Props) => {
+  const [mounted, setMounted] = useState(false);
+
   const handleWriterProfileClick = useCallback(
     (e: MouseEvent<HTMLElement>) => {
       e.stopPropagation();
@@ -59,6 +62,10 @@ const FeedWriterInfo = ({
     },
     [onChannelClick]
   );
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className={cx(className, 'profile', { 'has-click-event': onWriterProfileClick })}>
@@ -87,7 +94,11 @@ const FeedWriterInfo = ({
             </div>
           )}
         </div>
-        <span className={cx('date')}>{getModifyTimeString({ createdAt, updatedAt, locale })}</span>
+        <span className={cx('date')}>
+          <ClientOnly fallback={'-'}>
+            {getModifyTimeString({ createdAt, updatedAt, locale })}
+          </ClientOnly>
+        </span>
       </div>
     </div>
   );
