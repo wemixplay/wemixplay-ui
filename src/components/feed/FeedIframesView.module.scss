@@ -33,11 +33,29 @@
     }
   }
 
-  .preview-iframe-box {
+  .preview-iframe-area {
     position: relative;
+    border-radius: $rd-12;
+
+    &::after {
+      display: block;
+      min-height: 180px;
+      padding-bottom: 56.25%;
+      border-radius: inherit;
+      content: "";
+    }
+  }
+
+  .preview-iframe-box {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
     overflow: hidden;
     width: 100%;
-    border-radius: $rd-12;
+    height: 100%;
+    border-radius: inherit;
+    background-color: rgb(0 0 0 / 20%);
 
     .swipe-helper {
       position: absolute;

@@ -17,6 +17,7 @@ import Carousel from '../carousel/Carousel';
 import { SvgIcoDeleteX } from '@/assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
+import ClientOnly from '../clientOnly/ClientOnly';
 
 type Props = {
   className?: string;
@@ -103,7 +104,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
     }, []);
 
     const handleYoutubeVolumeChange = useCallback(() => {
-      if (!youtubeRef.current || !youtubeRef.current.playerInfo || !youtubeRef.current.g?.src) {
+      if (!youtubeRef.current || !youtubeRef.current?.playerInfo) {
         return;
       }
 
@@ -118,7 +119,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
     }, []);
 
     const io = useMemo(() => {
-      if (typeof window === 'undefined' || !intersectionVideo) {
+      if (typeof window === 'undefined' || !ready || !intersectionVideo) {
         return;
       }
 
@@ -127,11 +128,9 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
           (entries) => {
             window.clearTimeout(timeoutId.current.playTimeoutId);
 
-            if (youtubeRef.current && youtubeRef.current.playerInfo && youtubeRef.current.g?.src) {
+            if (youtubeRef.current && youtubeRef.current?.playerInfo) {
               if (entries[0]?.intersectionRatio > 0) {
                 youtubeRef.current.addEventListener('onVolumeChange', handleYoutubeVolumeChange);
-              } else {
-                youtubeRef.current.removeEventListener('onVolumeChange', handleYoutubeVolumeChange);
               }
 
               if (entries[0]?.intersectionRatio > 0.8 && playStateRef.current !== 'PAUSED') {
@@ -152,7 +151,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
           }
         );
       }
-    }, [intersectionVideo, handleYoutubeVolumeChange]);
+    }, [intersectionVideo, ready, handleYoutubeVolumeChange]);
 
     useEffect(() => {
       const el = iframePreviewBoxRef.current;
@@ -161,7 +160,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
         io.observe(el);
 
         return () => {
-          io.disconnect();
+          io.unobserve(el);
         };
       }
     }, [ready]);
@@ -188,7 +187,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
           spaceBetween={10}
         >
           {media.map((iframe, index) => (
-            <div key={`${iframe.src}-${index}`}>
+            <div key={`${iframe.src}-${index}`} className={cx('preview-iframe-area')}>
               {!!handleDeleteIframe && (
                 <button
                   className={cx('btn-img-delete')}
@@ -205,31 +204,35 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
               >
                 {/* <span className={cx('swipe-helper', 'before')}></span>
                 <span className={cx('swipe-helper', 'after')}></span> */}
-                {iframe.type === 'youtube' && (
-                  <YouTube
-                    videoId={getYoutubeVideoId(iframe.src)}
-                    opts={
-                      {
-                        host: 'https://www.youtube-nocookie.com',
-                        playerVars: {
-                          autoplay: 0,
-                          rel: 0,
-                          controls: 1,
-                          modestbranding: 1,
-                          loop: 1,
-                          enablejsapi: 1,
-                          origin: 'http://www.youtube-nocookie.com'
+                <ClientOnly>
+                  <>
+                    {iframe.type === 'youtube' && (
+                      <YouTube
+                        videoId={getYoutubeVideoId(iframe.src)}
+                        opts={
+                          {
+                            host: 'https://www.youtube-nocookie.com',
+                            playerVars: {
+                              autoplay: 0,
+                              rel: 0,
+                              controls: 1,
+                              modestbranding: 1,
+                              loop: 1,
+                              enablejsapi: 1,
+                              origin: 'http://www.youtube-nocookie.com'
+                            }
+                          } as YouTubeProps['opts']
                         }
-                      } as YouTubeProps['opts']
-                    }
-                    onReady={(e) => {
-                      youtubeRef.current = e.target;
-                      setReady(true);
-                    }}
-                    onStateChange={handleYoutubeStateChange}
-                  />
-                )}
-                {iframe.type === 'twitch' && <iframe src={iframe.src} />}
+                        onReady={(e) => {
+                          youtubeRef.current = e.target;
+                          setReady(true);
+                        }}
+                        onStateChange={handleYoutubeStateChange}
+                      />
+                    )}
+                    {iframe.type === 'twitch' && <iframe src={iframe.src} />}
+                  </>
+                </ClientOnly>
               </div>
             </div>
           ))}
