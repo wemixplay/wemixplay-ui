@@ -122,6 +122,10 @@
     margin-top: 2px;
     color: var(--semantic-label-alternative);
 
-    @include add-body-text-15-m;
+    @include add-body-text-13-m;
+
+    @include breakpoint-768 {
+      @include add-body-text-15-m;
+    }
   }
 }
