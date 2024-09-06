@@ -47,6 +47,9 @@
 
     &.btn-share {
       svg {
+        width: 36.4px;
+        height: 16px;
+
         @include breakpoint-768 {
           width: 52px;
           height: 24px;
