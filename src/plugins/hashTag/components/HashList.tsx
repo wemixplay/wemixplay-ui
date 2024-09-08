@@ -246,7 +246,13 @@ const HashList = forwardRef<HashListRef, Props>(
 
     useEffect(() => {
       const handleClickOutside = (e: Event) => {
-        if (elRef.current && !elRef.current.contains(e.target as HTMLElement)) {
+        const target = e.target as HTMLElement;
+
+        if (
+          elRef.current &&
+          !elRef.current.contains(target) &&
+          !target.classList.contains('hash')
+        ) {
           closeHashList();
         }
       };
