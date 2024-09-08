@@ -204,35 +204,32 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
               >
                 {/* <span className={cx('swipe-helper', 'before')}></span>
                 <span className={cx('swipe-helper', 'after')}></span> */}
-                <ClientOnly>
-                  <>
-                    {iframe.type === 'youtube' && (
-                      <YouTube
-                        videoId={getYoutubeVideoId(iframe.src)}
-                        opts={
-                          {
-                            host: 'https://www.youtube-nocookie.com',
-                            playerVars: {
-                              autoplay: 0,
-                              rel: 0,
-                              controls: 1,
-                              modestbranding: 1,
-                              loop: 1,
-                              enablejsapi: 1,
-                              origin: 'http://www.youtube-nocookie.com'
-                            }
-                          } as YouTubeProps['opts']
+
+                {iframe.type === 'youtube' && (
+                  <YouTube
+                    videoId={getYoutubeVideoId(iframe.src)}
+                    opts={
+                      {
+                        host: 'https://www.youtube-nocookie.com',
+                        playerVars: {
+                          autoplay: 0,
+                          rel: 0,
+                          controls: 1,
+                          modestbranding: 1,
+                          loop: 1,
+                          enablejsapi: 1,
+                          origin: 'http://www.youtube-nocookie.com'
                         }
-                        onReady={(e) => {
-                          youtubeRef.current = e.target;
-                          setReady(true);
-                        }}
-                        onStateChange={handleYoutubeStateChange}
-                      />
-                    )}
-                    {iframe.type === 'twitch' && <iframe src={iframe.src} />}
-                  </>
-                </ClientOnly>
+                      } as YouTubeProps['opts']
+                    }
+                    onReady={(e) => {
+                      youtubeRef.current = e.target;
+                      setReady(true);
+                    }}
+                    onStateChange={handleYoutubeStateChange}
+                  />
+                )}
+                {iframe.type === 'twitch' && <iframe src={iframe.src} />}
               </div>
             </div>
           ))}
