@@ -396,6 +396,17 @@ class HashTag implements WpEditorPlugin {
       this.config.onWriteHash &&
         this.config.onWriteHash(focusNode.parentElement.firstChild.textContent.replace('#', ''));
 
+      const parentElement = focusNode.parentElement;
+      const text = parentElement.textContent.replace('#', '');
+
+      if (text === this.config.list[0]?.name) {
+        parentElement.dataset.id = String(this.config.list[0].id);
+      } else {
+        parentElement.dataset.id = '0';
+      }
+
+      parentElement.dataset.name = text;
+
       this.config.onCompleteHash &&
         this.config.onCompleteHash({ allHashTag: this.getAllHashTag() });
     }
