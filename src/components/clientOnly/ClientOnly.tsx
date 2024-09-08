@@ -4,16 +4,16 @@ import React, { ReactElement, ReactNode, useEffect, useState } from 'react';
 
 type Props = {
   children?: ReactNode;
-  fallback?: ReactNode | ReactElement | string;
+  fallback?: ReactNode;
 };
-const ClientOnly = ({ children, fallback }: Props) => {
+const ClientOnly = ({ children, fallback = '' }: Props) => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  return mounted ? <>{children}</> : fallback;
+  return <>{mounted ? children : fallback}</>;
 };
 
 export default ClientOnly;
