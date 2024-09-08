@@ -4,7 +4,7 @@ import React, { MouseEvent, ReactElement, useCallback } from 'react';
 import style from './CommentWriterInfo.module.scss';
 import Person from '../avatars/Person';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
-import { getTimeString } from '@/utils/dateUtils';
+import { getModifyTimeString } from '@/utils/dateUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
 type Props = {
@@ -53,7 +53,9 @@ const CommentWriterInfo = ({
         )}
 
         {!!createdAt && (
-          <span className={cx('author-time')}>{getTimeString(createdAt, locale)}</span>
+          <span className={cx('author-time')}>
+            {getModifyTimeString({ createdAt, updatedAt, locale })}
+          </span>
         )}
       </div>
     </div>
