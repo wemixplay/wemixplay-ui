@@ -111,6 +111,9 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
             plugin={[Mention, AutoUrlMatch, PasteToPlainText, CountTextLength]}
             config={{
               ...config,
+              pasteToPlainText: {
+                onMatchUrlReplace: onMatchUrl
+              },
               autoUrlMatch: {
                 onMatchUrl: (urls) => {
                   return onMatchUrl({ textUrls: urls });
