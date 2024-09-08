@@ -135,7 +135,11 @@ if (process.env.NODE_VI === 'OK') {
 }
 
 module.exports = {
-  external: [...Object.keys(packageJson.dependencies), /@babel\/runtime/, /fsevents/],
+  external:  [
+    ...Object.keys(packageJson.dependencies).filter(dep => dep !== 'react-youtube'),
+    /@babel\/runtime/,
+    /fsevents/
+  ],
   plugins,
   input: './src/index.ts',
   output: [
