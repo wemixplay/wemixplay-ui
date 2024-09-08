@@ -3548,10 +3548,10 @@ webidl-conversions@^7.0.0:
   resolved "https://registry.yarnpkg.com/webidl-conversions/-/webidl-conversions-7.0.0.tgz#256b4e1882be7debbf01d05f0aa2039778ea080a"
   integrity sha512-VwddBukDzu71offAQR975unBIGqfKZpM+8ZX6ySk8nYhVoo5CYaZyzt3YBvYtRtO+aoGlqxPg/B87NGVZ/fu6g==
 
-wemixplay-ui@^1.12.187:
-  version "1.12.187"
-  resolved "https://registry.yarnpkg.com/wemixplay-ui/-/wemixplay-ui-1.12.187.tgz#2d07663a18a2fb5584000af4539ee8b7c0d74e64"
-  integrity sha512-uM9pYE5CxJNto5G8TF1RPZ8fsDVyeGJfBKgVlwkoc+50VpfbUTko/QxQQDuTXZqwWJAcj8fN/cC3yCPIW3p1kA==
+wemixplay-ui@^1.12.42:
+  version "1.12.42"
+  resolved "https://registry.yarnpkg.com/wemixplay-ui/-/wemixplay-ui-1.12.42.tgz#cf2fb726b1ff26709559955b1e855d4a0b13410d"
+  integrity sha512-UBgl36+DuEQsuyrLK6rar3A3B1mrwH95nboVWSI6vWDss15NMhDtdHGuQTjGoXd2Z0HxlxNioCiKH4UFX8tv6Q==
   dependencies:
     "@types/jsdom" "^21.1.7"
     classnames "^2.5.1"
