@@ -9,6 +9,7 @@
 
   @include breakpoint-768 {
     padding: $sp-24 $sp-20 $sp-16;
+    border-radius: $sp-16;
   }
 
   &.has-click-event {
@@ -17,7 +18,7 @@
 
   .feed-header {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: space-between;
 
     .profile {
