@@ -194,7 +194,7 @@ const Ellipsis = ({
     if (contentEl) {
       initializeContentElement();
     }
-  }, [content, initializeContentElement]);
+  }, [initializeContentElement]);
 
   useLayoutEffect(() => {
     // 이 effect는 관측하는 디바이스 환경이 변경되었을 때 발동합니다.
@@ -202,7 +202,9 @@ const Ellipsis = ({
 
     if (contentEl) {
       // observingEnvs 배열 중 boolean이 변경되었다면, 기기가 변경되었다는 뜻이므로 initializeContentElement 함수를 호출해 말줄임 처리를 true로 변환하고 말줄임 처리가 필요한지 판별합니다.
-      const isEnvChanged = observingEnvs.some((env, index) => env !== prevObservingEnvs[index]);
+      const isEnvChanged = observingEnvs.length
+        ? observingEnvs.some((env, index) => env !== prevObservingEnvs.current[index])
+        : false;
 
       if (isEnvChanged) {
         prevObservingEnvs.current = [...observingEnvs];
