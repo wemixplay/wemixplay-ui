@@ -297,7 +297,11 @@ class HashTag implements WpEditorPlugin {
 
     const collapseCheckRange = selection.getRangeAt(0);
 
-    if (focusInHashTag && collapseCheckRange.startOffset === collapseCheckRange.endOffset) {
+    if (
+      focusInHashTag &&
+      collapseCheckRange.startOffset > 0 &&
+      collapseCheckRange.startOffset === collapseCheckRange.endOffset
+    ) {
       this.hashId = focusNode.parentElement.id;
       this.config.onWriteHash &&
         this.config.onWriteHash(focusNode?.parentElement?.textContent?.replace('#', ''));
@@ -315,19 +319,22 @@ class HashTag implements WpEditorPlugin {
   }) {
     const targetHashId = this.hashId;
 
-    const focusInHashTag = !!selection.focusNode?.parentElement?.classList?.contains?.('hash');
+    const focusNode = selection.focusNode;
+    const focusInHashTag = !!focusNode?.parentElement?.classList?.contains?.('hash');
     const focusInDecompleteHashTag =
-      focusInHashTag && !selection.focusNode?.parentElement?.classList?.contains?.('complete-hash');
+      focusInHashTag && !focusNode?.parentElement?.classList?.contains?.('complete-hash');
+
+    const focusOffset = selection.focusOffset;
 
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
-      if (focusInHashTag && !targetHashId) {
-        this.hashId = selection.focusNode.parentElement.id;
+      if (focusInHashTag && focusOffset > 1 && !targetHashId) {
+        this.hashId = focusNode.parentElement.id;
 
         this.config.onWriteHash &&
-          this.config.onWriteHash(
-            selection.focusNode?.parentElement?.textContent?.replace('#', '')
-          );
-      } else if (targetHashId && selection.focusNode.firstChild?.textContent === '#') {
+          this.config.onWriteHash(focusNode?.parentElement?.textContent?.replace('#', ''));
+      } else if (focusInHashTag && targetHashId && focusOffset <= 1) {
+        this.hashId = '';
+      } else if (targetHashId && focusNode.firstChild?.textContent === '#') {
         this.leaveHashTag({ selection, range });
       } else if (!focusInHashTag && targetHashId) {
         this.hashId = '';
@@ -338,13 +345,13 @@ class HashTag implements WpEditorPlugin {
       if (
         targetHashId &&
         focusInDecompleteHashTag &&
-        !selection.focusNode.parentElement.nextElementSibling &&
+        !focusNode.parentElement.nextElementSibling &&
         !event.nativeEvent.isComposing
       ) {
         event.preventDefault();
 
         this.leaveHashTag({ selection, range });
-      } else if (targetHashId && selection.focusNode.firstChild?.textContent === '#') {
+      } else if (targetHashId && focusNode.firstChild?.textContent === '#') {
         this.leaveHashTag({ selection, range });
       }
     } else if (event.code === 'ArrowUp' || event.code === 'ArrowDown') {
@@ -362,6 +369,17 @@ class HashTag implements WpEditorPlugin {
         event.preventDefault();
 
         this.selectHashItem();
+      } else if (focusInHashTag && focusOffset <= 1) {
+        event.preventDefault();
+
+        // 공백 노드 추가
+        const lineBreakNode = document.createElement('br');
+        focusNode.parentElement.parentNode.insertBefore(lineBreakNode, focusNode.parentElement);
+
+        range.setStartAfter(lineBreakNode);
+        range.setEndAfter(lineBreakNode);
+        selection.removeAllRanges();
+        selection.addRange(range);
       }
     }
   }

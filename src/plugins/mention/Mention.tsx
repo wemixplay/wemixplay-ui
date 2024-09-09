@@ -244,7 +244,11 @@ class Mention implements WpEditorPlugin {
 
     const collapseCheckRange = selection.getRangeAt(0);
 
-    if (focusInMentionTag && collapseCheckRange.startOffset === collapseCheckRange.endOffset) {
+    if (
+      focusInMentionTag &&
+      collapseCheckRange.startOffset > 0 &&
+      collapseCheckRange.startOffset === collapseCheckRange.endOffset
+    ) {
       this.mentionId = focusNode.parentElement.id;
       this.config.onWriteMention &&
         this.config.onWriteMention(focusNode?.parentElement?.textContent?.replace('@', ''));
@@ -316,20 +320,22 @@ class Mention implements WpEditorPlugin {
   }) {
     const targetMentionId = this.mentionId;
 
-    const focusInMentionTag =
-      !!selection.focusNode?.parentElement?.classList?.contains?.('mention');
+    const focusNode = selection.focusNode;
+    const focusOffset = selection.focusOffset;
+
+    const focusInMentionTag = !!focusNode?.parentElement?.classList?.contains?.('mention');
     const focusInDecompleteMentionTag =
-      !!selection.focusNode?.parentElement?.classList?.contains?.('will-mention') ||
-      !!selection.focusNode?.parentElement?.classList?.contains?.('unknown-mention');
+      !!focusNode?.parentElement?.classList?.contains?.('will-mention') ||
+      !!focusNode?.parentElement?.classList?.contains?.('unknown-mention');
 
     if (event.code === 'ArrowLeft' || event.code === 'ArrowRight') {
-      if (!targetMentionId && focusInMentionTag) {
-        this.mentionId = selection.focusNode.parentElement.id;
+      if (!targetMentionId && focusOffset > 1 && focusInMentionTag) {
+        this.mentionId = focusNode.parentElement.id;
         this.config.onWriteMention &&
-          this.config.onWriteMention(
-            selection.focusNode?.parentElement?.textContent?.replace('@', '')
-          );
-      } else if (targetMentionId && selection.focusNode.firstChild?.textContent === '@') {
+          this.config.onWriteMention(focusNode?.parentElement?.textContent?.replace('@', ''));
+      } else if (focusInMentionTag && targetMentionId && focusOffset <= 1) {
+        this.mentionId = '';
+      } else if (targetMentionId && focusNode.firstChild?.textContent === '@') {
         this.leaveMentionTag({ selection, range });
       } else if (targetMentionId && !focusInMentionTag) {
         this.mentionId = '';
@@ -340,13 +346,13 @@ class Mention implements WpEditorPlugin {
       if (
         targetMentionId &&
         focusInDecompleteMentionTag &&
-        !selection.focusNode.parentElement.nextElementSibling &&
+        !focusNode.parentElement.nextElementSibling &&
         !event.nativeEvent.isComposing
       ) {
         event.preventDefault();
 
         this.leaveMentionTag({ selection, range });
-      } else if (targetMentionId && selection.focusNode.firstChild?.textContent === '@') {
+      } else if (targetMentionId && focusNode.firstChild?.textContent === '@') {
         this.leaveMentionTag({ selection, range });
       }
     } else if (event.code === 'ArrowUp' || event.code === 'ArrowDown') {
@@ -364,6 +370,17 @@ class Mention implements WpEditorPlugin {
         event.preventDefault();
 
         this.selectMentionItem();
+      } else if (focusInMentionTag && focusOffset <= 1) {
+        event.preventDefault();
+
+        // 공백 노드 추가
+        const lineBreakNode = document.createElement('br');
+        focusNode.parentElement.parentNode.insertBefore(lineBreakNode, focusNode.parentElement);
+
+        range.setStartAfter(lineBreakNode);
+        range.setEndAfter(lineBreakNode);
+        selection.removeAllRanges();
+        selection.addRange(range);
       }
     }
   }
