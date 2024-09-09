@@ -7,6 +7,7 @@ import Ellipsis from '../ellipsis/Ellipsis';
 import { convertMarkdownToHtmlStr } from '@/utils/valueParserUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import style from './FeedTextContent.module.scss';
+import { sanitize } from 'isomorphic-dompurify';
 
 type Props = {
   className?: string;
@@ -32,7 +33,7 @@ const FeedTextContent = ({
   const { isDesktop, isMobile, isTablet } = useCheckDevice();
 
   const htmlContent = useMemo(() => {
-    return convertMarkdownToHtmlStr(content ?? '');
+    return sanitize(convertMarkdownToHtmlStr(content ?? ''), { ADD_ATTR: ['target'] });
   }, [content]);
 
   const handleClick = useCallback(
