@@ -6,6 +6,7 @@ import Carousel from '../carousel/Carousel';
 import { SvgIcoDeleteX, SvgIcoSenstive, SvgNoimagePlaceholder } from '@/assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import Spinner from '../loadings/Spinner';
+import Swiper from 'swiper';
 
 type Props = {
   className?: string;
@@ -53,7 +54,12 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
   }, [images]);
 
   return (
-    <div className={cx(className, 'images-upload-preview', { 'is-preview': !!handleDeleteImg })}>
+    <div
+      className={cx(className, 'images-upload-preview', { 'is-preview': !!handleDeleteImg })}
+      onClick={(e) => {
+        e.stopPropagation();
+      }}
+    >
       <Carousel
         className={cx('image-preview-slider')}
         freeMode={handleDeleteImg ? true : false}

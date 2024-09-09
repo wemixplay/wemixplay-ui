@@ -1,5 +1,6 @@
 .images-upload-preview {
   margin: $sp-12 0 $sp-12 0;
+  cursor: default;
 
   .image-preview-slider {
     overflow: hidden;
@@ -17,6 +18,11 @@
         .swiper-wrapper {
           display: flex;
           align-items: center;
+          cursor: grab;
+
+          &:active {
+            cursor: grabbing;
+          }
         }
 
         .swiper-slide {
