@@ -306,12 +306,15 @@ const HashList = forwardRef<HashListRef, Props>(
                 listElement(item)
               ) : (
                 <>
-                  <SvgIcoHashtag width={24} height={24} className={cx('icon')} />
                   <div className={cx('info-area')}>
-                    <strong className={cx('title')}>{item.name}</strong>
-                    {!!item.postCnt && (
+                    <strong className={cx('title')}>
+                      <span>#</span>
+                      {item.name}
+                    </strong>
+
+                    {/* {!!item.postCnt && (
                       <span className={cx('count')}>{toFormatterByInt(item.postCnt, 1)} Posts</span>
-                    )}
+                    )} */}
                   </div>
                 </>
               )}
