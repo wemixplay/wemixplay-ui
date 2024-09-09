@@ -1,5 +1,6 @@
 import { ClipboardEvent, MutableRefObject } from 'react';
 import { WpEditorPlugin } from '@/components/editor/WpEditor';
+import { sanitize } from 'isomorphic-dompurify';
 
 type PasteToPlainTextConfig = {
   onMatchUrlReplace?: (params: {
@@ -60,6 +61,7 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
     const originHtmlTextData = event.nativeEvent.clipboardData.getData('text/html');
 
     let plainTextData = event.nativeEvent.clipboardData.getData('text/plain');
+    plainTextData = sanitize(plainTextData);
     plainTextData = plainTextData.replace(
       /<img[^>]*src="([^"]*)"[^>]*>|<video[^>]*>.*?<\/video>|<iframe[^>]*>.*?<\/iframe>/gi,
       '$1'
