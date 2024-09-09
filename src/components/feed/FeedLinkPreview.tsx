@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useCallback } from 'react';
+import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedLinkPreview.module.scss';
 import { SvgIcoDeleteX } from '@/assets/svgs';
 import WpImage from '../image/WpImage';
@@ -20,19 +20,23 @@ type Props = {
 const cx = makeCxFunc(style);
 
 const FeedLinkPreview = ({ className = '', ogMetaData, handleDeleteOgMetaData }: Props) => {
-  const windowOpenExternalUrl = useCallback(() => {
-    if (!ogMetaData?.url || handleDeleteOgMetaData) {
-      return;
-    }
+  const windowOpenExternalUrl = useCallback(
+    (e: MouseEvent<HTMLDivElement>) => {
+      if (!ogMetaData?.url || handleDeleteOgMetaData) {
+        return;
+      }
 
-    const anchorTag = document.createElement('a');
+      const anchorTag = document.createElement('a');
 
-    anchorTag.href = ogMetaData.url;
-    anchorTag.target = '_blank';
+      anchorTag.href = ogMetaData.url;
+      anchorTag.target = '_blank';
 
-    anchorTag.click();
-    anchorTag.remove();
-  }, [ogMetaData?.url, handleDeleteOgMetaData]);
+      anchorTag.click();
+      anchorTag.remove();
+      e.stopPropagation();
+    },
+    [ogMetaData?.url, handleDeleteOgMetaData]
+  );
 
   return (
     <div
