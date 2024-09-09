@@ -22,20 +22,18 @@
     .btn-img-delete {
       position: absolute;
       z-index: 1;
-      top: 0;
-      right: 0;
-
-      svg {
-        rect {
-          fill: var(--semantic-label-neutral);
-        }
-      }
+      top: 2px;
+      right: 2px;
     }
   }
 
   .preview-iframe-area {
     position: relative;
-    border-radius: $rd-12;
+    border-radius: $rd-8;
+
+    @include breakpoint-768 {
+      border-radius: $rd-12;
+    }
 
     &::after {
       display: block;

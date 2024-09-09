@@ -7,8 +7,12 @@
 
     :global {
       .swiper {
-        border-radius: $rd-12;
+        border-radius: $rd-8;
         background: var(--semantic-static-black);
+
+        @include breakpoint-768 {
+          border-radius: $rd-12;
+        }
 
         .swiper-wrapper {
           display: flex;
@@ -115,8 +119,8 @@
     .btn-img-delete {
       position: absolute;
       z-index: 2;
-      top: 0;
-      right: 0;
+      top: 2px;
+      right: 2px;
       background-color: transparent;
     }
   }
@@ -223,8 +227,8 @@
       .btn-img-delete {
         position: absolute;
         z-index: 2;
-        top: 0;
-        right: 0;
+        top: 2px;
+        right: 2px;
         background-color: transparent;
       }
     }
