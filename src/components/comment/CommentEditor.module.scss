@@ -29,9 +29,9 @@
       @include add-body-text-14-m;
 
       @include breakpoint-768 {
-        // border: 1px solid var(--semantic-label-alternative);
-
         @include add-body-text-16-m;
+
+        border: 0;
       }
 
       &:focus {
@@ -40,8 +40,11 @@
       }
 
       &.filled {
-        border-color: var(--semantic-label-alternative) !important;
-        background: transparent;
+        @include breakpoint-768 {
+          border: 1px solid var(--semantic-label-alternative);
+          border-color: var(--semantic-label-alternative) !important;
+          background: var(--semantic-background-normal-normal);
+        }
       }
 
       &:empty {
