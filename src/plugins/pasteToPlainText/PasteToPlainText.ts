@@ -92,6 +92,8 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
 
       if (maxLength > 0) {
         plainTextData = plainTextData.slice(0, maxLength);
+      } else {
+        plainTextData = '';
       }
     }
 
