@@ -1,5 +1,7 @@
 .editor-contents {
   color: var(--semantic-label-normal);
+  white-space: pre-wrap;
+  word-break: break-all;
 
   @include add-body-text-18-m;
 
