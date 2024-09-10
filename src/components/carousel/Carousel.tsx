@@ -12,6 +12,7 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 
 import style from './Carousel.module.scss';
+import { SvgIcoCarouselNext, SvgIcoCarouselPrev } from '@/assets/svgs';
 
 const cx = makeCxFunc(style);
 
@@ -204,8 +205,8 @@ const Carousel = ({
   allowTouchMove = true,
   navigation = false,
   pagination = false,
-  prevButton = <div>prev</div>,
-  nextButton = <div>next</div>,
+  prevButton = <SvgIcoCarouselPrev />,
+  nextButton = <SvgIcoCarouselNext />,
   onSlideChangeTransitionEnd,
   handleOnSlideChangeTransitionEnd,
   onSlideChange,
