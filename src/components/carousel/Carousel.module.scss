@@ -38,8 +38,12 @@
       align-items: center;
       justify-content: center;
       border-radius: $rd-100;
-      background: var(--semantic-label-inverse-normal);
+      background: var(--semantic-label-normal);
       cursor: pointer;
+
+      svg path {
+        fill: var(--semantic-label-inverse-normal);
+      }
 
       &.nav-prev-btn {
         left: 6px;
