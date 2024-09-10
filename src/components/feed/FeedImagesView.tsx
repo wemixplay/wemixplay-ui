@@ -64,6 +64,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
         className={cx('image-preview-slider')}
         freeMode={handleDeleteImg ? true : false}
         pagination={!handleDeleteImg && images.length > 1}
+        navigation={!handleDeleteImg && images.length > 1}
         loop={false}
         slidesPerView={handleDeleteImg ? 'auto' : 1}
         spaceBetween={handleDeleteImg ? 10 : 0}

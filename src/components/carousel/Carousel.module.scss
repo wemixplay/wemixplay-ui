@@ -1,4 +1,10 @@
 .carousel-wrapper {
+  &:hover {
+    .carousel-navigation {
+      opacity: 1;
+    }
+  }
+
   .carousel-swiper {
     :global {
       .swiper-slide {
@@ -8,14 +14,44 @@
   }
 
   .carousel-navigation {
+    position: absolute;
+    z-index: 1;
+    top: calc(50% - 50px);
+    left: 0;
+    display: none;
+    width: 100%;
+    opacity: 0;
+    transform: translateY(-50%);
+    transition: 0.3s;
+
+    @include breakpoint-1024 {
+      display: block;
+    }
+
     button {
-      padding: 4px;
-      border: 1px solid;
-      margin-right: 4px;
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      display: flex;
+      width: 52px;
+      height: 52px;
+      align-items: center;
+      justify-content: center;
+      border-radius: $rd-100;
+      background: var(--semantic-label-inverse-normal);
       cursor: pointer;
+
+      &.nav-prev-btn {
+        left: 6px;
+      }
+
+      &.nav-next-btn {
+        right: 6px;
+      }
 
       &:disabled {
         cursor: not-allowed;
+        opacity: 0;
       }
     }
   }
