@@ -1,9 +1,7 @@
 export const isYouTubeURL = (url: string) => {
   // 정규식 패턴 정의
   const youTubePattern =
-    /^(https:\/\/)?(www\.)?(youtube\.com\/watch\?v=[a-zA-Z0-9_-]+(&.*)?|youtu\.be\/[a-zA-Z0-9_-]+)(\?.*)?$/;
-
-  console.log(youTubePattern.test(url));
+    /^(https:\/\/)?(www\.)?(youtube\.com\/(watch\?v=|shorts\/)[a-zA-Z0-9_-]+(&.*)?|youtu\.be\/[a-zA-Z0-9_-]+)(\?.*)?$/;
 
   // 정규식 테스트
   return youTubePattern.test(url);
@@ -15,7 +13,7 @@ export const convertIframeYouTubeURL = (url: string) => {
     /https:\/\/youtu\.be\/([a-zA-Z0-9_-]+)(?:\?[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*/;
 
   const longUrlPattern =
-    /https:\/\/www\.youtube\.com\/watch\?v=([a-zA-Z0-9_-]+)(?:&[a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*/;
+    /https:\/\/www\.youtube\.com\/(?:watch\?v=|shorts\/)([a-zA-Z0-9_-]+)(?:[&?][a-zA-Z0-9_-]+=[a-zA-Z0-9_-]+)*/;
 
   // 정규식 매칭 및 변환
   if (shortUrlPattern.test(url)) {
