@@ -34,9 +34,12 @@
       align-items: center;
       padding: $sp-8;
       border-radius: $rd-8;
+      color: var(--semantic-label-normal);
       cursor: pointer;
       transition: background 0.3s;
       user-select: none;
+
+      @include label-01-reading-b;
 
       .thumb {
         width: 24px;
@@ -67,8 +70,7 @@
         /* stylelint-disable-next-line custom-property-pattern */
         background: var(--semantic-line-solid-neutral);
         color: var(--semantic-label-normal);
-
-        @include label-01-reading-b;
+        font-weight: 700;
       }
     }
   }
