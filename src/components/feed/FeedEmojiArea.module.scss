@@ -38,6 +38,9 @@
 
     &.active {
       // 내가 이모지를 클릭했을때 스타일
+      .count {
+        color: var(--semantic-primary-normal);
+      }
     }
 
     .count {

@@ -193,7 +193,7 @@
         color: var(--semantic-label-assistive);
 
         > b {
-          color: var(--semantic-label-alternative);
+          color: var(--semantic-label-normal);
         }
       }
 
@@ -201,10 +201,9 @@
         position: relative;
         height: 40px;
         padding: 0 $sp-20;
-        border-radius: $sp-8;
-        /* stylelint-disable-next-line custom-property-pattern */
-        background: var(--Cool-Neutral-10, #171719);
-        color: var(--semantic-static-white);
+        border-radius: $rd-100;
+        background: var(--semantic-label-normal);
+        color: var(--semantic-label-inverse-normal);
         text-align: center;
         transition: background 0.25s, color 0.25s;
 
