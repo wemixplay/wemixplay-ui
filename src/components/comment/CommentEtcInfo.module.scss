@@ -44,9 +44,6 @@
 
     &.active {
       // 내가 좋아요 했을때 스타일
-      .count {
-        color: var(--semantic-primary-normal);
-      }
 
       .icon {
         display: none;
