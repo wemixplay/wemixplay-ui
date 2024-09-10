@@ -16,9 +16,12 @@
 
     :global {
       .avatar {
+        width: 32px;
+        height: 32px;
+
         @include breakpoint-768 {
-          width: 44px !important;
-          height: 44px !important;
+          width: 44px;
+          height: 44px;
         }
       }
     }
@@ -35,6 +38,7 @@
 
     .author-name {
       width: 100%;
+      min-height: 17px;
       color: var(--semantic-label-normal);
 
       @include add-body-text-15-b;
@@ -61,7 +65,7 @@
     }
 
     .author-time {
-      margin-top: $sp-4;
+      margin-top: 1px;
       color: var(--semantic-label-alternative);
       font-feature-settings: "ss10" on;
 
@@ -69,6 +73,8 @@
 
       @include breakpoint-768 {
         @include add-body-text-15-m;
+
+        margin-top: $sp-4;
       }
     }
   }

@@ -40,7 +40,7 @@ const CommentWriterInfo = ({
   return (
     <div className={cx(className, 'author', { 'has-click-event': onProfileClick })}>
       <div className={cx('author-avatar')} onClick={handleProfileClick}>
-        <Person src={writerImg} />
+        <Person src={writerImg} size={'custom'} />
       </div>
       <div className={cx('author-info')}>
         <strong className={cx('author-name')} onClick={handleProfileClick}>
