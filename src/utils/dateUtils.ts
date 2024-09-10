@@ -341,17 +341,19 @@ export const getTimeString = (date: string | number, locale = 'en') => {
   const targetTimeStamp = typeof date === 'string' ? getDateUnix(date) : date;
 
   const daysGap = Math.abs(getGapFromNow(targetTimeStamp, 'day'));
+  const currentYear = new Date().getFullYear();
+  const targetYear = dayjs(getTimestamp(targetTimeStamp)).format('YYYY');
 
   const isOneWeekAgo = daysGap >= DAYS_IN_A_WEEK;
 
   let dateFormat = locale === 'ko' ? 'YYYY년 MM월 DD일' : 'MMM D, YYYY';
 
-  if (daysGap < 365) {
+  if (Number(currentYear) === Number(targetYear)) {
     dateFormat = locale === 'ko' ? 'MM월 DD일' : 'MMM D';
   }
 
   return isOneWeekAgo
-    ? dayjs(targetTimeStamp).format(dateFormat)
+    ? dayjs(getTimestamp(targetTimeStamp)).format(dateFormat)
     : formatRelativeTime(targetTimeStamp, locale);
 };
 
