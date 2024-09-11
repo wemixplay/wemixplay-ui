@@ -306,7 +306,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         textUrls: string[];
         mediaUrls: { tag: 'img' | 'video' | 'iframe'; src: string }[];
       }) => {
-        const imagePattern = /\.(jpg|jpeg|png|gif|webp|avif)$/i;
+        const imagePattern = /\.(jpg|jpeg|png|gif|webp|avif)(\?.*)?$/i;
 
         const testUrlList = [...textUrls, ...mediaUrls.map((item) => item.src)];
 
