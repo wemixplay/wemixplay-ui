@@ -34,7 +34,8 @@
 
   &-info {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: column;
+    padding-right: $sp-12;
 
     .author-name {
       width: 100%;
