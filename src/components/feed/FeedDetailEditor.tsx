@@ -306,7 +306,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         textUrls: string[];
         mediaUrls: { tag: 'img' | 'video' | 'iframe'; src: string }[];
       }) => {
-        const imagePattern = /\.(jpg|jpeg|png|gif|bmp|webp)(\?.*)?$/i;
+        const imagePattern = /\.(jpg|jpeg|png|gif|bmp|tiff|webp|avif)(\?.*)?$/i;
 
         const testUrlList = [...textUrls, ...mediaUrls.map((item) => item.src)];
 
@@ -520,7 +520,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                   return onMatchUrl({ textUrls: urls, mediaUrls: [] });
                 },
                 onChangeMatchUrls: (urls) => {
-                  const imagePattern = /\.(jpg|jpeg|png|gif|bmp|webp)$/i;
+                  const imagePattern = /\.(jpg|jpeg|png|gif|bmp|webp|tiff|avif)$/i;
                   const normalUrls = urls.filter(
                     (url) => !imagePattern.test(url) && !isYouTubeURL(url) && !isTwitchURL(url)
                   );
@@ -579,7 +579,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               <input
                 ref={imgInputRef}
                 type="file"
-                accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/bmp"
+                accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/bmp, image/tiff"
                 onChange={onImageFileChange}
               />
 
