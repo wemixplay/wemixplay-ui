@@ -71,6 +71,8 @@
       padding: $sp-16;
 
       @include breakpoint-768 {
+        height: 120px;
+        justify-content: center;
         padding: $sp-12 $sp-16;
       }
 
@@ -78,6 +80,10 @@
         @include headline-02-b;
 
         color: var(--semantic-label-normal);
+
+        @include breakpoint-768 {
+          @include ellipsis(1);
+        }
       }
 
       .link {
