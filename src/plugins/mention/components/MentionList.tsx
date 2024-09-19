@@ -171,6 +171,10 @@ const MentionList = forwardRef<MentionListRef, Props>(
           visibility: 'visible'
         };
 
+        if (isMobile) {
+          positionStyle.maxWidth = '95%';
+        }
+
         switch (boxDirection) {
           case 'top':
             positionStyle.top = top - dropboxElHeight;
