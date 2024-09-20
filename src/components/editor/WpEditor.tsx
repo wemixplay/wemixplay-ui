@@ -178,7 +178,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           recordStack();
         }
       });
-    }, []);
+    }, [recordStack]);
 
     const getSelection = useCallback(() => {
       const range = document.createRange();
@@ -212,42 +212,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         }
       }
     };
-
-    const insertLineBreak = useCallback(() => {
-      const { selection } = getSelection();
-
-      const { focusNode, focusOffset } = selection;
-
-      const br = document.createElement('br');
-      const range = selection.getRangeAt(0);
-      range.deleteContents(); // 선택된 내용을 삭제
-
-      const frag = document.createDocumentFragment();
-      const subBr = document.createElement('br');
-
-      if (focusNode.nodeType === Node.TEXT_NODE) {
-        if (focusNode.parentNode.nodeType === Node.ELEMENT_NODE) {
-        }
-        frag.appendChild(subBr);
-      }
-      frag.appendChild(br);
-
-      range.insertNode(frag);
-      range.setStartAfter(br);
-      range.setEndAfter(br);
-
-      selection.removeAllRanges();
-      selection.addRange(range);
-
-      range.collapse(false);
-
-      const brRect = br.getBoundingClientRect();
-      const editableRect = contentEditableEl.current.getBoundingClientRect();
-
-      if (brRect.bottom >= editableRect.bottom) {
-        contentEditableEl.current.scrollTop += brRect.bottom - editableRect.bottom + brRect.height;
-      }
-    }, []);
 
     const rangeMoveContentEnd = useCallback(() => {
       const { selection, range } = getSelection();
@@ -335,53 +299,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         plugins.forEach((plugin) => {
           plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
         });
-
-        // if (e.code === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
-        //   const range = selection.getRangeAt(0);
-        //   const anchorNode = range.startContainer;
-        //   const offset = range.startOffset;
-
-        //   // 텍스트 노드의 시작 부분에 커서가 위치한 경우
-        //   if (
-        //     anchorNode.nodeType === Node.TEXT_NODE &&
-        //     offset === 0 &&
-        //     anchorNode.parentNode.nodeName !== 'DIV'
-        //   ) {
-        //     e.preventDefault();
-
-        //     // 부모 요소 앞에 <br> 태그 삽입
-        //     const br = document.createElement('br');
-        //     anchorNode.parentNode.parentNode.insertBefore(br, anchorNode.parentNode);
-
-        //     // 커서를 새로운 줄로 이동
-        //     range.setStartBefore(anchorNode);
-        //     range.setEndBefore(anchorNode);
-        //     selection.removeAllRanges();
-        //     selection.addRange(range);
-
-        //     contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
-
-        //     return;
-        //   }
-        //   // 커서가 요소 노드의 시작 부분에 위치한 경우
-        //   else if (anchorNode.nodeType === Node.ELEMENT_NODE && anchorNode.nodeName !== 'DIV') {
-        //     e.preventDefault();
-
-        //     // 해당 요소 앞에 <br> 태그 삽입
-        //     const br = document.createElement('br');
-        //     anchorNode.parentNode.insertBefore(br, anchorNode);
-
-        //     // 커서를 새로운 줄로 이동
-        //     range.setStartBefore(anchorNode);
-        //     range.setEndBefore(anchorNode);
-        //     selection.removeAllRanges();
-        //     selection.addRange(range);
-
-        //     contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
-
-        //     return;
-        //   }
-        // }
 
         if (
           (e.code === 'Enter' || e.code === 'NumpadEnter') &&
@@ -592,13 +509,12 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           onBlur={handleBlur}
           onClick={handleClick}
         ></WpEditorContents>
-        {plugins.map((plugin, index) =>
-          plugin.component ? (
-            <div key={index}>{plugin.component({ plugin })}</div>
-          ) : (
-            <div key={index}></div>
-          )
-        )}
+        {plugins
+          .filter((plugin) => plugin?.component)
+          .map((plugin, index) => {
+            const Component = plugin.component;
+            return <Component key={plugin.commandKey ?? index} plugin={plugin} />;
+          })}
       </div>
     );
   }
