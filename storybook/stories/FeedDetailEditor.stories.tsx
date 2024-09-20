@@ -38,7 +38,11 @@ export const Default: StoryComponent = {
           { id: 5, name: 'Easton' },
           { id: 6, name: 'Easton' },
           { id: 7, name: 'Easton' }
-        ]
+        ],
+        maxMentionCnt: 4,
+        onCompleteMention({ allMention, currentMention }) {
+          // console.log(allMention, currentMention);
+        }
       },
       hash: {
         list: [
@@ -50,8 +54,11 @@ export const Default: StoryComponent = {
           { id: 6, name: 'Easton' },
           { id: 7, name: 'Easton' }
         ],
+        onWriteHash(text) {
+          // console.log(text);
+        },
         onCompleteHash({ allHashTag, currentHashTag }) {
-          console.log(allHashTag);
+          // console.log(allHashTag, currentHashTag);
         }
       }
     }

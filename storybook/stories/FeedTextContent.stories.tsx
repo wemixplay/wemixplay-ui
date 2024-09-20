@@ -23,7 +23,8 @@ export const Default: StoryComponent = {
     }
   },
   args: {
-    content: 'WP@[김종완](31) ㅁㅇㅈㅁㅇㅁㅈㅇ'
+    content:
+      '[https://wemixplay.com/nft/detail/0xe69921d540f235b534844b65bbb38aac99ef6036/1000004671](https://wemixplay.com/nft/detail/0xe69921d540f235b534844b65bbb38aac99ef6036/1000004671)[:target=&amp;quot;_blank&amp;quot;] [LINEBREAK][LINEBREAK]Current NFT stats havent updated on wemix yet. Picture shows current stats and with buff and without. WP#[nightcrows](25) WP#[cleric](95) WP#[naeu102](96) WP#[rook](97)'
   },
   render: Template
 };

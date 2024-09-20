@@ -14,7 +14,8 @@ const cx = classNames.bind(style);
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 export default {
   component: CheckBox,
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  globals: { theme: 'dark' }
 } as Meta<FunctionComponent<CheckBoxProps>>;
 
 const Template: StoryTemplate = (args) => {
