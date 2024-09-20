@@ -14,7 +14,9 @@ const HashContainer = ({ hash, children }: Props) => {
   const [config, setConfig] = useState(hash.config);
 
   useEffect(() => {
-    hash.observe({ setTargetHashId, setConfig });
+    if (hash?.observe) {
+      hash.observe({ setTargetHashId, setConfig });
+    }
   }, [hash]);
 
   return targetHashId ? <HashPortal>{children({ config, targetHashId })}</HashPortal> : <></>;

@@ -14,7 +14,9 @@ const MentionContainer = ({ mention, children }: Props) => {
   const [config, setConfig] = useState(mention.config);
 
   useEffect(() => {
-    mention.observe({ setTargetMentionId, setConfig });
+    if (mention?.observe) {
+      mention.observe({ setTargetMentionId, setConfig });
+    }
   }, [mention]);
 
   return targetMentionId ? (
