@@ -49,14 +49,9 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
     return (str ?? '').match(urlRegex)?.map((item) => item.trim()) ?? [];
   }
 
-  handlePaste({
-    selection,
-    event
-  }: {
-    selection: Selection;
-    range: Range;
-    event: ClipboardEvent<HTMLDivElement>;
-  }) {
+  handlePaste({ event }: { event: ClipboardEvent<HTMLDivElement> }) {
+    const selection = window.getSelection();
+
     const originTextData = event.nativeEvent.clipboardData.getData('text');
     const originHtmlTextData = event.nativeEvent.clipboardData.getData('text/html');
 

@@ -18,7 +18,6 @@ import React, {
   useRef,
   useState
 } from 'react';
-import classNames from 'classnames/bind';
 import style from './WpEditor.module.scss';
 import { MentionConfig } from '../../plugins/mention/Mention';
 import { HashTagConfig } from '../../plugins/hashTag/HashTag';
@@ -36,42 +35,14 @@ export interface WpEditorPlugin<C extends any = any> {
 
   setConfig: (config?: C | undefined) => void;
   component?: <P extends { plugin: any }>(props: P) => React.JSX.Element;
-  handleClick?: (params: {
-    selection: Selection;
-    range: Range;
-    event: MouseEvent<HTMLDivElement>;
-  }) => void;
-  handleKeyDown?: (params: {
-    selection: Selection;
-    range: Range;
-    event: KeyboardEvent<HTMLDivElement>;
-  }) => void;
-  handleChange?: (params: {
-    selection: Selection;
-    range: Range;
-    event: ChangeEvent<HTMLDivElement>;
-  }) => void;
-  handlePaste?: (params: {
-    selection: Selection;
-    range: Range;
-    event: ClipboardEvent<HTMLDivElement>;
-  }) => void;
-  handleCopy?: (params: {
-    selection: Selection;
-    range: Range;
-    event: ClipboardEvent<HTMLDivElement>;
-  }) => void;
-  handleFocus?: (params: {
-    selection: Selection;
-    range: Range;
-    event: FocusEvent<HTMLDivElement>;
-  }) => void;
-  handleBlur?: (params: {
-    selection: Selection;
-    range: Range;
-    event: FocusEvent<HTMLDivElement>;
-  }) => void;
-  handleUndoRedo?: (params: { selection: Selection; range: Range }) => void;
+  handleClick?: (params: { event: MouseEvent<HTMLDivElement> }) => void;
+  handleKeyDown?: (params: { event: KeyboardEvent<HTMLDivElement> }) => void;
+  handleChange?: (params: { event: ChangeEvent<HTMLDivElement> }) => void;
+  handlePaste?: (params: { event: ClipboardEvent<HTMLDivElement> }) => void;
+  handleCopy?: (params: { event: ClipboardEvent<HTMLDivElement> }) => void;
+  handleFocus?: (params: { event: FocusEvent<HTMLDivElement> }) => void;
+  handleBlur?: (params: { event: FocusEvent<HTMLDivElement> }) => void;
+  handleUndoRedo?: (params: { type: 'historyUndo' | 'historyRedo' }) => void;
 }
 
 export interface WpEditorPluginConstructor {
@@ -229,7 +200,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     const handleUndoRedo = useCallback(
       (e: InputEvent | { inputType: string; preventDefault: () => void }) => {
-        const { selection } = getSelection();
         let { range } = getSelection();
 
         if (e.inputType === 'historyUndo' || e.inputType === 'historyRedo') {
@@ -266,7 +236,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           previousRevisions.current.disabled = true;
 
           plugins.forEach((plugin) => {
-            plugin.handleUndoRedo && plugin.handleUndoRedo({ selection, range });
+            plugin.handleUndoRedo &&
+              plugin.handleUndoRedo({ type: e.inputType as 'historyUndo' | 'historyRedo' });
           });
         } else {
           const { index } = previousRevisions.current;
@@ -283,7 +254,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     const handleKeyDown = useCallback(
       (e: KeyboardEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
+        const { selection } = getSelection();
         const prevData = contentEditableEl.current.innerHTML;
 
         if ((e.ctrlKey && e.code === 'KeyB') || (e.metaKey && e.code === 'KeyB')) {
@@ -297,7 +268,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         }
 
         plugins.forEach((plugin) => {
-          plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
+          plugin.handleKeyDown && plugin.handleKeyDown({ event: e });
         });
 
         if (
@@ -339,8 +310,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     const handlePostDataChange = useCallback(
       (e: ChangeEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         if (!e.target.innerHTML) {
           // 전체 HTML을 제거하여 초기화
           contentEditableEl.current.innerHTML = '';
@@ -349,7 +318,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         removeFontTagAtCursor();
 
         for (const plugin of plugins) {
-          plugin.handleChange && plugin.handleChange({ selection, range, event: e });
+          plugin.handleChange && plugin.handleChange({ event: e });
         }
 
         handleChange &&
@@ -359,37 +328,31 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
         recordStack();
       },
-      [getSelection, handleChange, recordStack, name, plugins, textareaProps]
+      [handleChange, recordStack, name, plugins, textareaProps]
     );
 
     const handleClick = useCallback(
       (e: MouseEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         plugins.forEach((plugin) => {
-          plugin.handleClick && plugin.handleClick({ selection, range, event: e });
+          plugin.handleClick && plugin.handleClick({ event: e });
         });
       },
-      [getSelection, plugins]
+      [plugins]
     );
 
     const handleCopy = useCallback(
       (e: ClipboardEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         plugins.forEach((plugin) => {
-          plugin.handleCopy && plugin.handleCopy({ selection, range, event: e });
+          plugin.handleCopy && plugin.handleCopy({ event: e });
         });
 
         textareaProps.onCopy && textareaProps.onCopy(e);
       },
-      [getSelection, plugins, textareaProps]
+      [plugins, textareaProps]
     );
 
     const handlePaste = useCallback(
       (e: ClipboardEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         if (
           previousRevisions.current.stack[previousRevisions.current.index] !==
           contentEditableEl.current.innerHTML
@@ -399,38 +362,34 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         }
 
         plugins.forEach((plugin) => {
-          plugin.handlePaste && plugin.handlePaste({ selection, range, event: e });
+          plugin.handlePaste && plugin.handlePaste({ event: e });
         });
 
         textareaProps.onPaste && textareaProps.onPaste(e);
       },
-      [getSelection, plugins, textareaProps]
+      [plugins, textareaProps]
     );
 
     const handleFocus = useCallback(
       (e: FocusEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         plugins.forEach((plugin) => {
-          plugin.handleFocus && plugin.handleFocus({ selection, range, event: e });
+          plugin.handleFocus && plugin.handleFocus({ event: e });
         });
 
         textareaProps.onFocus && textareaProps.onFocus(e);
       },
-      [getSelection, plugins, textareaProps]
+      [plugins, textareaProps]
     );
 
     const handleBlur = useCallback(
       (e: FocusEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         plugins.forEach((plugin) => {
-          plugin.handleBlur && plugin.handleBlur({ selection, range, event: e });
+          plugin.handleBlur && plugin.handleBlur({ event: e });
         });
 
         textareaProps.onBlur && textareaProps.onBlur(e);
       },
-      [getSelection, plugins, textareaProps]
+      [plugins, textareaProps]
     );
 
     const setData = useCallback(

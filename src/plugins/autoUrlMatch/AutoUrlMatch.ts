@@ -21,7 +21,7 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     this.contentEditableEl = contentEditableEl;
   }
 
-  setConfig(config) {
+  setConfig(config: AutoUrlMatchConfig) {
     this.config = { ...this.config, ...(config ?? {}) };
   }
 
@@ -32,15 +32,10 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     return (str ?? '').match(urlRegex)?.map((item) => item.trim()) ?? [];
   }
 
-  handleKeyDown({
-    selection,
-    range,
-    event
-  }: {
-    selection: Selection;
-    range: Range;
-    event: KeyboardEvent<HTMLDivElement>;
-  }) {
+  handleKeyDown({ event }: { event: KeyboardEvent<HTMLDivElement> }) {
+    const selection = window.getSelection();
+    const range = document.createRange();
+
     const maxLength = Number(this.contentEditableEl.current.ariaValueMax);
     const currentValueLength = this.contentEditableEl.current.textContent?.length || 0;
     const focusNode = selection.focusNode;
@@ -192,24 +187,18 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     }
   }
 
-  handleChange({
-    selection,
-    range,
-    event
-  }: {
-    selection: Selection;
-    range: Range;
-    event: ChangeEvent<HTMLDivElement>;
-  }) {
+  handleChange({ event }: { event: ChangeEvent<HTMLDivElement> }) {
+    const selection = window.getSelection();
+
     const focusNode = selection.focusNode;
 
     if (focusNode.parentElement?.tagName === 'A') {
       if (!this.getUrlMatchList(focusNode.textContent).length) {
-        // 현재 <a> 태그의 위치와 텍스트를 기억합니다.
+        // 현재 <a> 태그의 위치와 텍스트를 기억
         const anchorElement = focusNode.parentElement as HTMLAnchorElement;
         const textContent = anchorElement.textContent || '';
 
-        // <a> 태그를 제거하고 텍스트 노드로 치환합니다.
+        // <a> 태그를 제거하고 텍스트 노드로 치환
         const textNode = document.createTextNode(textContent);
         const parentElement = anchorElement.parentElement;
 
@@ -221,11 +210,11 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
           const range = document.createRange();
           const selection = window.getSelection();
 
-          // 커서를 텍스트 노드의 끝으로 위치시킵니다.
+          // 커서를 텍스트 노드의 끝으로 위치
           range.setStart(textNode, textNode.length);
           range.collapse(true);
 
-          // 현재 선택 범위를 새로 설정한 위치로 이동합니다.
+          // 현재 선택 범위를 새로 설정한 위치로 이동
           selection?.removeAllRanges();
           selection?.addRange(range);
         }

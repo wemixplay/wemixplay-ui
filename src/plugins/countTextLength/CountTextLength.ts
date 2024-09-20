@@ -16,7 +16,7 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
     this.contentEditableEl = contentEditableEl;
   }
 
-  setConfig(config) {
+  setConfig(config: CountTextLengthConfig) {
     this.config = { ...this.config, ...(config ?? {}) };
 
     const target = this.contentEditableEl.current;
