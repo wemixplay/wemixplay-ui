@@ -43,6 +43,9 @@ type MentionConfig = {
   onMaxMentionList?: () => void | Promise<void>;
 };
 
+/**
+ * Mention은 에디터에서 멘션 기능을 사용할 수 있도록 지원하는 플러그인 입니다.
+ */
 class Mention implements WpEditorPlugin {
   /** Mention 플러그인의 고유 commandKey */
   public readonly commandKey = 'mention';
@@ -105,7 +108,7 @@ class Mention implements WpEditorPlugin {
   }
 
   /**
-   * configId setter 함수를 이용하여 config 정보 업데이트하는 함수
+   * config setter 함수를 이용하여 config 정보 업데이트하는 함수
    * @param {MentionConfig} config - 업데이트할 config 정보
    */
   setConfig(config?: MentionConfig) {

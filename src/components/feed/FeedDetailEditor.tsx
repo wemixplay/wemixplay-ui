@@ -516,8 +516,8 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                 onMatchUrlReplace: onMatchUrl
               },
               autoUrlMatch: {
-                onMatchUrl: (urls) => {
-                  return onMatchUrl({ textUrls: urls, mediaUrls: [] });
+                onMatchUrl: (url) => {
+                  return onMatchUrl({ textUrls: [url], mediaUrls: [] });
                 },
                 onChangeMatchUrls: (urls) => {
                   const imagePattern = /\.(jpg|jpeg|png|gif|bmp|webp|tiff|avif)$/i;

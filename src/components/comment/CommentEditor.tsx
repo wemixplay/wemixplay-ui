@@ -115,8 +115,8 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
                 onMatchUrlReplace: onMatchUrl
               },
               autoUrlMatch: {
-                onMatchUrl: (urls) => {
-                  return onMatchUrl({ textUrls: urls });
+                onMatchUrl: (url) => {
+                  return onMatchUrl({ textUrls: [url] });
                 }
               },
               countTextLength: {

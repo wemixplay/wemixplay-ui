@@ -11,6 +11,10 @@ type CountTextLengthConfig = {
   onChangeTextLength?: (length: number) => void;
 };
 
+/**
+ * CountTextLength는 에디터의 작성된 문자 길이를 측정하고
+ * 에디터의 최대 문자 길이보다 현재 문자열 길이가 작거나 같도록 유지하게 하는 플러그인 입니다.
+ */
 class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
   /** CountTextLength 플러그인의 고유 commandKey */
   public commandKey = 'countTextLength';
@@ -26,7 +30,7 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
   }
 
   /**
-   * configId setter 함수를 이용하여 config 정보 업데이트하는 함수
+   * config 설정 업데이트하는 함수
    * CountTextLength에서는 문자열 길이 표시 UI에 대한 처음 세팅도 진행
    * MutationObserver를 이용하여 에디터 내용이 바뀔때마다 문자열 길이를 update
    *
@@ -45,7 +49,7 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
 
       // count 업데이트를 위한 element 추가
       const countEl = document.createElement('span');
-      countEl.id = 'count';
+      countEl.id = 'ctlt-count';
       countEl.innerHTML = '0';
       el.append(countEl);
 
@@ -87,7 +91,7 @@ class CountTextLength implements WpEditorPlugin<CountTextLengthConfig> {
     const textContentLength = contentEditorEl.textContent.length;
 
     if (!this.config.hideUi) {
-      const countEl = document.getElementById('count');
+      const countEl = document.getElementById('ctlt-count');
       // textContent 길이 값 변경
       countEl.innerHTML = String(textContentLength);
 

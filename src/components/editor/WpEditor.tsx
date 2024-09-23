@@ -76,13 +76,19 @@ type Props = Omit<TextareaHTMLAttributes<HTMLDivElement>, 'aria-placeholder' | '
 
 const cx = makeCxFunc(style);
 
+/**
+ * 에디터 Plugin 클래스들의 생성자 함수를 실행하여 각 plugin 객체를 만들어 배열로 반환하는 함수
+ * @param {WpEditorPluginConstructor[]} [params.plugin] - Plugin 클래스 배열
+ * @param {MutableRefObject<HTMLDivElement | undefined>} [params.contentEditableEl] - 에디터 참조 객체
+ * @returns {WpEditorPlugin[]} - plugin 객체 배열
+ */
 const constructEditorPlugin = ({
   plugin,
   contentEditableEl
 }: {
   plugin: WpEditorPluginConstructor[];
   contentEditableEl: MutableRefObject<HTMLDivElement | undefined>;
-}) => {
+}): WpEditorPlugin[] => {
   return plugin.map((p) => new p({ contentEditableEl }));
 };
 
@@ -114,8 +120,10 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       disabled: false
     });
 
+    /** Plugin 클래스들로 만들어진 plugin 객체 배열 */
     const [plugins, setPlugins] = useState(constructEditorPlugin({ plugin, contentEditableEl }));
 
+    /** undo, redo를 컨트롤 하기 위한 기록을 stack 형식으로 기록하는 함수 */
     const recordStack = useMemo(
       () =>
         debounce(() => {
@@ -133,6 +141,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       []
     );
 
+    /**
+     * undo, redo를 기록하기 위해 에디터의 내용 변화를 감지하기 위한 mutationObserver
+     */
     const mutationObserver = useMemo(() => {
       if (typeof window === 'undefined') {
         return;
@@ -151,6 +162,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       });
     }, [recordStack]);
 
+    /** 현재의 커서 정보를 가져오는 함수 */
     const getSelection = useCallback(() => {
       const range = document.createRange();
       const selection = window.getSelection();
@@ -158,6 +170,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       return { selection, range };
     }, []);
 
+    /** 에디터 안에 <font> 태그가 들어갔을 시 font태그를 제거하고 안에 textConent만 나오도록 하는 함수 */
     const removeFontTagAtCursor = () => {
       const selection = window.getSelection();
       if (selection.rangeCount > 0) {
@@ -184,6 +197,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       }
     };
 
+    /**
+     * 에디터 내용의 끝 부분으로 커서를 옮기게 하는 range를 만드는 함수
+     */
     const rangeMoveContentEnd = useCallback(() => {
       const { selection, range } = getSelection();
 

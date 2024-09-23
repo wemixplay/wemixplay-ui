@@ -39,6 +39,9 @@ type HashTagConfig = {
   onCloseHashList?: () => void;
 };
 
+/**
+ * HashTag는 에디터에서 해시태그 기능을 사용할 수 있도록 지원하는 플러그인 입니다.
+ */
 class HashTag implements WpEditorPlugin {
   /** HashTag 플러그인의 고유 commandKey */
   public readonly commandKey = 'hash';
@@ -101,7 +104,7 @@ class HashTag implements WpEditorPlugin {
   }
 
   /**
-   * configId setter 함수를 이용하여 config 정보 업데이트하는 함수
+   * config setter 함수를 이용하여 config 정보 업데이트하는 함수
    * @param {HashTagConfig} config - 업데이트할 config 정보
    */
   setConfig(config: HashTagConfig) {
