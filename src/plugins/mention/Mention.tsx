@@ -433,7 +433,7 @@ class Mention implements WpEditorPlugin {
       } else if (targetMentionId && !focusInMentionTag) {
         this.mentionId = '';
 
-        // mentionId가 존재하고 포커싱된 노드가 complete-mention 태그가 일때 focusOffset이 mention 텍스트 길이와 같을때 mentionId를 초기화
+        // mentionId가 존재하고 포커싱된 노드가 complete-mention 태그 일때 focusOffset이 mention 텍스트 길이와 같을때 mentionId를 초기화
       } else if (
         targetMentionId &&
         focusInMentionTag &&
