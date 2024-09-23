@@ -204,7 +204,7 @@ class Mention implements WpEditorPlugin {
     }
 
     /** mention 태그안에 `@`만 존재하는지 확인 */
-    const existOnlyAtMark = mentionTag.firstChild?.textContent?.trim() === '@' && !mention;
+    const existOnlyAtMark = mentionTag?.textContent?.trim() === '@' && !mention;
 
     /** mention 정보가 작성중인 mention인지 여부 */
     const isWillMention = !!mentionTag?.classList.contains('will-mention');
@@ -237,7 +237,7 @@ class Mention implements WpEditorPlugin {
     } else if (mention) {
       target.innerHTML = target.innerHTML.replace(
         mentionRegex,
-        `<span id="${targetMentionId}" class="mention complete-mention"$1$2>@${mention.name.trim()}</span>&nbsp;`
+        `<span id="${targetMentionId}" class="mention complete-mention"$1$2>@${mention.name.trim()}</span>`
       );
 
       /** 새로 생성된 `complete-mention` Element */
@@ -255,12 +255,21 @@ class Mention implements WpEditorPlugin {
       // unkown-mention으로 변경
       target.innerHTML = target.innerHTML.replace(
         mentionRegex,
-        `<span id="${targetMentionId}" class="mention unknown-mention"$1$2>${mentionText}</span>&nbsp;`
+        `<span id="${targetMentionId}" class="mention unknown-mention"$1$2>${mentionText}</span>`
       );
     }
 
     // mention 리스트 UI컴포넌트가 사라지도록 mentionId를 빈값으로 변경
     this.mentionId = '';
+
+    const mentionTagNextSibling = target.querySelector(`#${targetMentionId}`)?.nextSibling;
+
+    if (
+      Node.TEXT_NODE !== mentionTagNextSibling?.TEXT_NODE ||
+      mentionTagNextSibling?.nodeValue?.trim()
+    ) {
+      target.querySelector(`#${targetMentionId}`).insertAdjacentHTML('afterend', '&nbsp;'); // 공백 추가
+    }
 
     const focusNode = existOnlyAtMark
       ? target
@@ -420,11 +429,16 @@ class Mention implements WpEditorPlugin {
       ) {
         this.leaveMentionTag();
 
-        // mentionId가 존재하고 포커싱된 노드가 mention 태그가 아니거나
-        // focusOffset이 mention textContent길이 이상일때 mentionId를 초기화
+        // mentionId가 존재하고 포커싱된 노드가 mention 태그가 아니면 mentionId를 초기화
+      } else if (targetMentionId && !focusInMentionTag) {
+        this.mentionId = '';
+
+        // mentionId가 존재하고 포커싱된 노드가 complete-mention 태그가 일때 focusOffset이 mention 텍스트 길이와 같을때 mentionId를 초기화
       } else if (
         targetMentionId &&
-        (!focusInMentionTag || focusOffset >= focusNode.textContent.length)
+        focusInMentionTag &&
+        !focusInDecompleteMentionTag &&
+        focusOffset >= focusNode.textContent.length
       ) {
         this.mentionId = '';
       }

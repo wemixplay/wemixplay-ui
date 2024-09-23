@@ -251,13 +251,13 @@ class HashTag implements WpEditorPlugin {
       ) {
         target.innerHTML = target.innerHTML.replace(
           hashRegex,
-          `<span id="${targetHashId}" class="duplicate-hash"$1$2>#${hash.name}</span>&nbsp;`
+          `<span id="${targetHashId}" class="duplicate-hash"$1$2>#${hash.name}</span>`
         );
         // 중복을 허용하거나 중복되는 hashTag가 아닐때는 complete-hash 클래스 선택자 추가하여 hashTag Element로 치환
       } else {
         target.innerHTML = target.innerHTML.replace(
           hashRegex,
-          `<span id="${targetHashId}" class="hash complete-hash"$1$2>#${hash.name}</span>&nbsp;`
+          `<span id="${targetHashId}" class="hash complete-hash"$1$2>#${hash.name}</span>`
         );
 
         const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
@@ -278,14 +278,14 @@ class HashTag implements WpEditorPlugin {
       ) {
         target.innerHTML = target.innerHTML.replace(
           hashRegex,
-          `<span id="${targetHashId}" class="duplicate-hash"$1$2>${hashText}</span>&nbsp;`
+          `<span id="${targetHashId}" class="duplicate-hash"$1$2>${hashText}</span>`
         );
 
         // 중복을 허용하거나 중복되는 hashTag가 아닐때는 complete-hash 클래스 선택자를 제거하여 hashTag Element로 치환
       } else {
         target.innerHTML = target.innerHTML.replace(
           hashRegex,
-          `<span id="${targetHashId}" class="hash"$1$2>${hashText}</span>&nbsp;`
+          `<span id="${targetHashId}" class="hash"$1$2>${hashText}</span>`
         );
 
         const newHashTag = target.querySelector(`#${targetHashId}`) as HTMLSpanElement;
@@ -301,6 +301,12 @@ class HashTag implements WpEditorPlugin {
     }
 
     this.hashId = '';
+
+    const hashTagNextSibling = target.querySelector(`#${targetHashId}`)?.nextSibling;
+
+    if (Node.TEXT_NODE !== hashTagNextSibling?.TEXT_NODE || hashTagNextSibling?.nodeValue?.trim()) {
+      target.querySelector(`#${targetHashId}`).insertAdjacentHTML('afterend', '&nbsp;'); // 공백 추가
+    }
 
     const focusNode = existOnlyHashMark
       ? target
@@ -416,9 +422,17 @@ class HashTag implements WpEditorPlugin {
       } else if (targetHashId && focusNode.firstChild?.textContent === '#') {
         this.leaveHashTag();
 
-        // hashId가 존재하고 포커싱된 노드가 hashTag가 아니거나
-        // focusOffset이 hashTag textContent길이 이상일때 hashId를 초기화
-      } else if (targetHashId && (!focusInHashTag || focusOffset >= focusNode.textContent.length)) {
+        // hashId가 존재하고 포커싱된 노드가 hashTag가 아니면 hashId를 초기화
+      } else if (targetHashId && !focusInHashTag) {
+        this.hashId = '';
+
+        // hashId가 존재하고 포커싱된 노드가 complete-hash 태그가 일때 focusOffset이 mention 텍스트 길이와 같을때 hashId를 초기화
+      } else if (
+        targetHashId &&
+        focusInHashTag &&
+        !focusInDecompleteHashTag &&
+        focusOffset >= focusNode.textContent.length
+      ) {
         this.hashId = '';
       }
     }
