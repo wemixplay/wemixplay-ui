@@ -650,20 +650,36 @@ class HashTag implements WpEditorPlugin {
       return;
 
       // hashTag에 포커싱이 되어있고 hashTag 안에 글자가 hash 유효성에 어긋날때
-    } else if (focusInHashTag && !this.checkValidHashTag(focusNode.textContent)) {
+    } else if (focusInHashTag && !this.checkValidHashTag(focusNode.parentElement.textContent)) {
       this.hashId = '';
       const cursorOffset = selection.getRangeAt(0).startOffset;
 
-      const normalTextNode = document.createTextNode(`${focusNode.textContent} `);
+      const hashTagNode = focusNode.parentNode;
+      const [firstChar, secondChar] = hashTagNode.textContent.split('#');
 
-      // hashTag를 깨고 일반 TextNode로 치환
-      focusNode.parentElement.parentNode.replaceChild(normalTextNode, focusNode.parentNode);
+      if (secondChar && secondChar === focusNode.parentElement.dataset.name) {
+        const normalTextNode = document.createTextNode(firstChar);
+        hashTagNode.textContent = `#${secondChar}`;
 
-      const newRange = document.createRange();
-      newRange.setStart(normalTextNode, cursorOffset);
-      newRange.setEnd(normalTextNode, cursorOffset);
-      selection.removeAllRanges();
-      selection.addRange(newRange);
+        hashTagNode.parentNode.insertBefore(normalTextNode, hashTagNode);
+
+        const newRange = document.createRange();
+        newRange.setStart(normalTextNode, cursorOffset);
+        newRange.setEnd(normalTextNode, cursorOffset);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      } else if (secondChar) {
+        const normalTextNode = document.createTextNode(`${focusNode.textContent} `);
+
+        // hashTag를 깨고 일반 TextNode로 치환
+        focusNode.parentElement.parentNode.replaceChild(normalTextNode, focusNode.parentNode);
+
+        const newRange = document.createRange();
+        newRange.setStart(normalTextNode, cursorOffset);
+        newRange.setEnd(normalTextNode, cursorOffset);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      }
 
       return;
 

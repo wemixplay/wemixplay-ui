@@ -6,7 +6,7 @@ import MentionContainer from './components/MentionContainer';
 import { WpEditorPlugin } from '@/components/editor/WpEditor';
 
 type MentionInfo = { id: number; name: string; profileImg?: string; isOfficial?: boolean } & {
-  [key: string]: string | number | undefined; // 추가적인 필드도 허용
+  [key: string]: string | number | boolean | undefined; // 추가적인 필드도 허용
 };
 
 type MentionConfig = {
@@ -558,7 +558,7 @@ class Mention implements WpEditorPlugin {
       this.mentionId = `mention-${uniqueId()}`;
 
       // 방금 입력된 @ 문자 앞에 혹시나 다른 문자가 있을 경우를 대비하여 @를 기준으로 beforeText와 afterText로 나눔
-      const textContent = focusNode.textContent;
+      const textContent = focusNode.textContent ?? '';
       const beforeText = textContent.slice(0, focusOffset - 1);
       const afterText = textContent.slice(focusOffset);
 
@@ -579,7 +579,13 @@ class Mention implements WpEditorPlugin {
       const afterTextNode = document.createTextNode(afterText);
       parentNode.insertBefore(afterTextNode, span.nextSibling);
 
-      range.setStart(target.querySelector(`#${this.mentionId}`), 1);
+      const mentionEl = target.querySelector(`#${this.mentionId}`);
+
+      if (!mentionEl) {
+        return;
+      }
+
+      range.setStart(mentionEl, 1);
       range.collapse(true);
 
       selection.removeAllRanges();
