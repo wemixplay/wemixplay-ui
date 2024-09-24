@@ -64,7 +64,7 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
     while ((match = regex.exec(str)) !== null) {
       srcValues.push({
         tag: match[1],
-        src: match[2]
+        src: match[2].startsWith('http') ? match[2] : `https://${match[2]}`
       });
     }
 
@@ -79,7 +79,12 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
   getUrlMatchList(str: string) {
     const urlRegex = /\bhttps?:\/\/[^\s"']+|www\.[^\s"']+|ftp:\/\/[^\s"']+/gi;
 
-    return (str ?? '').match(urlRegex)?.map((item) => item.trim()) ?? [];
+    return (
+      (str ?? '').match(urlRegex)?.map((item) => {
+        const url = item.trim();
+        return url.startsWith('http') ? url : `https://${url}`;
+      }) ?? []
+    );
   }
 
   /**
@@ -122,7 +127,14 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
     // 추출된 URL을 치환할 URL로 교체
     matchUrlList.forEach((url, index) => {
       if (replaceMatchUrlList[index]) {
-        plainTextData = plainTextData.replace(url, replaceMatchUrlList[index]);
+        if (plainTextData.includes(url)) {
+          plainTextData = plainTextData.replace(url, replaceMatchUrlList[index]);
+        } else if (plainTextData.includes(url.replace('https://', ''))) {
+          plainTextData = plainTextData.replace(
+            url.replace('https://', ''),
+            replaceMatchUrlList[index]
+          );
+        }
       }
     });
 

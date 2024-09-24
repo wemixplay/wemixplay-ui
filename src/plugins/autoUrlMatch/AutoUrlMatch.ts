@@ -189,11 +189,14 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
         focusNode.nodeType === Node.TEXT_NODE &&
         maxLength >= currentValueLength + 1
       ) {
-        this.config.onMatchUrl && this.config.onMatchUrl(matchUrlFormatText);
+        const hrefUrl = matchUrlFormatText.startsWith('http')
+          ? matchUrlFormatText
+          : `https://${matchUrlFormatText}`;
+        this.config.onMatchUrl && this.config.onMatchUrl(hrefUrl);
 
         // 임시 div를 사용하여 HTML 문자열을 파싱
         const tempDiv = document.createElement('div');
-        tempDiv.innerHTML = `<a href="${matchUrlFormatText.startsWith('http') ? matchUrlFormatText : `https://${matchUrlFormatText}`}" target="_blank">${matchUrlFormatText}</a>`;
+        tempDiv.innerHTML = `<a href="${hrefUrl}" target="_blank">${matchUrlFormatText}</a>`;
         const childNodes = Array.from(tempDiv.childNodes);
 
         if (childNodes.length > 0) {
@@ -276,7 +279,10 @@ class AutoUrlMatch implements WpEditorPlugin<AutoUrlMatchConfig> {
     // 다르다면 onChangeMathUrls를 실행하기 위한 로직
 
     const matchAtagsUrls = (event.target.innerHTML || '').match(/<a[^>]*>(.*?)<\/a>/g) ?? [];
-    const matchUrls = matchAtagsUrls.map((match) => match.match(/<a[^>]*>(.*?)<\/a>/)[1]);
+    const matchUrls = matchAtagsUrls.map((match) => {
+      const url = match.match(/<a[^>]*>(.*?)<\/a>/)[1];
+      return url.startsWith('http') ? url : `https://${url}`;
+    });
 
     if (
       matchUrls.length !== this.urls.length ||
