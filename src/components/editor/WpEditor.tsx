@@ -214,6 +214,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       return range;
     }, [getSelection]);
 
+    /**
+     * 앞으로 복구, 뒤로 복구 이벤트가 발생할때 호출되는 함수
+     */
     const handleUndoRedo = useCallback(
       (e: InputEvent | { inputType: string; preventDefault: () => void }) => {
         let { range } = getSelection();
@@ -242,6 +245,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
             const cursorPosition = range.getBoundingClientRect();
             const editableRect = contentEditableEl.current.getBoundingClientRect();
 
+            // 복구시 커서의 위치에 따라 스크롤 위치를 변경
             if (cursorPosition.top < editableRect.top) {
               contentEditableEl.current.scrollTop -= editableRect.top - cursorPosition.top;
             } else if (cursorPosition.bottom > editableRect.bottom) {
@@ -268,15 +272,20 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       [name, handleChange, getSelection, plugins, rangeMoveContentEnd]
     );
 
+    /**
+     * 에디터 keydown 이벤트 발생시 호출되는 함수
+     */
     const handleKeyDown = useCallback(
       (e: KeyboardEvent<HTMLDivElement>) => {
         const { selection } = getSelection();
         const prevData = contentEditableEl.current.innerHTML;
 
+        // 폰트 굴게 변하게 하는 단축키 무효화
         if ((e.ctrlKey && e.code === 'KeyB') || (e.metaKey && e.code === 'KeyB')) {
           e.preventDefault();
         }
 
+        // 앞으로 복구 단축키시 강제로 historyRedo 이벤트 dispatch
         if (e.code === 'KeyZ' && (e.metaKey || e.ctrlKey) && e.shiftKey) {
           handleUndoRedo({ ...e, inputType: 'historyRedo' });
 
@@ -287,6 +296,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           plugin.handleKeyDown && plugin.handleKeyDown({ event: e });
         });
 
+        // Enter 입력시 개행 처리 (플러그인에서 Enter 입력시 내용 변경을 한것이 없다면 개행처리 진행)
         if (
           (e.code === 'Enter' || e.code === 'NumpadEnter') &&
           !e.shiftKey &&
@@ -324,13 +334,17 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       [getSelection, handleUndoRedo, plugins, textareaProps]
     );
 
+    /**
+     * 에디터의 input 이벤트 발생시 호출되는 함수
+     */
     const handlePostDataChange = useCallback(
       (e: ChangeEvent<HTMLDivElement>) => {
         if (!e.target.innerHTML) {
-          // 전체 HTML을 제거하여 초기화
+          // 전체 HTML을 제거하여 초기화 (브라우저의 이전 폰트 스타일이 남아있는 것을 염두하여 초기화 진행)
           contentEditableEl.current.innerHTML = '';
         }
 
+        // font 태그는 제거하고 textContent만 나오도록
         removeFontTagAtCursor();
 
         for (const plugin of plugins) {
@@ -347,6 +361,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       [handleChange, recordStack, name, plugins, textareaProps]
     );
 
+    /**
+     * 에디터 내부 클릭 이벤트 발생시 호출되는 함수
+     */
     const handleClick = useCallback(
       (e: MouseEvent<HTMLDivElement>) => {
         plugins.forEach((plugin) => {
