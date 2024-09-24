@@ -306,7 +306,6 @@ const MentionList = forwardRef<MentionListRef, Props>(
                   <Person src={item.profileImg} size={'custom'} className={cx('thumb')} />
                   <p className={cx('item-info')}>
                     <strong className={cx('item-title')}>{item.name}</strong>
-                    <SvgIcoCertified width={12} height={12} />
                     {!!item.isOfficial && <SvgIcoCertified width={12} height={12} />}
                   </p>
                 </>
