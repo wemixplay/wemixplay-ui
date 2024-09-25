@@ -123,8 +123,12 @@ export default CommentExample;
 └── README.md
 ```
 
-- **components**: 각 기능별 컴포넌트들이 위치해 있으며, `feed`, `comment`, `editor`, `common` 등으로 분류되어 있습니다.
+- **rollup-plugins**: rollup 플러그인들이 위치해 있습니다.
+- **scripts**: rollup으로 빌드시 실행될 script 파일들이 위치해 있습니다.
+- **example**: nextjs, vite 등의 환경에서 wemixplay-ui를 테스트 해보기 위해 각 환경에 대한 예제 프로젝트들이 위치해 있습니다.
+- **components**: 각 기능별 컴포넌트들이 위치해 있으며, `feed`, `comment`, `editor`, `avatars` 등으로 분류되어 있습니다.
 - **hooks**: 다양한 사용자 정의 훅(Hooks)들이 위치하며, 주로 상태 관리와 UI 관련 동작을 처리합니다.
 - **utils**: 공통으로 사용되는 유틸리티 함수들이 모여 있습니다.
 - **plugins**: 에디터에서 사용하는 플러그인들이 위치해 있습니다.
 - **styles**: 프로젝트의 스타일 및 공통적인 SCSS 파일들이 위치해 있습니다.
+- **rollup.config.js**: rollup 빌드 설정 파일
