@@ -440,9 +440,9 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
     const handleEditorTextChange = useCallback(
       (value: string) => {
-        excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) =>
-          wpEditorRef.current.textContent.includes(url)
-        );
+        excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) => {
+          return wpEditorRef.current.textContent.includes(url);
+        });
 
         const convertValue = convertHtmlToMarkdownStr(value);
 
@@ -568,7 +568,10 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                     (url) => !imagePattern.test(url) && !isYouTubeURL(url) && !isTwitchURL(url)
                   );
 
-                  if (metaData?.url !== normalUrls[0]) {
+                  if (
+                    metaData?.url !== normalUrls[0] &&
+                    !excludeOgSiteUrl.current.includes(normalUrls[0])
+                  ) {
                     handleExternalUrlChange(normalUrls[0]);
                   }
                 }
