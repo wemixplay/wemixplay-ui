@@ -32,7 +32,7 @@ const plugins = [
         ]
       }
     }
-  }),,
+  }),
   optimizeLodashImports(),
   babel({
 		babelHelpers: 'runtime',
