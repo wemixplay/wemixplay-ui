@@ -175,13 +175,13 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
   ) => {
     const wpEditorRef = useRef<WpEditorRef>();
     const imgInputRef = useRef<HTMLInputElement>();
-    const excludeOgSiteUrl = useRef<string[]>([]);
 
     const [textLength, setTextLength] = useState(textValue?.length ?? 0);
     const [textData, setTextData] = useState(convertMarkdownToHtmlStr(textValue ?? ''));
     const [imagesData, setImagesData] = useState(images);
     const [mediaData, setMediaData] = useState(media);
     const [metaData, setMetaData] = useState(ogMetaData);
+    const [excludeOgSiteUrl, setExcludeOgSiteUrl] = useState([]);
 
     const memorizationData = useMemo(() => {
       return {
@@ -377,7 +377,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         );
 
         const { image = [], youtube = [], twitch = [], etc = [] } = urlInfoList;
-        const externalUrl = etc.filter((url) => !excludeOgSiteUrl.current.includes(url));
 
         const newImages = handleUpdateImages({
           newImage: [
@@ -398,10 +397,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           ]
         });
 
-        if (externalUrl.length > 0) {
-          handleExternalUrlChange && handleExternalUrlChange(externalUrl[0]);
-        }
-
         setMediaData(newMedia);
         setImagesData(newImages);
         handleMediaChange && handleMediaChange(newMedia, name);
@@ -418,8 +413,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         handleImageChange,
         handleMediaChange,
         handleUpdateImages,
-        handleUpdateMedia,
-        handleExternalUrlChange
+        handleUpdateMedia
       ]
     );
 
@@ -440,10 +434,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
     const handleEditorTextChange = useCallback(
       (value: string) => {
-        excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) => {
-          return wpEditorRef.current.textContent.includes(url);
-        });
-
         const convertValue = convertHtmlToMarkdownStr(value);
 
         setTextData(convertValue);
@@ -568,11 +558,18 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                     (url) => !imagePattern.test(url) && !isYouTubeURL(url) && !isTwitchURL(url)
                   );
 
-                  if (
-                    metaData?.url !== normalUrls[0] &&
-                    !excludeOgSiteUrl.current.includes(normalUrls[0])
-                  ) {
-                    handleExternalUrlChange(normalUrls[0]);
+                  setExcludeOgSiteUrl(
+                    excludeOgSiteUrl.filter((url) => {
+                      return normalUrls.includes(url);
+                    })
+                  );
+
+                  const externalUrls = normalUrls.filter((url) => {
+                    return !excludeOgSiteUrl.includes(url);
+                  });
+
+                  if (!excludeOgSiteUrl.includes(externalUrls[0])) {
+                    handleExternalUrlChange && handleExternalUrlChange(externalUrls[0]);
                   }
                 }
               },
@@ -608,13 +605,21 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               }}
             />
           )}
-          {!!ogMetaData && (
+          {!!metaData && (
             <FeedLinkPreview
-              ogMetaData={ogMetaData}
+              ogMetaData={metaData}
               handleDeleteOgMetaData={({ urls }) => {
-                excludeOgSiteUrl.current.push(urls[0]);
                 setMetaData(undefined);
-                handleExternalUrlChange(undefined);
+                handleExternalUrlChange && handleExternalUrlChange(undefined);
+
+                setExcludeOgSiteUrl((excludeOgSiteUrl) => {
+                  return [
+                    ...new Set([
+                      ...excludeOgSiteUrl,
+                      ...(urls ?? []).map((url) => (url.endsWith('/') ? url.slice(0, -1) : url))
+                    ])
+                  ];
+                });
               }}
             />
           )}
