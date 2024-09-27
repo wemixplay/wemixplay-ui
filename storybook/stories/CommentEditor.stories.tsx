@@ -23,6 +23,7 @@ export const Default: StoryComponent = {
     }
   },
   args: {
+    maxLength: 1000,
     placeholder: `댓글을 작성해주세요.
 과도한 욕설 등 타인에게 불쾌감을 줄 수 있는 의견은 자제해 주세요.
 - 최대 일 50건 등록할 수 있습니다.
@@ -50,7 +51,7 @@ export const Default: StoryComponent = {
           { id: 7, name: 'Easton' }
         ],
         onCompleteHash({ allHashTag, currentHashTag }) {
-          console.log(allHashTag);
+          // console.log(allHashTag);
         }
       }
     }

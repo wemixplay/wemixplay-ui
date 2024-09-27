@@ -91,7 +91,7 @@ export const ReactElementContent: StoryComponent = {
     ),
     triggerMore: 'show more',
     triggerLess: 'show less',
-    lineClamp: 3,
+    lineClamp: 5,
     defaultShortened: true
   },
   render: ReactElementContentTemplate

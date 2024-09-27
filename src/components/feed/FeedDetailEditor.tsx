@@ -58,39 +58,82 @@ type FeedDetailEditorValue = {
 };
 
 type Props = Omit<WpEditorProps, 'plugin' | 'initialValue' | 'handleChange'> & {
+  /** 추가적인 CSS 클래스명 */
   className?: string;
+  /** 에디터에 입력해야 하는 최소 텍스트 길이 */
   minLength?: number;
+  /** 제출 버튼 텍스트 */
   btnSubmitText?: ReactElement | string;
+  /** 에디터 텍스트 값 */
   textValue?: string;
+  /** 업로드된 이미지 배열 */
   images?: PostEditorImageValue[];
+  /** 업로드된 미디어 배열 */
   media?: PostEditorMediaValue[];
+  /** 링크 미리보기 메타데이터 */
   ogMetaData?: FeedLinkPreviewProps['ogMetaData'];
+  /** 에디터 이름 */
   name?: string;
+  /** 사용자가 공식인지 여부 */
   isOfficial?: boolean;
+  /** 작성자의 이름 */
   writerName: string;
+  /** 작성자의 프로필 이미지 URL */
   writerImg: string;
+  /** 채널 이름 */
   channelName: string;
+  /** 채널 이미지 URL */
   channelImg: string;
+  /** 카테고리 이름 */
   categoryName?: string;
+  /** 채널 선택 팝오버 요소 */
   selectChannelPopoverElement?: ReactElement;
+  /** 카테고리 선택 팝오버 요소 */
   selectCategoryPopoverElement?: ReactElement;
+  /** 업로드 가능한 최대 이미지 개수 */
   imageMaxCnt?: number;
+  /** 업로드 가능한 최대 iframe 개수 */
   iframeMaxCnt?: number;
+  /** 로딩 상태 */
   loading?: boolean;
+  /** 외부 URL이 변경될 때 호출되는 함수 */
   handleExternalUrlChange?: (url: string) => void;
+  /** 작성자 프로필 클릭 이벤트 핸들러 */
   onUserClick?: (e: MouseEvent<HTMLElement>) => void;
+  /** 채널 선택 클릭 이벤트 핸들러 */
   onSelectChannelClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  /** 카테고리 선택 클릭 이벤트 핸들러 */
   onSelectCategoryClick?: (e: MouseEvent<HTMLButtonElement>) => void;
+  /** 이미지가 최대보다 크게 업로드 하려고 할시 실행되는 함수 */
   onMaxImageUploads?: () => void;
+  /** iframe이 최대보다 크게 업로드 되려고 할시 실행되는 함수 */
   onMaxIframeUploads?: () => void;
+  /** 텍스트 변경 시 호출되는 함수 */
   handleTextChange: (value: string, name?: string) => void;
+  /** 이미지 변경 시 호출되는 함수 */
   handleImageChange: (value: PostEditorImageValue[], name?: string) => void;
+  /** 미디어 변경 시 호출되는 함수 */
   handleMediaChange: (value: PostEditorMediaValue[], name?: string) => void;
+  /** 제출 시 호출되는 함수 */
   handleSubmit: (value: FeedDetailEditorValue, name?: string) => void;
 };
 
 const cx = makeCxFunc(style);
 
+/**
+ * `FeedDetailEditor`는 피드 작성 및 수정 시 사용되는 에디터 컴포넌트입니다.
+ * 텍스트, 이미지, 미디어, 링크 미리보기 등을 지원하며, 텍스트 길이 제한 및 입력된 URL 자동 매칭 기능도 포함되어 있습니다.
+ *
+ * @component
+ * @example
+ * <FeedDetailEditor
+ *   writerName="John Doe"
+ *   writerImg="profile.jpg"
+ *   handleTextChange={(value) => console.log(value)}
+ *   handleImageChange={(images) => console.log(images)}
+ *   handleSubmit={(value) => console.log(value)}
+ * />
+ */
 const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
   (
     {
@@ -132,13 +175,13 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
   ) => {
     const wpEditorRef = useRef<WpEditorRef>();
     const imgInputRef = useRef<HTMLInputElement>();
-    const excludeOgSiteUrl = useRef<string[]>([]);
 
     const [textLength, setTextLength] = useState(textValue?.length ?? 0);
     const [textData, setTextData] = useState(convertMarkdownToHtmlStr(textValue ?? ''));
     const [imagesData, setImagesData] = useState(images);
     const [mediaData, setMediaData] = useState(media);
     const [metaData, setMetaData] = useState(ogMetaData);
+    const [excludeOgSiteUrl, setExcludeOgSiteUrl] = useState([]);
 
     const memorizationData = useMemo(() => {
       return {
@@ -306,7 +349,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         textUrls: string[];
         mediaUrls: { tag: 'img' | 'video' | 'iframe'; src: string }[];
       }) => {
-        const imagePattern = /\.(jpg|jpeg|png|gif|webp|avif)(\?.*)?$/i;
+        const imagePattern = /\.(jpg|jpeg|png|gif|bmp|tiff|webp|avif)(\?.*)?$/i;
 
         const testUrlList = [...textUrls, ...mediaUrls.map((item) => item.src)];
 
@@ -334,7 +377,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         );
 
         const { image = [], youtube = [], twitch = [], etc = [] } = urlInfoList;
-        const externalUrl = etc.filter((url) => !excludeOgSiteUrl.current.includes(url));
 
         const newImages = handleUpdateImages({
           newImage: [
@@ -355,10 +397,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           ]
         });
 
-        if (externalUrl.length > 0) {
-          handleExternalUrlChange && handleExternalUrlChange(externalUrl[0]);
-        }
-
         setMediaData(newMedia);
         setImagesData(newImages);
         handleMediaChange && handleMediaChange(newMedia, name);
@@ -375,8 +413,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
         handleImageChange,
         handleMediaChange,
         handleUpdateImages,
-        handleUpdateMedia,
-        handleExternalUrlChange
+        handleUpdateMedia
       ]
     );
 
@@ -397,10 +434,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
     const handleEditorTextChange = useCallback(
       (value: string) => {
-        excludeOgSiteUrl.current = excludeOgSiteUrl.current.filter((url) =>
-          wpEditorRef.current.textContent.includes(url)
-        );
-
         const convertValue = convertHtmlToMarkdownStr(value);
 
         setTextData(convertValue);
@@ -516,17 +549,27 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                 onMatchUrlReplace: onMatchUrl
               },
               autoUrlMatch: {
-                onMatchUrl: (urls) => {
-                  return onMatchUrl({ textUrls: urls, mediaUrls: [] });
+                onMatchUrl: (url) => {
+                  return onMatchUrl({ textUrls: [url], mediaUrls: [] });
                 },
                 onChangeMatchUrls: (urls) => {
-                  const imagePattern = /\.(jpg|jpeg|png|gif|webp|avif)$/i;
+                  const imagePattern = /\.(jpg|jpeg|png|gif|bmp|webp|tiff|avif)$/i;
                   const normalUrls = urls.filter(
                     (url) => !imagePattern.test(url) && !isYouTubeURL(url) && !isTwitchURL(url)
                   );
 
-                  if (metaData?.url !== normalUrls[0]) {
-                    handleExternalUrlChange(normalUrls[0]);
+                  setExcludeOgSiteUrl(
+                    excludeOgSiteUrl.filter((url) => {
+                      return normalUrls.includes(url);
+                    })
+                  );
+
+                  const externalUrls = normalUrls.filter((url) => {
+                    return !excludeOgSiteUrl.includes(url);
+                  });
+
+                  if (!excludeOgSiteUrl.includes(externalUrls[0])) {
+                    handleExternalUrlChange && handleExternalUrlChange(externalUrls[0]);
                   }
                 }
               },
@@ -562,13 +605,21 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               }}
             />
           )}
-          {!!ogMetaData && (
+          {!!metaData && (
             <FeedLinkPreview
-              ogMetaData={ogMetaData}
+              ogMetaData={metaData}
               handleDeleteOgMetaData={({ urls }) => {
-                excludeOgSiteUrl.current.push(urls[0]);
                 setMetaData(undefined);
-                handleExternalUrlChange(undefined);
+                handleExternalUrlChange && handleExternalUrlChange(undefined);
+
+                setExcludeOgSiteUrl((excludeOgSiteUrl) => {
+                  return [
+                    ...new Set([
+                      ...excludeOgSiteUrl,
+                      ...(urls ?? []).map((url) => (url.endsWith('/') ? url.slice(0, -1) : url))
+                    ])
+                  ];
+                });
               }}
             />
           )}
@@ -579,7 +630,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               <input
                 ref={imgInputRef}
                 type="file"
-                accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/avif"
+                accept="image/png, image/gif, image/jpeg, image/jpg, image/webp, image/bmp, image/tiff"
                 onChange={onImageFileChange}
               />
 

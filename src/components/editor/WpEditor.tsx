@@ -18,7 +18,6 @@ import React, {
   useRef,
   useState
 } from 'react';
-import classNames from 'classnames/bind';
 import style from './WpEditor.module.scss';
 import { MentionConfig } from '../../plugins/mention/Mention';
 import { HashTagConfig } from '../../plugins/hashTag/HashTag';
@@ -36,42 +35,14 @@ export interface WpEditorPlugin<C extends any = any> {
 
   setConfig: (config?: C | undefined) => void;
   component?: <P extends { plugin: any }>(props: P) => React.JSX.Element;
-  handleClick?: (params: {
-    selection: Selection;
-    range: Range;
-    event: MouseEvent<HTMLDivElement>;
-  }) => void;
-  handleKeyDown?: (params: {
-    selection: Selection;
-    range: Range;
-    event: KeyboardEvent<HTMLDivElement>;
-  }) => void;
-  handleChange?: (params: {
-    selection: Selection;
-    range: Range;
-    event: ChangeEvent<HTMLDivElement>;
-  }) => void;
-  handlePaste?: (params: {
-    selection: Selection;
-    range: Range;
-    event: ClipboardEvent<HTMLDivElement>;
-  }) => void;
-  handleCopy?: (params: {
-    selection: Selection;
-    range: Range;
-    event: ClipboardEvent<HTMLDivElement>;
-  }) => void;
-  handleFocus?: (params: {
-    selection: Selection;
-    range: Range;
-    event: FocusEvent<HTMLDivElement>;
-  }) => void;
-  handleBlur?: (params: {
-    selection: Selection;
-    range: Range;
-    event: FocusEvent<HTMLDivElement>;
-  }) => void;
-  handleUndoRedo?: (params: { selection: Selection; range: Range }) => void;
+  handleClick?: (params: { event: MouseEvent<HTMLDivElement> }) => void;
+  handleKeyDown?: (params: { event: KeyboardEvent<HTMLDivElement> }) => void;
+  handleChange?: (params: { event: ChangeEvent<HTMLDivElement> }) => void;
+  handlePaste?: (params: { event: ClipboardEvent<HTMLDivElement> }) => void;
+  handleCopy?: (params: { event: ClipboardEvent<HTMLDivElement> }) => void;
+  handleFocus?: (params: { event: FocusEvent<HTMLDivElement> }) => void;
+  handleBlur?: (params: { event: FocusEvent<HTMLDivElement> }) => void;
+  handleUndoRedo?: (params: { type: 'historyUndo' | 'historyRedo' }) => void;
 }
 
 export interface WpEditorPluginConstructor {
@@ -87,12 +58,19 @@ type WpEditorRef = HTMLDivElement & {
 };
 
 type Props = Omit<TextareaHTMLAttributes<HTMLDivElement>, 'aria-placeholder' | 'value'> & {
+  /** 추가적인 CSS 클래스명 */
   className?: string;
+  /** 에디터의 이름 (필드 이름으로 사용됨) */
   name?: string;
+  /** 초기 값 */
   initialValue?: string;
+  /** 에디터에 표시될 플레이스홀더 텍스트 */
   placeholder?: string;
+  /** 최대 입력 가능한 텍스트 길이 */
   maxLength?: number;
+  /** 플러그인 클래스를 배열로 전달하여 기능 확장 */
   plugin?: WpEditorPluginConstructor[];
+  /** 각 플러그인에 대한 설정 객체 */
   config?: {
     mention?: MentionConfig;
     hash?: HashTagConfig;
@@ -100,21 +78,52 @@ type Props = Omit<TextareaHTMLAttributes<HTMLDivElement>, 'aria-placeholder' | '
     pasteToPlainText?: PasteToPlainTextConfig;
     countTextLength?: CountTextLengthConfig;
   };
+  /** 텍스트가 변경될 때 호출되는 함수 */
   handleChange?: (value: string, name?: string) => void;
 };
 
 const cx = makeCxFunc(style);
 
+/**
+ * 에디터 Plugin 클래스들의 생성자 함수를 실행하여 각 plugin 객체를 만들어 배열로 반환하는 함수
+ * @param {WpEditorPluginConstructor[]} [params.plugin] - Plugin 클래스 배열
+ * @param {MutableRefObject<HTMLDivElement | undefined>} [params.contentEditableEl] - 에디터 참조 객체
+ * @returns {WpEditorPlugin[]} - plugin 객체 배열
+ */
 const constructEditorPlugin = ({
   plugin,
   contentEditableEl
 }: {
   plugin: WpEditorPluginConstructor[];
   contentEditableEl: MutableRefObject<HTMLDivElement | undefined>;
-}) => {
+}): WpEditorPlugin[] => {
   return plugin.map((p) => new p({ contentEditableEl }));
 };
 
+/**
+ * `WpEditor`는 텍스트 및 리치 텍스트를 입력할 수 있는 에디터 컴포넌트입니다.
+ * 플러그인 시스템을 지원하여 Mention, HashTag, URL 자동 매칭 등의 다양한 기능을 확장할 수 있습니다.
+ *
+ * @component
+ * @example
+ * <WpEditor
+ *   name="editor"
+ *   initialValue="<p>Hello World!</p>"
+ *   placeholder="Type something..."
+ *   maxLength={500}
+ *   plugin={[Mention, HashTag, AutoUrlMatch]}
+ *   handleChange={(value) => console.log(value)}
+ * />
+ *
+ * @param {string} [className] - 추가적인 CSS 클래스명
+ * @param {string} [name] - 에디터의 이름 (필드 이름으로 사용됨)
+ * @param {string} [initialValue] - 초기 값 (HTML 형태)
+ * @param {string} [placeholder] - 에디터에 표시될 플레이스홀더 텍스트
+ * @param {number} [maxLength] - 최대 입력 가능한 텍스트 길이
+ * @param {WpEditorPluginConstructor[]} [plugin] - 플러그인 클래스를 배열로 전달하여 기능 확장
+ * @param {object} [config] - 각 플러그인에 대한 설정 객체 (MentionConfig, HashTagConfig 등)
+ * @param {function} [handleChange] - 텍스트가 변경될 때 호출되는 함수, 변경된 텍스트와 에디터 이름을 인자로 받음
+ */
 const WpEditor = forwardRef<WpEditorRef, Props>(
   (
     {
@@ -143,8 +152,10 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       disabled: false
     });
 
+    /** Plugin 클래스들로 만들어진 plugin 객체 배열 */
     const [plugins, setPlugins] = useState(constructEditorPlugin({ plugin, contentEditableEl }));
 
+    /** undo, redo를 컨트롤 하기 위한 기록을 stack 형식으로 기록하는 함수 */
     const recordStack = useMemo(
       () =>
         debounce(() => {
@@ -162,6 +173,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       []
     );
 
+    /**
+     * undo, redo를 기록하기 위해 에디터의 내용 변화를 감지하기 위한 mutationObserver
+     */
     const mutationObserver = useMemo(() => {
       if (typeof window === 'undefined') {
         return;
@@ -178,8 +192,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           recordStack();
         }
       });
-    }, []);
+    }, [recordStack]);
 
+    /** 현재의 커서 정보를 가져오는 함수 */
     const getSelection = useCallback(() => {
       const range = document.createRange();
       const selection = window.getSelection();
@@ -187,6 +202,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       return { selection, range };
     }, []);
 
+    /** 에디터 안에 <font> 태그가 들어갔을 시 font태그를 제거하고 안에 textConent만 나오도록 하는 함수 */
     const removeFontTagAtCursor = () => {
       const selection = window.getSelection();
       if (selection.rangeCount > 0) {
@@ -213,42 +229,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       }
     };
 
-    const insertLineBreak = useCallback(() => {
-      const { selection } = getSelection();
-
-      const { focusNode, focusOffset } = selection;
-
-      const br = document.createElement('br');
-      const range = selection.getRangeAt(0);
-      range.deleteContents(); // 선택된 내용을 삭제
-
-      const frag = document.createDocumentFragment();
-      const subBr = document.createElement('br');
-
-      if (focusNode.nodeType === Node.TEXT_NODE) {
-        if (focusNode.parentNode.nodeType === Node.ELEMENT_NODE) {
-        }
-        frag.appendChild(subBr);
-      }
-      frag.appendChild(br);
-
-      range.insertNode(frag);
-      range.setStartAfter(br);
-      range.setEndAfter(br);
-
-      selection.removeAllRanges();
-      selection.addRange(range);
-
-      range.collapse(false);
-
-      const brRect = br.getBoundingClientRect();
-      const editableRect = contentEditableEl.current.getBoundingClientRect();
-
-      if (brRect.bottom >= editableRect.bottom) {
-        contentEditableEl.current.scrollTop += brRect.bottom - editableRect.bottom + brRect.height;
-      }
-    }, []);
-
+    /**
+     * 에디터 내용의 끝 부분으로 커서를 옮기게 하는 range를 만드는 함수
+     */
     const rangeMoveContentEnd = useCallback(() => {
       const { selection, range } = getSelection();
 
@@ -263,9 +246,11 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       return range;
     }, [getSelection]);
 
+    /**
+     * 앞으로 복구, 뒤로 복구 이벤트가 발생할때 호출되는 함수
+     */
     const handleUndoRedo = useCallback(
       (e: InputEvent | { inputType: string; preventDefault: () => void }) => {
-        const { selection } = getSelection();
         let { range } = getSelection();
 
         if (e.inputType === 'historyUndo' || e.inputType === 'historyRedo') {
@@ -292,6 +277,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
             const cursorPosition = range.getBoundingClientRect();
             const editableRect = contentEditableEl.current.getBoundingClientRect();
 
+            // 복구시 커서의 위치에 따라 스크롤 위치를 변경
             if (cursorPosition.top < editableRect.top) {
               contentEditableEl.current.scrollTop -= editableRect.top - cursorPosition.top;
             } else if (cursorPosition.bottom > editableRect.bottom) {
@@ -302,7 +288,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           previousRevisions.current.disabled = true;
 
           plugins.forEach((plugin) => {
-            plugin.handleUndoRedo && plugin.handleUndoRedo({ selection, range });
+            plugin.handleUndoRedo &&
+              plugin.handleUndoRedo({ type: e.inputType as 'historyUndo' | 'historyRedo' });
           });
         } else {
           const { index } = previousRevisions.current;
@@ -317,15 +304,20 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       [name, handleChange, getSelection, plugins, rangeMoveContentEnd]
     );
 
+    /**
+     * 에디터 keydown 이벤트 발생시 호출되는 함수
+     */
     const handleKeyDown = useCallback(
       (e: KeyboardEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
+        const { selection } = getSelection();
         const prevData = contentEditableEl.current.innerHTML;
 
+        // 폰트 굴게 변하게 하는 단축키 무효화
         if ((e.ctrlKey && e.code === 'KeyB') || (e.metaKey && e.code === 'KeyB')) {
           e.preventDefault();
         }
 
+        // 앞으로 복구 단축키시 강제로 historyRedo 이벤트 dispatch
         if (e.code === 'KeyZ' && (e.metaKey || e.ctrlKey) && e.shiftKey) {
           handleUndoRedo({ ...e, inputType: 'historyRedo' });
 
@@ -333,56 +325,10 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         }
 
         plugins.forEach((plugin) => {
-          plugin.handleKeyDown && plugin.handleKeyDown({ selection, range, event: e });
+          plugin.handleKeyDown && plugin.handleKeyDown({ event: e });
         });
 
-        // if (e.code === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
-        //   const range = selection.getRangeAt(0);
-        //   const anchorNode = range.startContainer;
-        //   const offset = range.startOffset;
-
-        //   // 텍스트 노드의 시작 부분에 커서가 위치한 경우
-        //   if (
-        //     anchorNode.nodeType === Node.TEXT_NODE &&
-        //     offset === 0 &&
-        //     anchorNode.parentNode.nodeName !== 'DIV'
-        //   ) {
-        //     e.preventDefault();
-
-        //     // 부모 요소 앞에 <br> 태그 삽입
-        //     const br = document.createElement('br');
-        //     anchorNode.parentNode.parentNode.insertBefore(br, anchorNode.parentNode);
-
-        //     // 커서를 새로운 줄로 이동
-        //     range.setStartBefore(anchorNode);
-        //     range.setEndBefore(anchorNode);
-        //     selection.removeAllRanges();
-        //     selection.addRange(range);
-
-        //     contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
-
-        //     return;
-        //   }
-        //   // 커서가 요소 노드의 시작 부분에 위치한 경우
-        //   else if (anchorNode.nodeType === Node.ELEMENT_NODE && anchorNode.nodeName !== 'DIV') {
-        //     e.preventDefault();
-
-        //     // 해당 요소 앞에 <br> 태그 삽입
-        //     const br = document.createElement('br');
-        //     anchorNode.parentNode.insertBefore(br, anchorNode);
-
-        //     // 커서를 새로운 줄로 이동
-        //     range.setStartBefore(anchorNode);
-        //     range.setEndBefore(anchorNode);
-        //     selection.removeAllRanges();
-        //     selection.addRange(range);
-
-        //     contentEditableEl.current.dispatchEvent(new Event('input', { bubbles: true }));
-
-        //     return;
-        //   }
-        // }
-
+        // Enter 입력시 개행 처리 (플러그인에서 Enter 입력시 내용 변경을 한것이 없다면 개행처리 진행)
         if (
           (e.code === 'Enter' || e.code === 'NumpadEnter') &&
           !e.shiftKey &&
@@ -420,19 +366,21 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
       [getSelection, handleUndoRedo, plugins, textareaProps]
     );
 
+    /**
+     * 에디터의 input 이벤트 발생시 호출되는 함수
+     */
     const handlePostDataChange = useCallback(
       (e: ChangeEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         if (!e.target.innerHTML) {
-          // 전체 HTML을 제거하여 초기화
+          // 전체 HTML을 제거하여 초기화 (브라우저의 이전 폰트 스타일이 남아있는 것을 염두하여 초기화 진행)
           contentEditableEl.current.innerHTML = '';
         }
 
+        // font 태그는 제거하고 textContent만 나오도록
         removeFontTagAtCursor();
 
         for (const plugin of plugins) {
-          plugin.handleChange && plugin.handleChange({ selection, range, event: e });
+          plugin.handleChange && plugin.handleChange({ event: e });
         }
 
         handleChange &&
@@ -442,37 +390,34 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
         recordStack();
       },
-      [getSelection, handleChange, recordStack, name, plugins, textareaProps]
+      [handleChange, recordStack, name, plugins, textareaProps]
     );
 
+    /**
+     * 에디터 내부 클릭 이벤트 발생시 호출되는 함수
+     */
     const handleClick = useCallback(
       (e: MouseEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         plugins.forEach((plugin) => {
-          plugin.handleClick && plugin.handleClick({ selection, range, event: e });
+          plugin.handleClick && plugin.handleClick({ event: e });
         });
       },
-      [getSelection, plugins]
+      [plugins]
     );
 
     const handleCopy = useCallback(
       (e: ClipboardEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         plugins.forEach((plugin) => {
-          plugin.handleCopy && plugin.handleCopy({ selection, range, event: e });
+          plugin.handleCopy && plugin.handleCopy({ event: e });
         });
 
         textareaProps.onCopy && textareaProps.onCopy(e);
       },
-      [getSelection, plugins, textareaProps]
+      [plugins, textareaProps]
     );
 
     const handlePaste = useCallback(
       (e: ClipboardEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         if (
           previousRevisions.current.stack[previousRevisions.current.index] !==
           contentEditableEl.current.innerHTML
@@ -482,38 +427,34 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         }
 
         plugins.forEach((plugin) => {
-          plugin.handlePaste && plugin.handlePaste({ selection, range, event: e });
+          plugin.handlePaste && plugin.handlePaste({ event: e });
         });
 
         textareaProps.onPaste && textareaProps.onPaste(e);
       },
-      [getSelection, plugins, textareaProps]
+      [plugins, textareaProps]
     );
 
     const handleFocus = useCallback(
       (e: FocusEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         plugins.forEach((plugin) => {
-          plugin.handleFocus && plugin.handleFocus({ selection, range, event: e });
+          plugin.handleFocus && plugin.handleFocus({ event: e });
         });
 
         textareaProps.onFocus && textareaProps.onFocus(e);
       },
-      [getSelection, plugins, textareaProps]
+      [plugins, textareaProps]
     );
 
     const handleBlur = useCallback(
       (e: FocusEvent<HTMLDivElement>) => {
-        const { selection, range } = getSelection();
-
         plugins.forEach((plugin) => {
-          plugin.handleBlur && plugin.handleBlur({ selection, range, event: e });
+          plugin.handleBlur && plugin.handleBlur({ event: e });
         });
 
         textareaProps.onBlur && textareaProps.onBlur(e);
       },
-      [getSelection, plugins, textareaProps]
+      [plugins, textareaProps]
     );
 
     const setData = useCallback(
@@ -592,13 +533,12 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           onBlur={handleBlur}
           onClick={handleClick}
         ></WpEditorContents>
-        {plugins.map((plugin, index) =>
-          plugin.component ? (
-            <div key={index}>{plugin.component({ plugin })}</div>
-          ) : (
-            <div key={index}></div>
-          )
-        )}
+        {plugins
+          .filter((plugin) => plugin?.component)
+          .map((plugin, index) => {
+            const Component = plugin.component;
+            return <Component key={plugin.commandKey ?? index} plugin={plugin} />;
+          })}
       </div>
     );
   }

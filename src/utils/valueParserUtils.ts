@@ -79,7 +79,16 @@ export const decodeHtmlEntities = (str: string) => {
     '&#x3D;': '='
   };
 
-  return str.replace(/&[#\w]+;/g, (match) => entityMap[match] || match);
+  let decodedStr = str;
+
+  // 반복적으로 HTML 엔티티를 디코딩
+  let prevStr = '';
+  while (decodedStr !== prevStr) {
+    prevStr = decodedStr;
+    decodedStr = decodedStr.replace(/&[#\w]+;/g, (match) => entityMap[match] || match);
+  }
+
+  return decodedStr;
 };
 
 export const convertMarkdownToHtmlStr = (text: string) => {
@@ -101,7 +110,7 @@ export const convertMarkdownToHtmlStr = (text: string) => {
   // 링크 변환
   convertStr = convertStr.replace(
     /\[([^\]]+)\]\(([^)]+)\)\[:(target="_blank")\]/g,
-    '<a href="$2" $3>$1</a>'
+    '<a href="$2" target="_blank">$1</a>'
   );
 
   // [LINEBREAK] 변환
