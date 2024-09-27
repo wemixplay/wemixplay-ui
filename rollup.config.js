@@ -35,23 +35,23 @@ const plugins = [
   }),
   optimizeLodashImports(),
   babel({
-		babelHelpers: 'runtime',
-		exclude: 'node_modules/**',
-		extensions,
-		presets: [
-			[
-				'@babel/preset-env',
-				{
-					useBuiltIns: 'usage',
-					corejs: 3, // core-js version 3 사용
-				}
-			],
-			'@babel/preset-react',
-			'@babel/preset-typescript'
-		],
-		plugins: [
-			'@babel/plugin-transform-runtime'
-		],
+	  babelHelpers: 'runtime', // 여전히 runtime helpers를 사용할 수 있지만 core-js는 사용하지 않음
+  exclude: 'node_modules/**',
+  extensions,
+  presets: [
+    [
+      '@babel/preset-env',
+      {
+        // useBuiltIns 옵션을 제거하여 core-js 의존성을 없앰
+        targets: '> 0.25%, not dead', // 브라우저 타겟을 설정하여 필요한 최소 기능만 변환
+      }
+    ],
+    '@babel/preset-react',
+    '@babel/preset-typescript'
+  ],
+  plugins: [
+    '@babel/plugin-transform-runtime' // corejs 없이 runtime 헬퍼만 사용
+  ]
 	}),
   {
     transform(code, id) {
@@ -102,7 +102,7 @@ const plugins = [
   resolve({
     extensions,
     browser: true,
-    dedupe: ['react', 'react-dom', 'lodash-es']
+    dedupe: ['react', 'react-dom', 'lodash-es', 'core-js']
   }),
   replace({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
@@ -135,33 +135,58 @@ if (process.env.NODE_VI === 'OK') {
   }))
 }
 
-module.exports = {
-  external:  [
-    ...Object.keys(packageJson.dependencies).filter(dep => dep !== 'react-youtube'),
-    /@babel\/runtime/,
-    /fsevents/
-  ],
-  plugins,
-  input: './src/index.ts',
-  output: [
-    {
-      dir: 'dist/esm',
-      format: 'esm',
-      preserveModules: true, // indicate not create a single-file
-      preserveModulesRoot: 'src',
-      sourcemap: process.env.NODE_ENV === 'development'
+module.exports = [
+  {
+    external:  [
+      ...Object.keys(packageJson.dependencies).filter(dep => dep !== 'react-youtube' || dep !== 'fs-extra'),
+      /@babel\/runtime/,
+      /fsevents/
+    ],
+    plugins,
+    input: './src/index.ts',
+    output: [
+      {
+        dir: 'dist/esm',
+        format: 'esm',
+        preserveModules: true, // indicate not create a single-file
+        preserveModulesRoot: 'src',
+        sourcemap: process.env.NODE_ENV === 'development'
+      },
+      {
+        dir: 'dist',
+        format: 'cjs',
+        preserveModules: true, // indicate not create a single-file
+        preserveModulesRoot: 'src',
+        exports: 'auto',
+        sourcemap: process.env.NODE_ENV === 'development'
+      }
+    ],
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
     },
-    {
-      dir: 'dist',
-      format: 'cjs',
-      preserveModules: true, // indicate not create a single-file
-      preserveModulesRoot: 'src',
-      sourcemap: process.env.NODE_ENV === 'development'
-    }
-  ],
-	treeshake: {
-		moduleSideEffects: false,
-		propertyReadSideEffects: false,
-		unknownGlobalSideEffects: false,
-	},
-};
+  },
+  {
+    external: ['react', 'react-dom', id => /fsevents/.test(id)],
+    plugins,
+    input: './src/modules/index.ts',
+    output: [
+			{
+				file: 'dist/modules/index.cjs.js',
+				format: 'cjs',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+			{
+				file: 'dist/modules/index.esm.mjs',
+				format: 'esm',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+		],
+    manualChunks(id) {
+      if (id.includes('node_modules')) {
+        return 'vendors';
+      }
+      }
+  }
+];
