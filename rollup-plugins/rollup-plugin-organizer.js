@@ -1,6 +1,5 @@
-const {existsSync} = require('fs')
 const path = require('path')
-const {copy, remove} = require('fs-extra')
+const {copy, remove, existsSync} = require('fs-extra')
 
 module.exports = function organizer ({ target }) {
     return {
