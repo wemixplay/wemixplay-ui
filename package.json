@@ -1,6 +1,6 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.13.22",
+  "version": "1.13.23",
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
@@ -90,6 +90,7 @@
     "rollup-plugin-node-builtins": "^2.1.2",
     "rollup-plugin-node-globals": "^1.4.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "rollup-plugin-polyfill-node": "^0.13.0",
     "rollup-plugin-postcss": "^4.0.2",
     "rollup-plugin-rename-node-modules": "^1.3.1",
     "rollup-plugin-terser": "^7.0.2",
