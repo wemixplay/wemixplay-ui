@@ -1,5 +1,6 @@
 .og-meta-data-preview {
-  margin: $sp-12 0;
+  // margin: $sp-8 0;
+  margin-top: $sp-8;
 
   &.has-click-event {
     cursor: pointer;
@@ -29,19 +30,22 @@
 
     .preview-box {
       display: flex;
-      flex-wrap: wrap;
-      align-items: center;
+      align-items: flex-start;
 
-      @include breakpoint-768 {
-        flex-wrap: nowrap;
-      }
+      // flex-wrap: nowrap;
+
+      // @include breakpoint-768 {
+
+      // }
     }
 
     .preview-img {
       position: relative;
-      width: 100%;
-      height: 162px;
+      width: 140px;
+      min-width: 140px;
+      height: auto;
       flex-shrink: 0;
+      align-self: stretch;
 
       @include breakpoint-768 {
         max-width: 200px;
@@ -65,10 +69,12 @@
 
     .preview-data {
       display: flex;
-      width: 100%;
       min-width: 0;
+      height: auto;
+      flex: 1;
       flex-direction: column;
-      padding: $sp-16;
+      align-self: stretch;
+      padding: $sp-8 $sp-16;
 
       @include breakpoint-768 {
         height: 120px;
@@ -77,37 +83,29 @@
       }
 
       .title {
-        @include headline-02-b;
+        @include add-body-text-16-b;
 
+        max-width: calc(100% - 14px);
         color: var(--semantic-label-normal);
 
-        @include breakpoint-768 {
-          @include ellipsis(1);
-        }
+        @include ellipsis(1);
       }
 
       .link {
-        @include label-01-normal-r;
+        @include add-body-text-16-r;
         @include ellipsis(1);
 
         color: var(--semantic-label-alternative);
-
-        @include breakpoint-768 {
-          margin-top: $sp-4;
-        }
       }
 
       .description {
-        @include label-02-reading-r;
+        @include label-01-reading-r;
 
         margin-top: $sp-4;
+        margin-top: -4px;
         color: var(--semantic-label-alternative);
 
         @include ellipsis(2);
-
-        @include breakpoint-768 {
-          margin-top: $sp-8;
-        }
       }
     }
 

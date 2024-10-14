@@ -1,25 +1,19 @@
 .feed-detail-editor {
   height: 100%;
 
-  //  padding: 0 $sp-20;
-
   @include breakpoint-768 {
     height: auto;
-
-    // padding: $sp-24 $sp-20 $sp-16;
   }
 
   &-header {
     display: flex;
     align-items: center;
-    padding: 0 $sp-20;
+    padding: 0 $sp-14;
     gap: 0 12px;
 
     @include breakpoint-768 {
       padding: $sp-20;
     }
-
-    // padding: 0 $sp-20;
 
     &.exist-user-click-event {
       .user-name,
@@ -30,8 +24,7 @@
 
     .profile-info {
       .user-name {
-        // @include body-02-normal-sb;
-        @include headline-01-b;
+        @include body-01-normal-b;
 
         color: var(--semantic-label-normal);
       }
@@ -66,7 +59,7 @@
       background: var(--semantic-background-normal-alternative);
       color: var(--semantic-label-normal);
 
-      @include label-01-normal-m;
+      @include label-01-normal-sb;
 
       svg {
         margin-left: $sp-8;
@@ -88,25 +81,24 @@
 
   &-body {
     overflow: hidden;
-
-    // max-height: calc(100% - 150px);
+    max-height: calc(100% - 64px - 80px);
     padding: 0 $sp-20;
+    margin-top: $sp-20;
 
-    // padding-bottom: $sp-24;
-    margin-top: $sp-12;
+    [class*="wp-editor"] {
+      height: auto;
+    }
   }
 
   .editor.post-content {
-    min-height: 80px;
+    min-height: 120px;
     padding: 0;
     border: none;
     margin: 0;
 
-    @include body-01-reading-02-r;
+    @include add-body-text-16-m;
 
     @include breakpoint-768 {
-      @include add-body-text-16-m;
-
       overflow: auto;
       min-height: 120px;
       max-height: 520px;
@@ -137,7 +129,7 @@
 
   .control-box {
     display: flex;
-    padding: $sp-16 $sp-20;
+    padding: $sp-12 $sp-20 $sp-16 $sp-20;
     margin-top: auto;
 
     .left {
