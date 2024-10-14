@@ -61,11 +61,11 @@
       path,
       rect {
         &[class*="fill"] {
-          fill: var(--semantic-label-normal);
+          fill: var(--semantic-label-neutral);
         }
 
         &[class*="stroke"] {
-          stroke: var(--semantic-label-normal);
+          stroke: var(--semantic-label-neutral);
         }
       }
     }
@@ -103,13 +103,13 @@
   }
 
   .count {
-    color: var(--semantic-label-normal);
+    color: var(--semantic-label-neutral);
     font-feature-settings: "ss10" on;
 
-    @include add-body-text-13-sb;
+    @include add-body-text-14-m;
 
-    @include breakpoint-768 {
-      @include add-body-text-16-sb;
-    }
+    // @include breakpoint-768 {
+    //   @include add-body-text-16-sb;
+    // }
   }
 }

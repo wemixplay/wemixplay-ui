@@ -1,5 +1,5 @@
 .images-upload-preview {
-  margin: $sp-12 0 $sp-12 0;
+  margin-top: $sp-8;
   cursor: default;
 
   .image-preview-slider {
@@ -9,12 +9,12 @@
 
     :global {
       .swiper {
-        border-radius: $rd-8;
+        border-radius: 0;
         background: var(--semantic-static-black);
 
-        @include breakpoint-768 {
-          border-radius: $rd-12;
-        }
+        // @include breakpoint-768 {
+        //   border-radius: $rd-12;
+        // }
 
         .swiper-wrapper {
           display: flex;

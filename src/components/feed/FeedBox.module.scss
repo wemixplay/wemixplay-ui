@@ -1,7 +1,6 @@
 .feed-box {
   position: relative;
-  padding: $sp-16 $sp-14 $sp-10;
-  border-radius: $sp-12;
+  padding: $sp-20 0 $sp-12 0;
   border-bottom: 0.7px solid rgb(0 0 0 / 10%);
   background: var(--semantic-background-elevated-normal);
   box-shadow: 0 5.6px 19.601px 0 rgb(0 0 0 / 6%);
@@ -20,6 +19,7 @@
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    padding: 0 $sp-20;
 
     .profile {
       // style
@@ -50,7 +50,7 @@
 
   .feed-body {
     min-height: 38px;
-    padding: $sp-6 $sp-6 0;
+    padding: 0 0  $sp-14 0;
     margin-top: $sp-6;
 
     @include breakpoint-768 {
@@ -61,23 +61,17 @@
     }
 
     .text-content {
+      padding: 0 $sp-20;
       margin: 0;
-
-      @include add-body-text-14-m;
-
       font-family: inherit;
 
-      @include breakpoint-768 {
-        @include add-body-text-18-m;
-
-        margin-bottom: $sp-20;
-      }
+      @include add-body-text-16-m;
     }
 
     .carousel {
       overflow: hidden;
       width: 100%;
-      margin-top: $sp-12;
+      margin-top: $sp-8;
       margin-bottom: 0;
 
       :global {
@@ -100,7 +94,7 @@
 
             /* 캐러셀 이미지 비율은 16:9 고정, 이미지는 contain */
             padding-bottom: 56.25%;
-            border-radius: $rd-12;
+            border-radius: 0;
             background-color: var(--semantic-fill-strong);
           }
 
@@ -114,9 +108,11 @@
   }
 
   .feed-footer {
+    padding: 0 $sp-20;
+
     // padding: $sp-4 $sp-20 $sp-16 $sp-20;
     // margin-top: $sp-32;
-    margin-top: $sp-32;
+    margin-top: $sp-16;
 
     &-container {
       display: flex;
@@ -126,7 +122,7 @@
     button {
       display: flex;
       align-items: center;
-      padding: $sp-2 $sp-8;
+      padding: $sp-2 $sp-6;
       color: var(--semantic-label-normal);
       font-feature-settings: "ss10" on;
       text-align: center;
@@ -145,9 +141,9 @@
     .feed-comments {
       width: 100%;
       justify-content: space-between;
-      padding-top: $sp-10;
+      padding-top: $sp-12;
       border-top: 1px solid var(--semantic-line-normal-alternative);
-      margin-top: $sp-10;
+      margin-top: $sp-12;
     }
   }
 

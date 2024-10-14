@@ -30,7 +30,7 @@
 
   .preview-iframe-area {
     position: relative;
-    border-radius: $rd-8;
+    border-radius: 0;
 
     @include breakpoint-768 {
       border-radius: $rd-12;

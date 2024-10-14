@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   max-width: 240px;
-  padding: $sp-8 $sp-2 $sp-8 $sp-8;
+  padding: $sp-8 0 $sp-8 $sp-8;
   border: 1px solid  var(--semantic-line-solid-normal);
   border-radius: $rd-8;
   background: var(--semantic-background-normal-alternative);
@@ -21,7 +21,9 @@
     overflow: auto;
     max-height: 188px;
     padding: 0;
+    padding-right: 3px;
     margin: 0;
+    margin-right: 3px;
     list-style: none;
 
     @include scroll(3px, var(--semantic-fill-strong), transparent);

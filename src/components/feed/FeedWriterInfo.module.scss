@@ -31,15 +31,8 @@
     min-height: 17px;
     align-items: center;
     color: var(--semantic-label-normal);
-    font-feature-settings: "ss10" on;
 
-    @include add-body-text-15-b;
-
-    @include breakpoint-768 {
-      @include add-title-18-b;
-
-      min-height: 24px;
-    }
+    @include add-body-text-16-b;
 
     svg {
       margin-left: 4px;
@@ -136,9 +129,5 @@
     color: var(--semantic-label-alternative);
 
     @include add-body-text-13-m;
-
-    @include breakpoint-768 {
-      @include add-body-text-15-m;
-    }
   }
 }

@@ -5,7 +5,7 @@
   left: 0;
   width: 100%;
   max-width: 200px;
-  padding: $sp-8 $sp-2 $sp-8 $sp-8;
+  padding: $sp-8 0 $sp-8 $sp-8;
   border: 1px solid  var(--semantic-line-solid-normal);
   border-radius: $rd-8;
   background: var(--semantic-background-normal-alternative);
@@ -21,7 +21,9 @@
     overflow: auto;
     max-height: 188px;
     padding: 0;
+    padding-right: 3px;
     margin: 0;
+    margin-right: 3px;
     list-style: none;
 
     @include scroll(3px, var(--semantic-fill-strong), transparent);
@@ -48,7 +50,7 @@
         padding-left: $sp-8;
 
         .title {
-          @include add-body-text-13-m;
+          @include add-body-text-14-b;
 
           color: var(--semantic-label-strong);
           word-break: break-all;
@@ -65,7 +67,11 @@
         background: var(--semantic-line-solid-neutral);
         color: var(--semantic-label-normal);
 
-        @include add-body-text-13-m;
+        .info-area {
+          .title {
+            @include add-body-text-14-b ;
+          }
+        }
       }
     }
   }

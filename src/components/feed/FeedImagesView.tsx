@@ -129,7 +129,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
         navigation={!handleDeleteImg && images.length > 1}
         loop={false}
         slidesPerView={handleDeleteImg ? 'auto' : 1}
-        spaceBetween={handleDeleteImg ? 10 : 0}
+        spaceBetween={handleDeleteImg ? 4 : 0}
         onSlidesLengthChange={(swiper) => {
           if (curentImagesRef.current.length < images.length) {
             setTimeout(() => {
