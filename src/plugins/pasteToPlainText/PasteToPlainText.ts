@@ -109,6 +109,21 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
       '$1'
     );
 
+    /** 에디터 최대 문자열 길이값 */
+    const ariaValueMax = this.contentEditableEl.current.getAttribute('aria-valuemax');
+
+    // contentEditable 요소의 최대 텍스트 길이를 가져와 텍스트가 초과하지 않도록 자름
+    if (ariaValueMax) {
+      const availableInputLength =
+        Number(ariaValueMax) - this.contentEditableEl.current.textContent.length - 1;
+
+      if (availableInputLength > 0) {
+        plainTextData = plainTextData.slice(0, availableInputLength);
+      } else {
+        plainTextData = '';
+      }
+    }
+
     /** HTML 포맷을 확인하여 미디어 URL 추출한 배열 값 */
     const matchMediaList = this.getMediaMatchUrlList(
       this.checkHTMLFormat(originTextData) ? originTextData : originHtmlTextData
@@ -137,23 +152,8 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
         }
       }
     });
-
-    /** 에디터 최대 문자열 길이값 */
-    const ariaValueMax = this.contentEditableEl.current.getAttribute('aria-valuemax');
-
-    // contentEditable 요소의 최대 텍스트 길이를 가져와 텍스트가 초과하지 않도록 자름
-    if (ariaValueMax) {
-      const maxLength =
-        Number(ariaValueMax) - this.contentEditableEl.current.textContent.length - 1;
-
-      if (maxLength > 0) {
-        plainTextData = plainTextData.slice(0, maxLength);
-      } else {
-        plainTextData = '';
-      }
-    }
-
     const range = selection.getRangeAt(0);
+    console.log('range', range);
     range.deleteContents();
 
     // 수정된 데이터를 contenteditable 요소에 삽입
