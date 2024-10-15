@@ -2,6 +2,7 @@
   display: flex;
   width: 100%;
   min-width: 0;
+  flex-wrap: wrap;
   align-items: flex-start;
 
   &.has-click-event {
@@ -28,7 +29,7 @@
 
   .title {
     display: flex;
-    min-height: 17px;
+    min-height: 24px;
     align-items: center;
     color: var(--semantic-label-normal);
 
@@ -44,7 +45,8 @@
     min-width: 0;
     flex-direction: column;
     padding-right: $sp-20;
-    margin-left: $sp-8;
+    margin-top: -3px;
+    margin-left: $sp-6;
   }
 
   .info {
@@ -82,52 +84,49 @@
 
       @include label-01-normal-r;
     }
-
-    .from-info {
-      display: flex;
-      min-width: 0;
-      flex: 1;
-      align-items: center;
-      margin-top: $sp-2;
-
-      &.has-click-event {
-        > * {
-          cursor: pointer;
-        }
-      }
-
-      .ico-from-arrow {
-        cursor: default;
-
-        path {
-          fill: var(--semantic-label-normal);
-        }
-      }
-
-      .channel {
-        display: flex;
-        width: 100%;
-        min-width: 0;
-        align-items: center;
-        gap: 0 $sp-4;
-
-        &-name {
-          @include label-02-normal-m;
-
-          display: block;
-          padding-left: $sp-4;
-          color: var(--semantic-label-normal);
-
-          @include ellipsis(1);
-        }
-      }
-    }
   }
 
   .date {
-    margin-top: 2px;
+    margin-top: -1px;
     color: var(--semantic-label-alternative);
 
     @include add-body-text-13-m;
+  }
+
+  .from-info {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    height: 32px;
+    align-items: center;
+    padding: $sp-4 $sp-8;
+    border-radius: $rd-4;
+    margin-top: $sp-12;
+    margin-bottom: $sp-6;
+    background: var(--semantic-fill-normal);
+
+    &.has-click-event {
+      > * {
+        cursor: pointer;
+      }
+    }
+
+    .channel {
+      display: flex;
+      width: 100%;
+      min-width: 0;
+      align-items: center;
+      padding-left: 3px;
+      gap: 0 $sp-4;
+
+      &-name {
+        @include add-body-text-12-m;
+
+        display: block;
+        color: var(--semantic-label-normal);
+
+        @include ellipsis(1);
+      }
+    }
   }
 }

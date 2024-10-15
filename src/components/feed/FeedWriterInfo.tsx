@@ -163,17 +163,6 @@ const FeedWriterInfo = ({
         </strong>
         <div className={cx('info')}>
           {!!categoryName && <span className={cx('category')}>{categoryName}</span>}
-
-          {!!channelName && (
-            <div className={cx('from-info', { 'has-click-event': onChannelClick })}>
-              <SvgIcoFromArrow className={cx('ico-from-arrow')} />
-              <Person src={channelImg} customSize={18} onClick={handleChannelClick} />
-              <div className={cx('channel')} onClick={handleChannelClick}>
-                <span className={cx('channel-name')}>{channelName}</span>
-                {!!channelIsOfficial && <SvgIcoCertified width={12} height={12} />}
-              </div>
-            </div>
-          )}
         </div>
         <span className={cx('date')}>
           <ClientOnly fallback={'-'}>
@@ -181,6 +170,15 @@ const FeedWriterInfo = ({
           </ClientOnly>
         </span>
       </div>
+      {!!channelName && (
+        <div className={cx('from-info', { 'has-click-event': onChannelClick })}>
+          <Person src={channelImg} customSize={24} onClick={handleChannelClick} />
+          <div className={cx('channel')} onClick={handleChannelClick}>
+            <span className={cx('channel-name')}>{channelName}</span>
+            {!!channelIsOfficial && <SvgIcoCertified width={12} height={12} />}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

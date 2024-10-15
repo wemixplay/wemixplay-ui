@@ -1,5 +1,6 @@
 .feed-box {
   position: relative;
+  max-width: 600px; // test
   padding: $sp-20 0 $sp-12 0;
   border-bottom: 0.7px solid rgb(0 0 0 / 10%);
   background: var(--semantic-background-elevated-normal);
@@ -7,8 +8,8 @@
   cursor: default;
 
   @include breakpoint-768 {
-    padding: $sp-24 $sp-20 $sp-16;
-    border-radius: $sp-16;
+    padding: $sp-20 0;
+    border-radius: $sp-12;
   }
 
   &.has-click-event {
@@ -21,11 +22,20 @@
     justify-content: space-between;
     padding: 0 $sp-20;
 
-    .profile {
-      // style
+    @include breakpoint-768 {
+      padding: 0 $sp-16;
     }
 
     .btn-manage {
+      position: absolute;
+      top: 16px;
+      right: 20px;
+
+      @include breakpoint-768 {
+        top: 28px;
+        right: 16px;
+      }
+
       :global {
         .btn-popover {
           background: transparent;
@@ -140,7 +150,6 @@
 
     .feed-comments {
       width: 100%;
-      justify-content: space-between;
       padding-top: $sp-12;
       border-top: 1px solid var(--semantic-line-normal-alternative);
       margin-top: $sp-12;

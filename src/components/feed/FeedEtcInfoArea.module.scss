@@ -46,14 +46,16 @@
     }
 
     &.btn-share {
-      svg {
-        width: 36.4px;
-        height: 16px;
+      display: flex;
+      width: 36px;
+      height: 26px;
+      align-items: center;
+      justify-content: center;
+      margin-left: auto;
 
-        @include breakpoint-768 {
-          width: 52px;
-          height: 24px;
-        }
+      svg {
+        width: auto;
+        height: 16px;
       }
     }
 
@@ -62,20 +64,20 @@
       rect {
         &[class*="fill"] {
           fill: var(--semantic-label-neutral);
+          fill-opacity: 1;
+          stroke-opacity: 1;
         }
 
         &[class*="stroke"] {
+          fill-opacity: 1;
           stroke: var(--semantic-label-neutral);
+          stroke-opacity: 1;
         }
       }
     }
 
     &.has-click-event {
       cursor: pointer !important;
-    }
-
-    &:not(:first-child) {
-      margin-left: $sp-24;
     }
 
     .icon {
