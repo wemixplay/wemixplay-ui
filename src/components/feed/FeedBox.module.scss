@@ -64,9 +64,8 @@
     margin-top: $sp-6;
 
     @include breakpoint-768 {
-      padding-top: $sp-8;
-      padding-right: 0;
-      padding-left: 0;
+      min-height: 55px;
+      padding: $sp-8 0 0 0;
       margin-top: $sp-8;
     }
 
@@ -76,6 +75,10 @@
       font-family: inherit;
 
       @include add-body-text-16-m;
+
+      @include breakpoint-768 {
+        padding: 0 $sp-24;
+      }
     }
 
     .carousel {
@@ -83,6 +86,10 @@
       width: 100%;
       margin-top: $sp-8;
       margin-bottom: 0;
+
+      @include breakpoint-768 {
+        padding: 0 $sp-16;
+      }
 
       :global {
         .carousel-swiper {
@@ -123,6 +130,11 @@
     // padding: $sp-4 $sp-20 $sp-16 $sp-20;
     // margin-top: $sp-32;
     margin-top: $sp-16;
+
+    @include breakpoint-768 {
+      padding: 0 $sp-16;
+      margin-top: $sp-28;
+    }
 
     &-container {
       display: flex;

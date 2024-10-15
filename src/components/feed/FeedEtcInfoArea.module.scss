@@ -53,9 +53,18 @@
       justify-content: center;
       margin-left: auto;
 
+      @include breakpoint-768 {
+        width: 52px;
+        height: 36px;
+      }
+
       svg {
         width: auto;
         height: 16px;
+
+        @include breakpoint-768 {
+          height: 24px;
+        }
       }
     }
 
@@ -110,8 +119,8 @@
 
     @include add-body-text-14-m;
 
-    // @include breakpoint-768 {
-    //   @include add-body-text-16-sb;
-    // }
+    @include breakpoint-768 {
+      @include add-body-text-16-sb;
+    }
   }
 }

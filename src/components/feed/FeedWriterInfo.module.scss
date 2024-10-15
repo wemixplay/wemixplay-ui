@@ -35,6 +35,10 @@
 
     @include add-body-text-16-b;
 
+    @include breakpoint-768 {
+      @include add-title-18-b;
+    }
+
     svg {
       margin-left: 4px;
     }
@@ -47,6 +51,11 @@
     padding-right: $sp-20;
     margin-top: -3px;
     margin-left: $sp-6;
+
+    @include breakpoint-768 {
+      margin-top: 0;
+      margin-left: $sp-8;
+    }
   }
 
   .info {
@@ -91,6 +100,12 @@
     color: var(--semantic-label-alternative);
 
     @include add-body-text-13-m;
+
+    @include breakpoint-768 {
+      @include add-body-text-15-m;
+
+      margin-top: $sp-4;
+    }
   }
 
   .from-info {
@@ -105,10 +120,21 @@
     margin-bottom: $sp-6;
     background: var(--semantic-fill-normal);
 
+    @include breakpoint-768 {
+      height: 36px;
+      border-radius: $rd-8;
+      margin-top: $sp-14;
+    }
+
     &.has-click-event {
       > * {
         cursor: pointer;
       }
+    }
+
+    > [class*="avatar"] {
+      width: 28px !important;
+      height: 28px !important;
     }
 
     .channel {
@@ -126,6 +152,10 @@
         color: var(--semantic-label-normal);
 
         @include ellipsis(1);
+
+        @include breakpoint-768 {
+          @include add-body-text-13-m;
+        }
       }
     }
   }
