@@ -9,7 +9,7 @@
     white-space: pre-wrap;
     word-break: break-word;
 
-    @include add-body-text-14-m;
+    @include add-body-text-16-m;
 
     @include breakpoint-768 {
       @include add-body-text-18-m;

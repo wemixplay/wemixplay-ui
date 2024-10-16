@@ -1,6 +1,7 @@
 .og-meta-data-preview {
   padding: 0 $sp-20;
-  margin-top: $sp-6;
+  margin-top: auto;
+  margin-bottom: $sp-6;
 
   @include breakpoint-768 {
     padding: 0 $sp-16;
@@ -34,9 +35,8 @@
 
     .preview-box {
       display: flex;
+      flex-wrap: nowrap;
       align-items: flex-start;
-
-      // flex-wrap: nowrap;
 
       // @include breakpoint-768 {
 

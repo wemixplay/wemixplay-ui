@@ -80,14 +80,14 @@
   }
 
   &-body {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+
     // overflow: hidden;
     // max-height: calc(100% - 64px - 80px);
     padding: 0 $sp-20;
     margin-top: $sp-20;
-
-    [class*="wp-editor"] {
-      height: auto;
-    }
   }
 
   .editor.post-content {

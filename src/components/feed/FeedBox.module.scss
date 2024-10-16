@@ -28,7 +28,7 @@
 
     .btn-manage {
       position: absolute;
-      top: 16px;
+      top: 20px;
       right: 20px;
 
       @include breakpoint-768 {
@@ -60,7 +60,8 @@
 
   .feed-body {
     min-height: 38px;
-    padding: 0 0  $sp-14 0;
+
+    // padding: 0 0  $sp-14 0;
     margin-top: $sp-6;
 
     @include breakpoint-768 {
@@ -70,7 +71,7 @@
     }
 
     .text-content {
-      padding: 0 $sp-20;
+      padding: $sp-8 $sp-20 $sp-14 $sp-20;
       margin: 0;
       font-family: inherit;
 
