@@ -4,6 +4,10 @@
   margin-top: $sp-8;
   margin-left: auto;
 
+  @include breakpoint-768 {
+    gap: 0 $sp-4;
+  }
+
   button {
     display: inline-flex;
     min-height: 26px;
@@ -31,7 +35,7 @@
       border-radius: $rd-100;
 
       @include breakpoint-768 {
-        padding-left: $sp-8;
+        padding: 0 $sp-8;
       }
 
       svg {

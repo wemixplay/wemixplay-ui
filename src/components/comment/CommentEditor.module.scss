@@ -26,7 +26,7 @@
       overflow-y: auto;
 
       @include scroll(3px, var(--semantic-fill-strong), transparent);
-      @include add-body-text-14-m;
+      @include label-01-normal-r;
 
       @include breakpoint-768 {
         @include add-body-text-16-m;
@@ -53,7 +53,8 @@
       &:empty {
         &::before {
           color: var(--semantic-label-alternative);
-          line-height: 1.5rem;
+
+          @include label-02-normal-r;
         }
       }
     }

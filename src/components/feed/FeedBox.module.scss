@@ -77,7 +77,7 @@
       @include add-body-text-16-m;
 
       @include breakpoint-768 {
-        padding: 0 $sp-24;
+        padding: $sp-8 $sp-16 $sp-20 $sp-24;
       }
     }
 
