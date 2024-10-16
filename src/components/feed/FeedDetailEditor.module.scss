@@ -88,6 +88,40 @@
     // max-height: calc(100% - 64px - 80px);
     padding: 0 $sp-20;
     margin-top: $sp-20;
+
+    [class*="og-meta-data-preview"] {
+      padding: 0;
+
+      [class*="og-meta-data-content"] {
+        [class*="preview-box"] {
+          flex-wrap: nowrap;
+        }
+
+        [class*="preview-img"] {
+          min-width: 140px;
+          max-width: 140px;
+          height: auto;
+        }
+
+        [class*="preview-data"] {
+          padding: $sp-8 $sp-16;
+
+          [class*="title"] {
+            @include add-body-text-16-b;
+          }
+
+          [class*="link"] {
+            @include add-body-text-16-r;
+          }
+
+          [class*="description"] {
+            @include label-01-normal-r;
+
+            margin-top: -4px;
+          }
+        }
+      }
+    }
   }
 
   .editor.post-content {

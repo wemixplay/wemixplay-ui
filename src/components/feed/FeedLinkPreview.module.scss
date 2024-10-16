@@ -35,25 +35,26 @@
 
     .preview-box {
       display: flex;
-      flex-wrap: nowrap;
+      flex-wrap: wrap;
       align-items: flex-start;
 
-      // @include breakpoint-768 {
-
-      // }
+      @include breakpoint-768 {
+        flex-wrap: nowrap;
+      }
     }
 
     .preview-img {
       position: relative;
-      width: 140px;
-      min-width: 140px;
-      height: auto;
+      width: 100%;
+      min-width: 100%;
+      height: 162px;
       flex-shrink: 0;
       align-self: stretch;
 
       @include breakpoint-768 {
+        min-width: 200px;
         max-width: 200px;
-        height: 120px;
+        height: auto;
       }
 
       :global {
@@ -78,7 +79,7 @@
       flex: 1;
       flex-direction: column;
       align-self: stretch;
-      padding: $sp-8 $sp-16;
+      padding: $sp-16;
 
       @include breakpoint-768 {
         height: 120px;
@@ -87,7 +88,7 @@
       }
 
       .title {
-        @include add-body-text-16-b;
+        @include headline-02-b;
 
         max-width: calc(100% - 14px);
         color: var(--semantic-label-normal);
@@ -96,20 +97,27 @@
       }
 
       .link {
-        @include add-body-text-16-r;
+        @include label-01-normal-r;
         @include ellipsis(1);
 
         color: var(--semantic-label-alternative);
+
+        @include breakpoint-768 {
+          margin-top: $sp-4;
+        }
       }
 
       .description {
-        @include label-01-reading-r;
+        @include label-02-normal-r;
 
         margin-top: $sp-4;
-        margin-top: -4px;
         color: var(--semantic-label-alternative);
 
         @include ellipsis(2);
+
+        @include breakpoint-768 {
+          margin-top: $sp-12;
+        }
       }
     }
 
