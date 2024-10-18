@@ -21,12 +21,19 @@
 
   /* Comment Content */
   .comment-content {
-    padding: $sp-6 $sp-6 $sp-14;
-    margin-top: $sp-6;
+    padding: $sp-6 0 $sp-14;
+    margin-top: $sp-8;
     color: var(--semantic-label-strong);
     font-feature-settings: "ss10" on;
 
-    @include body-01-reading-02-r;
+    @include add-body-text-14-m;
+
+    @include breakpoint-768 {
+      padding: $sp-8 0 $sp-20 $sp-8;
+      margin-top: $sp-8;
+
+      @include body-01-reading-02-r;
+    }
   }
 
   .comment-btns {
@@ -49,11 +56,17 @@
     text-align: center;
 
     @include add-body-text-12-m;
+
+    @include breakpoint-768 {
+      padding: $sp-24 0;
+
+      @include add-body-text-15-m;
+    }
   }
 
   .btn-manage {
     svg {
-      path {
+      [class*="fill"] {
         fill: var(--semantic-label-normal);
       }
     }

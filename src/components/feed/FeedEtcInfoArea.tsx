@@ -109,7 +109,9 @@ const FeedEtcInfoArea = ({
         className={cx('btn-comment', { 'has-click-event': onCommentBtnClick })}
         onClick={handleCommentClick}
       >
-        <SvgIcoComment width={32} height={32} />
+        <i className={cx('icon')}>
+          <SvgIcoComment />
+        </i>
         <span className={cx('count')}>{toFormatterByInt(commentCount, 1)}</span>
       </button>
       <button

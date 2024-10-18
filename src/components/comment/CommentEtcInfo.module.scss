@@ -1,5 +1,14 @@
 .comment-etc-info {
-  margin-top: $sp-2;
+  padding-top: $sp-8;
+  border-top: 1px solid var(--semantic-line-normal-alternative);
+  margin-top: $sp-16;
+
+  @include breakpoint-768 {
+    height: 36px;
+    padding-top: 0;
+    border-top: 0;
+    margin-top: $sp-4;
+  }
 
   .btn-like {
     display: flex;
@@ -25,11 +34,19 @@
       path,
       rect {
         &[class*="fill"] {
-          fill: var(--semantic-label-normal);
+          fill: var(--semantic-label-neutral);
+
+          @include breakpoint-768 {
+            fill: var(--semantic-label-normal);
+          }
         }
 
         &[class*="stroke"] {
-          stroke: var(--semantic-label-normal);
+          stroke: var(--semantic-label-neutral);
+
+          @include breakpoint-768 {
+            stroke: var(--semantic-label-normal);
+          }
         }
       }
     }
@@ -59,8 +76,14 @@
     }
 
     .count {
-      color: var(--semantic-label-normal);
+      color: var(--semantic-label-neutral);
       line-height: 1;
+
+      @include breakpoint-768 {
+        @include add-body-text-16-sb;
+
+        color: var(--semantic-label-neutral);
+      }
     }
   }
 }

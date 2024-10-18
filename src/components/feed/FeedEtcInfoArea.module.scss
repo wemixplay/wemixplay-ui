@@ -3,9 +3,10 @@
   align-items: center;
   margin-top: $sp-8;
   margin-left: auto;
+  gap: 0 $sp-4;
 
   @include breakpoint-768 {
-    gap: 0 $sp-4;
+
   }
 
   button {
@@ -38,13 +39,15 @@
         padding: 0 $sp-8;
       }
 
-      svg {
+      .icon {
+        display: flex;
         width: 22px;
         height: 22px;
+        align-items: center;
+        justify-content: center;
 
         @include breakpoint-768 {
           width: 32px;
-          height: 32px;
         }
       }
     }
@@ -65,6 +68,8 @@
       svg {
         width: auto;
         height: 16px;
+        fill: var(--semantic-label-neutral);
+        stroke: var(--semantic-label-neutral);
 
         @include breakpoint-768 {
           height: 24px;
@@ -118,12 +123,15 @@
   }
 
   .count {
+    padding-left: $sp-2;
     color: var(--semantic-label-neutral);
     font-feature-settings: "ss10" on;
 
-    @include add-body-text-14-m;
+    @include add-body-text-13-m;
 
     @include breakpoint-768 {
+      padding-left: 0;
+
       @include add-body-text-16-sb;
     }
   }

@@ -14,6 +14,10 @@
     flex-shrink: 0;
     margin-right: $sp-12;
 
+    @include breakpoint-768 {
+      margin-right: $sp-8;
+    }
+
     :global {
       .avatar {
         width: 32px;
@@ -39,10 +43,10 @@
 
     .author-name {
       width: 100%;
-      min-height: 17px;
+      min-height: 22px;
       color: var(--semantic-label-normal);
 
-      @include add-body-text-15-b;
+      @include label-01-reading-sb;
 
       @include breakpoint-768 {
         display: flex;
@@ -66,16 +70,14 @@
     }
 
     .author-time {
-      margin-top: 1px;
+      margin-top: $sp-4;
       color: var(--semantic-label-alternative);
       font-feature-settings: "ss10" on;
 
-      @include add-body-text-13-m;
+      @include add-body-text-15-m;
 
       @include breakpoint-768 {
         @include add-body-text-15-m;
-
-        margin-top: $sp-4;
       }
     }
   }
