@@ -48,6 +48,10 @@
       font-feature-settings: "ss10" on;
 
       @include add-body-text-13-m;
+
+      @include breakpoint-768 {
+        @include add-body-text-16-m;
+      }
     }
   }
 

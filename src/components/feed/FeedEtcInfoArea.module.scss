@@ -6,7 +6,7 @@
   gap: 0 $sp-4;
 
   @include breakpoint-768 {
-
+    justify-content: space-between;
   }
 
   button {
@@ -63,6 +63,7 @@
       @include breakpoint-768 {
         width: 52px;
         height: 36px;
+        margin: 0;
       }
 
       svg {

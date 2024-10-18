@@ -43,14 +43,13 @@
 
     .author-name {
       width: 100%;
-      min-height: 22px;
+      min-height: 24px;
       color: var(--semantic-label-normal);
 
-      @include label-01-reading-sb;
+      @include add-body-text-16-b;
 
       @include breakpoint-768 {
         display: flex;
-        min-height: 24px;
         align-items: center;
 
         @include add-title-18-b;
@@ -70,14 +69,15 @@
     }
 
     .author-time {
-      margin-top: $sp-4;
       color: var(--semantic-label-alternative);
       font-feature-settings: "ss10" on;
 
-      @include add-body-text-15-m;
+      @include add-body-text-13-m;
 
       @include breakpoint-768 {
         @include add-body-text-15-m;
+
+        margin-top: $sp-4;
       }
     }
   }
