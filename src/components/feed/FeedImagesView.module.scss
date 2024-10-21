@@ -12,9 +12,9 @@
         border-radius: 0;
         background: var(--semantic-static-black);
 
-        // @include breakpoint-768 {
-        //   border-radius: $rd-12;
-        // }
+        @include breakpoint-768 {
+          border-radius: $rd-12;
+        }
 
         .swiper-wrapper {
           display: flex;

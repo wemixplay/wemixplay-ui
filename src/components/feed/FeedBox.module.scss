@@ -27,7 +27,7 @@
       right: 20px;
 
       @include breakpoint-768 {
-        top: 28px;
+        top: 20px;
         right: 16px;
       }
 
@@ -83,7 +83,6 @@
 
       @include breakpoint-768 {
         padding: 0;
-        border-radius: $rd-12;
       }
 
       :global {
