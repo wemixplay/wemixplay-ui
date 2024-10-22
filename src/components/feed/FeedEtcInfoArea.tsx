@@ -116,14 +116,14 @@ const FeedEtcInfoArea = ({
       </button>
       <button
         type="button"
-        className={cx('btn-like', { active: isMyClick, 'has-click-event': onLikeBtnClick })}
+        className={cx('btn-like', {
+          active: isMyClick,
+          'has-click-event': onLikeBtnClick
+        })}
         onClick={handleLikeBtnClick}
       >
         <span className={cx('icon')}>
           <SvgIcoLike />
-        </span>
-        <span className={cx('icon-pressed')}>
-          <SvgIcoLikePressed />
         </span>
         <span className={cx('count')}>{toFormatterByInt(likeCount, 1)}</span>
       </button>
