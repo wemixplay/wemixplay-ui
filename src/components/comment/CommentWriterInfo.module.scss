@@ -12,7 +12,7 @@
 
   &-avatar {
     flex-shrink: 0;
-    margin-right: $sp-12;
+    margin-right: $sp-6;
 
     @include breakpoint-768 {
       margin-right: $sp-8;
