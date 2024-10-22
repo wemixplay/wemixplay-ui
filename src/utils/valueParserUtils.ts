@@ -91,9 +91,52 @@ export const decodeHtmlEntities = (str: string) => {
   return decodedStr;
 };
 
+// 테이블 변환 함수
+const markdownToHtmlTable = (markdownStr: string) => {
+  const imgRegex = /<img\s+[^>]*src=["']?([^"'>]+)["']?[^>]*\/?>/i;
+  // 줄바꿈으로 나누기
+  const lines = markdownStr.trim().split('[LINEBREAK]');
+
+  // HTML 테이블 시작
+  let html = '<table>\n<thead>\n<tr>\n';
+
+  // 헤더 처리
+  const headers = lines[0].split('|').slice(1, -1); // 첫 번째 줄은 헤더
+  headers.forEach((header) => {
+    html += `<th>${header}</th>\n`;
+  });
+  html += '</tr>\n</thead>\n<tbody>\n';
+
+  // 데이터 처리
+  for (let i = 2; i < lines.length; i++) {
+    const columns = lines[i].split('|').slice(1, -1); // 각 줄의 데이터
+    if (columns.length > 0) {
+      // 빈 줄이 아닐 경우
+      html += '<tr>\n';
+
+      columns.forEach((column) => {
+        if (imgRegex.test(column)) {
+          html += `<td><div class="img-td">${column}</div></td>\n`;
+        } else {
+          html += `<td>${column}</td>\n`;
+        }
+      });
+      html += '</tr>\n';
+    }
+  }
+
+  // HTML 테이블 종료
+  html += '</tbody>\n</table>';
+
+  return html;
+};
+
 export const convertMarkdownToHtmlStr = (text: string) => {
   // 변환된 문자열을 저장할 변수 초기화
   let convertStr = decodeHtmlEntities(text).replace(/<[^>]*>/g, '');
+
+  // img 변환
+  convertStr = convertStr.replace(/!\[.*?\]\((.*?)\)/g, '<img src="$1" alt="" />');
 
   // WP@ 변환
   convertStr = convertStr.replace(
@@ -111,6 +154,11 @@ export const convertMarkdownToHtmlStr = (text: string) => {
   convertStr = convertStr.replace(
     /\[([^\]]+)\]\(([^)]+)\)\[:(target="_blank")\]/g,
     '<a href="$2" target="_blank">$1</a>'
+  );
+  // table 변환
+  convertStr = convertStr.replace(
+    /(\|[^\[]+\[LINEBREAK\])(\|[-:]+[-|:]*\|(\[LINEBREAK\]\|[^\[]+\|)+)/g,
+    markdownToHtmlTable
   );
 
   // [LINEBREAK] 변환
