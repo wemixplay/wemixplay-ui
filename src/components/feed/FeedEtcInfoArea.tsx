@@ -2,7 +2,7 @@
 
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedEtcInfoArea.module.scss';
-import { SvgIcoComment, SvgIcoLike, SvgIcoLikePressed, SvgIcoShare } from '@/assets/svgs';
+import { SvgIcoComment, SvgIcoLike, SvgIcoShare } from '@/assets/svgs';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
 

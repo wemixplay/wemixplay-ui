@@ -69,23 +69,22 @@
       }
     }
 
-    .icon-pressed {
-      display: none;
-    }
-
     &.active {
       // 내가 좋아요 했을때 스타일
-
       .icon {
-        display: none;
+        svg {
+          [class*="fill"] {
+            fill: var(--semantic-primary-normal);
+          }
+
+          [class*="stroke"] {
+            stroke: var(--semantic-primary-normal);
+          }
+        }
       }
 
-      .icon-pressed {
-        display: block;
-
-        path {
-          transform-origin: center;
-        }
+      .count {
+        color: var(--semantic-primary-normal);
       }
     }
 

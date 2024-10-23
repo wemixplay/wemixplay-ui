@@ -5,10 +5,6 @@
   margin-left: auto;
   gap: 0 $sp-4;
 
-  @include breakpoint-768 {
-    justify-content: space-between;
-  }
-
   button {
     display: inline-flex;
     min-height: 26px;
@@ -32,11 +28,11 @@
 
     &:not(.btn-share) {
       height: 26px;
-      padding: 0 6px;
+      padding: $sp-2 $sp-6;
       border-radius: $rd-100;
 
       @include breakpoint-768 {
-        padding: 0 $sp-8;
+        padding: $sp-2 $sp-8;
       }
 
       .icon {
@@ -63,7 +59,6 @@
       @include breakpoint-768 {
         width: 52px;
         height: 36px;
-        margin: 0;
       }
 
       svg {
