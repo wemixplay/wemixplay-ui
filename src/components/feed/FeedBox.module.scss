@@ -7,7 +7,7 @@
   cursor: default;
 
   @include breakpoint-768 {
-    padding: $sp-20 0;
+    padding-bottom: $sp-16;
     border-radius: $sp-12;
   }
 
@@ -20,6 +20,10 @@
     align-items: flex-start;
     justify-content: space-between;
     padding: 0 $sp-20;
+
+    @include breakpoint-768 {
+      padding: 0 $sp-16;
+    }
 
     .btn-manage {
       position: absolute;
@@ -59,7 +63,7 @@
 
     @include breakpoint-768 {
       min-height: 55px;
-      padding: 0 $sp-20 0 $sp-20;
+      padding: 0 $sp-16 0 $sp-16;
     }
 
     .text-content {
@@ -120,12 +124,10 @@
 
   .feed-footer {
     padding: 0 $sp-20;
-
-    // padding: $sp-4 $sp-20 $sp-16 $sp-20;
-    // margin-top: $sp-32;
     margin-top: $sp-16;
 
     @include breakpoint-768 {
+      padding: 0 $sp-16;
       margin-top: $sp-28;
     }
 
