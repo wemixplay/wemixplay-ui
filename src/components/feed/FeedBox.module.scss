@@ -58,12 +58,13 @@
   }
 
   .feed-body {
-    min-height: 38px;
+    min-height: 46px;
     margin-top: $sp-6;
 
     @include breakpoint-768 {
       min-height: 55px;
       padding: 0 $sp-16 0 $sp-16;
+      margin-top: $sp-8;
     }
 
     .text-content {
@@ -74,8 +75,15 @@
       @include add-body-text-16-m;
 
       @include breakpoint-768 {
-        padding: $sp-8 $sp-20 $sp-16 $sp-24;
-        padding: $sp-8 $sp-20 $sp-20 $sp-8;
+        padding: $sp-8 0 $sp-20 $sp-8;
+      }
+
+      [class*="ellipsis-content"] {
+        @include add-body-text-16-m;
+
+        @include breakpoint-768 {
+          @include add-body-text-18-m;
+        }
       }
     }
 
@@ -165,21 +173,10 @@
       border-top: 1px solid var(--semantic-line-normal-alternative);
       margin-top: $sp-12;
 
-      @include breakpoint-768 {
-        padding-top: $sp-10;
-        margin-top: $sp-10;
-      }
+      // @include breakpoint-768 {
+      //   padding-top: $sp-10;
+      //   margin-top: $sp-10;
+      // }
     }
   }
-
-  // /* Skeleton */
-  // .skeleton {
-  //   width: 100%;
-  //   width: 308px;
-  //   height: 0;
-  //   padding-bottom: 56.527%;
-  //   border-radius: $rd-12;
-  //   animation: skeleton-blank infinite alternate 3s;
-  //   background-color: #d2d2d9;
-  // }
 }

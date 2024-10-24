@@ -129,7 +129,7 @@
     color: var(--semantic-label-neutral);
     font-feature-settings: "ss10" on;
 
-    @include add-body-text-13-m;
+    @include add-body-text-13-sb;
 
     @include breakpoint-768 {
       padding-left: 0;
