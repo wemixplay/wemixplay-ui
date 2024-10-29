@@ -27,8 +27,7 @@ export const Default: StoryComponent = {
     }
   },
   args: {
-    textValue:
-      '| no | game       | user    | %   |[LINEBREAK]|----|------------|---------|-----|[LINEBREAK]| 1  | nightCrows | 300,023 | 2%  |[LINEBREAK]| 2  | mir4       | 180,232 | 3%  |[LINEBREAK]| 3  | everyfarm  | 19,322  | -5% |[LINEBREAK]',
+    textValue: '',
     config: {
       mention: {
         list: [

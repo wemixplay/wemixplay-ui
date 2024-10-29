@@ -27,6 +27,7 @@ import { PasteToPlainTextConfig } from '../../plugins/pasteToPlainText/PasteToPl
 import { CountTextLengthConfig } from '../../plugins/countTextLength/CountTextLength';
 import WpEditorContents from './WpEditorContents';
 import { makeCxFunc } from '@/utils/forReactUtils';
+import ToolBar from '@/plugins/toolBar/ToolBar';
 
 export interface WpEditorPlugin<C extends any = any> {
   commandKey: string;
@@ -313,9 +314,9 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         const prevData = contentEditableEl.current.innerHTML;
 
         // 폰트 굴게 변하게 하는 단축키 무효화
-        if ((e.ctrlKey && e.code === 'KeyB') || (e.metaKey && e.code === 'KeyB')) {
-          e.preventDefault();
-        }
+        // if ((e.ctrlKey && e.code === 'KeyB') || (e.metaKey && e.code === 'KeyB')) {
+        //   e.preventDefault();
+        // }
 
         // 앞으로 복구 단축키시 강제로 historyRedo 이벤트 dispatch
         if (e.code === 'KeyZ' && (e.metaKey || e.ctrlKey) && e.shiftKey) {
@@ -377,7 +378,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         }
 
         // font 태그는 제거하고 textContent만 나오도록
-        removeFontTagAtCursor();
+        // removeFontTagAtCursor();
 
         for (const plugin of plugins) {
           plugin.handleChange && plugin.handleChange({ event: e });
@@ -518,6 +519,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     return (
       <div className={cx('wp-editor')} onClick={onClick}>
+        <ToolBar />
         <WpEditorContents
           ref={contentEditableEl}
           className={cx(className, 'wp-editor-content')}

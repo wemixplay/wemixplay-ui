@@ -1,0 +1,50 @@
+.toolbar {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  overflow: auto;
+  height: 36px;
+  padding: 4px;
+  margin-bottom: 1px;
+  background: #fff;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  vertical-align: middle;
+
+  .toolbar-item {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px;
+    border: 0;
+    border-radius: 10px;
+    background: none;
+    cursor: pointer;
+    vertical-align: middle;
+
+    &.bold {
+      margin-right: 2px;
+      opacity: 0.2;
+    }
+
+    &.active {
+      background-color: rgb(223 232 250 / 30%);
+      opacity: 1;
+    }
+
+    &.text {
+      display: flex;
+      overflow: hidden;
+      height: 20px;
+      padding-right: 10px;
+      color: #777;
+      font-size: 14px;
+      line-height: 20px;
+      text-align: left;
+      text-overflow: ellipsis;
+      vertical-align: middle;
+    }
+  }
+}
