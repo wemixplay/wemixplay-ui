@@ -519,7 +519,7 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     return (
       <div className={cx('wp-editor')} onClick={onClick}>
-        <ToolBar />
+        <ToolBar editorRef={contentEditableEl} />
         <WpEditorContents
           ref={contentEditableEl}
           className={cx(className, 'wp-editor-content')}
