@@ -35,18 +35,14 @@
       @include body-01-reading-02-r;
     }
 
-    [class*="feed-text-content"] {
-      @include add-body-text-16-m;
+    :global {
+      .ellipsis-wrap {
+        .ellipsis-content {
+          @include add-body-text-16-m;
 
-      @include breakpoint-768 {
-        @include add-body-text-18-m;
-      }
-
-      [class*="ellipsis-content"] {
-        @include add-body-text-16-m;
-
-        @include breakpoint-768 {
-          @include add-body-text-18-m;
+          @include breakpoint-768 {
+            @include add-body-text-18-m;
+          }
         }
       }
     }

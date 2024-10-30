@@ -89,8 +89,11 @@
     }
 
     .count {
+      padding-left: $sp-2;
       color: var(--semantic-label-neutral);
       line-height: 1;
+
+      @include add-body-text-14-sb;
 
       @include breakpoint-768 {
         @include add-body-text-16-sb;
