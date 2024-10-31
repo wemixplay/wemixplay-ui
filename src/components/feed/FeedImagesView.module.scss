@@ -66,8 +66,16 @@
 
           > div {
             display: flex;
+            min-height: 292px;
+            max-height: 304px;
+            flex-wrap: wrap;
             align-items: center;
             justify-content: center;
+
+            @include breakpoint-768 {
+              min-height: 310px;
+              max-height: 560px;
+            }
           }
 
           &:last-of-type {
