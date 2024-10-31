@@ -68,7 +68,7 @@
     }
 
     .text-content {
-      padding: $sp-8 $sp-20 $sp-14 $sp-20;
+      padding: $sp-8 $sp-20 $sp-20 $sp-20;
       margin: 0;
       font-family: inherit;
 
@@ -90,40 +90,45 @@
     .carousel {
       overflow: hidden;
       width: 100%;
-      margin-top: $sp-8;
       margin-bottom: 0;
 
       @include breakpoint-768 {
         padding: 0;
       }
 
-      :global {
-        .carousel-swiper {
-          > .swiper {
-            overflow: hidden;
-          }
-        }
-
-        .swiper-slide {
-          &:last-of-type {
-            margin-right: 0 !important;
+      &:global {
+        &.carousel {
+          .carousel-swiper {
+            > .swiper {
+              overflow: hidden;
+            }
           }
 
-          .slide-item {
-            position: relative;
-            overflow: hidden;
-            width: 100%;
-            height: 0;
+          .swiper-slide {
+            &:last-of-type {
+              margin-right: 0 !important;
+            }
 
-            /* 캐러셀 이미지 비율은 16:9 고정, 이미지는 contain */
-            padding-bottom: 56.25%;
-            border-radius: 0;
-            background-color: var(--semantic-fill-strong);
+            .slide-item {
+              position: relative;
+              overflow: hidden;
+              width: 100%;
+              height: 0;
+
+              /* 캐러셀 이미지 비율은 16:9 고정, 이미지는 contain */
+              padding-bottom: 56.25%;
+              border-radius: 0;
+              background-color: var(--semantic-fill-strong);
+            }
+
+            img {
+              min-height: 100%;
+              object-fit: contain;
+            }
           }
 
-          img {
-            min-height: 100%;
-            object-fit: contain;
+          & + .og-meta-data-preview {
+            margin-top: $sp-20;
           }
         }
       }
