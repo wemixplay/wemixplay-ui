@@ -1,0 +1,43 @@
+
+{
+  "root": true, // 이 설정 파일이 최상위 설정임을 나타냄. 상위 디렉토리의 설정을 무시
+  "parser": "@typescript-eslint/parser", // TypeScript 코드를 분석하기 위한 파서
+  "plugins": ["@typescript-eslint", "prettier", "react-hooks"], // 사용하는 플러그인 목록
+  "parserOptions": {
+    "createDefaultProgram": true, // 기본 프로그램 생성 옵션 활성화
+    "project": true,
+		"tsconfigRootDir": "__dirname",
+  },
+  "env": { // ESLint가 인식하는 전역 객체 설정
+    "browser": true, // 브라우저 전역 객체 (예: window, document) 인식
+    "node": true, // Node.js 전역 객체 인식
+    "es6": true // ES6 전역 객체 인식
+  },
+  "ignorePatterns": ["node_modules/", ".next/*", "*.js", "dist/*",".eslintrc.cjs", "vite.config.ts", "vite-env.d.ts"], // ESLint 적용 제외 파일/디렉토리
+  "extends": [
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended", 
+    "plugin:prettier/recommended",
+    "next/core-web-vitals",
+    "prettier" // Prettier와 중복되는 ESLint 규칙 제거
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off", // React 17부터 JSX에서 React import가 필요 없으므로 비활성화
+    "react/jsx-filename-extension": ["warn", { "extensions": [".ts", ".tsx", ".jsx"] }], // .ts, .tsx 파일 확장자에서 JSX 사용 허용
+    "no-useless-catch": "off", // 불필요한 catch 블록 사용 금지 규칙 비활성화
+    "react/no-children-prop":"off", // children prop 사용 금지 규칙 비활성화
+    "no-unused-vars":"off", // 사용하지 않는 변수 금지 규칙 비활성화
+    "@typescript-eslint/no-unused-vars": "off" // TypeScript에서 사용하지 않는 변수 금지 규칙 비활성화
+  },
+  "overrides": [ // 특정 파일 유형에 대한 규칙 재정의
+    {
+      "files": ["*.js", "*.jsx"], // JavaScript와 JSX 파일에 적용
+      "rules": {
+        "@typescript-eslint/explicit-function-return-type": "off", // 함수 반환 타입 명시 규칙 비활성화
+        "@typescript-eslint/no-unused-vars": "off", // TypeScript에서 사용하지 않는 변수 금지 규칙 비활성화
+        "@typescript-eslint/no-empty-interface": "off" // 빈 인터페이스 사용 금지 규칙 비활성화
+      }
+    }
+  ]
+}
+

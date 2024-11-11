@@ -44,6 +44,7 @@ import {
 import Person from '../avatars/Person';
 import PopoverButton from '../popover/PopoverButton';
 import Spinner from '../loadings/Spinner';
+import ToolBar from '@/plugins/toolBar/ToolBar';
 
 type PostEditorImageValue = { file?: File; loading?: boolean; src: string } & {
   [key: string]: string | number | boolean | File | undefined; // 추가적인 필드도 허용
@@ -538,7 +539,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           <WpEditor
             className={cx('editor', 'post-content', { filled: textData.length })}
             ref={wpEditorRef}
-            plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength]}
+            plugin={[Mention, HashTag, AutoUrlMatch, PasteToPlainText, CountTextLength, ToolBar]}
             initialValue={textData}
             placeholder={placeholder}
             maxLength={maxLength}

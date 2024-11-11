@@ -27,7 +27,6 @@ import { PasteToPlainTextConfig } from '../../plugins/pasteToPlainText/PasteToPl
 import { CountTextLengthConfig } from '../../plugins/countTextLength/CountTextLength';
 import WpEditorContents from './WpEditorContents';
 import { makeCxFunc } from '@/utils/forReactUtils';
-import ToolBar from '@/plugins/toolBar/ToolBar';
 
 export interface WpEditorPlugin<C extends any = any> {
   commandKey: string;
@@ -46,13 +45,9 @@ export interface WpEditorPlugin<C extends any = any> {
   handleUndoRedo?: (params: { type: 'historyUndo' | 'historyRedo' }) => void;
 }
 
-export interface WpEditorPluginConstructor {
-  new ({
-    contentEditableEl
-  }: {
-    contentEditableEl: MutableRefObject<HTMLDivElement>;
-  }): WpEditorPlugin;
-}
+export type WpEditorPluginConstructor = (params: {
+  contentEditableEl: MutableRefObject<HTMLDivElement>;
+}) => WpEditorPlugin;
 
 type WpEditorRef = HTMLDivElement & {
   setData: (data: string, option?: { keepRange?: boolean }) => void;
@@ -98,7 +93,7 @@ const constructEditorPlugin = ({
   plugin: WpEditorPluginConstructor[];
   contentEditableEl: MutableRefObject<HTMLDivElement | undefined>;
 }): WpEditorPlugin[] => {
-  return plugin.map((p) => new p({ contentEditableEl }));
+  return plugin.map((p) => p({ contentEditableEl }));
 };
 
 /**
@@ -155,6 +150,11 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     /** Plugin 클래스들로 만들어진 plugin 객체 배열 */
     const [plugins, setPlugins] = useState(constructEditorPlugin({ plugin, contentEditableEl }));
+
+    /** Plugin 에 Toolbar 가 있다면 Toolbar 노출 */
+    const isToolBar = useMemo(() => {
+      return plugins?.find((p) => p.commandKey === 'ToolBar');
+    }, []);
 
     /** undo, redo를 컨트롤 하기 위한 기록을 stack 형식으로 기록하는 함수 */
     const recordStack = useMemo(
@@ -318,7 +318,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         //   e.preventDefault();
         // }
 
-        // 앞으로 복구 단축키시 강제로 historyRedo 이벤트 dispatch
         if (e.code === 'KeyZ' && (e.metaKey || e.ctrlKey) && e.shiftKey) {
           handleUndoRedo({ ...e, inputType: 'historyRedo' });
 
@@ -377,8 +376,8 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           contentEditableEl.current.innerHTML = '';
         }
 
-        // font 태그는 제거하고 textContent만 나오도록
-        // removeFontTagAtCursor();
+        //toolbar가 없을 때, font 태그는 제거하고 textContent만 나오도록
+        !isToolBar && removeFontTagAtCursor();
 
         for (const plugin of plugins) {
           plugin.handleChange && plugin.handleChange({ event: e });
@@ -519,7 +518,12 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
 
     return (
       <div className={cx('wp-editor')} onClick={onClick}>
-        <ToolBar editorRef={contentEditableEl} />
+        {plugins
+          .filter((plugin) => plugin?.component)
+          .map((plugin, index) => {
+            const Component = plugin.component;
+            return <Component key={plugin.commandKey ?? index} plugin={plugin} />;
+          })}
         <WpEditorContents
           ref={contentEditableEl}
           className={cx(className, 'wp-editor-content')}
@@ -535,12 +539,6 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           onBlur={handleBlur}
           onClick={handleClick}
         ></WpEditorContents>
-        {plugins
-          .filter((plugin) => plugin?.component)
-          .map((plugin, index) => {
-            const Component = plugin.component;
-            return <Component key={plugin.commandKey ?? index} plugin={plugin} />;
-          })}
       </div>
     );
   }
