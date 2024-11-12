@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { ClipboardEvent } from 'react';
 import type { WpEditorPlugin } from '@/components/editor/WpEditor';
 import { uniqueId } from 'lodash';
 import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'react';
 import HashList, { HashListRef } from './components/HashList';
 import HashContainer from './components/HashContainer';
+import { checkValidHashTag } from '@/utils/pluginUtils';
 
 type HashTagInfo = { id: number; name: string; postCnt?: number } & {
   [key: string]: string | number | undefined; // 추가적인 필드도 허용
@@ -144,18 +145,6 @@ class HashTag implements WpEditorPlugin {
         )}
       </HashContainer>
     );
-  }
-
-  /**
-   * hashTag의 유효성 검사를 하는 함수
-   * @param {string} str - hashTag안에 들어가는 텍스트
-   */
-  checkValidHashTag(str: string) {
-    // 정규식: 해시태그가 '#'로 시작하고, 그 뒤에 국가 문자, 숫자, 밑줄, 이모지가 올 수 있도록 허용
-    const regex = /^#[\p{L}\p{N}_\u200d\p{Emoji_Presentation}\uFE0F]*$/u;
-
-    // 해시태그가 '#'만 있어도 true를 반환
-    return str === '#' || regex.test(str);
   }
 
   /**
@@ -650,7 +639,7 @@ class HashTag implements WpEditorPlugin {
       return;
 
       // hashTag에 포커싱이 되어있고 hashTag 안에 글자가 hash 유효성에 어긋날때
-    } else if (focusInHashTag && !this.checkValidHashTag(focusNode.parentElement.textContent)) {
+    } else if (focusInHashTag && !checkValidHashTag(focusNode.parentElement.textContent)) {
       this.hashId = '';
       const cursorOffset = selection.getRangeAt(0).startOffset;
 
@@ -761,6 +750,39 @@ class HashTag implements WpEditorPlugin {
       }
     } else {
       this.hashId = '';
+    }
+  }
+
+  handlePaste({ event }: { event: ClipboardEvent<HTMLDivElement> }) {
+    const selection = window.getSelection();
+    /** 현재 커서가 포커싱된 Node */
+    const focusNode = selection.focusNode;
+    /** 포커싱되 Node의 부모 element가 hash 클래스 선택자를 갖고 있는 hashTag 인지 확인 */
+    const focusInHashTag = !!focusNode?.parentElement?.classList?.contains?.('hash');
+    /** 클립보드에서 일반 텍스트 */
+    const originTextData = event.nativeEvent.clipboardData.getData('text');
+    // hashId가 존재하고 hashTag에 포커싱이 되어있다면, 복사된 문구에 #이 포함되었는지 체크
+    if (focusInHashTag && checkValidHashTag(originTextData)) {
+      // 포커스 노드의 부모 요소 찾기
+      const parentElement = focusNode.parentElement;
+      console.log('parentElement', parentElement);
+      // 새로운 텍스트 노드 생성
+      const textNode = document.createTextNode(originTextData);
+      // 포커스 노드 다음에 새로운 텍스트 노드 삽입
+      if (parentElement.nextSibling) {
+        parentElement.parentNode.insertBefore(textNode, parentElement.nextSibling);
+      } else {
+        parentElement.parentNode.appendChild(textNode);
+      }
+
+      // 커서를 새로 삽입된 텍스트 끝으로 이동
+      const newRange = document.createRange();
+      newRange.setStartAfter(textNode);
+      newRange.collapse(true);
+
+      selection.removeAllRanges();
+      selection.addRange(newRange);
+      event.preventDefault();
     }
   }
 

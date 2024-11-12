@@ -27,6 +27,7 @@ import { PasteToPlainTextConfig } from '../../plugins/pasteToPlainText/PasteToPl
 import { CountTextLengthConfig } from '../../plugins/countTextLength/CountTextLength';
 import WpEditorContents from './WpEditorContents';
 import { makeCxFunc } from '@/utils/forReactUtils';
+import { checkValidHashTag, checkValidMention } from '@/utils/pluginUtils';
 
 export interface WpEditorPlugin<C extends any = any> {
   commandKey: string;
@@ -426,7 +427,28 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
           previousRevisions.current.index += 1;
         }
 
-        plugins.forEach((plugin) => {
+        let filteredPlugins = plugins;
+        const selection = window.getSelection();
+        /** 현재 커서가 포커싱된 Node */
+        const focusNode = selection.focusNode;
+        /** 포커싱되 Node의 부모 element가 hash 클래스 선택자를 갖고 있는 hashTag 인지 확인 */
+        const focusInHashTag = !!focusNode?.parentElement?.classList?.contains?.('hash');
+        /** 포커싱되 Node의 부모 element가 mention 클래스 선택자를 갖고 있는 mention 태그인지 확인 */
+        const focusInMentionTag = !!focusNode?.parentElement?.classList?.contains?.('mention');
+        /** 클립보드에서 일반 텍스트 */
+        const originTextData = e.nativeEvent.clipboardData.getData('text');
+
+        /* mention이나 hashtag에 포커스가 되어있고, 해당 문자(@,#) 이 들어간 경우,해당 플러그인의 handlePaste를 실행하고,
+         * pasteToPlainText의 handlePaste를 실행하지 않음.
+         */
+        if (focusInHashTag && checkValidHashTag(originTextData)) {
+          filteredPlugins = filteredPlugins.filter((p) => p.commandKey !== 'pasteToPlainText');
+        }
+        if (focusInMentionTag && checkValidMention(originTextData)) {
+          filteredPlugins = filteredPlugins.filter((p) => p.commandKey !== 'pasteToPlainText');
+        }
+
+        filteredPlugins.forEach((plugin) => {
           plugin.handlePaste && plugin.handlePaste({ event: e });
         });
 
