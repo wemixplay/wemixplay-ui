@@ -1,7 +1,7 @@
 'use client';
 
 import React, { forwardRef, MouseEvent, useRef } from 'react';
-import style from './FeedBox.module.scss';
+import style from './CurationBox.module.scss';
 import FeedWriterInfo from './FeedWriterInfo';
 import FeedTextContent from './FeedTextContent';
 import { makeCxFunc } from '@/utils/forReactUtils';
