@@ -2,15 +2,9 @@
 
 import React, { forwardRef, MouseEvent, ReactElement, useRef } from 'react';
 import style from './CurationBox.module.scss';
-import FeedImagesView, { FeedImagesViewProps } from './FeedImagesView';
-import { EmojiInfo } from './FeedEmojiArea';
 import FeedWriterInfo from './FeedWriterInfo';
 import FeedTextContent from './FeedTextContent';
-import { FeedLinkPreviewProps } from './FeedLinkPreview';
 import { makeCxFunc } from '@/utils/forReactUtils';
-import Carousel from '../carousel/Carousel';
-import WpImage from '../image/WpImage';
-import { isDesktop, isMobile } from 'react-device-detect';
 
 type CurationBoxRef = HTMLElement;
 const cx = makeCxFunc(style);
@@ -40,7 +34,6 @@ const CurationBox = forwardRef<CurationBoxRef, Props>(
     ref
   ) => {
     const elRef = useRef<CurationBoxRef>();
-    const curationListDummy = ['111', '222', '333', '444', '555'];
     return (
       <div className={cx('curation-box')}>
         <div className={cx('curation-box-content')}>
