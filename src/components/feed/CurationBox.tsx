@@ -1,13 +1,16 @@
 'use client';
 
 import React, { forwardRef, MouseEvent, ReactElement, useRef } from 'react';
-import style from './FeedBox.module.scss';
-import { FeedImagesViewProps } from './FeedImagesView';
+import style from './CurationBox.module.scss';
+import FeedImagesView, { FeedImagesViewProps } from './FeedImagesView';
 import { EmojiInfo } from './FeedEmojiArea';
 import FeedWriterInfo from './FeedWriterInfo';
 import FeedTextContent from './FeedTextContent';
 import { FeedLinkPreviewProps } from './FeedLinkPreview';
 import { makeCxFunc } from '@/utils/forReactUtils';
+import Carousel from '../carousel/Carousel';
+import WpImage from '../image/WpImage';
+import { isDesktop, isMobile } from 'react-device-detect';
 
 type CurationBoxRef = HTMLElement;
 const cx = makeCxFunc(style);
@@ -37,7 +40,7 @@ const CurationBox = forwardRef<CurationBoxRef, Props>(
     ref
   ) => {
     const elRef = useRef<CurationBoxRef>();
-
+    const curationListDummy = ['111', '222', '333', '444', '555'];
     return (
       <article
         ref={elRef}
@@ -45,33 +48,60 @@ const CurationBox = forwardRef<CurationBoxRef, Props>(
         onClick={onClick}
       >
         <div className={cx('curation-box-container')}>
-          <div className={cx('curation-body')}>
-            <FeedTextContent
-              className={cx('text-content')}
-              content={textContent}
-              ellipsis={textEllipsis}
-              onTextClick={onClick}
-              onMentionClick={onMentionClick}
-              onHashTagClick={onHashTagClick}
-            />
-          </div>
+          {/* 큐레이션 타이틀영역 (today's hot pick feeds) */}
           <div className={cx('curation-header')}>
-            <FeedWriterInfo
-              className={cx('profile')}
-              name={writerName}
-              profileImg={writerImg}
-              profileSize={avatarSize}
-              channelName={channelName}
-              channelImg={channelImg}
-              channelIsOfficial={channelIsOfficial}
-              categoryName={categoryName}
-              certificated={certificated}
-              createdAt={createdAt}
-              updatedAt={updatedAt}
-              locale={locale}
-              onWriterProfileClick={onWriterProfileClick}
-              onChannelClick={onChannelClick}
-            />
+            <h4 className={cx('title')}>Today’s Hot Pick Feeds</h4>
+            {/* 
+              NOTICE : badge-notice
+              EVENT : badge-event
+            */}
+            <span className={cx('badge', 'badge-event')}>NOTICE</span>
+          </div>
+          <div className={cx('curation-body')}>
+            <Carousel
+              // slider 아이템이 1개인 경우 single 클래스 추가
+              className={cx('curation-box-slider', curationListDummy.length === 1 && 'single')}
+              navigation
+              loop={false}
+              // slider 아이템이 1개인 경우 1, 이상인 경우 'auto'
+              slidesPerView={curationListDummy.length === 1 ? 1 : 'auto'}
+              spaceBetween={isMobile ? 4 : 8}
+            >
+              {curationListDummy.map((item, index) => (
+                <div className={cx('curation-box-item')} key={index}>
+                  <div className={cx('curation-box-item-content')}>
+                    <FeedTextContent
+                      className={cx('text-content')}
+                      content={
+                        'WEMIX PLAY Onboarding Game Service Announcement \n\nThe services for Crypto Ball Z, GATOR_Zeroverse and ANIPANG MATCH/COINS/BLAST on WEMIX PLAY are scheduled to conclude due to the development team’s circumstances. \nPlease refer to the information below for more details. '
+                      }
+                      ellipsis={false}
+                      onTextClick={onClick}
+                      onMentionClick={onMentionClick}
+                      onHashTagClick={onHashTagClick}
+                    />
+                  </div>
+                  <div className={cx('curation-writer-info')}>
+                    <FeedWriterInfo
+                      className={cx('profile')}
+                      name={writerName}
+                      profileImg={writerImg}
+                      profileSize={avatarSize}
+                      channelName={channelName}
+                      channelImg={channelImg}
+                      channelIsOfficial={channelIsOfficial}
+                      categoryName={categoryName}
+                      certificated={certificated}
+                      createdAt={createdAt}
+                      updatedAt={updatedAt}
+                      locale={locale}
+                      onWriterProfileClick={onWriterProfileClick}
+                      onChannelClick={onChannelClick}
+                    />
+                  </div>
+                </div>
+              ))}
+            </Carousel>
           </div>
         </div>
       </article>

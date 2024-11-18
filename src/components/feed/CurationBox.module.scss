@@ -1,3 +1,224 @@
 .curation-box {
   position: relative;
+  padding-top: $sp-12;
+  background: rgb(112 115 124 / 6%);
+
+  &-container {
+    position: relative;
+  }
+
+  // slider
+  &-slider {
+    position: relative;
+
+    // 슬라이드 아이템이 1개인 경우 full size
+    &.single {
+      :global {
+        padding: 0 $sp-20;
+
+        @include breakpoint-768 {
+          padding: 0 $sp-16;
+        }
+
+        .swiper-slide {
+          width: 100%;
+          margin: 0;
+        }
+      }
+    }
+
+    // 1개 이상인 경우 모바일 최대 너비 160px -> 1024부터 218px
+    &:not(.single) {
+      :global {
+        .swiper {
+          padding-left: $sp-20;
+
+          @include breakpoint-768 {
+            padding-left: $sp-16;
+          }
+        }
+
+        .swiper-slide {
+          max-width: 160px;
+
+          @include breakpoint-768 {
+            max-width: 218px;
+          }
+
+          &:last-child {
+            margin-right: $sp-20;
+          }
+        }
+      }
+    }
+
+    :global {
+      .carousel-navigation {
+        top: unset !important;
+        bottom: 135px;
+        transform: none !important;
+
+        button {
+          width: 48px !important;
+          height: 48px !important;
+        }
+      }
+    }
+  }
+
+  // Hot pick feed 타이틀 + 뱃지
+  .curation-header {
+    display: flex;
+    height: 36px;
+    align-items: center;
+    padding: $sp-4 0 $sp-4 $sp-12;
+    gap: 0 5.6px;
+
+    @include breakpoint-768 {
+      height: 48px;
+      padding-left: $sp-16;
+    }
+
+    .title {
+      @include add-body-text-18-eb;
+
+      margin: 0;
+      color: var(--semantic-label-normal);
+
+      @include breakpoint-768 {
+        @include add-title-24-b;
+      }
+    }
+
+    .badge {
+      display: flex;
+      height: 18px;
+      align-items: center;
+      justify-content: center;
+      padding: 2px 5px;
+      border: 0.833px solid $color-global-violet-70;
+      border-radius: $sp-4;
+      background: rgb(187 170 255 / 20%);
+
+      @include caption-02-b ;
+
+      @include breakpoint-768 {
+        height: 24px;
+        padding: 4px 6px;
+
+        @include add-body-text-12-eb;
+      }
+
+      &-notice {
+        color: #9e86fc;
+      }
+
+      &-event {
+        border: 0.75px solid  #ad36e3;
+        background: rgb(203 89 255 / 20%);
+        color: #d478ff;
+      }
+    }
+  }
+
+  // 큐레이션 컨텐츠 박스 리스트 부분
+  .curation-body {
+    padding: $sp-14 0 $sp-12;
+  }
+
+  .curation-box-item {
+    overflow: hidden;
+    border: 1px solid var(--semantic-line-normal-normal);
+    border-radius: $rd-8;
+    background: var(--semantic-background-normal-normal);
+
+    &-content {
+      height: 160px;
+
+      .text-content {
+        padding: $sp-14 $sp-16 0;
+
+        @include breakpoint-768 {
+          padding: $sp-20 $sp-20 0;
+        }
+
+        :global {
+          .text {
+            @include ellipsis(7);
+            @include add-body-text-14-m;
+
+            @include breakpoint-768 {
+              @include add-body-text-16-m;
+              @include ellipsis(8);
+            }
+          }
+        }
+      }
+
+      @include breakpoint-768 {
+        height: 218px;
+      }
+    }
+  }
+
+  .curation-writer-info {
+    padding: $sp-12 $sp-12 $sp-12 $sp-12;
+    background: var(--semantic-background-elevated-normal);
+
+    @include breakpoint-768 {
+      padding: $sp-20;
+    }
+
+    [class*="writer-avatar"] {
+      width: 24px !important;
+      height: 24px !important;
+
+      @include breakpoint-768 {
+        width: 36px !important;
+        height: 36px !important;
+      }
+    }
+
+    .profile {
+      flex-wrap: nowrap;
+      align-items: center;
+
+      :global {
+        .title {
+          @include add-body-text-12-sb;
+
+          min-height: 14px;
+          color: var(--semantic-label-normal);
+
+          @include breakpoint-768 {
+            min-height: 18px;
+
+            @include add-body-text-14-b;
+          }
+        }
+
+        .profile-text {
+          padding-right: 0;
+          margin: 0;
+          margin-left: $sp-4;
+
+          @include breakpoint-768 {
+            margin-left: $sp-8;
+          }
+        }
+
+        .date {
+          margin-top: 1px;
+          font-size: 9.794px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 132%;
+
+          @include breakpoint-768 {
+            @include add-body-text-14-m;
+          }
+        }
+      }
+    }
+  }
 }

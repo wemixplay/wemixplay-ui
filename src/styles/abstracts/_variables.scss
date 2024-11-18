@@ -1013,6 +1013,42 @@ $icon-chennel-certified: #3d6aff;
   font-weight: 400;
 }
 
+@mixin add-title-24 {
+  line-height: 100%;
+
+  @include font-size(24);
+}
+
+@mixin add-title-24-eb {
+  @include add-title-24 ;
+
+  font-weight: 800;
+}
+
+@mixin add-title-24-b {
+  @include add-title-24 ;
+
+  font-weight: 700;
+}
+
+@mixin add-title-24-sb {
+  @include add-title-24 ;
+
+  font-weight: 600;
+}
+
+@mixin add-title-24-m {
+  @include add-title-24 ;
+
+  font-weight: 500;
+}
+
+@mixin add-title-24-r {
+  @include add-title-28 ;
+
+  font-weight: 400;
+}
+
 @mixin add-title-20 {
   font-feature-settings: "ss10" on;
   line-height: 100%;
