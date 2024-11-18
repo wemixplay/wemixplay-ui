@@ -1,12 +1,9 @@
 'use client';
 
-import React, { forwardRef, MouseEvent, ReactElement, useRef } from 'react';
+import React, { forwardRef, MouseEvent, useRef } from 'react';
 import style from './FeedBox.module.scss';
-import { FeedImagesViewProps } from './FeedImagesView';
-import { EmojiInfo } from './FeedEmojiArea';
 import FeedWriterInfo from './FeedWriterInfo';
 import FeedTextContent from './FeedTextContent';
-import { FeedLinkPreviewProps } from './FeedLinkPreview';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
 type CurationBoxRef = HTMLElement;
