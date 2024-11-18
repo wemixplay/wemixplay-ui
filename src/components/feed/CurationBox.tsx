@@ -34,44 +34,37 @@ const CurationBox = forwardRef<CurationBoxRef, Props>(
     ref
   ) => {
     const elRef = useRef<CurationBoxRef>();
-
     return (
-      <article
-        ref={elRef}
-        className={cx(className, 'curation-box', { 'has-click-event': onClick })}
-        onClick={onClick}
-      >
-        <div className={cx('curation-box-container')}>
-          <div className={cx('curation-body')}>
-            <FeedTextContent
-              className={cx('text-content')}
-              content={textContent}
-              ellipsis={textEllipsis}
-              onTextClick={onClick}
-              onMentionClick={onMentionClick}
-              onHashTagClick={onHashTagClick}
-            />
-          </div>
-          <div className={cx('curation-header')}>
-            <FeedWriterInfo
-              className={cx('profile')}
-              name={writerName}
-              profileImg={writerImg}
-              profileSize={avatarSize}
-              channelName={channelName}
-              channelImg={channelImg}
-              channelIsOfficial={channelIsOfficial}
-              categoryName={categoryName}
-              certificated={certificated}
-              createdAt={createdAt}
-              updatedAt={updatedAt}
-              locale={locale}
-              onWriterProfileClick={onWriterProfileClick}
-              onChannelClick={onChannelClick}
-            />
-          </div>
+      <div className={cx('curation-box')}>
+        <div className={cx('curation-box-content')}>
+          <FeedTextContent
+            className={cx('text-content')}
+            content={textContent}
+            ellipsis={false}
+            onTextClick={onClick}
+            onMentionClick={onMentionClick}
+            onHashTagClick={onHashTagClick}
+          />
         </div>
-      </article>
+        <div className={cx('curation-writer-info')}>
+          <FeedWriterInfo
+            className={cx('profile')}
+            name={writerName}
+            profileImg={writerImg}
+            profileSize={avatarSize}
+            channelName={channelName}
+            channelImg={channelImg}
+            channelIsOfficial={channelIsOfficial}
+            categoryName={categoryName}
+            certificated={certificated}
+            createdAt={createdAt}
+            updatedAt={updatedAt}
+            locale={locale}
+            onWriterProfileClick={onWriterProfileClick}
+            onChannelClick={onChannelClick}
+          />
+        </div>
+      </div>
     );
   }
 );
