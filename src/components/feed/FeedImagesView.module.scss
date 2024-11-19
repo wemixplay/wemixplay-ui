@@ -233,6 +233,11 @@
               margin-right: 0 !important;
             }
 
+            > div {
+              min-height: unset;
+              max-height: unset;
+            }
+
             * {
               user-select: none;
             }
