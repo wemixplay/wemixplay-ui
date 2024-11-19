@@ -4,10 +4,16 @@
   border-radius: $rd-8;
   background: var(--semantic-background-normal-normal);
 
+  @include breakpoint-768 {
+    border-radius: $rd-12;
+  }
+
   &-content {
     height: 160px;
+    background: var(--semantic-fill-alternative);
 
     .text-content {
+      height: 100%;
       padding: $sp-14 $sp-16 0;
 
       @include breakpoint-768 {
@@ -54,12 +60,19 @@
       flex-wrap: nowrap;
       align-items: center;
 
+      @include breakpoint-768 {
+        height: 44px;
+      }
+
       :global {
         .title {
           @include add-body-text-12-sb;
 
+          display: block;
           min-height: 14px;
           color: var(--semantic-label-normal);
+
+          @include ellipsis(1);
 
           @include breakpoint-768 {
             min-height: 18px;
@@ -80,10 +93,8 @@
 
         .date {
           margin-top: 1px;
-          font-size: 9.794px;
-          font-style: normal;
-          font-weight: 500;
-          line-height: 132%;
+
+          @include add-body-text-12-m;
 
           @include breakpoint-768 {
             @include add-body-text-14-m;
