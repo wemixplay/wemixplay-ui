@@ -40,6 +40,7 @@
       border-radius: $rd-100;
       background: var(--semantic-label-normal);
       cursor: pointer;
+      opacity: 0.2;
 
       svg path {
         fill: var(--semantic-label-inverse-normal);
@@ -56,6 +57,10 @@
       &:disabled {
         cursor: not-allowed;
         opacity: 0;
+      }
+
+      &:not(:disabled):hover {
+        opacity: 1;
       }
     }
   }
