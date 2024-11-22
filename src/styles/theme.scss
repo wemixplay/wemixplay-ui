@@ -4,6 +4,10 @@
   // static
   --semantic-static-white: #{$color-global-common-100};
   --semantic-static-black: #{$color-global-common-0};
+  --semantic-static-gray05: #f7f7f8;
+  --semantic-static-gray10: rgba(#70737c, 0.06);
+  --semantic-static-gray80: #43444a;
+  --semantic-static-gray85: #313337;
   --semantic-static-gray90: #252629;
   --semantic-static-gray95: #1f2023;
 
@@ -75,7 +79,10 @@
   --semantic-fill-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-5)};
 
   // Component - Material
-  --semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-52)};
+  --semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-74)};
+  --semantic-material-badge-violet-bg: #{rgba($color-global-violet-70, $color-global-opacity-20)};
+  --semantic-material-badge-violet-50: #{$color-global-violet-50};
+  --semantic-material-badge-violet-20: #{$color-global-violet-20};
 
   // Shadow
   --semantic-shadow-normal:
@@ -96,10 +103,9 @@
     0 0 8px rgb(0 0 0 / 8%);
   --semantic-shadow-big: 0 20px 50px 0 rgb(0 0 0 / 10%);
   --semantic-shadow-cookie: 0 -5px 18px 0 rgb(0 0 0 / 8%);
+  --semantic-feed-shadow: 0 8px 26px 0 rgb(0 0 0 / 6%);
 
   /*  Nft Marketplace */
-  --semantic-nft-bg: #{$color-global-neutral-5};
-  --semantic-nft-trade-info-bg: #{rgba(23, 23, 25, 0.64) };
 
   /* Status */
   --semantic-status-sold-out: #{$color-global-red-50};
@@ -109,32 +115,35 @@
   --semantic-status-burned-line: #{rgba(255, 129, 13, 0.39)};
   --semantic-status-burned-bg: #{$color-global-orange-95};
   --semantic-color-gradation: #{linear-gradient(102deg, #c23d6e 0%, #ac40d2 32.81%, #7c46ed 66.67%, #4a45d1 100%)};
+  /* stylelint-disable-next-line scss/operator-no-unspaced */
+  --semantic-color-gradation-ws-exchange: #{linear-gradient(93deg, #ea0388 -4.57%, #f06 47.57%, #fd6669 108.78%)}; // webshop gradient - exchange
+  --semantic-color-gradation-ws-purchase: #{linear-gradient(102deg, #f74590 0%, #c049f8 32.81%, #7e50ff 66.67%, #4f51f8 100%)}; // webshop gradient - purchase
   --semantic-nft-state-badge: #{rgb(255 0 102 / 10%)};
   --semantic-status-bidding: #{$color-global-green-50};
   --semantic-status-soon: #{$color-global-lightBlue-50};
-  --semantic-nft-banner-g: #{rgba($color-global-coolNeutral-10, $color-global-opacity-0)}; // collection 배너 그라디언트
 
   // Button
-  --semantic-color-btn-green: #{$color-global-green-50};
-  --semantic-color-btn-blue: #{$color-global-blue-50};
-  --semantic-color-btn-pink: #{$color-global-wemixplay-50};
-  --semantic-color-btn-dark-gray: #{$color-global-neutral-30};
-  --semantic-color-btn-gray: #{rgba(112, 115, 124, 0.16)};
   --semantic-nft-switch-disabled: #{$color-global-neutral-50};
-  --semantic-nft-number-input: #{rgba($color-global-common-0, $color-global-opacity-5)};
 
   // Hover Color
   --semantic-color-hover: #{rgba(112, 115, 124, 0.08)};
 
   // 모바일 선택한 Filter Chip 스크롤 오른쪽 그라데이션 효과
   --semantic-scroll: #{rgba($color-global-common-100, $color-global-opacity-5)};
-  --semantic-filter-scroll-gradient: #{rgba($color-global-common-100, $color-global-opacity-0)};
+
+  // Gradient
+  --semantic-gradient-wemix: linear-gradient(102deg, #f74590 0%, #c049f8 32.81%, #7e50ff 66.67%, #4f51f8 100%);
+  --semantic-gradient-play: linear-gradient(93deg, #ea0388 -4.57%, #f06 47.57%, #fd6669 108.78%);
 }
 
 [data-theme="dark"] {
   // static
   --semantic-static-white: #{$color-global-common-100};
   --semantic-static-black: #{$color-global-common-0};
+  --semantic-static-gray05: #f7f7f8;
+  --semantic-static-gray10: rgba(#70737c, 0.06);
+  --semantic-static-gray80: #43444a;
+  --semantic-static-gray85: #313337;
   --semantic-static-gray90: #252629;
   --semantic-static-gray95: #1f2023;
 
@@ -144,9 +153,9 @@
   --semantic-primary-heavy: #{$color-global-wemixplay-30};
 
   // highlight
-  --semantic-highlight-normal: #{$color-global-blue-50};
-  --semantic-highlight-strong: #{$color-global-blue-45};
-  --semantic-highlight-heavy: #{$color-global-blue-40};
+  --semantic-highlight-normal: #{$color-global-blue-60};
+  --semantic-highlight-strong: #{$color-global-blue-55};
+  --semantic-highlight-heavy: #{$color-global-blue-50};
 
   // label
   --semantic-label-normal: #{$color-global-coolNeutral-99};
@@ -206,7 +215,10 @@
   --semantic-fill-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-12)};
 
   // Component - Material
-  --semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-52)};
+  --semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-74)};
+  --semantic-material-badge-violet-bg: #{rgba($color-global-violet-70, $color-global-opacity-30)};
+  --semantic-material-badge-violet-50: #{$color-global-violet-70};
+  --semantic-material-badge-violet-20: #{$color-global-violet-90};
 
   // Shadow
   --semantic-shadow-normal:
@@ -227,10 +239,9 @@
     0 0 8px rgb(0 0 0 / 8%);
   --semantic-shadow-big: 0 20px 50px 0 rgb(0 0 0 / 10%);
   --semantic-shadow-cookie: 0 -5px 18px 0 rgb(0 0 0 / 8%);
+  --semantic-feed-shadow: 0 8px 26px 0 rgb(0 0 0 / 6%);
 
   /*  Nft Marketplace */
-  --semantic-nft-bg: #{$color-global-neutral-5};
-  --semantic-nft-trade-info-bg: #{rgba(23, 23, 25, 0.64) };
 
   /* Status */
   --semantic-status-sold-out: #{$color-global-red-50};
@@ -240,24 +251,23 @@
   --semantic-status-burned-line: #{rgba(255, 129, 13, 0.39)};
   --semantic-status-burned-bg: #{$color-global-orange-95};
   --semantic-color-gradation: #{linear-gradient(102deg, #c23d6e 0%, #ac40d2 32.81%, #7c46ed 66.67%, #4a45d1 100%)};
+  /* stylelint-disable-next-line scss/operator-no-unspaced */
+  --semantic-color-gradation-ws-exchange: #{linear-gradient(93deg, #ea0388 -4.57%, #f06 47.57%, #fd6669 108.78%)}; // webshop gradient - exchange
+  --semantic-color-gradation-ws-purchase: #{linear-gradient(102deg, #f74590 0%, #c049f8 32.81%, #7e50ff 66.67%, #4f51f8 100%)}; // webshop gradient - purchase
   --semantic-nft-state-badge: #{rgb(255 0 102 / 10%)};
   --semantic-status-bidding: #{$color-global-green-50};
   --semantic-status-soon: #{$color-global-lightBlue-50};
-  --semantic-nft-banner-g: #{rgba($color-global-coolNeutral-10, $color-global-opacity-0)}; // collection 배너 그라디언트
 
   // Button
-  --semantic-color-btn-green: #{$color-global-green-50};
-  --semantic-color-btn-blue: #{$color-global-blue-50};
-  --semantic-color-btn-pink: #{$color-global-wemixplay-50};
-  --semantic-color-btn-dark-gray: #{$color-global-neutral-30};
-  --semantic-color-btn-gray: #{rgba(112, 115, 124, 0.16)};
   --semantic-nft-switch-disabled: #{$color-global-neutral-50};
-  --semantic-nft-number-input: #{rgba($color-global-common-0, $color-global-opacity-5)};
 
   // Hover Color
   --semantic-color-hover: #{rgba(112, 115, 124, 0.08)};
 
   // 모바일 선택한 Filter Chip 스크롤 오른쪽 그라데이션 효과
   --semantic-scroll: #{rgba($color-global-common-0, $color-global-opacity-5)};
-  --semantic-filter-scroll-gradient: #{rgba($color-global-common-0, $color-global-opacity-0)};
+
+  // Gradient
+  --semantic-gradient-wemix: linear-gradient(102deg, #f74590 0%, #c049f8 32.81%, #7e50ff 66.67%, #4f51f8 100%);
+  --semantic-gradient-play: linear-gradient(93deg, #ea0388 -4.57%, #f06 47.57%, #fd6669 108.78%);
 }
