@@ -6,7 +6,7 @@ import FeedWriterInfo from './FeedWriterInfo';
 import FeedTextContent from './FeedTextContent';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
-type CurationBoxRef = HTMLElement;
+type CurationBoxRef = HTMLDivElement;
 const cx = makeCxFunc(style);
 const CurationBox = forwardRef<CurationBoxRef, Props>(
   (
@@ -35,12 +35,12 @@ const CurationBox = forwardRef<CurationBoxRef, Props>(
   ) => {
     const elRef = useRef<CurationBoxRef>();
     return (
-      <div className={cx('curation-box')}>
+      <div ref={elRef} className={cx('curation-box')} onClick={onClick}>
         <div className={cx('curation-box-content')}>
           <FeedTextContent
             className={cx('text-content')}
             content={textContent}
-            ellipsis={false}
+            ellipsis={textEllipsis}
             onTextClick={onClick}
             onMentionClick={onMentionClick}
             onHashTagClick={onHashTagClick}
