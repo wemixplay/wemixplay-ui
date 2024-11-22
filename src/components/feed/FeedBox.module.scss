@@ -88,7 +88,7 @@
     }
 
     .carousel {
-      overflow: hidden;
+      // overflow: hidden;
       width: 100%;
       margin-bottom: 0;
 
@@ -98,6 +98,8 @@
 
       &:global {
         &.carousel {
+          // overflow: unset;
+
           .carousel-swiper {
             > .swiper {
               overflow: hidden;
@@ -166,10 +168,6 @@
       .count {
         padding-left: $sp-4;
       }
-    }
-
-    .feed-reactions {
-      // style
     }
 
     .feed-comments {

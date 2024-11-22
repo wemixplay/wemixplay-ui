@@ -2,7 +2,7 @@
   overflow: hidden;
   border: 1px solid var(--semantic-line-normal-normal);
   border-radius: $rd-8;
-  background: var(--semantic-background-normal-normal);
+  background: var(--semantic-background-elevated-normal);
 
   @include breakpoint-768 {
     border-radius: $rd-12;
@@ -14,7 +14,7 @@
 
     .text-content {
       height: 100%;
-      padding: $sp-14 $sp-16 0;
+      padding: $sp-12 $sp-12 0;
 
       @include breakpoint-768 {
         padding: $sp-20 $sp-20 0;
@@ -78,6 +78,11 @@
             min-height: 18px;
 
             @include add-body-text-14-b;
+          }
+
+          // certificated icon 제거
+          > svg {
+            display: none !important;
           }
         }
 
