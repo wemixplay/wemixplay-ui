@@ -24,7 +24,6 @@ const CurationBox = forwardRef<CurationBoxRef, Props>(
       createdAt,
       updatedAt,
       locale = 'en',
-      textEllipsis = true,
       onClick,
       onMentionClick,
       onHashTagClick,
@@ -35,12 +34,12 @@ const CurationBox = forwardRef<CurationBoxRef, Props>(
   ) => {
     const elRef = useRef<CurationBoxRef>();
     return (
-      <div ref={elRef} className={cx('curation-box')} onClick={onClick}>
+      <div ref={elRef} className={cx('curation-box', className)} onClick={onClick}>
         <div className={cx('curation-box-content')}>
           <FeedTextContent
             className={cx('text-content')}
             content={textContent}
-            ellipsis={textEllipsis}
+            ellipsis={false}
             onTextClick={onClick}
             onMentionClick={onMentionClick}
             onHashTagClick={onHashTagClick}
@@ -92,8 +91,6 @@ type Props = {
   categoryName?: string;
   /** 작성자가 인증된 사용자 여부 */
   certificated?: boolean;
-  /** 텍스트에 줄임말(ellipsis) 표시 여부 */
-  textEllipsis?: boolean;
   /** 작성 시간 */
   createdAt?: number;
   /** 수정 시간 */
