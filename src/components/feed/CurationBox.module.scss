@@ -2,7 +2,7 @@
   overflow: hidden;
   border: 1px solid var(--semantic-line-normal-normal);
   border-radius: $rd-8;
-  background: var(--semantic-fill-alternative);
+  background: var(--semantic-background-elevated-normal);
 
   @include breakpoint-768 {
     border-radius: $rd-12;
@@ -10,6 +10,7 @@
 
   &-content {
     height: 160px;
+    background: var(--semantic-fill-alternative);
 
     .text-content {
       height: 100%;
