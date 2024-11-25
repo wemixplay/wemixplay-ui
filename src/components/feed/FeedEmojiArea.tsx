@@ -3,10 +3,11 @@
 import React, { ReactElement, MouseEvent, useId, useMemo, useCallback } from 'react';
 import style from './FeedEmojiArea.module.scss';
 import WpImage from '../image/WpImage';
-import { SvgIcoAddEmoji } from '@/assets/svgs';
+import { SvgIcoAddEmoji, SvgIcoAddEmojiM } from '@/assets/svgs';
 import PopoverButton from '../popover/PopoverButton';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
+import { isDesktop, isMobile } from 'react-device-detect';
 
 type EmojiInfo = {
   emojiNo?: number;
@@ -133,7 +134,7 @@ const FeedEmojiArea = ({
             whenWindowScrollClose={true}
             onClick={handleEmojiSelectBtnClick}
           >
-            <SvgIcoAddEmoji />
+            {isMobile ? <SvgIcoAddEmojiM /> : <SvgIcoAddEmoji />}
           </PopoverButton>
         </div>
       ) : (

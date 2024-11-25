@@ -69,29 +69,31 @@
       }
     }
 
-    .icon-pressed {
-      display: none;
-    }
-
     &.active {
       // 내가 좋아요 했을때 스타일
-
       .icon {
-        display: none;
+        svg {
+          [class*="fill"] {
+            fill: var(--semantic-primary-normal);
+          }
+
+          [class*="stroke"] {
+            stroke: var(--semantic-primary-normal);
+          }
+        }
       }
 
-      .icon-pressed {
-        display: block;
-
-        path {
-          transform-origin: center;
-        }
+      .count {
+        color: var(--semantic-primary-normal);
       }
     }
 
     .count {
+      padding-left: $sp-2;
       color: var(--semantic-label-neutral);
       line-height: 1;
+
+      @include add-body-text-14-sb;
 
       @include breakpoint-768 {
         @include add-body-text-16-sb;

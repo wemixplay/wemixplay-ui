@@ -5,10 +5,6 @@
   margin-left: auto;
   gap: 0 $sp-4;
 
-  @include breakpoint-768 {
-    justify-content: space-between;
-  }
-
   button {
     display: inline-flex;
     min-height: 26px;
@@ -18,7 +14,7 @@
     background-color: transparent;
     cursor: default !important;
 
-    @include add-body-text-13-sb;
+    @include add-body-text-14-sb;
 
     @include breakpoint-768 {
       min-height: 36px;
@@ -32,11 +28,11 @@
 
     &:not(.btn-share) {
       height: 26px;
-      padding: 0 6px;
+      padding: $sp-2 $sp-6;
       border-radius: $rd-100;
 
       @include breakpoint-768 {
-        padding: 0 $sp-8;
+        padding: $sp-2 $sp-8;
       }
 
       .icon {
@@ -63,17 +59,16 @@
       @include breakpoint-768 {
         width: 52px;
         height: 36px;
-        margin: 0;
       }
 
       svg {
         width: auto;
-        height: 16px;
-        fill: var(--semantic-label-neutral);
-        stroke: var(--semantic-label-neutral);
+        width: 18px;
+        height: 18px;
 
         @include breakpoint-768 {
-          height: 24px;
+          width: 22px;
+          height: 22px;
         }
       }
     }
@@ -85,12 +80,20 @@
           fill: var(--semantic-label-neutral);
           fill-opacity: 1;
           stroke-opacity: 1;
+
+          @include breakpoint-768 {
+            fill: var(--semantic-label-normal);
+          }
         }
 
         &[class*="stroke"] {
           fill-opacity: 1;
           stroke: var(--semantic-label-neutral);
           stroke-opacity: 1;
+
+          @include breakpoint-768 {
+            fill: var(--semantic-label-normal);
+          }
         }
       }
     }
@@ -103,22 +106,22 @@
       display: block;
     }
 
-    .icon-pressed {
-      display: none;
-    }
-
     &.active {
       // 내가 좋아요 했을때 스타일
       .icon {
-        display: none;
+        svg {
+          [class*="fill"] {
+            fill: var(--semantic-primary-normal);
+          }
+
+          [class*="stroke"] {
+            stroke: var(--semantic-primary-normal);
+          }
+        }
       }
 
-      .icon-pressed {
-        display: block;
-
-        path {
-          transform-origin: center;
-        }
+      .count {
+        color: var(--semantic-primary-normal);
       }
     }
   }
@@ -128,10 +131,11 @@
     color: var(--semantic-label-neutral);
     font-feature-settings: "ss10" on;
 
-    @include add-body-text-13-m;
+    @include add-body-text-14-sb;
 
     @include breakpoint-768 {
       padding-left: 0;
+      color: var(--semantic-label-normal);
 
       @include add-body-text-16-sb;
     }

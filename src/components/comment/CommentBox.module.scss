@@ -35,18 +35,14 @@
       @include body-01-reading-02-r;
     }
 
-    [class*="feed-text-content"] {
-      @include add-body-text-16-m;
+    :global {
+      .ellipsis-wrap {
+        .ellipsis-content {
+          @include add-body-text-16-m;
 
-      @include breakpoint-768 {
-        @include add-body-text-18-m;
-      }
-
-      [class*="ellipsis-content"] {
-        @include add-body-text-16-m;
-
-        @include breakpoint-768 {
-          @include add-body-text-18-m;
+          @include breakpoint-768 {
+            @include add-body-text-18-m;
+          }
         }
       }
     }
@@ -66,6 +62,10 @@
   }
 
   &.deleted-comment {
+    display: flex;
+    min-height: 54px;
+    align-items: center;
+    justify-content: center;
     padding: $sp-18 0;
     color: var(--semantic-label-alternative);
     font-feature-settings: "ss10" on;
@@ -74,11 +74,11 @@
     @include add-body-text-12-m;
 
     @include breakpoint-768 {
+      min-height: 71px;
       padding: $sp-24 0;
+      line-height: 23px !important;
 
       @include add-body-text-15-m;
-
-      line-height: 23px !important;
     }
   }
 

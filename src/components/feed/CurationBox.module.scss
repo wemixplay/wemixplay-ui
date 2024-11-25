@@ -1,0 +1,113 @@
+.curation-box {
+  overflow: hidden;
+  border: 1px solid var(--semantic-line-normal-normal);
+  border-radius: $rd-8;
+  background: var(--semantic-fill-alternative);
+
+  @include breakpoint-768 {
+    border-radius: $rd-12;
+  }
+
+  &-content {
+    height: 160px;
+
+    .text-content {
+      height: 100%;
+      padding: $sp-12 $sp-12 0;
+
+      @include breakpoint-768 {
+        padding: $sp-20 $sp-20 0;
+      }
+
+      :global {
+        .text {
+          @include ellipsis(7);
+          @include add-body-text-14-m;
+
+          margin-top: $sp-4;
+
+          @include breakpoint-768 {
+            @include add-body-text-16-m;
+
+            margin-top: $sp-8;
+          }
+        }
+      }
+    }
+
+    @include breakpoint-768 {
+      height: 218px;
+    }
+  }
+
+  .curation-writer-info {
+    padding: $sp-12 $sp-12 $sp-12 $sp-12;
+    background: var(--semantic-background-elevated-normal);
+
+    @include breakpoint-768 {
+      padding: $sp-20;
+    }
+
+    [class*="writer-avatar"] {
+      width: 24px !important;
+      height: 24px !important;
+
+      @include breakpoint-768 {
+        width: 36px !important;
+        height: 36px !important;
+      }
+    }
+
+    .profile {
+      flex-wrap: nowrap;
+      align-items: center;
+
+      @include breakpoint-768 {
+        height: 44px;
+      }
+
+      :global {
+        .title {
+          @include add-body-text-12-sb;
+
+          display: block;
+          min-height: 14px;
+          color: var(--semantic-label-normal);
+
+          @include ellipsis(1);
+
+          @include breakpoint-768 {
+            min-height: 18px;
+
+            @include add-body-text-14-b;
+          }
+
+          // certificated icon 제거
+          > svg {
+            display: none !important;
+          }
+        }
+
+        .profile-text {
+          padding-right: 0;
+          margin: 0;
+          margin-left: $sp-4;
+
+          @include breakpoint-768 {
+            margin-left: $sp-8;
+          }
+        }
+
+        .date {
+          margin-top: 1px;
+
+          @include add-body-text-12-m;
+
+          @include breakpoint-768 {
+            @include add-body-text-14-m;
+          }
+        }
+      }
+    }
+  }
+}

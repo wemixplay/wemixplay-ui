@@ -1,9 +1,16 @@
 import React from 'react';
 import { uniqueId } from 'lodash';
-import type { ChangeEvent, MouseEvent, KeyboardEvent, MutableRefObject } from 'react';
+import type {
+  ChangeEvent,
+  MouseEvent,
+  ClipboardEvent,
+  KeyboardEvent,
+  MutableRefObject
+} from 'react';
 import MentionList, { MentionListRef } from './components/MentionList';
 import MentionContainer from './components/MentionContainer';
 import { WpEditorPlugin } from '@/components/editor/WpEditor';
+import { checkValidMention } from '@/utils/pluginUtils';
 
 type MentionInfo = { id: number; name: string; profileImg?: string; isOfficial?: boolean } & {
   [key: string]: string | number | boolean | undefined; // 추가적인 필드도 허용
@@ -148,18 +155,6 @@ class Mention implements WpEditorPlugin {
         )}
       </MentionContainer>
     );
-  }
-
-  /**
-   * mention의 유효성 검사를 하는 함수
-   * @param {string} str - mention 태그안에 들어가는 텍스트
-   */
-  checkValidMention(str: string) {
-    // 정규식: mention이 '@'로 시작하고, 그 뒤에 국가 문자, 숫자, 밑줄이 올 수 있도록 허용
-    const regex = /^@[\p{L}\p{N}_]*$/u;
-
-    // mention이 '@'만 있어도 true를 반환
-    return str === '@' || regex.test(str);
   }
 
   /** 현재 완성된 mention 리스트를 모두 탐색하여 onCompleteMention 함수를 호출하고 모든 mention 정보를 배열로 반환하는 함수 */
@@ -660,7 +655,7 @@ class Mention implements WpEditorPlugin {
       return;
 
       // mention 태그에 포커싱이 되어있고 mention 태그 안에 글자가 mention 유효성에 어긋날때
-    } else if (focusInMentionTag && !this.checkValidMention(focusNode.textContent)) {
+    } else if (focusInMentionTag && !checkValidMention(focusNode.textContent)) {
       this.mentionId = '';
       const cursorOffset = selection.getRangeAt(0).startOffset;
 
@@ -760,6 +755,38 @@ class Mention implements WpEditorPlugin {
       }
     } else {
       this.mentionId = '';
+    }
+  }
+
+  handlePaste({ event }: { event: ClipboardEvent<HTMLDivElement> }) {
+    const selection = window.getSelection();
+    /** 현재 커서가 포커싱된 Node */
+    const focusNode = selection.focusNode;
+    /** 포커싱되 Node의 부모 element가 mention 클래스 선택자를 갖고 있는 mention 태그인지 확인 */
+    const focusInMentionTag = !!focusNode?.parentElement?.classList?.contains?.('mention');
+    /** 클립보드에서 일반 텍스트 */
+    const originTextData = event.nativeEvent.clipboardData.getData('text');
+    // hashId가 존재하고 hashTag에 포커싱이 되어있다면, 복사된 문구에 @이 포함되었는지 체크
+    if (focusInMentionTag && checkValidMention(originTextData)) {
+      // 포커스 노드의 부모 요소 찾기
+      const parentElement = focusNode.parentElement;
+      // 새로운 텍스트 노드 생성
+      const textNode = document.createTextNode(originTextData);
+      // 포커스 노드 다음에 새로운 텍스트 노드 삽입
+      if (parentElement.nextSibling) {
+        parentElement.parentNode.insertBefore(textNode, parentElement.nextSibling);
+      } else {
+        parentElement.parentNode.appendChild(textNode);
+      }
+
+      // 커서를 새로 삽입된 텍스트 끝으로 이동
+      const newRange = document.createRange();
+      newRange.setStartAfter(textNode);
+      newRange.collapse(true);
+
+      selection.removeAllRanges();
+      selection.addRange(newRange);
+      event.preventDefault();
     }
   }
 

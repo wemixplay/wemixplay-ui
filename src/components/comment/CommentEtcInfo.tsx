@@ -2,7 +2,7 @@
 
 import React, { MouseEvent } from 'react';
 import style from './CommentEtcInfo.module.scss';
-import { SvgIcoLike, SvgIcoLikePressed } from '@/assets/svgs';
+import { SvgIcoLike } from '@/assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
 
@@ -52,9 +52,6 @@ const CommentEtcInfo = ({ className = '', likeInfo, onLikeBtnClick }: Props) => 
         <i className={cx('btn-like-ico')}>
           <span className={cx('icon')}>
             <SvgIcoLike />
-          </span>
-          <span className={cx('icon-pressed')}>
-            <SvgIcoLikePressed />
           </span>
         </i>
 

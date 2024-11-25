@@ -20,6 +20,7 @@ import CommentEtcInfo, { CommentEtcInfoProps } from './components/comment/Commen
 import CommentWriterInfo, { CommentWriterInfoProps } from './components/comment/CommentWriterInfo';
 import { FeedIframesViewRef, IframePlayState } from './components/feed/FeedIframesView';
 import { convertHtmlToMarkdownStr, convertMarkdownToHtmlStr } from './utils/valueParserUtils';
+import CurationBox, { CurationBoxProps } from './components/feed/CurationBox';
 
 export type {
   WpEditorRef,
@@ -33,6 +34,7 @@ export type {
   IframePlayState,
   FeedBoxProps,
   FeedTextContentProps,
+  CurationBoxProps,
   FeedEmojiAreaProps,
   FeedEtcInfoAreaProps,
   FeedWriterInfoProps,
@@ -50,6 +52,7 @@ export {
   FeedEtcInfoArea,
   FeedWriterInfo,
   CommentBox,
+  CurationBox,
   CommentEditor,
   CommentEtcInfo,
   CommentWriterInfo,

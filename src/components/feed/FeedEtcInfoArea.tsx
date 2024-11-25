@@ -2,9 +2,10 @@
 
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedEtcInfoArea.module.scss';
-import { SvgIcoComment, SvgIcoLike, SvgIcoLikePressed, SvgIcoShare } from '@/assets/svgs';
+import { SvgIcoComment, SvgIcoLike, SvgIcoShare, SvgIcoShareM } from '@/assets/svgs';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
+import { isMobile } from 'react-device-detect';
 
 type Props = {
   /**
@@ -116,14 +117,14 @@ const FeedEtcInfoArea = ({
       </button>
       <button
         type="button"
-        className={cx('btn-like', { active: isMyClick, 'has-click-event': onLikeBtnClick })}
+        className={cx('btn-like', {
+          active: isMyClick,
+          'has-click-event': onLikeBtnClick
+        })}
         onClick={handleLikeBtnClick}
       >
         <span className={cx('icon')}>
           <SvgIcoLike />
-        </span>
-        <span className={cx('icon-pressed')}>
-          <SvgIcoLikePressed />
         </span>
         <span className={cx('count')}>{toFormatterByInt(likeCount, 1)}</span>
       </button>
@@ -133,7 +134,7 @@ const FeedEtcInfoArea = ({
           className={cx('btn-share', 'has-click-event')}
           onClick={handleShareBtnClick}
         >
-          <SvgIcoShare />
+          {isMobile ? <SvgIcoShareM /> : <SvgIcoShare />}
         </button>
       )}
     </div>

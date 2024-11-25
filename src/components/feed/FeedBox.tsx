@@ -71,6 +71,7 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
       updatedAt,
       locale = 'en',
       textEllipsis = true,
+      hideFooter = false,
       onClick,
       onMentionClick,
       onHashTagClick,
@@ -181,27 +182,28 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
             )}
             {!!ogMetaData && <FeedLinkPreview ogMetaData={ogMetaData} />}
           </div>
-
-          <div className={cx('feed-footer')}>
-            <div className={cx('feed-footer-container')}>
-              <FeedEmojiArea
-                className={cx('feed-reactions')}
-                emojiList={emojiList}
-                emojiSelectPopoverElement={emojiSelectPopoverElement}
-                onEmojiClick={onEmojiClick}
-                onEmojiSelectBtnClick={onEmojiSelectBtnClick}
-              />
-              <FeedEtcInfoArea
-                className={cx('feed-comments')}
-                commentCount={commentCount}
-                likeCount={likeCount}
-                isMyClick={isMyLike}
-                onLikeBtnClick={onLikeBtnClick}
-                onShareBtnClick={onShareBtnClick}
-                onCommentBtnClick={onCommentBtnClick}
-              />
+          {!hideFooter && (
+            <div className={cx('feed-footer')}>
+              <div className={cx('feed-footer-container')}>
+                <FeedEmojiArea
+                  className={cx('feed-reactions')}
+                  emojiList={emojiList}
+                  emojiSelectPopoverElement={emojiSelectPopoverElement}
+                  onEmojiClick={onEmojiClick}
+                  onEmojiSelectBtnClick={onEmojiSelectBtnClick}
+                />
+                <FeedEtcInfoArea
+                  className={cx('feed-comments')}
+                  commentCount={commentCount}
+                  likeCount={likeCount}
+                  isMyClick={isMyLike}
+                  onLikeBtnClick={onLikeBtnClick}
+                  onShareBtnClick={onShareBtnClick}
+                  onCommentBtnClick={onCommentBtnClick}
+                />
+              </div>
             </div>
-          </div>
+          )}
         </div>
       </article>
     );
@@ -278,6 +280,8 @@ type Props = {
   updatedAt?: number;
   /** 시간 및 날짜 포맷에 사용되는 로케일 */
   locale?: string;
+  /** Emoji , like , comment Footer 숨김 처리 default false */
+  hideFooter?: boolean;
   /**
    * 피드 클릭 시 호출되는 함수
    * @param e MouseEvent<HTMLSpanElement>
