@@ -36,7 +36,15 @@ export const Default: StoryComponent = {
         src: 'https://player.twitch.tv/?channel=dyushi&autoplay=false&muted=false&parent=localhost',
         type: 'twitch'
       }
-    ]
+    ],
+    ogMetaData: {
+      title: '위퍼블릭123',
+      url: 'wepublic.com',
+      image:
+        'https://plus.unsplash.com/premium_photo-1732730224306-3b469ea9e640?w=800&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwyfHx8ZW58MHx8fHx8',
+      description:
+        'Experience the blockchain game economy offered by WEMIX Play. Experience the blockchain game economy offered by WEMIX Play. Experience the blockchain game economy offered by WEMIX Play. :) Experience the blockchain game economy offered by WEMIX Play. Experience the blockchain game economy offered by WEMIX Play. Experience the blockchain game economy offered by WEMIX Play.'
+    }
   },
   render: Template
 };
