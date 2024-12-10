@@ -149,7 +149,7 @@ class Mention implements WpEditorPlugin {
               plugin.selectMentionItem(index);
             }}
             closeMentionList={() => {
-              this.mentionId = '';
+              plugin.mentionId = '';
             }}
           />
         )}

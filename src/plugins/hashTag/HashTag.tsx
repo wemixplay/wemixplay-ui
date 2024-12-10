@@ -139,7 +139,7 @@ class HashTag implements WpEditorPlugin {
               plugin.selectHashItem(index);
             }}
             closeHashList={() => {
-              this.hashId = '';
+              plugin.hashId = '';
             }}
           />
         )}
@@ -599,7 +599,6 @@ class HashTag implements WpEditorPlugin {
       // hashTag를 깨고 split으로 분리한 두개의 text로 대체
     } else if (focusInHashTag && focusNode.textContent.split(' ').length > 1) {
       this.hashId = '';
-
       const [tagText, normalText] = focusNode.textContent.split(' ');
 
       const spaceNode = document.createTextNode('\u00A0');
@@ -626,11 +625,17 @@ class HashTag implements WpEditorPlugin {
         // 공백문자를 없앤 문자를 다시 hashTag textContent로 치환
         focusNode.textContent = tagText;
 
-        // hashTag 바로 뒤에 공백문자 삽입
-        focusNode.parentNode.parentNode.insertBefore(spaceNode, focusNode.parentNode.nextSibling);
-
-        range.setStartAfter(normalTextNode);
-        range.setEndAfter(normalTextNode);
+        //tagText가 그냥 #뿐이라면 hashTag를 깨고 일반 텍스트로 대체
+        if (tagText === '#') {
+          focusNode.parentElement.replaceWith(tagTextNode);
+          range.setStartAfter(tagTextNode);
+          range.setEndAfter(tagTextNode);
+        } else {
+          // hashTag 바로 뒤에 공백문자 삽입
+          focusNode.parentNode.parentNode.insertBefore(spaceNode, focusNode.parentNode.nextSibling);
+          range.setStartAfter(normalTextNode);
+          range.setEndAfter(normalTextNode);
+        }
       }
 
       selection.removeAllRanges();
@@ -679,8 +684,7 @@ class HashTag implements WpEditorPlugin {
       focusNode.parentElement.dataset.name.trim() !==
         focusNode.parentElement.textContent.replace('#', '').trim()
     ) {
-      focusNode.parentElement.classList.replace('complete-hash', '');
-
+      focusNode.parentElement.classList.remove('complete-hash');
       focusNode.parentElement.dataset.id = '0';
       focusNode.parentElement.dataset.name = focusNode.parentElement.textContent
         .replace('#', '')
@@ -765,7 +769,6 @@ class HashTag implements WpEditorPlugin {
     if (focusInHashTag && checkValidHashTag(originTextData)) {
       // 포커스 노드의 부모 요소 찾기
       const parentElement = focusNode.parentElement;
-      console.log('parentElement', parentElement);
       // 새로운 텍스트 노드 생성
       const textNode = document.createTextNode(originTextData);
       // 포커스 노드 다음에 새로운 텍스트 노드 삽입
