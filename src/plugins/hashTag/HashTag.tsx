@@ -649,7 +649,21 @@ class HashTag implements WpEditorPlugin {
       const cursorOffset = selection.getRangeAt(0).startOffset;
 
       const hashTagNode = focusNode.parentNode;
-      const [firstChar, secondChar] = hashTagNode.textContent.split('#');
+
+      const splitText = hashTagNode.textContent.split('#');
+
+      // 해시태그 내에 #이 2개 이상 포함되어 있을 경우 일반 텍스트로 변환
+      if (splitText?.length > 2) {
+        const normalTextNode = document.createTextNode(focusNode.parentElement.textContent);
+        focusNode.parentElement.replaceWith(normalTextNode);
+
+        const newRange = document.createRange();
+        newRange.setStart(normalTextNode, normalTextNode.length);
+        newRange.setEnd(normalTextNode, normalTextNode.length);
+        selection.removeAllRanges();
+        selection.addRange(newRange);
+      }
+      const [firstChar, secondChar] = splitText;
 
       if (secondChar && secondChar === focusNode.parentElement.dataset.name) {
         const normalTextNode = document.createTextNode(firstChar);
@@ -664,7 +678,6 @@ class HashTag implements WpEditorPlugin {
         selection.addRange(newRange);
       } else if (secondChar) {
         const normalTextNode = document.createTextNode(`${focusNode.textContent} `);
-
         // hashTag를 깨고 일반 TextNode로 치환
         focusNode.parentElement.parentNode.replaceChild(normalTextNode, focusNode.parentNode);
 
@@ -704,8 +717,8 @@ class HashTag implements WpEditorPlugin {
       selection.addRange(range);
     }
 
-    // hashTag에 포커싱되 안되고 hashTag를 작성하려고 하지도 않았을때
     // hashId를 빈문자로 치환 (방어 코드)
+    // hashTag에 포커싱되 안되고 hashTag를 작성하려고 하지도 않았을때
     if (!isStartHash && !focusInHashTag) {
       this.hashId = '';
     }
