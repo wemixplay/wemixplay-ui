@@ -15,7 +15,7 @@ import { isDesktop } from 'react-device-detect';
 import style from './MentionList.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import Person from '@/components/avatars/Person';
-import { SvgIcoCertified } from '@/assets/svgs';
+import { SvgIcoCertifiedV2 } from '@/assets/svgs';
 import { MentionInfo } from '../Mention';
 import useCheckDevice from '@/hooks/useCheckDevice';
 
@@ -343,7 +343,7 @@ const MentionList = forwardRef<MentionListRef, Props>(
                   <Person src={item.profileImg} size={'custom'} className={cx('thumb')} />
                   <p className={cx('item-info')}>
                     <strong className={cx('item-title')}>{item.name}</strong>
-                    {!!item.isOfficial && <SvgIcoCertified width={12} height={12} />}
+                    {!!item.isOfficial && <SvgIcoCertifiedV2 width={12} height={12} />}
                   </p>
                 </>
               )}
