@@ -27,4 +27,4 @@ jobs:
         run: yarn build-storybook
 
       - name: Post Git Checkout
-        run: git checkout main
+        run: git checkout origin/main
