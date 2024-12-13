@@ -1,4 +1,4 @@
-name: Deploy to Remote Server123
+name: Deploy to Remote Server via Self-hosted Runner
 
 on:
   push:
@@ -6,29 +6,29 @@ on:
       - main
 
 jobs:
-    build-and-deploy:
-      runs-on: self-hosted # Self-hosted Runner 사용
+  build-and-deploy:
+    runs-on: self-hosted # Self-hosted Runner 사용
 
     steps:
-      # 1. 소스 코드 체크아웃
-      - name: Checkout code
-        uses: actions/checkout@v3
+    # 1. 소스 코드 체크아웃
+    - name: Checkout code
+      uses: actions/checkout@v3
 
-      # 2. Node.js 환경 설정
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-          cache: 'yarn'
+    # 2. Node.js 환경 설정
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x' # Node.js 버전
+        cache: 'yarn'        # Yarn 캐싱 설정
 
-      # 3. Dependencies 설치 및 빌드
-      - name: Install dependencies and build
-        run: |
-          yarn install
-          yarn build
+    # 3. Dependencies 설치 및 빌드
+    - name: Install dependencies and build
+      run: |
+        yarn install
+        yarn build
 
-      # 4. 배포 작업 수행
-      - name: Deploy to Application Directory
-        run: |
-          cd ~/front-end/src/wemixplay-ui/storybook
-          git pull origin main
+    # 4. 배포 작업 수행
+    - name: Deploy to Application Directory
+      run: |
+        cd /path/to/your/project
+        git pull origin main
