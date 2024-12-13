@@ -13,10 +13,10 @@ jobs:
     - name: Connect to Remote Server
       uses: appleboy/ssh-action@v0.1.7
       with:
-        host: ${{ secrets.SERVER_HOST }} # 서버 IP 주소
-        username: ${{ secrets.SERVER_USER }} # SSH 사용자 이름
-        password: ${{ secrets.SERVER_PASSWORD }} # SSH 비밀번호
-        port: 10022
+        host: ${{ secrets.ALPHA_SERVER_HOST }}
+        username: ${{ secrets.ALPHA_SERVER_USER }}
+        password: ${{ secrets.ALPHA_SERVER_PASSWORD }}
+        port: ${{ secrets.ALPHA_SERVER_PORT }}
         script: |
           cd ~/front-end/src/wemixplay-ui/storybook
           git pull origin main
