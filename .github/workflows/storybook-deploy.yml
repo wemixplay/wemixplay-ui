@@ -21,5 +21,4 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          yarn --ignore-platform
           yarn build-storybook
