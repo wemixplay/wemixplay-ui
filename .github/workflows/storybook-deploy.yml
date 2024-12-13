@@ -7,7 +7,11 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted # Self-hosted Runner 사용
+    runs-on: self-hosted 
+
+    defaults:
+      run:
+        working-directory: ~/front-end/src/wemixplay-ui/storybook
 
     steps:
       - name: Move to Storybook Project
@@ -17,5 +21,4 @@ jobs:
         run: git pull origin main
 
       - name: Install dependencies and build
-        run: |
-          yarn build-storybook
+        run: yarn build-storybook
