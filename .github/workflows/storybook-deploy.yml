@@ -1,4 +1,4 @@
-name: Deploy to Remote Server via Self-hosted Runner
+name: Storybook Rebuild And Deploy
 
 on:
   push:
@@ -10,14 +10,14 @@ jobs:
     runs-on: self-hosted # Self-hosted Runner 사용
 
     steps:
-      - name: Move to Project
-        run: cd ~/front-end/src/wemixplay-ui/storybook
-
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Git Pull
         run: git pull origin main
+
+      - name: Move to Storybook Project
+        run: cd ~/front-end/src/wemixplay-ui/storybook
 
       - name: Install dependencies and build
         run: |
