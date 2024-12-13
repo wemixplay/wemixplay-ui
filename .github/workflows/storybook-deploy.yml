@@ -13,17 +13,11 @@ jobs:
       - name: Move to Project
         run: cd ~/front-end/src/wemixplay-ui/storybook
 
-      - name: Deploy to Application Directory
-        run: git pull origin main
-
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-          cache: 'yarn'
+      - name: Git Pull
+        run: git pull origin main
 
       - name: Install dependencies and build
         run: |
