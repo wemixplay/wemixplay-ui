@@ -29,7 +29,8 @@
     "build:dev": "rm -rf dist && NODE_ENV=development NODE_VI=OK rollup -c && node scripts/svgComponentGenerator.js",
     "build": "rm -rf dist && NODE_ENV=production rollup -c && node scripts/svgComponentGenerator.js",
     "prepare": "yarn build",
-    "storybook": "NODE_ENV=development node scripts/svgComponentGenerator.js & cd storybook && yarn && yarn storybook"
+    "storybook": "NODE_ENV=development node scripts/svgComponentGenerator.js & cd storybook && yarn && yarn storybook",
+    "build-storybook": "cd storybook && yarn --ignore-platform && yarn storybook"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
