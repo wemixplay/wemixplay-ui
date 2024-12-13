@@ -9,14 +9,14 @@ jobs:
   build-and-deploy:
     runs-on: self-hosted 
 
+    env:
+      STORYBOOK_DIR: /home/alpha/front-end/src/wemixplay-ui/storybook
+
     defaults:
       run:
-        working-directory: ~/front-end/src/wemixplay-ui/storybook
+        working-directory: ${{ env.STORYBOOK_DIR }}
 
     steps:
-      - name: Move to Storybook Project
-        run: cd ~/front-end/src/wemixplay-ui/storybook
-
       - name: Git Pull
         run: git pull origin main
 
