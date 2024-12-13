@@ -1,0 +1,36 @@
+name: Deploy to Remote Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Connect to Remote Server
+      uses: appleboy/ssh-action@v0.1.7
+      with:
+        host: ${{ secrets.SERVER_HOST }} # 서버 IP 주소
+        username: ${{ secrets.SERVER_USER }} # SSH 사용자 이름
+        password: ${{ secrets.SERVER_PASSWORD }} # SSH 비밀번호
+        port: 10022
+        script: |
+          cd ~/front-end/src/wemixplay-ui/storybook
+          git pull origin main
+          
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18.x'
+        cache: 'yarn'
+
+    - name: Install dependencies and build
+      run: |
+        yarn install
+        yarn build
