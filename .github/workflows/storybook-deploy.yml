@@ -7,7 +7,7 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted # Self-hosted Runner 사용
+    runs-on: self-hosted 
 
     steps:
       - name: Checkout code
