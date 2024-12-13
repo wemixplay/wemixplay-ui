@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Git Checkout
-        run: git checkout origin/storybook
+        run: git checkout origin storybook
 
       - name: Git Pull
         run: git pull origin main
@@ -27,4 +27,4 @@ jobs:
         run: yarn build-storybook
 
       - name: Post Git Checkout
-        run: git checkout origin/main
+        run: git checkout origin main
