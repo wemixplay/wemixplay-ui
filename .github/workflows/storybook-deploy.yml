@@ -17,8 +17,10 @@ jobs:
         working-directory: ${{ env.STORYBOOK_DIR }}
 
     steps:
-      - name: Git Checkout
-        run: git checkout origin storybook
+      - name: Checkout storybook branch
+        uses: actions/checkout@v3
+        with:
+          ref: storybook
 
       - name: Git Pull
         run: git pull origin main
@@ -26,5 +28,7 @@ jobs:
       - name: Install dependencies and build
         run: yarn build-storybook
 
-      - name: Post Git Checkout
-        run: git checkout origin main
+      - name: Post Checkout main branch
+        uses: actions/checkout@v3
+        with:
+          ref: main
