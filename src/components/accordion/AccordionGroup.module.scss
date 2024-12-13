@@ -1,0 +1,12 @@
+.accordion-group {
+  // style
+
+  .accordion {
+    border-radius: 0;
+    border-bottom: none;
+
+    &:last-child {
+      border-bottom: 1px solid var(--semantic-line-solid-neutral);
+    }
+  }
+}

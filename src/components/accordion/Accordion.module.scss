@@ -1,0 +1,106 @@
+.accordion {
+  border: 1px solid var(--accor-border-color, var(--semantic-line-solid-neutral));
+
+  >input {
+    display: none;
+
+    &:checked {
+      ~ label {
+        .accor-hd {
+          > .ico-subject {
+            svg {
+              transform: rotate(180deg);
+            }
+          }
+        }
+      }
+
+      // ~ .accor-bd {
+      //   border-right: 1px solid var(--semantic-line-solid-neutral);
+      //   border-bottom: 1px solid var(--semantic-line-solid-neutral);
+      //   border-left: 1px solid var(--semantic-line-solid-neutral);
+      // }
+    }
+
+    &:not(:checked) {
+      ~ label {
+        .accor-hd {
+          // style
+        }
+      }
+
+      ~ .accor-bd {
+        max-height: 0 !important;
+      }
+    }
+  }
+
+  .accor-hd {
+    display: flex;
+    min-height: 64px;
+    align-items: center;
+    justify-content: space-between;
+    padding: $sp-20;
+    background: var(--semantic-background-normal-alternative);
+    cursor: pointer;
+
+    .subject {
+      display: flex;
+      width: 100%;
+      min-width: 0;
+      align-items: center;
+      color: var(--semantic-label-normal);
+
+      @include body-02-reading-sb;
+
+      button[id*="tooltip-"] {
+        margin-left: $sp-6;
+      }
+    }
+
+    .ico-subject {
+      display: flex;
+      width: 32px;
+      height: 32px;
+      flex-shrink: 0;
+      align-items: center;
+      justify-content: center;
+      margin-right: -$sp-16;
+
+      svg {
+        transform: rotate(0deg);
+        transition: transform 0.2s;
+      }
+    }
+
+    * { user-select: none; }
+
+    > .ico-subject {
+      svg {
+        transform: rotate(0deg);
+
+        rect {
+          fill: var(--semantic-label-normal);
+        }
+
+        path {
+          stroke: var(--semantic-label-normal);
+        }
+      }
+    }
+  }
+
+  .accor-bd {
+    overflow: hidden;
+    max-height: 100vh;
+    color: var(--semantic-label-neutral);
+    transition: max-height 0.2s;
+    will-change: max-height;
+
+    @include label-01-reading-r;
+
+    .accor-bd-inner {
+      border-top: 1px solid var(--accor-border-color, var(--semantic-line-solid-neutral));
+    }
+  }
+}
