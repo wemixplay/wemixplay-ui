@@ -30,5 +30,5 @@ jobs:
     # 4. 배포 작업 수행
     - name: Deploy to Application Directory
       run: |
-        cd /path/to/your/project
+        cd ~/front-end/src/wemixplay-ui/storybook
         git pull origin main
