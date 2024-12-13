@@ -18,7 +18,7 @@ jobs:
 
     steps:
       - name: Git Checkout
-        run: git checkout storybook
+        run: git checkout origin/storybook
 
       - name: Git Pull
         run: git pull origin main
