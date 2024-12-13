@@ -24,7 +24,7 @@ jobs:
 
       - name: Install dependencies and build
         run: |
-          yarn install
+          yarn --ignore-platform
           yarn build
 
       - name: Deploy to Application Directory
