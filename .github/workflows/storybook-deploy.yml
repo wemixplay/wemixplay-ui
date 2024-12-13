@@ -6,31 +6,29 @@ on:
       - main
 
 jobs:
-  build-and-deploy:
-    runs-on: ubuntu-latest
+    build-and-deploy:
+    runs-on: self-hosted # Self-hosted Runner 사용
 
     steps:
-    - name: Connect to Remote Server
-      uses: appleboy/ssh-action@v0.1.7
-      with:
-        host: ${{ secrets.ALPHA_SERVER_HOST }}
-        username: ${{ secrets.ALPHA_SERVER_USER }}
-        password: ${{ secrets.ALPHA_SERVER_PASSWORD }}
-        port: ${{ secrets.ALPHA_SERVER_PORT }}
-        script: |
-          cd ~/front-end/src/wemixplay-ui/storybook
-          git pull origin main
-          
+    # 1. 소스 코드 체크아웃
     - name: Checkout code
       uses: actions/checkout@v3
 
+    # 2. Node.js 환경 설정
     - name: Set up Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18.x'
         cache: 'yarn'
 
+    # 3. Dependencies 설치 및 빌드
     - name: Install dependencies and build
       run: |
         yarn install
         yarn build
+
+    # 4. 배포 작업 수행
+    - name: Deploy to Application Directory
+      run: |
+        cd ~/front-end/src/wemixplay-ui/storybook
+        git pull origin main
