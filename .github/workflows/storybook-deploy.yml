@@ -13,6 +13,9 @@ jobs:
       - name: Move to Project
         run: cd ~/front-end/src/wemixplay-ui/storybook
 
+      - name: Deploy to Application Directory
+        run: git pull origin main
+
       - name: Checkout code
         uses: actions/checkout@v3
 
@@ -25,7 +28,4 @@ jobs:
       - name: Install dependencies and build
         run: |
           yarn --ignore-platform
-          yarn build
-
-      - name: Deploy to Application Directory
-        run: git pull origin main
+          yarn build-storybook
