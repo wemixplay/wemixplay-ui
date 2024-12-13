@@ -7,17 +7,14 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted 
+    runs-on: self-hosted # Self-hosted Runner 사용
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+      - name: Move to Storybook Project
+        run: cd ~/front-end/src/wemixplay-ui/storybook
 
       - name: Git Pull
         run: git pull origin main
-
-      - name: Move to Storybook Project
-        run: cd storybook
 
       - name: Install dependencies and build
         run: |
