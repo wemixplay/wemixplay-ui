@@ -4,8 +4,8 @@
   // static
   --semantic-static-white: #{$color-global-common-100};
   --semantic-static-black: #{$color-global-common-0};
-  --semantic-static-gray05: #f7f7f8;
-  --semantic-static-gray10: rgba(#70737c, 0.06);
+  --semantic-static-gray05: #{$color-global-coolNeutral-99};
+  --semantic-static-gray10: #{rgba( $color-global-coolNeutral-50, $color-global-opacity-6)};
   --semantic-static-gray80: #43444a;
   --semantic-static-gray85: #313337;
   --semantic-static-gray90: #252629;
@@ -115,9 +115,6 @@
   --semantic-status-burned-line: #{rgba(255, 129, 13, 0.39)};
   --semantic-status-burned-bg: #{$color-global-orange-95};
   --semantic-color-gradation: #{linear-gradient(102deg, #c23d6e 0%, #ac40d2 32.81%, #7c46ed 66.67%, #4a45d1 100%)};
-  /* stylelint-disable-next-line scss/operator-no-unspaced */
-  --semantic-color-gradation-ws-exchange: #{linear-gradient(93deg, #ea0388 -4.57%, #f06 47.57%, #fd6669 108.78%)}; // webshop gradient - exchange
-  --semantic-color-gradation-ws-purchase: #{linear-gradient(102deg, #f74590 0%, #c049f8 32.81%, #7e50ff 66.67%, #4f51f8 100%)}; // webshop gradient - purchase
   --semantic-nft-state-badge: #{rgb(255 0 102 / 10%)};
   --semantic-status-bidding: #{$color-global-green-50};
   --semantic-status-soon: #{$color-global-lightBlue-50};
@@ -140,8 +137,8 @@
   // static
   --semantic-static-white: #{$color-global-common-100};
   --semantic-static-black: #{$color-global-common-0};
-  --semantic-static-gray05: #f7f7f8;
-  --semantic-static-gray10: rgba(#70737c, 0.06);
+  --semantic-static-gray05: #{$color-global-coolNeutral-99};
+  --semantic-static-gray10: #{rgba( $color-global-coolNeutral-50, $color-global-opacity-6)};
   --semantic-static-gray80: #43444a;
   --semantic-static-gray85: #313337;
   --semantic-static-gray90: #252629;
@@ -189,25 +186,25 @@
   --semantic-line-solid-strong: #{$color-global-coolNeutral-50};
 
   // status
-  --semantic-status-positive: #{$color-global-green-50};
+  --semantic-status-positive: #{$color-global-green-60};
   --semantic-status-positive-heavy: #{$color-global-green-40};
-  --semantic-status-positive-bg: #{rgba($color-global-green-50, $color-global-opacity-10)};
-  --semantic-status-cautionary: #{$color-global-orange-50};
-  --semantic-status-cautionary-bg: #{rgba($color-global-orange-50, $color-global-opacity-10)};
-  --semantic-status-negative: #{$color-global-red-50};
-  --semantic-status-negative-bg: #{rgba($color-global-red-50, $color-global-opacity-16)};
-  --semantic-status-negative-ball: #{rgba($color-global-red-50, $color-global-opacity-74)};
-  --semantic-status-blue: #{$color-global-blue-50};
-  --semantic-status-blue-bg: #{rgba($color-global-blue-50, $color-global-opacity-10)};
+  --semantic-status-positive-bg: #{rgba($color-global-green-60, $color-global-opacity-10)};
+  --semantic-status-cautionary: #{$color-global-orange-60};
+  --semantic-status-cautionary-bg: #{rgba($color-global-orange-60, $color-global-opacity-10)};
+  --semantic-status-negative: #{$color-global-red-60};
+  --semantic-status-negative-bg: #{rgba($color-global-red-60, $color-global-opacity-16)};
+  --semantic-status-negative-ball: #{rgba($color-global-red-60, $color-global-opacity-74)};
+  --semantic-status-blue: #{$color-global-blue-60};
+  --semantic-status-blue-bg: #{rgba($color-global-blue-60, $color-global-opacity-10)};
 
   // accent
-  --semantic-accent-lime: #{$color-global-lime-50};
-  --semantic-accent-cyan: #{$color-global-cyan-50};
-  --semantic-accent-lightBlue: #{$color-global-lightBlue-50};
-  --semantic-accent-violet: #{$color-global-violet-50};
-  --semantic-accent-purple: #{$color-global-purple-50};
-  --semantic-accent-pink: #{$color-global-pink-50};
-  --semantic-accent-redOrange: #{$color-global-redOrange-50};
+  --semantic-accent-lime: #{$color-global-lime-60};
+  --semantic-accent-cyan: #{$color-global-cyan-60};
+  --semantic-accent-lightBlue: #{$color-global-lightBlue-60};
+  --semantic-accent-violet: #{$color-global-violet-60};
+  --semantic-accent-purple: #{$color-global-purple-60};
+  --semantic-accent-pink: #{$color-global-pink-60};
+  --semantic-accent-redOrange: #{$color-global-redOrange-60};
 
   // Component - fill
   --semantic-fill-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
@@ -251,9 +248,6 @@
   --semantic-status-burned-line: #{rgba(255, 129, 13, 0.39)};
   --semantic-status-burned-bg: #{$color-global-orange-95};
   --semantic-color-gradation: #{linear-gradient(102deg, #c23d6e 0%, #ac40d2 32.81%, #7c46ed 66.67%, #4a45d1 100%)};
-  /* stylelint-disable-next-line scss/operator-no-unspaced */
-  --semantic-color-gradation-ws-exchange: #{linear-gradient(93deg, #ea0388 -4.57%, #f06 47.57%, #fd6669 108.78%)}; // webshop gradient - exchange
-  --semantic-color-gradation-ws-purchase: #{linear-gradient(102deg, #f74590 0%, #c049f8 32.81%, #7e50ff 66.67%, #4f51f8 100%)}; // webshop gradient - purchase
   --semantic-nft-state-badge: #{rgb(255 0 102 / 10%)};
   --semantic-status-bidding: #{$color-global-green-50};
   --semantic-status-soon: #{$color-global-lightBlue-50};
