@@ -32,31 +32,40 @@ jobs:
     runs-on: self-hosted 
 
     steps:
-      - name: Get tag name
-        id: get_tag
-        run: echo "version=${GITHUB_REF#refs/tags/npm-publish/}" >> $GITHUB_OUTPUT
+      - name: Get tag version
+        id: get_tag_version
+        run: |
+          FULL_VERSION=${GITHUB_REF#refs/tags/npm-publish/}
+          NPM_TAG=$(echo $FULL_VERSION | grep -oP '(?<=-).+$' || echo 'latest')
+          echo "version=$FULL_VERSION" >> $GITHUB_OUTPUT
+          echo "npm_tag=$NPM_TAG" >> $GITHUB_OUTPUT
 
       - name: Print TAG_VERSION
-        run: echo "TAG_VERSION = ${{ steps.get_tag.outputs.version }}"
+        run: echo "TAG_VERSION = ${{ steps.get_tag_version.outputs.version }}"
 
       - name: Checkout tag 
         uses: actions/checkout@v3
         with:
-          ref: refs/tags/npm-publish/${{ steps.get_tag.outputs.version }}
+          ref: refs/tags/npm-publish/${{ steps.get_tag_version.outputs.version }}
 
       - name: Authenticate with npm
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.DEREK_NPM_TOKEN }}" > ./.npmrc
 
       - name: Install dependencies & build
+        id: build
         run: yarn --ignore-platform && yarn build
+        continue-on-error: false
 
       - name: Publish to npm
-        run: yarn publish --new-version ${{ steps.get_tag.outputs.version }}
+        id: publish
+        if: steps.build.outcome == 'success'
+        run: yarn publish --new-version ${{ steps.get_tag_version.outputs.version }} --tag ${{ steps.get_tag_version.outputs.npm_tag }}
+        continue-on-error: true
 
       - name: Delete tag remotely
         env:
           GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
-        run: git push https://${GH_TOKEN}@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ steps.get_tag.outputs.version }}
+        run: git push https://${GH_TOKEN}@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ steps.get_tag_version.outputs.version }}
 
       - name: Cleanup .npmrc
         run: rm -f ./.npmrc

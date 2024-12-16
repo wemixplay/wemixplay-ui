@@ -18,11 +18,11 @@ function print_string(){
   fi
 }
 
-if [ "$current_branch" = "main" ]; then
-    print_string "success" "현재 브랜치가 main입니다. 최신 변경 사항을 가져옵니다."
+if [ "$current_branch" = "main" ] || [ "$current_branch" = "alpha" ]; then
+    print_string "success" "현재 브랜치가 $current_branch 입니다. 최신 변경 사항을 가져옵니다."
     git pull origin main
 else
-    print_string "error" "현재 브랜치가 $current_branch 입니다. main 브랜치로 변경 후 배포 작업을 진행해주세요."
+    print_string "error" "현재 브랜치가 $current_branch 입니다. main이나 alpha 브랜치로 변경 후 배포 작업을 진행해주세요."
     exit 1
 fi
 
@@ -34,13 +34,18 @@ if [ -z "$version" ]; then
     exit 1
 fi
 
-# IFS를 사용해 버전 분리
-IFS='.' read -r major minor patch <<< "$version"
+# 버전과 태그 분리
+IFS='-' read -r version_num npm_tag <<< "$version"
+
+# 버전 번호를 major, minor, patch로 분리
+IFS='.' read -r major minor patch <<< "$version_num"
 
 # 각 값을 숫자로 변환
 major=$((major))
 minor=$((minor))
 patch=$((patch))
+tag=$([ "$current_branch" = "main" ] && echo "latest" || echo "alpha")
+tag_str=$([ "$tag" = "latest" ] && echo "" || echo "-alpha")
 
 if [ -z "$major" ] || [ -z "$minor" ] || [ -z "$patch" ]; then
     print_string "error" "버전 정보를 올바르게 추출하지 못했습니다. 파일을 확인하세요."
@@ -60,17 +65,25 @@ else
 fi
 
 # 새 버전 문자열 생성
-auto_new_version="$major.$minor.$patch"
+auto_new_version="$major.$minor.$patch${tag_str}"
 
 read -p "새로운 버전을 입력하세요 ( 자동 생성 버전: $auto_new_version ): " new_version
 
 if [ -z "$new_version" ]; then
     new_version=$auto_new_version
+else
+    # tag_str이 비어있지 않다면 new_version 뒤에 tag_str 추가
+    if [ -n "$tag_str" ]; then
+        # new_version에 이미 tag_str이 포함되어 있는지 확인
+        if [[ "$new_version" != *"$tag_str"* ]]; then
+            new_version="${new_version}${tag_str}"
+        fi
+    fi
 fi
 
 tag_version="npm-publish/$new_version"
 
-yarn version --new-version $new_version --no-git-tag-version
+yarn version --new-version $new_version --tag $tag --no-git-tag-version
 
 git add package.json
 
