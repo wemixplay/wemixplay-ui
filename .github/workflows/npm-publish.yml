@@ -40,8 +40,10 @@ jobs:
           echo "version=$FULL_VERSION" >> $GITHUB_OUTPUT
           echo "npm_tag=$NPM_TAG" >> $GITHUB_OUTPUT
 
-      - name: Print TAG_VERSION
-        run: echo "TAG_VERSION = ${{ steps.get_tag_version.outputs.version }}"
+      - name: Print tag version
+        run: | 
+          echo "VERSION = ${{ steps.get_tag_version.outputs.version }}"
+          echo "NPM_TAG = ${{ steps.get_tag_version.outputs.npm_tag }}"
 
       - name: Checkout tag 
         uses: actions/checkout@v3
