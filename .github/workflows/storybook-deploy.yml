@@ -3,7 +3,7 @@ name: Storybook Rebuild And Deploy
 on:
   push:
     branches:
-      - main
+      - storybook
 
 jobs:
   build-and-deploy:
@@ -17,8 +17,18 @@ jobs:
         working-directory: ${{ env.STORYBOOK_DIR }}
 
     steps:
+      - name: Checkout storybook branch
+        uses: actions/checkout@v3
+        with:
+          ref: storybook
+
       - name: Git Pull
         run: git pull origin main
 
       - name: Install dependencies and build
         run: yarn build-storybook
+
+      - name: Post Checkout main branch
+        uses: actions/checkout@v3
+        with:
+          ref: main
