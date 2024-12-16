@@ -41,7 +41,7 @@ jobs:
       # 4. Dependencies 설치 및 빌드
       - name: Install dependencies
         run: |
-          yarn install
+          yarn --ignore-platform
           yarn build
 
       # 5. npm 패키지 배포
