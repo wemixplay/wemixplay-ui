@@ -55,11 +55,16 @@ if [ -z "$new_version" ]; then
     new_version=$auto_new_version
 fi
 
-new_version = "npm-publish/$new_version"
+tag_version="npm-publish/$new_version"
 
-git tag -a $new_version -m "Release $new_version"
-git push origin $new_version
-git tag -d $new_version
+git tag -a $tag_version -m "Release $new_version"
+git push origin $tag_version
+git tag -d $tag_version
 
-echo "버전 $new_version 배포 완료"
+yarn version --new-version $new_version --no-git-tag-version
+
+git commit -a -m "update version to $new_version"
+git push origin main
+
+echo "버전 $tag_version 배포 완료"
 exit 0
