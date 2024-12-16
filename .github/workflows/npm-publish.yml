@@ -6,20 +6,47 @@ on:
       - 'npm-publish/*'
 
 jobs:
+  storybook-branch-update:
+    runs-on: self-hosted 
+
+    env:
+      STORYBOOK_DIR: /home/alpha/front-end/src/wemixplay-ui/storybook
+
+    defaults:
+      run:
+        working-directory: ${{ env.STORYBOOK_DIR }}
+
+    steps:
+      - name: Get tag name
+        id: get_tag
+        run: echo "version=${GITHUB_REF#refs/tags/npm-publish/}" >> $GITHUB_OUTPUT
+
+      - name: Checkout storybook branch
+        run: git checkout storybook
+
+      - name: Storybook Branch Update
+        run: |
+          git pull origin refs/tags/npm-publish/${{ steps.get_tag.outputs.version }}
+          git push origin storybook
+
+      - name: Checkout main branch
+        run: git checkout main
+        
   publish:
     runs-on: self-hosted 
 
     steps:
       - name: Get tag name
-        run: echo "TAG_VERSION=${GITHUB_REF#refs/tags/npm-publish/}" >> $GITHUB_ENV
+        id: get_tag
+        run: echo "version=${GITHUB_REF#refs/tags/npm-publish/}" >> $GITHUB_OUTPUT
 
       - name: Print TAG_VERSION
-        run: echo "TAG_VERSION = ${{ env.TAG_VERSION }}"
+        run: echo "TAG_VERSION = ${{ steps.get_tag.outputs.version }}"
 
       - name: Checkout tag 
         uses: actions/checkout@v3
         with:
-          ref: refs/tags/npm-publish/${{ env.TAG_VERSION }}
+          ref: refs/tags/npm-publish/${{ steps.get_tag.outputs.version }}
 
       - name: Authenticate with npm
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.DEREK_NPM_TOKEN }}" > ./.npmrc
@@ -28,12 +55,12 @@ jobs:
         run: yarn --ignore-platform && yarn build
 
       - name: Publish to npm
-        run: yarn publish --new-version ${{ env.TAG_VERSION }}
+        run: yarn publish --new-version ${{ steps.get_tag.outputs.version }}
 
       - name: Delete tag remotely
         env:
-          GITHUB_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
-        run: git push https://${GH_TOKEN}@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ env.TAG_VERSION }}
+          GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
+        run: git push https://${GH_TOKEN}@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ steps.get_tag.outputs.version }}
 
       - name: Cleanup .npmrc
         run: rm -f ./.npmrc
