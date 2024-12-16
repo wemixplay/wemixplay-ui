@@ -22,13 +22,13 @@ jobs:
         with:
           ref: storybook
 
-      - name: Git Pull
-        run: git pull
+      # - name: Git Pull
+      #   run: git pull
 
       - name: Install dependencies and build
         run: yarn build-storybook
 
-      - name: Post Checkout main branch
-        uses: actions/checkout@v3
-        with:
-          ref: main
+      # - name: Post Checkout main branch
+      #   uses: actions/checkout@v3
+      #   with:
+      #     ref: main
