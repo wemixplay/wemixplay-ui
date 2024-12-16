@@ -33,6 +33,7 @@ jobs:
         run: git checkout main
         
   publish:
+    needs: storybook-branch-update
     runs-on: self-hosted 
 
     steps:
