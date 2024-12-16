@@ -22,16 +22,15 @@ jobs:
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.DEREK_NPM_TOKEN }}" > ./.npmrc
 
       - name: Install dependencies
-        run: |
-          yarn --ignore-platform
+        run: yarn --ignore-platform
 
       - name: Publish to npm
         run: yarn publish --new-version ${{ env.TAG_VERSION }}
 
       - name: Delete tag remotely
-        run: git push origin :refs/tags/npm-publish/${{ env.TAG_VERSION }}
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.WP_GITHUB_TOKEN }}@github.com/${{ github.repository }}
+          git push origin :refs/tags/npm-publish/${{ env.TAG_VERSION }}
 
       - name: Cleanup .npmrc
         run: rm -f ./.npmrc
