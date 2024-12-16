@@ -17,11 +17,26 @@ jobs:
         working-directory: ${{ env.STORYBOOK_DIR }}
 
     steps:
+      - name: Save current state
+        run: |
+          git rev-parse HEAD > .git/previous-head
+
       - name: Checkout storybook branch
         run: git checkout storybook
 
       - name: Install dependencies and build
+        id: build
         run: yarn build-storybook
+        continue-on-error: true
+
+      - name: Rollback if build fails
+        if: steps.build.outcome == 'failure'
+        run: |
+          git checkout $(cat .git/previous-head)
+          echo "빌드 실패로 인한 롤백 수행"
+          git checkout main
+          exit 1
 
       - name: Post Checkout main branch
+        if: steps.build.outcome == 'success'
         run: git checkout main
