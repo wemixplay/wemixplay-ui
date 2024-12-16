@@ -20,6 +20,7 @@ jobs:
           ref: storybook
 
       - name: Storybook Branch Update
+        id: storybook_branch_update
         env:
           GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
         run: |
@@ -27,6 +28,13 @@ jobs:
           git config user.name "wemixplay"
           git pull origin refs/tags/npm-publish/${{ steps.get_tag.outputs.version }} --no-rebase
           git push https://${GH_TOKEN}@github.com/${{ github.repository }} storybook
+        continue-on-error: false
+
+      - name: Delete tag remotely
+        if: steps.storybook_branch_update.outcome == 'failure'
+        env:
+          GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
+        run: git push https://${GH_TOKEN}@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ steps.get_tag.outputs.version }}
         
   publish:
     needs: storybook-branch-update
