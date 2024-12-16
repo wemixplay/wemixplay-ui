@@ -26,21 +26,16 @@ jobs:
         with:
           ref: npm-publish/${{ env.TAG_VERSION }}
 
-      # 3. npm 인증 정보 설정
       - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/wemixplay-ui:_authToken=${{ secrets.DEREK_NPM_TOKEN }}" > ./.npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.DEREK_NPM_TOKEN }}" > ./.npmrc
 
-      # 4. Dependencies 설치 및 빌드
       - name: Install dependencies
         run: |
           yarn --ignore-platform
-          yarn build
 
-      # 5. npm 패키지 배포
       - name: Publish to npm
         run: yarn publish --new-version ${{ env.TAG_VERSION }}
 
-              # 7. 태그 삭제
       - name: Delete tag locally and remotely
         run: |
           git tag -d ${{ env.TAG_VERSION }}
