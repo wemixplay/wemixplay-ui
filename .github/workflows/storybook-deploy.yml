@@ -39,8 +39,7 @@ jobs:
         run: |
           if [ -d "storybook-static.backup" ]; then
             rm -rf storybook-static
-            mv storybook-static.backup storybook-static
-            rm -rf storybook-static.backup
+            rename storybook-static.backup storybook-static
           fi
           echo "빌드 실패로 인한 롤백 수행"
 
