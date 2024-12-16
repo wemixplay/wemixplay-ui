@@ -64,7 +64,7 @@ jobs:
 
       - name: Install dependencies & build
         id: build
-        run: yarn --ignore-platform && yarn build
+        run: NODE_ENV=production && yarn --ignore-platform && yarn build
         continue-on-error: false
 
       - name: Publish to npm
