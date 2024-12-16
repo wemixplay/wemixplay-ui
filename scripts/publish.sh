@@ -20,7 +20,7 @@ function print_string(){
 
 if [ "$current_branch" = "main" ] || [ "$current_branch" = "alpha" ]; then
     print_string "success" "현재 브랜치가 $current_branch 입니다. 최신 변경 사항을 가져옵니다."
-    git pull origin main
+    git pull origin $current_branch
 else
     print_string "error" "현재 브랜치가 $current_branch 입니다. main이나 alpha 브랜치로 변경 후 배포 작업을 진행해주세요."
     exit 1
@@ -88,11 +88,18 @@ yarn version --new-version $new_version --tag $tag --no-git-tag-version
 git add package.json
 
 git commit -m "update version to $new_version"
-git push origin main
+git push origin $current_branch
 
 git tag -a $tag_version -m "Release $new_version"
 git push origin $tag_version
 git tag -d $tag_version
 
+print_string "success" "================================"
 print_string "success" "✨🎉 v $new_version 배포 완료 🎉✨"
+print_string "success" "================================"
+print_string "warning" "wemixplay-ui를 사용하는 프로젝트에서 아래 명령어를 실행해주세요!"
+print_string "success" "================================"
+print_string "success" "npm install wemixplay-ui@${tag}"
+print_string "success" "yarn add wemixplay-ui@${tag}"
+print_string "success" "================================"
 exit 0
