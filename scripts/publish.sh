@@ -57,14 +57,16 @@ fi
 
 tag_version="npm-publish/$new_version"
 
+yarn version --new-version $new_version --no-git-tag-version
+
+git add package.json
+
+git commit -m "update version to $new_version"
+git push origin main
+
 git tag -a $tag_version -m "Release $new_version"
 git push origin $tag_version
 git tag -d $tag_version
-
-yarn version --new-version $new_version --no-git-tag-version
-
-git commit -a -m "update version to $new_version"
-git push origin main
 
 echo "버전 $tag_version 배포 완료"
 exit 0
