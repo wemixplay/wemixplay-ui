@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - storybook
+  pull_request:
+    types: [closed]
+    branches:
+      - storybook
 
 jobs:
   storybook-build-and-deploy:
