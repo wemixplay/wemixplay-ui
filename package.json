@@ -23,7 +23,6 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "postinstall": "lefthook install",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:css": "stylelint --ignore-path .gitignore '**/*.scss'",
     "start": "NODE_ENV=development rollup -c && node scripts/svgComponentGenerator.js & rollup -cw",
