@@ -23,8 +23,7 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
         run: |
-          git fetch origin refs/tags/npm-publish/${{ steps.get_tag.outputs.version }}
-          git merge FETCH_HEAD --ff-only
+          git pull origin refs/tags/npm-publish/${{ steps.get_tag.outputs.version }} --rebase false
           git push https://${GH_TOKEN}@github.com/${{ github.repository }} storybook
         
   publish:
@@ -71,8 +70,3 @@ jobs:
 
       - name: Cleanup .npmrc
         run: rm -f ./.npmrc
-
-      - name: Checkout main branch
-        uses: actions/checkout@v3
-        with:
-          ref: main
