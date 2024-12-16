@@ -17,7 +17,7 @@ jobs:
       - name: Checkout tag 
         uses: actions/checkout@v3
         with:
-        ref: npm-publish/${{ env.TAG_VERSION }}
+          ref: npm-publish/${{ env.TAG_VERSION }}
 
       # # 2. Node.js 환경 설정
       # - name: Set up Node.js
@@ -55,4 +55,4 @@ jobs:
       - name: Checkout main branch
         uses: actions/checkout@v3
         with:
-        ref: main
+          ref: main
