@@ -28,9 +28,12 @@ jobs:
         run: yarn publish --new-version ${{ env.TAG_VERSION }}
 
       - name: Delete tag remotely
-        env:
-          GITHUB_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
-        run: git push https://$GITHUB_TOKEN@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ env.TAG_VERSION }}
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.WP_GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
+          force: true
+          tags: true
 
       - name: Cleanup .npmrc
         run: rm -f ./.npmrc
