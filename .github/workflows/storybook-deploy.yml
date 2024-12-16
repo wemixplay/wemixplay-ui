@@ -1,4 +1,4 @@
-name: Storybook Rebuild And Deploy
+name: Storybook Build And Deploy
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - storybook
 
 jobs:
-  build-and-deploy:
+  storybook-build-and-deploy:
     runs-on: self-hosted 
 
     env:
@@ -23,7 +23,7 @@ jobs:
           ref: storybook
 
       - name: Git Pull
-        run: git pull origin main
+        run: git pull
 
       - name: Install dependencies and build
         run: yarn build-storybook
