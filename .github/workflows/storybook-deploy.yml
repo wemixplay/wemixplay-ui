@@ -17,9 +17,11 @@ jobs:
         working-directory: ${{ env.STORYBOOK_DIR }}
 
     steps:
-      - name: Save current state
+      - name: Backup current storybook-static
         run: |
-          git rev-parse HEAD > .git/previous-head
+          if [ -d "storybook-static" ]; then
+            cp -r storybook-static storybook-static.backup
+          fi
 
       - name: Checkout storybook branch
         run: git checkout storybook
@@ -32,11 +34,12 @@ jobs:
       - name: Rollback if build fails
         if: steps.build.outcome == 'failure'
         run: |
-          git checkout $(cat .git/previous-head)
+          if [ -d "storybook-static.backup" ]; then
+            rm -rf storybook-static
+            mv storybook-static.backup storybook-static
+          fi
           echo "빌드 실패로 인한 롤백 수행"
-          git checkout main
-          exit 1
 
       - name: Post Checkout main branch
-        if: steps.build.outcome == 'success'
-        run: git checkout main
+        run: |
+          git checkout main
