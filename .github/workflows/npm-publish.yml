@@ -22,10 +22,10 @@ jobs:
           ref: refs/tags/npm-publish/${{ env.TAG_VERSION }}
 
       - name: Authenticate with npm
-        run: echo "//registry.npmjs.org/wemixplay-ui/:_authToken=${{ secrets.DEREK_NPM_TOKEN }}" > ./.npmrc
+        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.DEREK_NPM_TOKEN }}" > ./.npmrc
 
-      - name: Install dependencies
-        run: yarn --ignore-platform
+      - name: Install dependencies & build
+        run: yarn --ignore-platform && yarn build
 
       - name: Publish to npm
         run: yarn publish --new-version ${{ env.TAG_VERSION }}
