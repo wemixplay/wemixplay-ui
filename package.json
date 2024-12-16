@@ -23,6 +23,7 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
+    "postinstall": "lefthook install",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:css": "stylelint --ignore-path .gitignore '**/*.scss'",
     "start": "NODE_ENV=development rollup -c && node scripts/svgComponentGenerator.js & rollup -cw",
@@ -76,6 +77,7 @@
     "eslint-plugin-react": "^7.34.3",
     "eslint-plugin-react-hooks": "^4.3.0",
     "fs-extra": "^11.2.0",
+    "lefthook": "^1.9.2",
     "monkey-d": "^1.1.44",
     "node-gyp": "^10.1.0",
     "postcss": "^8.4.38",
