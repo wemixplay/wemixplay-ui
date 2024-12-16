@@ -13,6 +13,9 @@ jobs:
       - name: Get tag name
         run: echo "TAG_VERSION=${GITHUB_REF#refs/tags/npm-publish/}" >> $GITHUB_ENV
 
+      - name: Print TAG_VERSION
+        run: echo "TAG_VERSION = ${{ env.TAG_VERSION }}"
+
       - name: Checkout tag 
         uses: actions/checkout@v3
         with:
@@ -28,12 +31,9 @@ jobs:
         run: yarn publish --new-version ${{ env.TAG_VERSION }}
 
       - name: Delete tag remotely
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.WP_GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-          force: true
-          tags: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
+        run: git push https://${GH_TOKEN}@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ env.TAG_VERSION }}
 
       - name: Cleanup .npmrc
         run: rm -f ./.npmrc
