@@ -10,9 +10,15 @@ jobs:
     runs-on: self-hosted 
 
     steps:
-     # TAG_VERSION 환경변수 설정
-      - name: Set TAG_VERSION
-        run: echo "TAG_VERSION=$(git ls-remote --tags origin 'refs/tags/npm-publish/*' | sort -t '/' -k 3 -V | tail -n 1 | awk -F/ '{print $NF}')" >> $GITHUB_ENV
+      # 현재 트리거된 태그 이름을 직접 가져오기
+      - name: Get tag name
+        run: echo "TAG_VERSION=${GITHUB_REF#refs/tags/npm-publish/}" >> $GITHUB_ENV
+
+      # 1. 리포지토리 코드 체크아웃
+      - name: Checkout tag 
+        uses: actions/checkout@v3
+        with:
+          ref: refs/tags/npm-publish/${{ env.TAG_VERSION }}
 
       # 1. 리포지토리 코드 체크아웃
       - name: Checkout tag 
