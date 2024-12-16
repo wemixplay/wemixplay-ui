@@ -7,14 +7,7 @@ on:
 
 jobs:
   storybook-branch-update:
-    runs-on: self-hosted 
-
-    env:
-      STORYBOOK_DIR: /home/alpha/front-end/src/wemixplay-ui/storybook
-
-    defaults:
-      run:
-        working-directory: ${{ env.STORYBOOK_DIR }}
+    runs-on: self-hosted
 
     steps:
       - name: Get tag name
