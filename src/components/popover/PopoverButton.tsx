@@ -77,7 +77,7 @@ interface PropsType {
   onClick?: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-interface RefPopoverButton {
+interface PopoverButtonRef {
   /** popover를 닫히게 하는 함수 */
   close: () => void | Promise<void>;
   /** popover를 열리게 하는 함수 */
@@ -115,7 +115,7 @@ const defaultExcludeOutSideIds: string[] = [];
  * @param {RippleOption} [props.ripple] - Ripple 효과 옵션
  * @param {ReactNode|string} props.children - 버튼 내에 랜더링될 내용
  * @param {function} [props.onClick] - 버튼 클릭 시 호출될 함수. MouseEvent 객체를 인자로 받음.
- * @param {ForwardedRef<RefPopoverButton>} [ref] - 컴포넌트 외부에서 popover를 제어할 수 있는 ref 객체. `open`과 `close` 함수를 포함함.
+ * @param {ForwardedRef<PopoverButtonRef>} [ref] - 컴포넌트 외부에서 popover를 제어할 수 있는 ref 객체. `open`과 `close` 함수를 포함함.
  */
 const PopoverButton = forwardRef(
   (
@@ -133,7 +133,7 @@ const PopoverButton = forwardRef(
       children,
       onClick
     }: PropsType,
-    ref?: ForwardedRef<RefPopoverButton>
+    ref?: ForwardedRef<PopoverButtonRef>
   ) => {
     /** popover button 컴포넌트의 최상위 요소를 가르키는 ref값 */
     const popoverRef = useRef<HTMLDivElement>();
@@ -308,5 +308,5 @@ const PopoverButton = forwardRef(
 
 PopoverButton.displayName = 'PopoverButton';
 
-export type { PropsType as PopoverButtonProps, RefPopoverButton };
+export type { PropsType as PopoverButtonProps, PopoverButtonRef };
 export default PopoverButton;

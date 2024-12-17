@@ -78,4 +78,5 @@ const TextArea = forwardRef<HTMLTextAreaElement, Props>(
 
 TextArea.displayName = 'TextArea';
 
+export type { Props as TextAreaProps };
 export default TextArea;

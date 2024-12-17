@@ -343,4 +343,5 @@ const Drawer = ({
   );
 };
 
+export type { PropsType as DrawerProps };
 export default Drawer;

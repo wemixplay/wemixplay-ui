@@ -216,5 +216,5 @@ const AvatarGroup = ({
   );
 };
 
-export type { Props as MultipleAvatarProps };
+export type { Props as AvatarGroupProps };
 export default AvatarGroup;
