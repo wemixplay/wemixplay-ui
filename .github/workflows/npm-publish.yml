@@ -86,7 +86,7 @@ jobs:
       - name: Cleanup dist
         run: rm -rf ./dist
 
-      - name : git push
+      - name : Git push
         env:
           GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
         run: |
