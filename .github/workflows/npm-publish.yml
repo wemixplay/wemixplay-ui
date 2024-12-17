@@ -73,10 +73,10 @@ jobs:
         run: git push https://${GH_TOKEN}@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ steps.get_tag_version.outputs.version }}
 
       - name: Cleanup .npmrc
-        run: rm -f ./.npmrc
+        run: rm -rf ./.npmrc
 
       - name: Cleanup dist
-        run: rm -f ./dist
+        run: rm -rf ./dist
 
       - name : git push
         run: |
