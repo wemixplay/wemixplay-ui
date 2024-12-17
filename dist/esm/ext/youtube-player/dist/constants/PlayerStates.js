@@ -1,0 +1,1 @@
+import{__module as e}from"../../../../_virtual/PlayerStates.js";var r;function t(){return r||(r=1,t=e,a=e.exports,Object.defineProperty(a,"__esModule",{value:!0}),a.default={BUFFERING:3,ENDED:0,PAUSED:2,PLAYING:1,UNSTARTED:-1,VIDEO_CUED:5},t.exports=a.default),e.exports;var t,a}export{t as __require};
