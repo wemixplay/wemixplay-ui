@@ -1,0 +1,27 @@
+.multiple-avatars {
+  display: inline-block;
+
+  .avatars-area {
+    position: relative;
+    display: inline-block;
+
+    .avatar-item {
+      :global {
+        .avtr-img {
+          border: 2px solid white;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+
+  .avatar-item {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: inline-block;
+    transform-origin: center;
+    transition: transform 0.3s;
+    will-change: transform;
+  }
+}

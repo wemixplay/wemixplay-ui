@@ -1,0 +1,38 @@
+.no-data {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  &-icon {
+    display: flex;
+    width: 80px;
+    height: 80px;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+    margin-left: $sp-6;
+    opacity: 0.2;
+  }
+
+  &-text {
+    padding-top: $sp-16;
+    margin: 0;
+    color: var(--semantic-label-alternative);
+    text-align: center;
+    white-space: pre-line;
+
+    @include word-break;
+    @include body-02-normal-r;
+  }
+
+  &-action {
+    display: flex;
+    align-items: center;
+    margin-top: $sp-16;
+
+    button {
+      @include body-02-normal-b;
+    }
+  }
+}

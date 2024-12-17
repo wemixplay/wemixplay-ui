@@ -1,0 +1,190 @@
+.text-input {
+  display: inline-block;
+  width: 335px;
+  height: 48px;
+  box-sizing: border-box;
+  padding: $sp-8 $sp-8 $sp-8 $sp-10;
+  border: 1px solid var(--semantic-label-disable);
+  border-radius: $rd-6;
+  background: var(--semantic-background-normal-alternative);
+  color: var(--semantic-label-normal);
+  transition: 0.2s;
+  vertical-align: middle;
+
+  // @include label-01-normal-m;
+  @include body-02-reading-m;
+
+  @include breakpoint-768 {
+    padding-left: $sp-16;
+  }
+
+  div,
+  span,
+  button {
+    box-sizing: border-box;
+  }
+
+  /* IE의 경우 */
+  input::-ms-clear,
+  input::-ms-reveal {
+    display: none;
+  }
+
+  /* 크롬의 경우 */
+  input::-webkit-search-decoration,
+  input::-webkit-search-cancel-button,
+  input::-webkit-search-results-button,
+  input::-webkit-search-results-decoration {
+    display: none;
+  }
+
+  &:hover {
+    border-color: var(--semantic-label-alternative);
+  }
+
+  &.focus {
+    border-color: var(--semantic-label-normal);
+    background-color: var(--semantic-background-normal-normal);
+
+    &.filled {
+      // 한 글자라도 입력이 된 상태인 경우 : .filled
+      border-color: var(--semantic-label-normal);
+      background-color: var(--semantic-background-normal-normal);
+    }
+
+    input::placeholder {
+      font-size: 0 !important;
+    }
+  }
+
+  &.filled {
+    // 한 글자라도 입력이 된 상태인 경우 : .filled
+    border-color: var(--semantic-label-alternative);
+    color: var(--semantic-label-normal);
+  }
+
+  &.readonly,
+  &.disabled {
+    border-color: transparent;
+    background: var(--semantic-line-solid-alternative);
+    color: var(--semantic-label-alternative);
+
+    input {
+      cursor: not-allowed;
+    }
+  }
+
+  &.error {
+    border-color: var(--semantic-status-negative);
+    caret-color: red;
+
+    &.filled {
+      border-color: var(--semantic-status-negative);
+    }
+  }
+
+  &.search {
+    .ico-prefix {
+      svg path {
+        stroke: var(--semantic-label-normal);
+      }
+    }
+  }
+
+  .input-area {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    color: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    text-align: inherit;
+  }
+
+  .ico-prefix {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+
+    > svg {
+      display: block;
+      width: auto;
+    }
+
+    ~ input {
+      padding-left: 32px;
+    }
+  }
+
+  .ico-reset {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    right: 0;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: red;
+    cursor: pointer;
+    transform: translateY(-50%);
+
+    rect,
+    path {
+      fill: var(--semantic-label-normal);
+    }
+
+    >svg {
+      display: inline-block;
+      width: auto;
+      height: 20px;
+      vertical-align: middle;
+    }
+
+    ~input {
+      padding-right: 24px;
+    }
+  }
+
+  input {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    border: none;
+    appearance: none;
+    background-color: inherit;
+    color: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    outline: none;
+    text-align: inherit;
+
+    &::placeholder {
+      color: var(--semantic-label-alternative);
+    }
+
+    /* 자동 완성된 입력 필드의 스타일을 변경합니다. */
+    &:-webkit-autofill {
+      background-color: transparent !important; /* 자동 완성된 필드의 배경 색상 */
+      -webkit-box-shadow: none !important;
+      color: var(--semantic-label-normal);
+
+      &:focus,
+      &:active,
+      &:hover {
+        background-color: transparent !important; /* 자동 완성된 필드의 배경 색상 */
+        -webkit-box-shadow: none !important;
+        color: var(--semantic-label-normal);
+      }
+    }
+  }
+}

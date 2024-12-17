@@ -1,0 +1,85 @@
+.number-input {
+  display: inline-block;
+  width: 260px;
+  height: 42px;
+  border: 1px solid #eee;
+  border-radius: $rd-8;
+  background-color: var(--semantic-static-white);
+  color: rgb(0 0 0 / 50%);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: -0.14px;
+  line-height: 16px;
+  transition: border-color 0.25s;
+  vertical-align: middle;
+
+  // @include transition-default(border-color);
+
+  .number-inp-cont {
+    display: flex;
+    height: 100%;
+    color: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    text-align: inherit;
+  }
+
+  .number-btn-area {
+    position: relative;
+    display: flex;
+    width: 48px;
+    height: 100%;
+    flex-direction: column;
+    border-left: 1px solid #ddd;
+
+    &::after {
+      position: absolute;
+      z-index: 1;
+      top: 50%;
+      left: 0;
+      display: block;
+      width: 100%;
+      border-color: inherit;
+      border-bottom: 1px solid #ddd;
+      content: "";
+      transform: translateY(-50%);
+    }
+
+    .number-btn {
+      display: inline-flex;
+      height: 100%;
+      align-items: center;
+      justify-content: center;
+      -webkit-tap-highlight-color: transparent;
+
+      >svg {
+        width: 12px;
+      }
+    }
+  }
+
+  input {
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    padding: 10px 20px;
+    appearance: none;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-align: inherit;
+
+    &::placeholder {
+      color: #aaa;
+    }
+  }
+
+  &.error {
+    border-color: var(--semantic-status-negative);
+    color: var(--semantic-status-negative);
+  }
+}

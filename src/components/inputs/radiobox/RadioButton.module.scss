@@ -1,0 +1,63 @@
+/* stylelint-disable selector-type-no-unknown */
+
+/* ChipTab과 같은 UI처럼 보이도록 수정함 */
+.radio-button {
+  position: relative;
+  overflow: hidden;
+  min-height: 32px;
+  padding: 0 $sp-12;
+
+  .radio-button-text {
+    position: relative;
+    z-index: 2;
+  }
+
+  :global {
+    jwripple {
+      z-index: 3 !important;
+    }
+
+    .ico-check {
+      display: none;
+    }
+
+    // checked 안됐을때
+    .text {
+      color: var(--semantic-label-alternative);
+      transition: color 0.3s;
+
+      @include add-body-text-12-m;
+
+      &::after {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: block;
+        border: 1px solid var(--semantic-label-disable);
+        border-radius: $rd-40;
+        content: "";
+        pointer-events: none;
+        transition: border 0.3s, background-color 0.3s;
+      }
+    }
+
+    input {
+      // checked 됐을때
+      &:checked {
+        ~ .text {
+          color: var(--semantic-label-inverse-normal);
+
+          @include add-body-text-12-b;
+
+          &::after {
+            border: 1px solid var(--semantic-label-normal);
+            background-color: var(--semantic-label-normal);
+          }
+        }
+      }
+    }
+  }
+}

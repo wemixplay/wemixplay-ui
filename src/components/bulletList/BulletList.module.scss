@@ -1,0 +1,53 @@
+.bullet-list {
+  padding: 0;
+  margin: 0;
+  color: var(--semantic-label-alternative);
+  font-feature-settings: "calt" off;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 157%;
+  list-style: none;
+
+  @include font-size(13);
+
+  li {
+    position: relative;
+    padding-left: $sp-12;
+    font-size: inherit;
+    font-style: normal;
+    font-weight: inherit;
+    line-height: inherit;
+
+    @include word-break;
+
+    .bullet-icon {
+      position: absolute;
+      top: 6px;
+      left: 0;
+    }
+  }
+
+  // Default 원형 불릿스타일
+  &.default-circle {
+    li {
+      padding-left: $sp-6;
+
+      @include label-02-normal-r;
+
+      &:not(&:first-of-type) {
+        margin-top: $sp-4;
+      }
+
+      &::before {
+        position: absolute;
+        top: $sp-10;
+        left: 0;
+        width: 2px;
+        height: 2px;
+        border-radius: 100%;
+        background: var(--semantic-label-alternative);
+        content: "";
+      }
+    }
+  }
+}

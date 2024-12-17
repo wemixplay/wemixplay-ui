@@ -4,7 +4,7 @@
 import { useEffect } from 'react'
 import '../styles/storybook.scss';
 import {pretendard, twkEverett} from '@/constants/font.c';
-
+import WemixplayUIProvider from '@/providers/WemixplayUi';
 const preview = {
   parameters: {
     actions: { argTypesRegex: '^(on|handle)(?!Icon)[A-Z].*' },
@@ -38,7 +38,9 @@ const preview = {
 
       return (
         <div className={`storybook-font ${pretendard.variable} ${twkEverett.variable}`}>
-          <Story />
+          <WemixplayUIProvider>
+            <Story />
+          </WemixplayUIProvider>
         </div>
       )
     }
