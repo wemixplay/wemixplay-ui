@@ -1,0 +1,71 @@
+.refresh {
+  position: relative;
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  box-sizing: content-box;
+  font-size: 10px;
+  font-weight: 700;
+
+  .btn-refresh {
+    display: flex;
+    width: inherit;
+    height: inherit;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    color: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    font-style: inherit;
+    font-weight: inherit;
+
+    /* Icon */
+    &-ico {
+      position: absolute;
+      z-index: 1;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+
+      > svg {
+        width: 100%;
+        height: 100%;
+        animation: none;
+
+        path {
+          fill: var(--semantic-label-normal);
+        }
+      }
+
+      &.refreshed {
+        > svg {
+          animation-duration: 1s;
+          animation-name: rotate;
+          transform-origin: center;
+        }
+      }
+    }
+
+    /* Count */
+    &-count {
+      color: inherit;
+      font-family: inherit;
+      font-size: inherit;
+      font-style: inherit;
+      font-weight: inherit;
+    }
+  }
+}
+
+/* Animation Keyframes */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,12 @@
+.countdown-wrapper {
+  display: inline-block;
+
+  :global {
+    .timer-counter,
+    .timer-separator {
+      @include label-02-normal-r;
+
+      color: var(--semantic-label-alternative);
+    }
+  }
+}

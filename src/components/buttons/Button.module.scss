@@ -22,7 +22,7 @@
     left: 0;
     width: 100%;
     height: 100%;
-    border-radius: $rd-10;
+    border-radius: $rd-100;
     background-color: var(--semantic-label-normal);
     content: "";
     opacity: 0;
@@ -79,6 +79,7 @@
   /* 버튼 사이즈별 스타일 정의 */
   &.large {
     height: 44px;
+    padding: 0 24px;
   }
 
   &.medium {
@@ -146,13 +147,15 @@
 */
 .btn-line-cap {
   border: 1px solid var(--semantic-label-normal);
-  border-radius: 100px;
-  background-color: var(--semantic-background-normal-normal);
+  border-radius: $rd-100;
+
+  // background-color: var(--semantic-background-normal-normal);
+  background-color: transparent;
   color: var(--semantic-label-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
-    border-radius: $rd-10;
+    border-radius: $rd-100;
     background-color: var(--semantic-label-normal);
   }
 
@@ -199,7 +202,7 @@
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
-    border-radius: $rd-10;
+    border-radius: $rd-100;
   }
 
   // 버튼 상태에 따른 스타일 정의
@@ -238,12 +241,12 @@
 * SolidCapButton Stye
 */
 .btn-solid-cap {
-  border-radius: 100px;
+  border-radius: $rd-100;
   color: var(--semantic-label-inverse-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
-    border-radius: $rd-10;
+    border-radius: $rd-100;
   }
 
   // 버튼 상태에 따른 스타일 정의
@@ -287,7 +290,7 @@
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
-    border-radius: $rd-10;
+    border-radius: $rd-100;
     background-color: var(--semantic-background-normal-normal);
   }
 
@@ -338,7 +341,7 @@
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
-    border-radius: 5px;
+    border-radius: $rd-6;
     background-color: transparent;
   }
 
@@ -387,15 +390,15 @@
   border: 0;
   border-radius: 0;
   background-color: transparent;
-  color: $black-100;
+  color: var(--semantic-static-black);
   font-feature-settings: "calt" off;
-  font-size: 14px;
-  font-style: normal;
   font-weight: 400;
-  line-height: 18px;
+
+  @include font-size(14);
+  @include line-height(18);
 
   svg path {
-    fill: $black-48;
+    fill: var($color-global-neutral-50);
   }
 
   &::before {
@@ -429,7 +432,8 @@
   프로모션페이지에서 사용되는 3.0버전의 버튼 스타일 (이벤트 종료후 삭제)
 */
 .btn-event-primary {
-  border-radius: 100px;
+  overflow: hidden;
+  border-radius: $rd-100;
   background: #f06;
   color: #fff;
   font-size: 16px;
@@ -459,8 +463,9 @@
 }
 
 .btn-event-secondary {
+  overflow: hidden;
   border: 1px solid rgb(255 255 255 / 24%);
-  border-radius: 100px;
+  border-radius: $rd-100;
   background-color: transparent;
   color: #fff;
   font-size: 16px;
