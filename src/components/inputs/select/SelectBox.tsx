@@ -510,5 +510,5 @@ const SelectBox = forwardRef<SelectBoxRef, PropsType>((props, ref) => {
 
 SelectBox.displayName = 'SelectBox';
 
-export type { PropsType as SelectBoxPops, SelectBoxRef };
+export type { PropsType as SelectBoxProps, SelectBoxRef };
 export default SelectBox;

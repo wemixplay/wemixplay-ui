@@ -23,5 +23,5 @@ const NoDataText = ({ className, nullText = 'no data', style = { paddingTop: 8 }
   );
 };
 
-export type { PropsType as NoDataProps };
+export type { PropsType as NoDataTextProps };
 export default NoDataText;

@@ -36,5 +36,5 @@ const NoDataIconText = ({
   );
 };
 
-export type { PropsType as NoDataProps };
+export type { PropsType as NoDataIconTextProps };
 export default NoDataIconText;
