@@ -1,1 +1,0 @@
-import{__module as r}from"../../../_virtual/updateLocale2.js";var e;r.exports;function t(){return e||(e=1,r.exports=function(r,e,t){t.updateLocale=function(r,e){var o=t.Ls[r];if(o)return(e?Object.keys(e):[]).forEach((function(r){o[r]=e[r]})),o}}),r.exports}export{t as __require};
