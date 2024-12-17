@@ -1,0 +1,1 @@
+import{__module as e}from"../../../_virtual/eventNames.js";var a;function r(){return a||(a=1,r=e,t=e.exports,Object.defineProperty(t,"__esModule",{value:!0}),t.default=["ready","stateChange","playbackQualityChange","playbackRateChange","error","apiChange","volumeChange"],r.exports=t.default),e.exports;var r,t}export{r as __require};
