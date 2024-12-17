@@ -82,14 +82,14 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
         run: |
+          git add -f .
+          git commit -m "cleanup dist"
+
           if [[ "${{ steps.get_tag_version.outputs.npm_tag }}" == "alpha" ]]; then
             git pull https://${GH_TOKEN}@github.com/${{ github.repository }} alpha --rebase
           else
             git pull https://${GH_TOKEN}@github.com/${{ github.repository }} main --rebase
           fi
-
-          git add -f .
-          git commit -m "cleanup dist"
 
           if [[ "${{ steps.get_tag_version.outputs.npm_tag }}" == "alpha" ]]; then
             git push -f https://${GH_TOKEN}@github.com/${{ github.repository }} alpha
