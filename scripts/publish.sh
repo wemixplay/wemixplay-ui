@@ -84,8 +84,8 @@ fi
 tag_version="npm-publish/$new_version"
 
 # # yarn 패키지 설치 및 빌드 추가
-print_string "warning" "패키지 설치 중..."
-yarn install || { print_string "error" "패키지 설치 실패"; exit 1; }
+# print_string "warning" "패키지 설치 중..."
+# yarn install || { print_string "error" "패키지 설치 실패"; exit 1; }
 
 print_string "warning" "프로젝트 빌드 중..."
 yarn run build || { print_string "error" "빌드 실패"; exit 1; }

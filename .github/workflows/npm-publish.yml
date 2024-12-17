@@ -79,10 +79,12 @@ jobs:
         run: rm -rf ./dist
 
       - name : git push
+        env:
+          GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
         run: |
           git config user.email "dapp@wemade.com"
           git config user.name "wemixplay"
           git add -f .
           git commit -m "cleanup dist" 
-          git push
+          git push https://${GH_TOKEN}@github.com/${{ github.repository }}
         
