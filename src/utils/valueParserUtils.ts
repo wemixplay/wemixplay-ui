@@ -90,6 +90,15 @@ export const decodeHtmlEntities = (str: string) => {
 
   return decodedStr;
 };
+/**
+ * WP Mention 정규표현식
+ */
+export const WP_MENTION_REGEX = /WP@\[(.*?)\]\((\d+)\)/g;
+
+/**
+ * WP# HashTag 정규표현식
+ */
+export const WP_HASH_REGEX = /WP#\[(.*?)\]\((\d+)\)/g;
 
 export const convertMarkdownToHtmlStr = (text: string) => {
   // 변환된 문자열을 저장할 변수 초기화

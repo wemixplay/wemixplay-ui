@@ -19,7 +19,12 @@ import CommentEditor, { CommentEditorProps } from './components/comment/CommentE
 import CommentEtcInfo, { CommentEtcInfoProps } from './components/comment/CommentEtcInfo';
 import CommentWriterInfo, { CommentWriterInfoProps } from './components/comment/CommentWriterInfo';
 import { FeedIframesViewRef, IframePlayState } from './components/feed/FeedIframesView';
-import { convertHtmlToMarkdownStr, convertMarkdownToHtmlStr } from './utils/valueParserUtils';
+import {
+  convertHtmlToMarkdownStr,
+  convertMarkdownToHtmlStr,
+  WP_HASH_REGEX,
+  WP_MENTION_REGEX
+} from './utils/valueParserUtils';
 import CurationBox, { CurationBoxProps } from './components/feed/CurationBox';
 
 export type {
@@ -57,5 +62,7 @@ export {
   CommentEtcInfo,
   CommentWriterInfo,
   convertMarkdownToHtmlStr,
-  convertHtmlToMarkdownStr
+  convertHtmlToMarkdownStr,
+  WP_MENTION_REGEX,
+  WP_HASH_REGEX
 };
