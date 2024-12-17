@@ -1,0 +1,1 @@
+"use strict";var e,r=require("../../../_virtual/updateLocale2.js");r.__module.exports;exports.__require=function(){return e||(e=1,r.__module.exports=function(e,r,t){t.updateLocale=function(e,r){var u=t.Ls[e];if(u)return(r?Object.keys(r):[]).forEach((function(e){u[e]=r[e]})),u}}),r.__module.exports};
