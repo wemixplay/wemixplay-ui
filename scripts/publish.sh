@@ -94,7 +94,7 @@ print_string "success" "패키지 설치 및 빌드 완료"
 
 yarn version --new-version $new_version --tag $tag --no-git-tag-version
 
-git add package.json
+git add -f package.json ./dist
 
 git commit -m "update version to $new_version"
 git push origin $current_branch

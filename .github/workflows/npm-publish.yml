@@ -74,3 +74,15 @@ jobs:
 
       - name: Cleanup .npmrc
         run: rm -f ./.npmrc
+
+      - name: Cleanup dist
+        run: rm -f ./dist
+
+      - name : git push
+        run: |
+          git config user.email "dapp@wemade.com"
+          git config user.name "wemixplay"
+          git add -f .
+          git commit -m "cleanup dist" 
+          git push
+        
