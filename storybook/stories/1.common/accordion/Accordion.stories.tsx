@@ -19,17 +19,6 @@ const DefaultTemplate: StoryTemplate = (args) => {
   return <Accordion {...args} />;
 };
 
-const MultiAccordionTemplate: StoryTemplate = (args) => {
-  return (
-    <>
-      <Accordion {...args} />
-      <Accordion {...args} />
-      <Accordion {...args} />
-      <Accordion {...args} />
-    </>
-  );
-};
-
 export const Default: StoryComponent = {
   parameters: {
     docs: {
@@ -43,19 +32,4 @@ export const Default: StoryComponent = {
     children: '테스트에 대한 저의 답은 이겁니다!!! 으아아아아아아악!!!'
   },
   render: DefaultTemplate
-};
-
-export const MulitpleAccordion: StoryComponent = {
-  parameters: {
-    docs: {
-      description: {
-        story: ''
-      }
-    }
-  },
-  args: {
-    title: '테스트 입니다.',
-    children: '테스트에 대한 저의 답은 이겁니다!!! 으아아아아아아악!!!'
-  },
-  render: MultiAccordionTemplate
 };

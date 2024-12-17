@@ -3,7 +3,7 @@ import CheckBox, { CheckBoxProps } from '@/components/inputs/checkbox/CheckBox';
 import RoundCheckBox from '@/components/inputs/checkbox/RoundCheckBox';
 import { FunctionComponent, useState } from 'react';
 import classNames from 'classnames/bind';
-import style from '../styles/StrCheckBox.module.scss';
+import style from '../../../styles/StrCheckBox.module.scss';
 import React from 'react';
 
 type StoryComponent = StoryObj<FunctionComponent<CheckBoxProps>>;

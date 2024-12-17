@@ -11,6 +11,17 @@ export const pad = (v: string | number, p: string | number, len: number): string
   return r;
 };
 
+/**
+ * 콤마로 천단위 분리를 수행한 후 다시 두 부분을 합쳐 숫자 스트링을 반환하는 함수
+ * @param arg 문자열로 들어온 숫자값
+ * @returns {string} 화면에 렌더할 최종적인 숫자 스트링
+ */
+export const makeParts = (arg: string): [string, string | undefined] => {
+  const parts = arg.split('.') as [string, string | undefined];
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  return parts;
+};
+
 const SI = [
   { value: 1, symbol: '' },
   { value: 1e3, symbol: 'K' }, // Thousand
@@ -48,11 +59,20 @@ export const toFormatterByInt = (num: number, digits: number, si = SI): string =
 };
 
 /**
+ * 123,000.12 형식의 string 값을 number 형식으로 변환
+ * @param {string} value
+ * @returns {number}
+ */
+export const commaStrToNumber = (value: string): number => {
+  return Number(value.replace(/,/gi, ''));
+};
+
+/**
  * 123000.12 형식의 string | number 값을 seperator(,)를 붙혀 반환
  * @param {string | number} value
  * @returns {string}
  */
-export const commaWithValue = (value: string | number) => {
+export const commaWithValue = (value: string | number): string => {
   value = String(value ?? 0);
   if (value.match(/[^0-9,.]/g)) return value;
   if (value) {
@@ -177,4 +197,36 @@ export const convertHtmlToMarkdownStr = (text: string) => {
   }
 
   return convertStr;
+};
+
+/**
+ * 문자열로 들어온 숫자값에서 정수 부분과 소수 부분을 나누어 배열로 반환하는 함수
+ * @param {string} numberString 문자열로 들어온 숫자값
+ * @returns {[string, string]} 배열의 첫 번째 요소는 숫자 스트링의 정부 부분이 스트링으로 변환된 값, 두 번째 요소는 숫자 스트링의 소수 부분이 스트링으로 변환된 값
+ */
+export const splitNumberStringByComma = (numberString: string): [string, string] => {
+  const parts = numberString.split('.');
+  const integerPart = parts[0];
+  const decimalPart = parts[1];
+
+  return [integerPart, decimalPart];
+};
+
+/**
+ * 문자열로 들어온 숫자값을 정수 부분과 소수 부분으로 분리하여 정수 부분은 콤마로 천단위 분리를 수행한 후 다시 두 부분을 합쳐 숫자 스트링을 반환하는 함수
+ * @param {string} numberValue 문자열로 들어온 숫자값
+ * @returns {string} 화면에 렌더할 최종적인 숫자 스트링
+ */
+export const formatNumberValueWithComma = (numberValue: string | number): string => {
+  if (typeof numberValue === 'number') {
+    numberValue = String(numberValue);
+  }
+
+  const [integerPart, decimalPart] = splitNumberStringByComma(numberValue);
+
+  const decimalPartWithComma = decimalPart ? `.${decimalPart}` : '';
+
+  const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+
+  return `${formattedIntegerPart}${decimalPartWithComma}`;
 };

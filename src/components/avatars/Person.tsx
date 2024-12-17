@@ -26,6 +26,7 @@ type Props = {
   name?: string;
   /** 아바타 UI의 크기 (기본값: 'medium') */
   size?: 'xsmall' | 'small' | 'medium' | 'large' | 'xlarge' | 'custom';
+  /** 아바타 UI의 맞춤형 크기 (기본값: 50) */
   customSize?: number;
   /** 아바타 UI 우측 상단에 표시될 커스텀 bedge UI 요소 */
   bedgeElement?: ReactElement;

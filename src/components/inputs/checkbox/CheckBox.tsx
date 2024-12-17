@@ -97,7 +97,7 @@ const CheckBox = forwardRef<HTMLInputElement, Props>(
     const checked = useMemo(() => {
       // 전달된 value 가 없으면 input 태그의 checked 상태를 따르기 위해 undefined 반환
       if (typeof value === 'undefined') {
-        return false;
+        return undefined;
       }
 
       if (Array.isArray(checkValue) && Array.isArray(value)) {

@@ -40,7 +40,6 @@ const cx = makeCxFunc(style);
 
 /**
  * Button 컴포넌트는 다양한 버튼 관련 기능을 제공합니다. <br/>
- * Solid, Capsule, Line, Icon Button
  *
  * @component
  * @param {string} [props.className=''] - 추가할 CSS 클래스 이름
