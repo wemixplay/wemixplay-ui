@@ -1,0 +1,56 @@
+.check-button {
+  position: relative;
+  overflow: hidden;
+  padding: 12px;
+
+  .check-button-text {
+    position: relative;
+    z-index: 2;
+  }
+
+  :global {
+    /* stylelint-disable-next-line selector-type-no-unknown */
+    jwripple {
+      z-index: 3 !important;
+    }
+
+    .ico-check {
+      display: none;
+    }
+
+    // checked 안됐을때
+    .text {
+      transition: color 0.3s;
+
+      &::after {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        display: block;
+        border: 1px solid var(--semantic-line-solid-normal);
+        border-radius: 8px;
+        background-color: var(--semantic-background-normal-alternative);
+        content: "";
+        pointer-events: none;
+        transition: border 0.3s, background-color 0.3s;
+      }
+    }
+
+    input {
+      // checked 됐을때
+      &:checked {
+        ~ .text {
+          color: var(--semantic-label-inverse-normal);
+
+          &::after {
+            border: 1px solid var(--semantic-label-normal);
+            background-color: var(--semantic-label-normal);
+          }
+        }
+      }
+    }
+  }
+}

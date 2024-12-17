@@ -1,0 +1,39 @@
+/*
+  낮은 위계로 활성여부를 제어할때 사용하는 single-check의 사이즈 스타일은
+  상위컴포넌트 CheckBox.module.scss에 지정되어있습니다.
+*/
+.check-single {
+  :global {
+    input {
+      &:checked ~ .ico-check {
+        .icon {
+          border: none;
+          background: transparent;
+
+          svg path {
+            fill: var(--semantic-primary-normal);
+          }
+        }
+      }
+    }
+
+    .ico-check {
+      .icon {
+        width: 24px;
+        height: 24px;
+        border: 0 !important;
+        border-radius: 0;
+        background-color: transparent;
+
+        svg {
+          width: inherit;
+          height: inherit;
+
+          path {
+            fill: var(--semantic-label-assistive);
+          }
+        }
+      }
+    }
+  }
+}

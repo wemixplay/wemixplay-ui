@@ -1,0 +1,148 @@
+.select-box {
+  display: inline-block;
+  min-width: 200px;
+  height: 48px;
+  box-sizing: border-box;
+  padding: 0 $sp-16 0 $sp-16;
+  border: 1px solid var(--semantic-label-disable);
+  border-radius: $rd-6;
+  background: var(--semantic-background-normal-alternative);
+  color: var(--semantic-label-alternative);
+  cursor: pointer;
+  transition: border-color ease-in-out 0.25s;
+  vertical-align: middle;
+
+  // font-size, font-weight, line-height, font-feature-settings, font-family, color는 .value로 전달되어 지기 때문에
+  // 따로 .text에 위의 스타일 속성들을 정의하지 않으셔도 됩니다.
+  @include body-02-reading-m;
+
+  &.placeholder {
+    color: var(--semantic-label-alternative);
+  }
+
+  &.not-allow {
+    cursor: not-allowed;
+  }
+
+  &.readonly {
+    cursor: default;
+  }
+
+  &:hover:not(.not-allow) {
+    // border-color: rgb(255 255 255 / 45%);
+    border-color: var(--semantic-label-alternative);
+  }
+
+  &.focus:not(.not-allow) {
+    // border-color: $gray00;
+    border-color: var(--semantic-label-normal);
+    background-color: var(--semantic-background-normal-normal);
+  }
+
+  &.open {
+    .ico-arrow {
+      svg {
+        transform: rotate(-180deg);
+      }
+    }
+  }
+
+  label {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    height: inherit;
+    box-sizing: border-box;
+    padding-right: $sp-28;
+
+    /**
+    * 상위 선택자인 .select-box 스타일을 상속 받습니다.
+    */
+    color: inherit;
+    cursor: inherit;
+    font-family: inherit;
+    font-feature-settings: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+    user-select: none;
+  }
+
+  .value {
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: inherit;
+    box-sizing: border-box;
+    align-items: center;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    text-overflow: ellipsis;
+    user-select: none;
+    word-break: keep-all;
+
+    * {
+      display: block;
+      overflow: inherit;
+      -webkit-box-orient: inherit;
+      -webkit-line-clamp: inherit;
+      text-overflow: inherit;
+      word-break: inherit;
+    }
+  }
+
+  input {
+    position: absolute;
+    z-index: 2;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 0;
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    cursor: inherit;
+    font-family: inherit;
+    font-size: inherit;
+    opacity: 0;
+    outline: none;
+  }
+
+  .ico-arrow {
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+
+    * {
+      width: inherit;
+      height: inherit;
+    }
+
+    svg {
+      transform: rotate(0deg);
+      transform-origin: center;
+      transition: border-color ease-in-out 0.25s, transform  ease-in-out 0.25s;
+
+      rect {
+        fill: var(--semantic-label-normal);
+      }
+    }
+  }
+}
+
+.no-data {
+  padding: 12px 0 !important;
+
+  :global {
+    .no-data-text {
+      padding: 0;
+    }
+  }
+}

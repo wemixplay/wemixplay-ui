@@ -1,6 +1,6 @@
 'use client';
 
-import React, { ChangeEvent, ReactElement } from 'react';
+import React, { ChangeEvent, ReactElement, useId } from 'react';
 
 import { makeCxFunc } from '@/utils/forReactUtils';
 
@@ -16,6 +16,8 @@ type Props = {
   icon?: string | ReactElement;
   /** 공통 ripple 효과 옵션 */
   ripple?: RippleOption;
+  /** 하나의 아코디언이 열렸을때 다른 아코디언이 닫히는 토글 모드 여부 */
+  isToggle?: boolean;
   /**
    * accordion을 눌렀을때 호출되는 함수이며 accordion의 열림 상태, accordion의 key값, ChangeEvent를 인자로 전달한다.
    *
@@ -49,9 +51,13 @@ const AccordionGroup = ({
   list,
   ripple,
   icon,
+  isToggle,
   initialOpen = false,
   handleClickAccordion
 }: Props) => {
+  const uid = useId();
+  const uName = `accordion-group-${uid}`;
+
   return (
     <div className={cx(className, 'accordion-group')}>
       {(list ?? []).map((item, index) => (
@@ -63,6 +69,7 @@ const AccordionGroup = ({
           ripple={ripple ?? item.ripple}
           handleOpenChange={(status, e) => handleClickAccordion({ status, key: item.key, e })}
           initialOpen={initialOpen}
+          name={isToggle ? uName : undefined}
         />
       ))}
     </div>

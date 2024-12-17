@@ -1,0 +1,52 @@
+.drawer {
+  position: relative;
+  width: 100%;
+
+  // will-change: transform, height;
+
+  @media (max-width: 800px) {
+    &:not(.disabled) {
+      > * {
+        &:first-child {
+          // padding-top: 24px !important;
+
+          // &::before {
+          //   position: absolute;
+          //   z-index: 9;
+          //   top: 28px;
+          //   left: calc(50% - 40px);
+          //   width: 80px;
+          //   height: 6px;
+          //   border-radius: 100px;
+          //   background-color: rgb(0 0 0 / 20%);
+          //   content: "";
+          //   transform: translateY(-50%);
+          // }
+        }
+      }
+    }
+  }
+
+  // @include breakpoint(800, "max") {
+  //   &:not(.disabled) {
+  //     > * {
+  //       &:first-child {
+  //         padding-top: 24px !important;
+
+  //         &::before {
+  //           position: absolute;
+  //           z-index: 9;
+  //           top: 28px;
+  //           left: calc(50% - 40px);
+  //           width: 80px;
+  //           height: 6px;
+  //           border-radius: 100px;
+  //           background-color: rgb(0 0 0 / 20%);
+  //           content: "";
+  //           transform: translateY(-50%);
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+}
