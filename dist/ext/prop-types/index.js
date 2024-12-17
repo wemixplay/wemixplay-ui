@@ -1,0 +1,1 @@
+"use strict";var r,e=require("../../_virtual/index4.js"),i=require("./factoryWithThrowingShims.js");exports.__require=function(){return r||(r=1,e.__module.exports=i.__require()()),e.__module.exports};
