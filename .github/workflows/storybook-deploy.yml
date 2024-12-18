@@ -33,6 +33,8 @@ jobs:
       - name: Checkout storybook branch
         run: | 
           git checkout storybook
+          git config user.email "dapp@wemade.com"
+          git config user.name "wemixplay"
           git pull origin storybook
 
       - name: Install dependencies and build
