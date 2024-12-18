@@ -1,0 +1,1 @@
+"use strict";var e=require("react"),s=require("../../utils/forReactUtils.js"),r=require("./Table.module.scss.js"),t=s.makeCxFunc(r),a=function(s){var r=s.className,a=void 0===r?"":r,l=s.children,d=s.style;return e.createElement("div",{className:t("td-expend")},e.createElement("div",{className:t("td-expend-inner",a),style:d},l))};a.displayName="TdExpend",module.exports=a;
