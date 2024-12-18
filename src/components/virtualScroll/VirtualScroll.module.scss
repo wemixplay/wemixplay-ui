@@ -1,0 +1,74 @@
+.virtual-scroll {
+  position: relative;
+  width: 100%;
+
+  .loading {
+    height: 400px;
+  }
+
+  .virtual-item {
+    will-change: top, left, width, height;
+  }
+
+  &.no-data {
+    height: auto !important;
+  }
+
+  // .scroll-area{
+  //   position: absolute;
+  //   top:0;
+  //   left:0;
+  //   z-index: 1;
+  //   width:100%;
+
+  //   display: grid;
+  // width: 100%;
+  // flex-wrap: wrap;
+  // align-items: flex-start;
+  // margin-right: auto;
+  // margin-left: auto;
+  // color: $color-white;
+  // grid-gap: $gap-row-mobile 0;
+
+  // &.empty {
+  //   display: block;
+
+  //   [class*="no-data"] {
+  //     height: 400px;
+  //     border-bottom: none;
+
+  //     @include mobile {
+  //       height: 30vh;
+  //     }
+  //   }
+  // }
+
+  // @include breakpoint-360 {
+  //   grid-gap: 16px 12px;
+  //   grid-template-columns: repeat(2, 1fr);
+  // }
+
+  // @include breakpoint-600 {
+  //   grid-gap: $gap-col-tablet $gap-row-tablet;
+  //   grid-template-columns: repeat(3, 1fr);
+  // }
+
+  // @include breakpoint-1024 {
+  //   min-height: 800px;
+  //   grid-gap: $gap-col-tablet $gap-row-tablet;
+  //   grid-template-columns: repeat(5, 1fr);
+  // }
+
+  // &.filter-active {
+  //   @include breakpoint-1280 {
+  //     // padding-left: 360px;
+  //   }
+  // }
+
+  // :global {
+  //   .no-msg-comp {
+  //     width: 100%;
+  //   }
+  // }
+  // }
+}
