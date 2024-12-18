@@ -1,0 +1,21 @@
+.infinite-scroll {
+  position: relative;
+
+  .io-target {
+    width: 100%;
+    min-height: 2px;
+  }
+
+  &-loading {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    display: none;
+    padding: $sp-20;
+    transform: translateX(-50%);
+
+    &.active {
+      display: block;
+    }
+  }
+}

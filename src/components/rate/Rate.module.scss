@@ -1,0 +1,35 @@
+.rate {
+  @include caption-01-m;
+
+  display: flex;
+  align-items: center;
+  color: var(--semantic-label-inverse-normal);
+
+  svg {
+    margin-right: 2px;
+  }
+
+  .fluctuation {
+    margin-left: $sp-4;
+  }
+
+  &.complement {
+    color: var(--semantic-label-normal);
+    opacity: 0.6;
+    svg path { fill: var(--semantic-label-normal); }
+  }
+
+  &.increase {
+    color: var(--semantic-status-positive);
+    svg path { fill: var(--semantic-status-positive); }
+  }
+
+  &.decrease {
+    color: var(--semantic-status-negative);
+
+    svg {
+      transform: rotate(180deg);
+      path { fill: var(--semantic-status-negative); }
+    }
+  }
+}
