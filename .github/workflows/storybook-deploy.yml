@@ -4,10 +4,6 @@ on:
   push:
     branches:
       - storybook
-  pull_request:
-    types: [closed]
-    branches:
-      - storybook
 
 jobs:
   storybook-build-and-deploy:
@@ -33,9 +29,8 @@ jobs:
       - name: Checkout storybook branch
         run: | 
           git checkout storybook
-          git config user.email "dapp@wemade.com"
-          git config user.name "wemixplay"
-          git pull origin storybook
+          git fetch origin
+          git reset --hard origin/storybook
 
       - name: Install dependencies and build
         id: build
