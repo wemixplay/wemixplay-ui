@@ -1,1 +1,0 @@
-import t from"react";import{makeCxFunc as a}from"../../utils/forReactUtils.js";import e from"./NoData.module.scss.js";var o=a(e),s=function(a){var e=a.className,s=a.nullText,r=void 0===s?"no data":s,l=a.style,m=void 0===l?{paddingTop:8}:l;return t.createElement("div",{className:o("no-data",e),style:m},t.createElement("p",{className:o("no-data-text")},r))};export{s as default};
