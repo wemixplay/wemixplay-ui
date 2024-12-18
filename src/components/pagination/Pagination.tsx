@@ -36,19 +36,23 @@ const Pagination = ({ currPage = 1, pageSize = 20, totalCount = 0, handlePageCha
     return pageCount.isInt() ? pageCount.toNumber() : pageCount.add(1).floor().toNumber();
   }, [pageSize, totalCount]);
 
-  const PageNumberComponent = useCallback(() => {
+  const PageNumberComponent = useCallback((): React.ReactElement => {
     if (totalPage < 8) {
-      return Array.from({ length: totalPage }, (_, i) => i + 1).map((idx) => (
-        <li key={idx}>
-          <button
-            className={cx('pagination-page', currPage === idx && 'selected')}
-            type="button"
-            onClick={() => handlePageChange(idx)}
-          >
-            {idx}
-          </button>
-        </li>
-      ));
+      return (
+        <>
+          {Array.from({ length: totalPage }, (_, i) => i + 1).map((idx) => (
+            <li key={idx}>
+              <button
+                className={cx('pagination-page', currPage === idx && 'selected')}
+                type="button"
+                onClick={() => handlePageChange(idx)}
+              >
+                {idx}
+              </button>
+            </li>
+          ))}
+        </>
+      );
     } else {
       if (currPage < 5) {
         return (
