@@ -84,16 +84,13 @@ fi
 tag_version="npm-publish/$new_version"
 
 print_string "warning" "프로젝트 빌드 중..."
-yarn cache clean && yarn run build || { print_string "error" "빌드 실패"; exit 1; }
+rm -rf node_modules dist
+yarn cache clean && yarn && yarn build || { print_string "error" "빌드 실패"; exit 1; }
 
 print_string "success" "패키지 설치 및 빌드 완료"
 
 # 버전 업데이트
 yarn version --new-version $new_version --tag $tag --no-git-tag-version
-
-echo $current_branch
-echo $new_version
-echo $version;
 
 # version.json 업데이트
 # MacOS와 Linux 모두 호환되도록 수정
