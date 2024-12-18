@@ -1,1 +1,0 @@
-import e from"react";import{makeCxFunc as t}from"../../utils/forReactUtils.js";import a from"./Table.module.scss.js";var r=t(a),s=function(t){var a=t.className,s=void 0===a?"":a,l=t.children,d=t.style;return e.createElement("div",{className:r("td-expend")},e.createElement("div",{className:r("td-expend-inner",s),style:d},l))};s.displayName="TdExpend";export{s as default};
