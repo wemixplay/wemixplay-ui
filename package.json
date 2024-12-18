@@ -1,6 +1,6 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.13.14alpha-alpha",
+  "version": "1.13.148-alpha",
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
@@ -23,7 +23,7 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "prepare": "[ \"$NODE_ENV\" != \"production\" ] && yarn lefthook install || exit 0",
+    "postinstall": "[ \"$NODE_ENV\" != \"production\" ] && yarn lefthook install || exit 0",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:css": "stylelint --ignore-path .gitignore '**/*.scss'",
     "start": "NODE_ENV=development rollup -c && node scripts/svgComponentGenerator.js & rollup -cw",
