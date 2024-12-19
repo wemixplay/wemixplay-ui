@@ -63,6 +63,33 @@ import PopoverButton, {
 } from './components/popover/PopoverButton';
 import Ripple, { RippleOption, RippleProps } from './components/ripple/Ripple';
 import Timer, { TimerProps } from './components/timer/Timer';
+import Divider, { DividerProps } from './components/divider/Divider';
+import ErrorBoundary, { ErrorBoundaryProps } from './components/error/ErrorBoundary';
+import HStack, { HStackProps } from './components/layouts/HStack';
+import VStack, { VStackProps } from './components/layouts/VStack';
+import InfiniteScroll, { InfiniteScrollProps } from './components/list/InfiniteScroll';
+import ListMap, { ListMapProps } from './components/list/ListMap';
+import Marquee, { MarqueeProps } from './components/marquee/Marquee';
+import Pagination, { PaginationProps } from './components/pagination/Pagination';
+import { SimplePaginationProps } from './components/pagination/SimplePagination';
+import { RateProps } from './components/rate/Rate';
+import { RatingProps } from './components/ratings/Rating';
+import Typography, { TypographyProps } from './components/typography/Typography';
+import { SwitchProps } from './components/switch/Switch';
+import { ChipTabProps } from './components/tab/ChipTab';
+import { TabProps } from './components/tab/Tab';
+import { TableProps } from './components/table/Table';
+import { TableRowProps } from './components/table/TableRow';
+import { TdColumnProps } from './components/table/TdColumn';
+import { TdExpendProps } from './components/table/TdExpend';
+import { TooltipProps } from './components/tooltip/Tooltip';
+import GridVirtualScroll, {
+  GridVirtualScrollProps
+} from './components/virtualScroll/GridVirtualScroll';
+import ListVirtualScroll, {
+  ListVirtualScrollProps,
+  VirtualElementFunc
+} from './components/virtualScroll/ListVirtualScroll';
 
 export type {
   WpEditorRef,
@@ -122,7 +149,30 @@ export type {
   PopoverButtonRef,
   RippleProps,
   RippleOption,
-  TimerProps
+  TimerProps,
+  ErrorBoundaryProps,
+  InfiniteScrollProps,
+  ListMapProps,
+  PaginationProps,
+  DividerProps,
+  TypographyProps,
+  HStackProps,
+  VStackProps,
+  MarqueeProps,
+  SimplePaginationProps,
+  RateProps,
+  RatingProps,
+  SwitchProps,
+  TabProps,
+  ChipTabProps,
+  TableProps,
+  TableRowProps,
+  TdColumnProps,
+  TdExpendProps,
+  TooltipProps,
+  ListVirtualScrollProps,
+  GridVirtualScrollProps,
+  VirtualElementFunc
 };
 export {
   WpEditor,
@@ -175,5 +225,16 @@ export {
   Popover,
   PopoverButton,
   Ripple,
-  Timer
+  Timer,
+  ErrorBoundary,
+  InfiniteScroll,
+  ListMap,
+  Marquee,
+  Pagination,
+  Divider,
+  Typography,
+  HStack,
+  VStack,
+  ListVirtualScroll,
+  GridVirtualScroll
 };
