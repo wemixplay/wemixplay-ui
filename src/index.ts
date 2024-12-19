@@ -91,6 +91,22 @@ import ListVirtualScroll, {
   ListVirtualScrollProps,
   VirtualElementFunc
 } from './components/virtualScroll/ListVirtualScroll';
+import Typography, {
+  Font,
+  H,
+  Label,
+  P,
+  Span,
+  TypographyFontProps,
+  TypographyHProps,
+  TypographyLabelProps,
+  TypographyPProps,
+  TypographyProps,
+  TypographySpanProps
+} from './components/typography/Typography';
+import HStack, { HStackProps } from './components/layouts/HStack';
+import VStack, { VStackProps } from './components/layouts/VStack';
+import Divider, { DividerProps } from './components/divider/Divider';
 
 export type {
   WpEditorRef,
@@ -169,7 +185,16 @@ export type {
   TooltipProps,
   ListVirtualScrollProps,
   GridVirtualScrollProps,
-  VirtualElementFunc
+  VirtualElementFunc,
+  TypographyProps,
+  TypographyHProps,
+  TypographyPProps,
+  TypographySpanProps,
+  TypographyFontProps,
+  TypographyLabelProps,
+  VStackProps,
+  HStackProps,
+  DividerProps
 };
 export {
   WpEditor,
@@ -240,5 +265,14 @@ export {
   TdExpend,
   Tooltip,
   ListVirtualScroll,
-  GridVirtualScroll
+  GridVirtualScroll,
+  Typography,
+  H,
+  P,
+  Span,
+  Font,
+  Label,
+  HStack,
+  VStack,
+  Divider
 };
