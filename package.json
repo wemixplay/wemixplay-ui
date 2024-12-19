@@ -23,15 +23,16 @@
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
-    "prepare": "[ \"$NODE_ENV\" != \"production\" ] && yarn lefthook install || exit 0",
+    "postinstall": "[ \"$NODE_ENV\" != \"production\" ] && yarn lefthook install || exit 0",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx",
     "lint:css": "stylelint --ignore-path .gitignore '**/*.scss'",
     "start": "NODE_ENV=development rollup -c && node scripts/svgComponentGenerator.js & rollup -cw",
     "build:dev": "rm -rf dist && NODE_ENV=development NODE_VI=OK rollup -c && node scripts/svgComponentGenerator.js",
-    "build": "rm -rf dist && NODE_ENV=production rollup -c && node scripts/svgComponentGenerator.js",
+    "build": "rm -rf dist && NODE_ENV=production rollup -c",
     "publish-ui": "chmod +x ./scripts/publish.sh && ./scripts/publish.sh",
     "storybook": "NODE_ENV=development node scripts/svgComponentGenerator.js & cd storybook && yarn && yarn storybook",
-    "build-storybook": "cd storybook && yarn build-storybook"
+    "build-storybook": "cd storybook && yarn build-storybook",
+    "generate:svg": "node scripts/svgComponentGenerator.js"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.1",
