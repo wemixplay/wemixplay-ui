@@ -32,14 +32,13 @@
 
   input[type="range"] {
     position: absolute;
-    z-index: 3;
+    z-index: 2;
     top: 50%;
     left: 0;
     width: 100%;
     height: var(--mri-slider-height);
     -webkit-appearance: none;
     appearance: none;
-    background-color: transparent;
     opacity: 1;
     pointer-events: none;
     transform: translateY(-50%);
@@ -51,10 +50,10 @@
     &::-webkit-slider-thumb {
       width: var(--mri-thumb-size); /* 썸의 너비 */
       height: var(--mri-thumb-size); /* 썸의 높이 */
-      border: 3px solid var(--mri-thumb-border-color, var(--semantic-label-normal));
+      border: 3px solid var(--semantic-label-normal);
       border-radius: 50%;
       -webkit-appearance: none;
-      background-color: var(--mri-thumb-color, var(--semantic-label-normal));
+      background-color: var(--semantic-label-normal);
       cursor: pointer;
       pointer-events: auto;
       transition: box-shadow 0.4s;
@@ -67,10 +66,10 @@
     &::-moz-range-thumb {
       width: var(--mri-thumb-size); /* 썸의 너비 */
       height: var(--mri-thumb-size); /* 썸의 높이 */
-      border: 3px solid var(--mri-thumb-border-color, var(--semantic-label-normal));
+      border: 3px solid var(--semantic-label-normal);
       border-radius: 50%;
       -moz-appearance: none;
-      background-color: var(--mri-thumb-color, var(--semantic-label-normal));
+      background-color: var(--semantic-label-normal);
       cursor: pointer;
       pointer-events: auto;
       transition: box-shadow 0.4s;
@@ -83,7 +82,7 @@
 
   .slider {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     height: var(--mri-slider-height);
 
     .track {
@@ -94,7 +93,7 @@
       bottom: 0;
       left: 0;
       border-radius: 5px;
-      background-color: var(--mri-track-color, var(--semantic-line-normal-neutral));
+      background-color: var(--semantic-line-normal-neutral);
     }
 
     .range {
@@ -105,7 +104,7 @@
       bottom: 0;
       left: 25%;
       border-radius: 5px;
-      background-color: var(--mri-range-color, var(--semantic-label-normal));
+      background-color: var(--semantic-label-normal);
     }
   }
 

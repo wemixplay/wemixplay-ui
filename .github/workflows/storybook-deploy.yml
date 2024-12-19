@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - storybook
+  pull_request:
+    types: [closed]
+    branches:
+      - storybook
 
 jobs:
   storybook-build-and-deploy:
@@ -27,10 +31,7 @@ jobs:
           fi
 
       - name: Checkout storybook branch
-        run: | 
-          git checkout storybook
-          git fetch origin
-          git reset --hard origin/storybook
+        run: git checkout storybook
 
       - name: Install dependencies and build
         id: build

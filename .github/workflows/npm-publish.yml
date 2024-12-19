@@ -46,11 +46,8 @@ jobs:
         run: |
           FULL_VERSION=${GITHUB_REF#refs/tags/npm-publish/}
           NPM_TAG=$(echo $FULL_VERSION | grep -oP '(?<=-).+$' || echo 'latest')
-          BRANCH=$([ "$NPM_TAG" == "alpha" ] && echo "alpha" || echo "main")
           echo "version=$FULL_VERSION" >> $GITHUB_OUTPUT
           echo "npm_tag=$NPM_TAG" >> $GITHUB_OUTPUT
-          echo "target_branch=$BRANCH" >> $GITHUB_OUTPUT
-
 
       - name: Print tag version
         run: | 
@@ -65,8 +62,14 @@ jobs:
       - name: Authenticate with npm
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.DEREK_NPM_TOKEN }}" > ./.npmrc
 
+      - name: Install dependencies & build
+        id: build
+        run: NODE_ENV=production && yarn --ignore-platform && yarn build
+        continue-on-error: false
+
       - name: Publish to npm
         id: publish
+        if: steps.build.outcome == 'success'
         run: yarn publish --new-version ${{ steps.get_tag_version.outputs.version }} --tag ${{ steps.get_tag_version.outputs.npm_tag }}
         continue-on-error: true
 
@@ -76,26 +79,4 @@ jobs:
         run: git push https://${GH_TOKEN}@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ steps.get_tag_version.outputs.version }}
 
       - name: Cleanup .npmrc
-        run: rm -rf ./.npmrc
-
-      - name: Checkout tag 
-        uses: actions/checkout@v3
-        with:
-          ref: ${{ steps.get_tag_version.outputs.target_branch }}    
-
-      - name: Cleanup dist
-        run: rm -rf ./dist
-
-      - name : Git push
-        env:
-          GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
-        run: |
-          git fetch origin
-
-          git add -f .
-          git commit -m "cleanup dist"
-
-          git pull https://${GH_TOKEN}@github.com/${{ github.repository }} ${{ steps.get_tag_version.outputs.target_branch }}
-
-          git push https://${GH_TOKEN}@github.com/${{ github.repository }} ${{ steps.get_tag_version.outputs.target_branch }}
-        
+        run: rm -f ./.npmrc

@@ -110,7 +110,7 @@ const AvatarGroup = ({
       avatarShowSize,
       // 만약 4개가 보인다면 3개의 avatarShowSize와 원래 size 하나를 더해야 정확한 값이 나옴
       containerWidth: avatarShowSize * (realShowCount - 1) + size,
-      containerHeight: size
+      containerHeight: SIZE_MAP[avatarSize]
     };
   }, [avatarHideRatio, realShowCount, size]);
 

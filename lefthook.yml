@@ -6,9 +6,8 @@ pre-commit:
         CHANGED_FILES=$(git diff --cached --name-only)
         
         if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "storybook" ]; then
-          echo $CHANGED_FILES
           for file in $CHANGED_FILES; do
-            if [[ ! "$file" =~ ^(.github/workflows/|lefthook.yml|package.json|dist/|scripts/publish.sh|version.json|.vscode/|src/assets/svgs/) ]]; then
+            if [[ ! "$file" =~ ^(.github/workflows/|lefthook.yml|package.json) ]]; then
               echo "❌ main과 storybook 브랜치에는 직접 커밋할 수 없습니다. PR을 통한 병합을 진행해주세요."
               exit 1
             fi
@@ -17,7 +16,7 @@ pre-commit:
         
         if [ "$BRANCH" = "alpha" ]; then
           for file in $CHANGED_FILES; do
-            if [[ ! "$file" =~ ^(.github/|scripts/|lefthook.yml|package.json|yarn.lock|dist/|scripts/publish.sh|version.json|.vscode/|src/assets/svgs/) ]]; then
+            if [[ ! "$file" =~ ^(.github/|scripts/|lefthook.yml|package.json|yarn.lock) ]]; then
               echo "❌ alpha 브랜치에서는 .github/workflows와 scripts 디렉토리의 파일만 수정할 수 있습니다. PR을 통한 병합을 진행해주세요."
               exit 1
             fi
@@ -33,7 +32,7 @@ pre-push:
 
         if [ "$BRANCH" = "main" ]; then
           for file in $CHANGED_FILES; do
-            if [[ ! "$file" =~ ^(package.json|dist/|scripts/publish.sh|version.json|.vscode/|src/assets/svgs/) ]]; then
+            if [[ ! "$file" =~ ^(package.json) ]]; then
               echo "❌ protected 브랜치에는 직접 push할 수 없습니다. PR을 통한 병합을 진행해주세요."
               exit 1
             fi
