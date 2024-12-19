@@ -27,7 +27,7 @@ else
 fi
 
 # version 값 추출
-version=$(grep '"version"' package.json | sed -E 's/.*"version": *"([^"]+)".*/\1/')
+version=$(grep "\"$current_branch\":" version.json | sed -E "s/.*\"$current_branch\": *\"([^\"]+)\".*/\1/")
 
 if [ -z "$version" ]; then
     print_string "error" "package.json에서 버전 정보를 찾을 수 없습니다. 파일을 확인하세요."
@@ -83,9 +83,26 @@ fi
 
 tag_version="npm-publish/$new_version"
 
+print_string "warning" "프로젝트 빌드 중..."
+rm -rf dist
+yarn cache clean && yarn && yarn build || { print_string "error" "빌드 실패"; exit 1; }
+
+print_string "success" "패키지 설치 및 빌드 완료"
+
+# 버전 업데이트
 yarn version --new-version $new_version --tag $tag --no-git-tag-version
 
-git add package.json
+# version.json 업데이트
+# MacOS와 Linux 모두 호환되도록 수정
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    # MacOS
+    sed -i '' "s/\"$current_branch\": *\"[^\"]*\"/\"$current_branch\": \"$new_version\"/" version.json
+else
+    # Linux
+    sed -i "s/\"$current_branch\": *\"[^\"]*\"/\"$current_branch\": \"$new_version\"/" version.json
+fi
+
+git add -f package.json version.json ./dist
 
 git commit -m "update version to $new_version"
 git push origin $current_branch
@@ -94,12 +111,12 @@ git tag -a $tag_version -m "Release $new_version"
 git push origin $tag_version
 git tag -d $tag_version
 
-print_string "success" "================================"
+print_string "success" "=================================="
 print_string "success" "✨🎉 v $new_version 배포 완료 🎉✨"
-print_string "success" "================================"
+print_string "success" "=================================="
 print_string "warning" "wemixplay-ui를 사용하는 프로젝트에서 아래 명령어를 실행해주세요!"
-print_string "success" "================================"
+print_string "success" "=================================="
 print_string "success" "npm install wemixplay-ui@${tag}"
 print_string "success" "yarn add wemixplay-ui@${tag}"
-print_string "success" "================================"
+print_string "success" "=================================="
 exit 0

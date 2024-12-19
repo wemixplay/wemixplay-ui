@@ -1,0 +1,19 @@
+.example-tab {
+  :global {
+    .tab-content-holder {
+      padding-top: 12px;
+    }
+  }
+
+  .example-tab-label {
+    width: 100px;
+    padding: 10px 0;
+    font-size: 16px;
+    text-align: center;
+  }
+
+  .example-tab-content {
+    padding: 4px 10px;
+    font-size: 16px;
+  }
+}

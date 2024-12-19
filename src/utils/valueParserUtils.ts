@@ -110,6 +110,15 @@ export const decodeHtmlEntities = (str: string) => {
 
   return decodedStr;
 };
+/**
+ * WP Mention 정규표현식
+ */
+export const WP_MENTION_REGEX = /WP@\[(.*?)\]\((\d+)\)/g;
+
+/**
+ * WP# HashTag 정규표현식
+ */
+export const WP_HASH_REGEX = /WP#\[(.*?)\]\((\d+)\)/g;
 
 export const convertMarkdownToHtmlStr = (text: string) => {
   // 변환된 문자열을 저장할 변수 초기화
@@ -220,4 +229,14 @@ export const formatNumberValueWithComma = (numberValue: string | number): string
   const formattedIntegerPart = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
   return `${formattedIntegerPart}${decimalPartWithComma}`;
+};
+
+/**
+ * 소수 몇번째 짜리까지 0채워서 표현
+ * @param {number} value - 소수 값
+ * @param {number} fixed - 몇번째자리 까지 표현 할 것인지
+ * @returns string
+ */
+export const getFloatFixed = (value: number, fixed: number) => {
+  return parseFloat(String(Math.round(value * 100) / 100)).toFixed(fixed);
 };
