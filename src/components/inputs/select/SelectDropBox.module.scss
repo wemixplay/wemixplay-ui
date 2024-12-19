@@ -35,7 +35,7 @@
     z-index: 1;
     width: 100%;
     height: 100%;
-    background-color: var(--semantic-material-dimmer);
+    background-color: var(--wp-semantic-material-dimmer);
     inset: 0;
 
     @media (min-width: 800px) {
@@ -53,8 +53,8 @@
     max-height: calc((100 * var(--vh)) - 24px);
     border-radius: $rd-16 $rd-16  0 0;
     animation: select-option-mobile-slide 0.2s;
-    background: var(--semantic-background-normal-alternative);
-    color: var(--semantic-label-alternative);
+    background: var(--wp-semantic-background-normal-alternative);
+    color: var(--wp-semantic-label-alternative);
 
     @include breakpoint-768 {
       position: relative;
@@ -82,7 +82,7 @@
     max-height: calc((100 * var(--vh)) - 70px);
     padding: $sp-8 $sp-8;
 
-    @include scroll(3px, var(--semantic-fill-strong), transparent);
+    @include scroll(3px, var(--wp-semantic-fill-strong), transparent);
 
     @include breakpoint-768 {
       max-height: 180px;
@@ -97,7 +97,7 @@
     padding: 0 12px;
     border-radius: $sp-8;
     margin: 16px 16px 0;
-    background-color: var(--semantic-static-white);
+    background-color: var(--wp-semantic-static-white);
 
     @media (min-width: 800px) {
       padding: 0;

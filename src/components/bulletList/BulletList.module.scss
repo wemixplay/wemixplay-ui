@@ -1,7 +1,7 @@
 .bullet-list {
   padding: 0;
   margin: 0;
-  color: var(--semantic-label-alternative);
+  color: var(--wp-semantic-label-alternative);
   font-feature-settings: "calt" off;
   font-style: normal;
   font-weight: 400;
@@ -45,7 +45,7 @@
         width: 2px;
         height: 2px;
         border-radius: 100%;
-        background: var(--semantic-label-alternative);
+        background: var(--wp-semantic-label-alternative);
         content: "";
       }
     }

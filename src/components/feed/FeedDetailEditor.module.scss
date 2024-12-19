@@ -26,7 +26,7 @@
       .user-name {
         @include headline-01-b;
 
-        color: var(--semantic-label-normal);
+        color: var(--wp-semantic-label-normal);
       }
 
       .btn-post-popover {
@@ -37,7 +37,7 @@
             height: auto;
             align-items: center;
             border-radius: 0;
-            color: var(--semantic-label-normal);
+            color: var(--wp-semantic-label-normal);
 
             @include label-01-normal-m;
           }
@@ -56,8 +56,8 @@
       align-items: center;
       padding: $sp-4 $sp-8;
       border-radius: $rd-8;
-      background: var(--semantic-background-normal-alternative);
-      color: var(--semantic-label-normal);
+      background: var(--wp-semantic-background-normal-alternative);
+      color: var(--wp-semantic-label-normal);
 
       @include label-01-normal-sb;
 
@@ -65,7 +65,7 @@
         margin-left: $sp-8;
 
         path {
-          fill: var(--semantic-label-normal);
+          fill: var(--wp-semantic-label-normal);
         }
       }
 
@@ -139,13 +139,13 @@
       padding: $sp-12;
       border: 1px solid transparent;
       border-radius: $sp-12;
-      background: var(--semantic-background-normal-alternative);
+      background: var(--wp-semantic-background-normal-alternative);
       transition: 0.25s;
 
-      @include scroll(3px, var(--semantic-fill-strong), transparent);
+      @include scroll(3px, var(--wp-semantic-fill-strong), transparent);
 
       &:focus {
-        border: 1px solid var(--semantic-label-normal);
+        border: 1px solid var(--wp-semantic-label-normal);
         background: transparent;
 
         // focus > placeholder 숨김
@@ -155,7 +155,7 @@
       }
 
       &.filled {
-        border: 1px solid var(--semantic-label-normal) !important;
+        border: 1px solid var(--wp-semantic-label-normal) !important;
         background: transparent;
       }
     }
@@ -177,7 +177,7 @@
         cursor: pointer;
 
         svg path {
-          fill: var(--semantic-label-normal);
+          fill: var(--wp-semantic-label-normal);
         }
 
         &::before {
@@ -187,7 +187,7 @@
           width: 30px;
           height: 30px;
           border-radius: $sp-4;
-          background-color: var(--semantic-label-normal);
+          background-color: var(--wp-semantic-label-normal);
           content: "";
           opacity: 0;
           transform: translate(-50%, -50%);
@@ -216,10 +216,10 @@
         @include label-02-reading-m;
 
         padding-right: $sp-16;
-        color: var(--semantic-label-assistive);
+        color: var(--wp-semantic-label-assistive);
 
         > b {
-          color: var(--semantic-label-normal);
+          color: var(--wp-semantic-label-normal);
         }
       }
 
@@ -228,8 +228,8 @@
         height: 40px;
         padding: 0 $sp-20;
         border-radius: $rd-100;
-        background: var(--semantic-label-normal);
-        color: var(--semantic-label-inverse-normal);
+        background: var(--wp-semantic-label-normal);
+        color: var(--wp-semantic-label-inverse-normal);
         text-align: center;
         transition: background 0.25s, color 0.25s;
 
@@ -252,8 +252,8 @@
 
         &:disabled {
           border-radius: $sp-8;
-          background: var(--semantic-line-solid-alternative);
-          color: var(--semantic-label-alternative);
+          background: var(--wp-semantic-line-solid-alternative);
+          color: var(--wp-semantic-label-alternative);
           cursor: not-allowed;
         }
       }

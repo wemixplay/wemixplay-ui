@@ -23,7 +23,7 @@
 
     .ico-check { // input이 disabled 경우의 .ico-check에 대한 정의
       .icon {
-        border: 1px solid var(--semantic-line-normal-normal);
+        border: 1px solid var(--wp-semantic-line-normal-normal);
       }
     }
   }
@@ -78,7 +78,7 @@
       width: 100%;
       height: 100%;
       border-radius: $rd-circle;
-      background: var(--semantic-label-normal);
+      background: var(--wp-semantic-label-normal);
       content: "";
       opacity: 0;
       transition: opacity 0.15s;
@@ -88,7 +88,7 @@
       position: relative;
       width: 20px;
       height: 20px;
-      border: 1.5px solid var(--semantic-line-normal-normal);
+      border: 1.5px solid var(--wp-semantic-line-normal-normal);
       border-radius: 50%;
 
       /*
@@ -102,7 +102,7 @@
         width: 0;
         height: 0;
         border-radius: $rd-circle;
-        background-color: var(--semantic-primary-normal);
+        background-color: var(--wp-semantic-primary-normal);
         content: "";
         transform: translate(-50%, -50%);
         transition: width, height, 0.3s;

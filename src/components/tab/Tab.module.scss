@@ -27,7 +27,7 @@
 .tab-nav {
   position: relative;
   display: flex;
-  border-bottom: 1px solid var(--semantic-fill-strong);
+  border-bottom: 1px solid var(--wp-semantic-fill-strong);
 }
 
 .tab-btn {
@@ -43,7 +43,7 @@
   border: 0;
   margin: 0;
   margin-right: $sp-20;
-  color: var(--semantic-label-alternative);
+  color: var(--wp-semantic-label-alternative);
   cursor: pointer;
   font-feature-settings: "cv13" on;
   outline: none;
@@ -52,15 +52,15 @@
   @include body-01-normal-sb;
 
   svg [class*="fill"] {
-    fill: var(--semantic-label-alternative);
+    fill: var(--wp-semantic-label-alternative);
   }
 
   &.active {
-    color: var(--semantic-label-normal);
+    color: var(--wp-semantic-label-normal);
     font-feature-settings: "cv13" on;
 
     svg [class*="fill"] {
-      fill: var(--semantic-label-normal);
+      fill: var(--wp-semantic-label-normal);
     }
   }
 
@@ -76,7 +76,7 @@
   bottom: -1px;
   left: 0;
   height: 3px;
-  background-color: var(--semantic-label-normal);
+  background-color: var(--wp-semantic-label-normal);
   transition: transform 0.25s, width 0.25s;
 }
 

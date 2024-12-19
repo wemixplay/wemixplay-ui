@@ -6,8 +6,8 @@
   justify-content: center;
   padding: 0 28px;
   border-radius: $rd-10;
-  background-color: var(--semantic-label-normal);
-  color: var(--semantic-label-inverse-normal);
+  background-color: var(--wp-semantic-label-normal);
+  color: var(--wp-semantic-label-inverse-normal);
   cursor: pointer;
   text-align: center;
   transition: background-color ease 0.25s;
@@ -23,7 +23,7 @@
     width: 100%;
     height: 100%;
     border-radius: $rd-100;
-    background-color: var(--semantic-label-normal);
+    background-color: var(--wp-semantic-label-normal);
     content: "";
     opacity: 0;
     transition: opacity 0.2s;
@@ -44,8 +44,8 @@
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
-    background-color: var(--semantic-interaction-disable);
-    color: var(--semantic-label-assistive);
+    background-color: var(--wp-semantic-interaction-disable);
+    color: var(--wp-semantic-label-assistive);
     cursor: not-allowed;
   }
 
@@ -105,8 +105,8 @@
 
   // 컬러 타입에 따른 색상 정의
   &.secondary {
-    background-color: var(--semantic-primary-normal);
-    color: var(--semantic-static-white);
+    background-color: var(--wp-semantic-primary-normal);
+    color: var(--wp-semantic-static-white);
   }
 }
 
@@ -132,7 +132,7 @@
 
   // uiType Solid
   &.solid {
-    background: var(--semantic-label-normal);
+    background: var(--wp-semantic-label-normal);
 
     svg rect {
       fill: white;
@@ -146,24 +146,24 @@
 * LineCapButton Style
 */
 .btn-line-cap {
-  border: 1px solid var(--semantic-label-normal);
+  border: 1px solid var(--wp-semantic-label-normal);
   border-radius: $rd-100;
 
-  // background-color: var(--semantic-background-normal-normal);
+  // background-color: var(--wp-semantic-background-normal-normal);
   background-color: transparent;
-  color: var(--semantic-label-normal);
+  color: var(--wp-semantic-label-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
     border-radius: $rd-100;
-    background-color: var(--semantic-label-normal);
+    background-color: var(--wp-semantic-label-normal);
   }
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
-    border-color: var(--semantic-line-normal-normal);
+    border-color: var(--wp-semantic-line-normal-normal);
     background-color: transparent;
-    color: var(--semantic-label-assistive);
+    color: var(--wp-semantic-label-assistive);
     cursor: not-allowed;
   }
 
@@ -195,10 +195,10 @@
 * LineSquareButton Style
 */
 .btn-line-square {
-  border: 1px solid var(--semantic-label-normal);
+  border: 1px solid var(--wp-semantic-label-normal);
   border-radius: $rd-10;
   background-color: transparent;
-  color: var(--semantic-label-normal);
+  color: var(--wp-semantic-label-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
@@ -207,9 +207,9 @@
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
-    border-color: var(--semantic-line-normal-normal);
+    border-color: var(--wp-semantic-line-normal-normal);
     background-color: transparent;
-    color: var(--semantic-label-assistive);
+    color: var(--wp-semantic-label-assistive);
     cursor: not-allowed;
   }
 
@@ -242,7 +242,7 @@
 */
 .btn-solid-cap {
   border-radius: $rd-100;
-  color: var(--semantic-label-inverse-normal);
+  color: var(--wp-semantic-label-inverse-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
@@ -251,8 +251,8 @@
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
-    background-color: var(--semantic-interaction-disable) !important;
-    color: var(--semantic-label-assistive);
+    background-color: var(--wp-semantic-interaction-disable) !important;
+    color: var(--wp-semantic-label-assistive);
     cursor: not-allowed;
   }
 
@@ -285,19 +285,19 @@
 */
 .btn-solid-square {
   border-radius: $rd-10;
-  background-color: var(--semantic-label-normal);
-  color: var(--semantic-background-normal-normal);
+  background-color: var(--wp-semantic-label-normal);
+  color: var(--wp-semantic-background-normal-normal);
 
   // hover, focus 인터랙션 될 때 버튼영역에 Dimmed 처리 되는 가상선택자
   &::before {
     border-radius: $rd-100;
-    background-color: var(--semantic-background-normal-normal);
+    background-color: var(--wp-semantic-background-normal-normal);
   }
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
-    background-color: var(--semantic-interaction-disable) !important;
-    color: var(--semantic-label-assistive);
+    background-color: var(--wp-semantic-interaction-disable) !important;
+    color: var(--wp-semantic-label-assistive);
     cursor: not-allowed;
   }
 
@@ -332,10 +332,10 @@
 .btn-assitive-square {
   height: 24px;
   padding: 0 $sp-12;
-  border: 1px solid var(--semantic-line-normal-normal);
+  border: 1px solid var(--wp-semantic-line-normal-normal);
   border-radius: $rd-6;
   background-color: transparent;
-  color: var(--semantic-background-normal-normal);
+  color: var(--wp-semantic-background-normal-normal);
 
   @include caption-01-r;
 
@@ -347,9 +347,9 @@
 
   // 버튼 상태에 따른 스타일 정의
   &:disabled {
-    border-color: var(--semantic-line-normal-normal);
+    border-color: var(--wp-semantic-line-normal-normal);
     background-color: transparent;
-    color: var(--semantic-label-assistive);
+    color: var(--wp-semantic-label-assistive);
     cursor: not-allowed;
   }
 
@@ -390,7 +390,7 @@
   border: 0;
   border-radius: 0;
   background-color: transparent;
-  color: var(--semantic-static-black);
+  color: var(--wp-semantic-static-black);
   font-feature-settings: "calt" off;
   font-weight: 400;
 
@@ -408,7 +408,7 @@
     left: 0;
     width: 0;
     height: 1px;
-    background-color: var(--semantic-static-black) !important;
+    background-color: var(--wp-semantic-static-black) !important;
     content: "";
     transition: ease 0.25s;
   }

@@ -11,7 +11,7 @@
     :global {
       .swiper {
         border-radius: 0;
-        background: var(--semantic-static-black);
+        background: var(--wp-semantic-static-black);
 
         @include breakpoint-768 {
           border-radius: $rd-12;
@@ -58,7 +58,7 @@
               display: flex;
               flex-direction: column;
               align-items: center;
-              color: var(--semantic-static-white);
+              color: var(--wp-semantic-static-white);
               gap: 8px 0;
 
               @include add-body-text-16-m;
@@ -109,7 +109,7 @@
 
             &::after {
               width: 20px;
-              background: var(--semantic-label-normal);
+              background: var(--wp-semantic-label-normal);
 
               @include breakpoint-768 {
                 width: 24px;
@@ -121,7 +121,7 @@
             width: 6px;
             height: 6px;
             border-radius: $rd-100;
-            background: var(--semantic-label-assistive);
+            background: var(--wp-semantic-label-assistive);
             content: "";
             transition: 0.25s;
 

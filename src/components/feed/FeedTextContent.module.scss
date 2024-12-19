@@ -37,7 +37,7 @@
     display: flex;
     height: 24px;
     align-items: center;
-    color: var(--semantic-label-alternative);
+    color: var(--wp-semantic-label-alternative);
 
     @include add-body-text-12-m;
 
@@ -51,7 +51,7 @@
     align-items: center;
     justify-content: flex-end;
     margin-top: $sp-20;
-    color: var(--semantic-label-neutral);
+    color: var(--wp-semantic-label-neutral);
 
     @include add-body-text-12-m;
 
@@ -61,7 +61,7 @@
 
     svg {
       path {
-        fill: var(--semantic-label-neutral);
+        fill: var(--wp-semantic-label-neutral);
       }
     }
   }

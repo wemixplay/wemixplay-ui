@@ -4,10 +4,10 @@
   height: 48px;
   box-sizing: border-box;
   padding: $sp-8 $sp-8 $sp-8 $sp-10;
-  border: 1px solid var(--semantic-label-disable);
+  border: 1px solid var(--wp-semantic-label-disable);
   border-radius: $rd-6;
-  background: var(--semantic-background-normal-alternative);
-  color: var(--semantic-label-normal);
+  background: var(--wp-semantic-background-normal-alternative);
+  color: var(--wp-semantic-label-normal);
   transition: 0.2s;
   vertical-align: middle;
 
@@ -39,17 +39,17 @@
   }
 
   &:hover {
-    border-color: var(--semantic-label-alternative);
+    border-color: var(--wp-semantic-label-alternative);
   }
 
   &.focus {
-    border-color: var(--semantic-label-normal);
-    background-color: var(--semantic-background-normal-normal);
+    border-color: var(--wp-semantic-label-normal);
+    background-color: var(--wp-semantic-background-normal-normal);
 
     &.filled {
       // 한 글자라도 입력이 된 상태인 경우 : .filled
-      border-color: var(--semantic-label-normal);
-      background-color: var(--semantic-background-normal-normal);
+      border-color: var(--wp-semantic-label-normal);
+      background-color: var(--wp-semantic-background-normal-normal);
     }
 
     input::placeholder {
@@ -59,15 +59,15 @@
 
   &.filled {
     // 한 글자라도 입력이 된 상태인 경우 : .filled
-    border-color: var(--semantic-label-alternative);
-    color: var(--semantic-label-normal);
+    border-color: var(--wp-semantic-label-alternative);
+    color: var(--wp-semantic-label-normal);
   }
 
   &.readonly,
   &.disabled {
     border-color: transparent;
-    background: var(--semantic-line-solid-alternative);
-    color: var(--semantic-label-alternative);
+    background: var(--wp-semantic-line-solid-alternative);
+    color: var(--wp-semantic-label-alternative);
 
     input {
       cursor: not-allowed;
@@ -75,18 +75,18 @@
   }
 
   &.error {
-    border-color: var(--semantic-status-negative);
+    border-color: var(--wp-semantic-status-negative);
     caret-color: red;
 
     &.filled {
-      border-color: var(--semantic-status-negative);
+      border-color: var(--wp-semantic-status-negative);
     }
   }
 
   &.search {
     .ico-prefix {
       svg path {
-        stroke: var(--semantic-label-normal);
+        stroke: var(--wp-semantic-label-normal);
       }
     }
   }
@@ -134,7 +134,7 @@
 
     rect,
     path {
-      fill: var(--semantic-label-normal);
+      fill: var(--wp-semantic-label-normal);
     }
 
     >svg {
@@ -169,21 +169,21 @@
     text-align: inherit;
 
     &::placeholder {
-      color: var(--semantic-label-alternative);
+      color: var(--wp-semantic-label-alternative);
     }
 
     /* 자동 완성된 입력 필드의 스타일을 변경합니다. */
     &:-webkit-autofill {
       background-color: transparent !important; /* 자동 완성된 필드의 배경 색상 */
       -webkit-box-shadow: none !important;
-      color: var(--semantic-label-normal);
+      color: var(--wp-semantic-label-normal);
 
       &:focus,
       &:active,
       &:hover {
         background-color: transparent !important; /* 자동 완성된 필드의 배경 색상 */
         -webkit-box-shadow: none !important;
-        color: var(--semantic-label-normal);
+        color: var(--wp-semantic-label-normal);
       }
     }
   }

@@ -31,7 +31,7 @@
     display: flex;
     min-height: 24px;
     align-items: center;
-    color: var(--semantic-label-normal);
+    color: var(--wp-semantic-label-normal);
 
     @include add-body-text-16-b;
 
@@ -89,7 +89,7 @@
     }
 
     .category {
-      color: var(--semantic-label-neutral);
+      color: var(--wp-semantic-label-neutral);
 
       @include label-01-normal-r;
     }
@@ -97,7 +97,7 @@
 
   .date {
     margin-top: -1px;
-    color: var(--semantic-label-alternative);
+    color: var(--wp-semantic-label-alternative);
 
     @include add-body-text-13-m;
 
@@ -118,7 +118,7 @@
     border-radius: $rd-4;
     margin-top: $sp-12;
     margin-bottom: $sp-6;
-    background: var(--semantic-fill-normal);
+    background: var(--wp-semantic-fill-normal);
 
     @include breakpoint-768 {
       height: 36px;
@@ -154,7 +154,7 @@
         @include add-body-text-12-m;
 
         display: block;
-        color: var(--semantic-label-normal);
+        color: var(--wp-semantic-label-normal);
 
         @include ellipsis(1);
 

@@ -23,7 +23,7 @@
 
     // checked 안됐을때
     .text {
-      color: var(--semantic-label-alternative);
+      color: var(--wp-semantic-label-alternative);
       transition: color 0.3s;
 
       @include add-body-text-12-m;
@@ -36,7 +36,7 @@
         bottom: 0;
         left: 0;
         display: block;
-        border: 1px solid var(--semantic-label-disable);
+        border: 1px solid var(--wp-semantic-label-disable);
         border-radius: $rd-40;
         content: "";
         pointer-events: none;
@@ -48,13 +48,13 @@
       // checked 됐을때
       &:checked {
         ~ .text {
-          color: var(--semantic-label-inverse-normal);
+          color: var(--wp-semantic-label-inverse-normal);
 
           @include add-body-text-12-b;
 
           &::after {
-            border: 1px solid var(--semantic-label-normal);
-            background-color: var(--semantic-label-normal);
+            border: 1px solid var(--wp-semantic-label-normal);
+            background-color: var(--wp-semantic-label-normal);
           }
         }
       }

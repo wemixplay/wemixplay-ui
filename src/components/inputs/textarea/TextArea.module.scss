@@ -4,21 +4,21 @@
   flex-direction: column;
 
   &.error {
-    border-color: var(--semantic-status-negative);
+    border-color: var(--wp-semantic-status-negative);
     caret-color: red;
 
     textarea {
-      border-color: var(--semantic-status-negative);
+      border-color: var(--wp-semantic-status-negative);
     }
 
     &.filled {
-      border-color: var(--semantic-status-negative) !important;
+      border-color: var(--wp-semantic-status-negative) !important;
     }
   }
 
   &.filled {
     textarea {
-      border-color: var(--semantic-label-alternative) !important;
+      border-color: var(--wp-semantic-label-alternative) !important;
     }
   }
 
@@ -27,20 +27,20 @@
     height: 100%;
     padding: $sp-12;
     border: 0;
-    border: 1px solid var(--semantic-line-normal-alternative);
+    border: 1px solid var(--wp-semantic-line-normal-alternative);
     border-radius: $rd-12;
-    background: var(--semantic-background-normal-alternative);
-    color: var(--semantic-label-strong);
+    background: var(--wp-semantic-background-normal-alternative);
+    color: var(--wp-semantic-label-strong);
     resize: none;
 
     @include add-body-text-14-m;
 
     &::placeholder {
-      color: var(--semantic-label-assistive);
+      color: var(--wp-semantic-label-assistive);
     }
 
     &:focus {
-      border-color: var(--semantic-label-alternative);
+      border-color: var(--wp-semantic-label-alternative);
 
       &::placeholder {
         font-size: 0;
@@ -52,11 +52,11 @@
     @include label-02-normal-r;
 
     padding: $sp-16 $sp-20;
-    color: var(--semantic-label-assistive);
+    color: var(--wp-semantic-label-assistive);
     text-align: right;
 
     > strong {
-      color: var(--semantic-label-normal);
+      color: var(--wp-semantic-label-normal);
 
       @include label-02-normal-m;
     }

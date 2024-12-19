@@ -28,7 +28,7 @@
     background: transparent;
 
     &:hover {
-      background: var(--semantic-fill-normal);
+      background: var(--wp-semantic-fill-normal);
     }
 
     &.no-exist-event {
@@ -39,12 +39,12 @@
     &.active {
       // 내가 이모지를 클릭했을때 스타일
       .count {
-        color: var(--semantic-primary-normal);
+        color: var(--wp-semantic-primary-normal);
       }
     }
 
     .count {
-      color: var(--semantic-label-normal);
+      color: var(--wp-semantic-label-normal);
       font-feature-settings: "ss10" on;
 
       @include add-body-text-13-m;
@@ -81,13 +81,13 @@
 
       path {
         &:not([class*="exclude"]) {
-          fill: var(--semantic-label-normal);
+          fill: var(--wp-semantic-label-normal);
         }
       }
     }
 
     &:hover {
-      background: var(--semantic-fill-normal);
+      background: var(--wp-semantic-fill-normal);
     }
 
     :global {

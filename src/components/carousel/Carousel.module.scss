@@ -38,7 +38,7 @@
       align-items: center;
       justify-content: center;
       border-radius: $rd-100;
-      background: var(--semantic-static-white);
+      background: var(--wp-semantic-static-white);
       cursor: pointer;
       opacity: 0.8;
 
@@ -47,7 +47,7 @@
         height: 18px;
 
         path {
-          fill: var(--semantic-static-black);
+          fill: var(--wp-semantic-static-black);
         }
       }
 
@@ -70,7 +70,7 @@
 
       &:focus,
       &:focus-within {
-        background: var(--semantic-static-gray05);
+        background: var(--wp-semantic-static-gray05);
       }
     }
   }

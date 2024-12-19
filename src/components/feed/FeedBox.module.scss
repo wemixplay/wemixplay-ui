@@ -1,8 +1,8 @@
 .feed-box {
   position: relative;
   padding: $sp-20 0 $sp-12 0;
-  border-bottom: 1px solid var(--semantic-fill-alternative);
-  background: var(--semantic-background-elevated-normal);
+  border-bottom: 1px solid var(--wp-semantic-fill-alternative);
+  background: var(--wp-semantic-background-elevated-normal);
   box-shadow: 0 5.6px 19.601px 0 rgb(0 0 0 / 6%);
   cursor: default;
 
@@ -44,7 +44,7 @@
             height: 22px;
 
             path {
-              fill: var(--semantic-label-normal);
+              fill: var(--wp-semantic-label-normal);
             }
 
             @include breakpoint-768 {
@@ -120,7 +120,7 @@
               /* 캐러셀 이미지 비율은 16:9 고정, 이미지는 contain */
               padding-bottom: 56.25%;
               border-radius: 0;
-              background-color: var(--semantic-fill-strong);
+              background-color: var(--wp-semantic-fill-strong);
             }
 
             img {
@@ -192,7 +192,7 @@
       display: flex;
       align-items: center;
       padding: $sp-2 $sp-6;
-      color: var(--semantic-label-normal);
+      color: var(--wp-semantic-label-normal);
       font-feature-settings: "ss10" on;
       text-align: center;
 
@@ -210,7 +210,7 @@
     .feed-comments {
       width: 100%;
       padding-top: $sp-12;
-      border-top: 1px solid var(--semantic-line-normal-alternative);
+      border-top: 1px solid var(--wp-semantic-line-normal-alternative);
       margin-top: $sp-12;
 
       // @include breakpoint-768 {

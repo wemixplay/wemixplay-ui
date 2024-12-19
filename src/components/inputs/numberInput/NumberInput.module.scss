@@ -4,7 +4,7 @@
   height: 42px;
   border: 1px solid #eee;
   border-radius: $rd-8;
-  background-color: var(--semantic-static-white);
+  background-color: var(--wp-semantic-static-white);
   color: rgb(0 0 0 / 50%);
   font-size: 14px;
   font-style: normal;
@@ -79,7 +79,7 @@
   }
 
   &.error {
-    border-color: var(--semantic-status-negative);
-    color: var(--semantic-status-negative);
+    border-color: var(--wp-semantic-status-negative);
+    color: var(--wp-semantic-status-negative);
   }
 }

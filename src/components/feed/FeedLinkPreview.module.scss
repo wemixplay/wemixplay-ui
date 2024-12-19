@@ -25,10 +25,10 @@
     display: inline-block;
     overflow: hidden;
     width: 100%;
-    border: 1px solid var(--semantic-line-normal-neutral);
+    border: 1px solid var(--wp-semantic-line-normal-neutral);
     border-radius: $rd-12;
-    background: var(--semantic-background-normal-alternative);
-    color: var(--semantic-label-alternative);
+    background: var(--wp-semantic-background-normal-alternative);
+    color: var(--wp-semantic-label-alternative);
 
     @include label-01-normal-r;
 
@@ -85,7 +85,7 @@
 
       .title {
         max-width: calc(100% - 14px);
-        color: var(--semantic-label-normal);
+        color: var(--wp-semantic-label-normal);
 
         @include ellipsis(1);
         @include headline-02-b;
@@ -95,7 +95,7 @@
         @include ellipsis(1);
         @include label-01-normal-r;
 
-        color: var(--semantic-label-alternative);
+        color: var(--wp-semantic-label-alternative);
 
         @include breakpoint-768 {
           margin-top: $sp-4;
@@ -111,7 +111,7 @@
         @include label-01-normal-r;
 
         margin-top: $sp-4;
-        color: var(--semantic-label-alternative);
+        color: var(--wp-semantic-label-alternative);
 
         @include ellipsis(2);
 
