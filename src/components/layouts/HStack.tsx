@@ -62,7 +62,7 @@ interface PropsType extends HTMLAttributes<HTMLElement> {
   children: ReactNode;
 }
 
-const cx = makeCxFunc(style, { excludeGlobalClass: true });
+const cx = makeCxFunc(style);
 
 /**
  * `HStack`은 display: flex; 형태의 수평 스택 컴포넌트 입니다.
