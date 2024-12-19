@@ -32,14 +32,13 @@
 
   input[type="range"] {
     position: absolute;
-    z-index: 3;
+    z-index: 2;
     top: 50%;
     left: 0;
     width: 100%;
     height: var(--mri-slider-height);
     -webkit-appearance: none;
     appearance: none;
-    background-color: transparent;
     opacity: 1;
     pointer-events: none;
     transform: translateY(-50%);
@@ -83,7 +82,7 @@
 
   .slider {
     position: relative;
-    z-index: 2;
+    z-index: 1;
     height: var(--mri-slider-height);
 
     .track {

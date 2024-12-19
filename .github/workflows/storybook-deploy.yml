@@ -31,9 +31,7 @@ jobs:
           fi
 
       - name: Checkout storybook branch
-        run: | 
-          git checkout storybook
-          git pull origin storybook
+        run: git checkout storybook
 
       - name: Install dependencies and build
         id: build

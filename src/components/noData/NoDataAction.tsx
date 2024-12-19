@@ -41,5 +41,5 @@ const NoDataAction = ({
   );
 };
 
-export type { PropsType as NoDataActionProps };
+export type { PropsType as NoDataProps };
 export default NoDataAction;
