@@ -1,17 +1,21 @@
+import Ripple from '@/components/ripple/Ripple';
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
-import WpEditor from '@/components/editor/WpEditor';
 
-type StoryComponent = StoryObj<typeof WpEditor>;
-type StoryTemplate = StoryFn<typeof WpEditor>;
+type StoryComponent = StoryObj<typeof Ripple>;
+type StoryTemplate = StoryFn<typeof Ripple>;
 
 // More on how to set up stories at: https://storybook.js.org/docs/react/writing-stories/introduction
 export default {
-  component: WpEditor,
+  component: Ripple,
   tags: ['autodocs']
-} as Meta<typeof WpEditor>;
+} as Meta<typeof Ripple>;
 
 const Template: StoryTemplate = (args) => {
-  return <WpEditor {...args} maxLength={20} />;
+  return (
+    <Ripple {...args}>
+      <button style={{ padding: '10px 20px' }}>Click</button>
+    </Ripple>
+  );
 };
 
 export const Default: StoryComponent = {
@@ -22,6 +26,8 @@ export const Default: StoryComponent = {
       }
     }
   },
-  args: {},
+  args: {
+    color: '#432525'
+  },
   render: Template
 };

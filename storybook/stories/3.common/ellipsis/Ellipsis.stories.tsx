@@ -28,6 +28,7 @@ const StringContentTemplate: StoryTemplate = (args) => {
         {...args}
         // content={change ? args.content : 'dasdsd entence appears.'}
         content={args.content}
+        onShowMoreLessClick={undefined}
       />
     </div>
   );

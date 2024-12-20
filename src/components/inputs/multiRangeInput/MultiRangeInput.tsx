@@ -129,7 +129,7 @@ const MultiRangeInput = forwardRef<MultiRangeInputForwardRef, Props>((props, ref
 
   const onChangeSlide = useCallback(
     (direction: 'left' | 'right', e: ChangeEvent<HTMLInputElement>, changeEmit = false) => {
-      if (!textInpLeftRef.current || !textInpRightRef.current) return;
+      if (showTextInput && (!textInpLeftRef.current || !textInpRightRef.current)) return;
 
       const { value: domValue } = e.target;
 
@@ -150,7 +150,7 @@ const MultiRangeInput = forwardRef<MultiRangeInputForwardRef, Props>((props, ref
       onChange && onChange(e);
       syncTextValue();
     },
-    [onChange, syncTextValue, handleChange, name, range, step, min, max]
+    [onChange, showTextInput, syncTextValue, handleChange, name, range, step, min, max]
   );
 
   const onMouseUp = useCallback(() => {
