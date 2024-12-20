@@ -150,7 +150,7 @@ const MultiRangeInput = forwardRef<MultiRangeInputForwardRef, Props>((props, ref
       onChange && onChange(e);
       syncTextValue();
     },
-    [onChange, syncTextValue, handleChange, name, range, step, min, max]
+    [onChange, showTextInput, syncTextValue, handleChange, name, range, step, min, max]
   );
 
   const onMouseUp = useCallback(() => {
