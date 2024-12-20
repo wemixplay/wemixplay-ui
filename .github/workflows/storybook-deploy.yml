@@ -28,7 +28,7 @@ jobs:
 
       - name: Checkout storybook branch
         run: | 
-          git checkout storybook
+          git checkout origin/storybook
           git fetch origin
           git reset --hard origin/storybook
 
