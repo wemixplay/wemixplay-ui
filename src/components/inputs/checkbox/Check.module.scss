@@ -11,7 +11,7 @@
           background: transparent;
 
           svg path {
-            fill: var(--wp-semantic-primary-normal);
+            // fill: var(--wp-semantic-label-assistive);
           }
         }
       }
@@ -21,7 +21,7 @@
       .icon {
         width: 24px;
         height: 24px;
-        border: 0 !important;
+        border: 1px solid var(--wp-semantic-line-normal-normal);
         border-radius: 0;
         background-color: transparent;
 
@@ -30,7 +30,7 @@
           height: inherit;
 
           path {
-            fill: var(--wp-semantic-label-assistive);
+            // fill: var(--wp-semantic-label-assistive);
           }
         }
       }
