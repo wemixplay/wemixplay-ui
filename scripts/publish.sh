@@ -111,6 +111,11 @@ else
     sed -i "s/\"$current_branch\": *\"[^\"]*\"/\"$current_branch\": \"$new_version\"/" version.json
 fi
 
+git add -f version.json
+
+git commit -m "update version.json"
+git push origin $current_branch
+
 print_string "success" "=================================="
 print_string "success" "✨🎉 v $new_version 배포 완료 🎉✨"
 print_string "success" "=================================="
