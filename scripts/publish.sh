@@ -69,6 +69,13 @@ auto_new_version="$major.$minor.$patch${tag_str}"
 
 read -p "새로운 버전을 입력하세요 ( 자동 생성 버전: $auto_new_version ): " new_version
 
+# 버전 형식 확인
+version_regex="^[0-9]+\.[0-9]+\.[0-9]+(-alpha)?$"
+if [[ -n "$new_version" && ! "$new_version" =~ $version_regex ]]; then
+    print_string "error" "올바른 버전 형식이 아닙니다. 형식: number.number.number 또는 number.number.number-alpha"
+    exit 1
+fi
+
 if [ -z "$new_version" ]; then
     new_version=$auto_new_version
 else
