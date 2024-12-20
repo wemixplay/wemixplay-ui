@@ -32,13 +32,14 @@
 
   input[type="range"] {
     position: absolute;
-    z-index: 2;
+    z-index: 3;
     top: 50%;
     left: 0;
     width: 100%;
     height: var(--mri-slider-height);
     -webkit-appearance: none;
     appearance: none;
+    background-color: transparent;
     opacity: 1;
     pointer-events: none;
     transform: translateY(-50%);
@@ -50,10 +51,10 @@
     &::-webkit-slider-thumb {
       width: var(--mri-thumb-size); /* 썸의 너비 */
       height: var(--mri-thumb-size); /* 썸의 높이 */
-      border: 3px solid var(--mri-thumb-border-color, var(--wp-semantic-label-normal));
+      border: 3px solid var(--mri-thumb-border-color, var(--semantic-label-normal));
       border-radius: 50%;
       -webkit-appearance: none;
-      background-color: var(--mri-thumb-color, var(--wp-semantic-label-normal));
+      background-color: var(--mri-thumb-color, var(--semantic-label-normal));
       cursor: pointer;
       pointer-events: auto;
       transition: box-shadow 0.4s;
@@ -66,10 +67,10 @@
     &::-moz-range-thumb {
       width: var(--mri-thumb-size); /* 썸의 너비 */
       height: var(--mri-thumb-size); /* 썸의 높이 */
-      border: 3px solid var(--mri-thumb-border-color, var(--wp-semantic-label-normal));
+      border: 3px solid var(--mri-thumb-border-color, var(--semantic-label-normal));
       border-radius: 50%;
       -moz-appearance: none;
-      background-color: var(--mri-thumb-color, var(--wp-semantic-label-normal));
+      background-color: var(--mri-thumb-color, var(--semantic-label-normal));
       cursor: pointer;
       pointer-events: auto;
       transition: box-shadow 0.4s;
@@ -82,7 +83,7 @@
 
   .slider {
     position: relative;
-    z-index: 1;
+    z-index: 2;
     height: var(--mri-slider-height);
 
     .track {
@@ -93,7 +94,7 @@
       bottom: 0;
       left: 0;
       border-radius: 5px;
-      background-color: var(--mri-track-color, var(--wp-semantic-line-normal-neutral));
+      background-color: var(--mri-track-color, var(--semantic-line-normal-neutral));
     }
 
     .range {
@@ -104,7 +105,7 @@
       bottom: 0;
       left: 25%;
       border-radius: 5px;
-      background-color: var(--mri-range-color, var(--wp-semantic-label-normal));
+      background-color: var(--mri-range-color, var(--semantic-label-normal));
     }
   }
 
@@ -123,7 +124,7 @@
 
       label {
         display: block;
-        color: var(--wp-semantic-label-alternative);
+        color: var(--semantic-label-alternative);
 
         @include label-01-normal-m;
       }
@@ -134,10 +135,10 @@
         max-width: 100px;
         height: 36px;
         padding: 0 $sp-8;
-        border: 1px solid  var(--wp-semantic-label-normal);
+        border: 1px solid  var(--semantic-label-normal);
         border-radius: $rd-4;
         margin-top: $sp-12;
-        color: var(--wp-semantic-label-strong);
+        color: var(--semantic-label-strong);
         font-feature-settings: "ss10" on;
         text-align: center;
 
