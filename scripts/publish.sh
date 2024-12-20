@@ -92,6 +92,15 @@ print_string "success" "패키지 설치 및 빌드 완료"
 # 버전 업데이트
 yarn version --new-version $new_version --tag $tag --no-git-tag-version
 
+git add -f package.json version.json ./dist
+
+git commit -m "update version to $new_version"
+git push origin $current_branch
+
+git tag -a $tag_version -m "Release $new_version"
+git push origin $tag_version
+git tag -d $tag_version
+
 # version.json 업데이트
 # MacOS와 Linux 모두 호환되도록 수정
 if [[ "$OSTYPE" == "darwin"* ]]; then
@@ -101,15 +110,6 @@ else
     # Linux
     sed -i "s/\"$current_branch\": *\"[^\"]*\"/\"$current_branch\": \"$new_version\"/" version.json
 fi
-
-git add -f package.json version.json ./dist
-
-git commit -m "update version to $new_version"
-git push origin $current_branch
-
-git tag -a $tag_version -m "Release $new_version"
-git push origin $tag_version
-git tag -d $tag_version
 
 print_string "success" "=================================="
 print_string "success" "✨🎉 v $new_version 배포 완료 🎉✨"
