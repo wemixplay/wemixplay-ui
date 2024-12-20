@@ -22,21 +22,6 @@ export const Default: StoryComponent = {
       }
     }
   },
-  args: {
-    config: {
-      mention: {
-        list: [
-          { id: 1, name: 'Derek', age: '30' },
-          { id: 2, name: 'Easton', age: '30' }
-        ]
-      },
-      hash: {
-        list: [
-          { id: 1, name: 'Derek' },
-          { id: 2, name: 'Easton' }
-        ]
-      }
-    }
-  },
+  args: {},
   render: Template
 };
