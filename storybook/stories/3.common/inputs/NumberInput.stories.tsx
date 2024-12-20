@@ -1,5 +1,5 @@
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
-import { debounce } from 'lodash-es';
+import { debounce } from 'lodash';
 import { useMemo } from 'react';
 import { useState } from 'react';
 import NumberInput from '@/components/inputs/numberInput/NumberInput';

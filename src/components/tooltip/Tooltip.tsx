@@ -1,6 +1,6 @@
 'use client';
 
-import { debounce, throttle } from 'lodash-es';
+import { debounce, throttle } from 'lodash';
 import React, {
   CSSProperties,
   ReactNode,

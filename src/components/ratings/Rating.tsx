@@ -1,6 +1,6 @@
 'use client';
 
-import { debounce } from 'lodash-es';
+import { debounce } from 'lodash';
 import React, { ChangeEvent, ReactElement, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { makeCxFunc } from '@/utils/forReactUtils';

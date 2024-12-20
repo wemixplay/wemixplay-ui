@@ -221,3 +221,13 @@ export const formatNumberValueWithComma = (numberValue: string | number): string
 
   return `${formattedIntegerPart}${decimalPartWithComma}`;
 };
+
+/**
+ * 소수 몇번째 짜리까지 0채워서 표현
+ * @param {number} value - 소수 값
+ * @param {number} fixed - 몇번째자리 까지 표현 할 것인지
+ * @returns string
+ */
+export const getFloatFixed = (value: number, fixed: number) => {
+  return parseFloat(String(Math.round(value * 100) / 100)).toFixed(fixed);
+};

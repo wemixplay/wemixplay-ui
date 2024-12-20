@@ -1,0 +1,1 @@
+"use strict";var e=require("@babel/runtime/helpers/slicedToArray"),r=require("react");module.exports=function(t){var u=t.children,a=t.fallback,l=void 0===a?"":a,n=r.useState(!1),c=e(n,2),i=c[0],s=c[1];return r.useEffect((function(){s(!0)}),[]),r.createElement(r.Fragment,null,i?u:l)};
