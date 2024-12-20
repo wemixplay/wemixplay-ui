@@ -33,11 +33,7 @@ const plugins = [
       }
     }
   }),
-  optimizeLodashImports({
-    useLodashEs: true,
-    optimize: true,
-    removeUnderscore: true,
-  }),
+  optimizeLodashImports(),
   babel({
 		babelHelpers: 'runtime',
 		exclude: 'node_modules/**',
@@ -103,17 +99,14 @@ const plugins = [
     ]
   }),
   resolve({
-    preferBuiltins: true,
-    extensions: ['.js', '.jsx', '.ts', '.tsx']
-  }),
-  commonjs({
-    include: /node_modules/,
-    transformMixedEsModules: true,
-    requireReturnsDefault: 'auto'
+    extensions,
+    browser: true,
+    dedupe: ['react', 'react-dom', 'lodash-es']
   }),
   replace({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
   }),
+  commonjs()
 ]
 
 if (process.env.NODE_ENV === 'production') {
@@ -145,8 +138,7 @@ module.exports = {
   external:  [
     ...Object.keys(packageJson.dependencies).filter(dep => dep !== 'react-youtube'),
     /@babel\/runtime/,
-    /fsevents/,
-    /^lodash(-es)?/,
+    /fsevents/
   ],
   plugins,
   input: './src/index.ts',
