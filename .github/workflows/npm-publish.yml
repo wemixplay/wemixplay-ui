@@ -26,8 +26,9 @@ jobs:
         run: |
           git config user.email "dapp@wemade.com"
           git config user.name "wemixplay"
-          git pull origin refs/tags/npm-publish/${{ steps.get_tag.outputs.version }} --rebase
-          git push -f https://${GH_TOKEN}@github.com/${{ github.repository }} storybook
+          git fetch origin refs/tags/npm-publish/${{ steps.get_tag.outputs.version }}
+          git merge FETCH_HEAD
+          git push https://${GH_TOKEN}@github.com/${{ github.repository }} storybook
         continue-on-error: false
 
       - name: Delete tag remotely
