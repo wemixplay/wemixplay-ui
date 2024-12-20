@@ -254,7 +254,7 @@ const NumberInput = forwardRef<HTMLInputElement, Props>(
           return;
         }
 
-        inp.current.value = makeParts(putValue).join('.');
+        inp.current.value = makeParts(putValue ?? '').join('.');
 
         if (valueRef.current !== putValue) {
           handleChange && handleChange(putValue, name, { type });
@@ -376,8 +376,8 @@ const NumberInput = forwardRef<HTMLInputElement, Props>(
             ref={ref || inp}
             type={'text'}
             inputMode={'decimal'}
-            value={makeParts(number).join('.') ?? ''}
-            defaultValue={makeParts(value).join('.') ?? ''}
+            value={makeParts(number ?? '').join('.') ?? ''}
+            defaultValue={makeParts(value ?? '').join('.') ?? ''}
             readOnly={!isDirect}
             onChange={(e) => onChange({ e })}
             onFocus={(e) => handleFocus(e, true)}
