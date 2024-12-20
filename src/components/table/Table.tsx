@@ -9,7 +9,7 @@ import React, {
   useMemo,
   useState
 } from 'react';
-import { orderBy } from 'lodash-es';
+import { orderBy } from 'lodash';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import Spinner from '@/components/loadings/Spinner';
 import { SvgIcoSortUpElement, SvgIcoSortDownElement, SvgIcoSortNormalElement } from '@/assets/svgs';

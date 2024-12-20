@@ -1,7 +1,7 @@
 'use client';
 
 import Decimal from 'decimal.js';
-import { last, replace } from 'lodash-es';
+import { last, replace } from 'lodash';
 import React, {
   forwardRef,
   useRef,

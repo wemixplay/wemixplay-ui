@@ -1,6 +1,6 @@
 'use client';
 
-import { lowerCase } from 'lodash-es';
+import { lowerCase } from 'lodash';
 import React, { MouseEvent, ReactElement, useCallback, useMemo } from 'react';
 
 import { makeCxFunc } from '@/utils/forReactUtils';
