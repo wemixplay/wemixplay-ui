@@ -38,7 +38,7 @@
   th {
     padding: 12px 8px;
     padding-right: 16px;
-    border-bottom: 1px solid var(--semantic-line-normal-alternative);
+    border-bottom: 1px solid var(--wp-semantic-line-normal-alternative);
     font-feature-settings: "cv13" on;
     font-size: 14px;
     font-weight: 400;
@@ -61,7 +61,7 @@
 
   td {
     padding: 10px 8px;
-    border-bottom: 1px solid var(--semantic-line-normal-alternative);
+    border-bottom: 1px solid var(--wp-semantic-line-normal-alternative);
     background: transparent;
     color: #0f1719;
     font-size: 14px;
@@ -173,7 +173,7 @@
   //         top: 0;
   //         left: 0;
   //         padding-left: $sp-20;
-  //         background-color: var(--semantic-background-normal-normal);
+  //         background-color: var(--wp-semantic-background-normal-normal);
 
   //         &::after {
   //           position: absolute;
@@ -193,7 +193,7 @@
   //     }
 
   //     thead th:first-child {
-  //       background-color: var(--semantic-background-normal-normal);
+  //       background-color: var(--wp-semantic-background-normal-normal);
 
   //       &::after {
   //         top: 0;
@@ -205,8 +205,8 @@
   //       th {
   //         height: 48px;
   //         border-top: 0;
-  //         background-color: var(--semantic-background-normal-normal);
-  //         color: var(--semantic-label-neutral);
+  //         background-color: var(--wp-semantic-background-normal-normal);
+  //         color: var(--wp-semantic-label-neutral);
 
   //         @include add-body-text-12-sb;
 
@@ -215,11 +215,11 @@
 
   //           svg path {
   //             &[class*="inactive"] {
-  //               fill: var(--semantic-label-disable);
+  //               fill: var(--wp-semantic-label-disable);
   //             }
 
   //             &[class*="active"] {
-  //               fill: var(--semantic-label-normal);
+  //               fill: var(--wp-semantic-label-normal);
   //             }
   //           }
   //         }
@@ -235,8 +235,8 @@
   //         @include add-body-text-14-sb;
 
   //         padding: $sp-20 2px;
-  //         background-color: var(--semantic-background-normal-normal);
-  //         color: var(--semantic-label-normal);
+  //         background-color: var(--wp-semantic-background-normal-normal);
+  //         color: var(--wp-semantic-label-normal);
   //       }
   //     }
   //   }

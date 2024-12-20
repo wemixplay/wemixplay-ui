@@ -19,9 +19,9 @@
         align-items: center;
         justify-content: center;
         padding: 0 $sp-12;
-        border: 1px solid var(--semantic-label-disable);
+        border: 1px solid var(--wp-semantic-label-disable);
         border-radius: 40px;
-        color: var(--semantic-label-alternative);
+        color: var(--wp-semantic-label-alternative);
         cursor: pointer;
         transition: color 0.25s, background-color 0.25s, border-color 0.25s;
 
@@ -30,7 +30,7 @@
         &.active {
           border-color: $color-global-coolNeutral-20;
           background-color: $color-global-coolNeutral-20;
-          color: var(--semantic-static-white);
+          color: var(--wp-semantic-static-white);
 
           @include label-02-normal-sb;
         }

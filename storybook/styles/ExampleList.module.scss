@@ -15,7 +15,7 @@
     border: 1px solid $color-global-neutral-95;
     border-radius: $rd-4;
     background-color: $color-global-neutral-22;
-    color: var(--semantic-static-white);
+    color: var(--wp-semantic-static-white);
 
     &.skeleton {
       animation: skeleton-blank ease 1.5s infinite;

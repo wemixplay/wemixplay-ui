@@ -25,7 +25,7 @@
     width: 10px;
     height: 10px;
     backdrop-filter: blur(10px);
-    fill: var(--tooltip-color, var(--semantic-label-neutral));
+    fill: var(--tooltip-color, var(--wp-semantic-label-neutral));
     transform: rotate(0deg) translateY(19%);
   }
 
@@ -40,8 +40,8 @@
       border: 0;
       border-radius: var(--tooltip-border-radius, $rd-12);
       backdrop-filter: blur(10px);
-      background-color: var(--tooltip-color, var(--semantic-label-neutral));
-      color: var(--tooltip-text-color, var(--semantic-label-inverse-normal));
+      background-color: var(--tooltip-color, var(--wp-semantic-label-neutral));
+      color: var(--tooltip-text-color, var(--wp-semantic-label-inverse-normal));
       font-feature-settings: "ss10" on;
       word-break: break-word;
 

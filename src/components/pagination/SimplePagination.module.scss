@@ -19,17 +19,17 @@
 
 .pagination-page {
   border-radius: $rd-4;
-  color: var(--semantic-label-normal);
+  color: var(--wp-semantic-label-normal);
 
   @include label-01-normal-sb;
 
   &:hover,
   &:focus {
-    background-color: var(--semantic-fill-alternative);
+    background-color: var(--wp-semantic-fill-alternative);
   }
 
   &.selected {
-    background-color: var(--semantic-fill-normal);
+    background-color: var(--wp-semantic-fill-normal);
   }
 }
 
@@ -39,12 +39,12 @@
     border-radius: $rd-4;
 
     path {
-      fill: var(--semantic-label-normal);
+      fill: var(--wp-semantic-label-normal);
     }
 
     &:hover,
     &:focus {
-      background-color: var(--semantic-fill-alternative);
+      background-color: var(--wp-semantic-fill-alternative);
     }
 
     &:disabled {
@@ -52,7 +52,7 @@
       cursor: default !important;
 
       path {
-        fill: var(--semantic-label-assistive);
+        fill: var(--wp-semantic-label-assistive);
       }
     }
   }
