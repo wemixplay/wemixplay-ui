@@ -1,0 +1,1 @@
+var r={stringify:function(r,{EOL:n="\n",finalEOL:e=!0,replacer:t=null,spaces:f}={}){const i=e?n:"";return JSON.stringify(r,t,f).replace(/\n/g,n)+i},stripBom:function(r){return Buffer.isBuffer(r)&&(r=r.toString("utf8")),r.replace(/^\uFEFF/,"")}};export{r as u};

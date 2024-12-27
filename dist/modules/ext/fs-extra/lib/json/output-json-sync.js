@@ -1,0 +1,1 @@
+"use strict";var t=require("../../../jsonfile/utils.js"),u=require("../output-file/index.js");const{stringify:i}=t.utils,{outputFileSync:s}=u.outputFile_1;var e=function(t,u,e){const n=i(u,e);s(t,n,e)};exports.outputJsonSync_1=e;

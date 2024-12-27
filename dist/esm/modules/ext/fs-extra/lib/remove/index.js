@@ -1,0 +1,1 @@
+import{__exports as r}from"../../../../_virtual/index2.js";import"../../../universalify/index.js";import{g as e}from"../../../graceful-fs/graceful-fs.js";const o=e;var s={remove:(0,r.fromCallback)((function(r,e){o.rm(r,{recursive:!0,force:!0},e)})),removeSync:function(r){o.rmSync(r,{recursive:!0,force:!0})}};export{s as r};

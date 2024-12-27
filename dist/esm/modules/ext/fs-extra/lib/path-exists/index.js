@@ -1,0 +1,1 @@
+import{__exports as s}from"../../../../_virtual/index2.js";import"../../../universalify/index.js";import{__exports as t}from"../../../../_virtual/index.js";import"../fs/index.js";const i=s.fromPromise,r=t;var e={pathExists:i((function(s){return r.access(s).then((()=>!0)).catch((()=>!1))})),pathExistsSync:r.existsSync};export{e as p};

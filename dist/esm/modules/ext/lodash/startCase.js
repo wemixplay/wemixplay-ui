@@ -1,0 +1,1 @@
+import{getDefaultExportFromCjs as r}from"../../_virtual/_commonjsHelpers.js";import{_ as o}from"./_createCompounder.js";import{u as t}from"./upperFirst.js";var e=t,m=r(o((function(r,o,t){return r+(t?" ":"")+e(o)})));export{m as default};

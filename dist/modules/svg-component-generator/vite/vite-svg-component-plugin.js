@@ -1,0 +1,1 @@
+"use strict";var e=require("../svgComponentGenerator.js");process.once("SIGINT",(()=>{process.exit(0)})),exports.ViteSvgComponentPlugin=t=>{let{svgFileDir:i,outputDir:r,typescript:n,title:s,description:o}=t;return{name:"vite-svg-component-plugin",buildStart(){new e({svgFileDir:i,outputDir:r,typescript:n,title:s,description:o}).generate()},buildEnd(){}}};

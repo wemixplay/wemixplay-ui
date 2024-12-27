@@ -1,0 +1,1 @@
+"use strict";var r=require("./copy.js"),e=require("./copy-sync.js"),c=require("../../../../_virtual/index2.js");require("../../../universalify/index.js");var i={copy:(0,c.__exports.fromPromise)(r.copy_1),copySync:e.copySync_1};exports.copy=i;

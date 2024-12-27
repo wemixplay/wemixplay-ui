@@ -1,0 +1,1 @@
+export{default as SvgComponentGenerator}from"./svg-component-generator/svgComponentGenerator.js";export{ViteSvgComponentPlugin}from"./svg-component-generator/vite/vite-svg-component-plugin.js";export{default as WebpackSvgComponentPlugin}from"./svg-component-generator/webpack/webpack-svg-component-plugin.js";

@@ -1,0 +1,1 @@
+import{c as o}from"./copy.js";import{c as r}from"./copy-sync.js";import{__exports as s}from"../../../../_virtual/index2.js";import"../../../universalify/index.js";var i={copy:(0,s.fromPromise)(o),copySync:r};export{i as c};

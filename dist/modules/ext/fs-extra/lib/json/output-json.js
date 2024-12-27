@@ -1,0 +1,1 @@
+"use strict";var t=require("../../../jsonfile/utils.js"),i=require("../output-file/index.js");const{stringify:u}=t.utils,{outputFile:s}=i.outputFile_1;var e=async function(t,i,e={}){const o=u(i,e);await s(t,o,e)};exports.outputJson_1=e;

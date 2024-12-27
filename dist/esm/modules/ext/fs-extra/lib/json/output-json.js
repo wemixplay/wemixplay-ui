@@ -1,0 +1,1 @@
+import{u as o}from"../../../jsonfile/utils.js";import{o as t}from"../output-file/index.js";const{stringify:i}=o,{outputFile:s}=t;var n=async function(o,t,n={}){const a=i(t,n);await s(o,a,n)};export{n as o};

@@ -1,0 +1,1 @@
+import{_ as r}from"./_castSlice.js";import{_ as o}from"./_hasUnicode.js";import{_ as t}from"./_stringToArray.js";import{t as i}from"./toString.js";var s=r,a=o,n=t,m=i;var c=function(r){return function(o){o=m(o);var t=a(o)?n(o):void 0,i=t?t[0]:o.charAt(0),c=t?s(t,1).join(""):o.slice(1);return i[r]()+c}};export{c as _};

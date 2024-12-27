@@ -1,0 +1,1 @@
+import{__exports as t}from"../../../../_virtual/utils.js";import r from"path";const o=r;t.checkPath=function(t){if("win32"===process.platform){if(/[<>:"|?*]/.test(t.replace(o.parse(t).root,""))){const r=new Error(`Path contains invalid characters: ${t}`);throw r.code="EINVAL",r}}};export{t as default};
