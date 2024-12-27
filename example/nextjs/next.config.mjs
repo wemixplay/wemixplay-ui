@@ -1,4 +1,4 @@
-import {WebpackSvgComponentPlugin} from 'wemixplay-ui/modules'
+import { WebpackSvgComponentPlugin } from 'wemixplay-ui/modules'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
