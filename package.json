@@ -4,10 +4,10 @@
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
-  "main": "./dist/index.js",
-  "module": "./dist/esm/index.js",
-  "types": "./dist/index.d.ts",
-  "typings": "dist/index.d.ts",
+  "main": "./dist/components/index.js",
+  "module": "./dist/esm/components/index.js",
+  "types": "./dist/components/index.d.ts",
+  "typings": "dist/components/index.d.ts",
   "engines": {
     "node": ">=16"
   },
@@ -16,14 +16,14 @@
   ],
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/esm/index.js",
-      "require": "./dist/index.js"
+      "types": "./dist/components/index.d.ts",
+      "import": "./dist/esm/components/index.js",
+      "require": "./dist/components/index.js"
     },
     "./modules": {
       "types": "./dist/modules/index.d.ts",
-      "import": "./dist/modules/index.esm.mjs",
-      "require": "./dist/index.cjs.js"
+      "import": "./dist/esm/modules/index.js",
+      "require": "./dist/modules/index.js"
     },
     "./styles.css": "./dist/styles.css"
   },

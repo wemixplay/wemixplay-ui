@@ -143,7 +143,7 @@ module.exports = [
       /fsevents/
     ],
     plugins,
-    input: './src/index.ts',
+    input: './src/components/index.ts',
     output: [
       {
         dir: 'dist/esm',
@@ -173,20 +173,25 @@ module.exports = [
     input: './src/modules/index.ts',
     output: [
 			{
-				file: 'dist/modules/index.cjs.js',
+				dir: 'dist/modules',
 				format: 'cjs',
+        preserveModules: true, // indicate not create a single-file
+        preserveModulesRoot: 'src/modules',
+        exports: 'auto',
 				sourcemap: process.env.NODE_ENV !== 'production',
 			},
 			{
-				file: 'dist/modules/index.esm.mjs',
+				dir: 'dist/esm/modules',
 				format: 'esm',
+        preserveModules: true, // indicate not create a single-file
+        preserveModulesRoot: 'src/modules',
 				sourcemap: process.env.NODE_ENV !== 'production',
 			},
 		],
-    manualChunks(id) {
-      if (id.includes('node_modules')) {
-        return 'vendors';
-      }
-      }
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
+    },
   }
 ];
