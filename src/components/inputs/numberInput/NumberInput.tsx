@@ -377,7 +377,6 @@ const NumberInput = forwardRef<HTMLInputElement, Props>(
             type={'text'}
             inputMode={'decimal'}
             value={makeParts(number ?? '').join('.') ?? ''}
-            defaultValue={makeParts(value ?? '').join('.') ?? ''}
             readOnly={!isDirect}
             onChange={(e) => onChange({ e })}
             onFocus={(e) => handleFocus(e, true)}

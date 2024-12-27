@@ -23,44 +23,45 @@ class WebpackSvgComponentPlugin {
       title,
       description
     });
-  }
 
-  generate() {
-    this.svgCompGenerator.generate();
-  }
-
-  async apply(compiler: Compiler) {
-    compiler.hooks.compile.tap('WebpackSvgComponentPlugin', () => {
-      if (process.env.NODE_ENV === 'development') {
-        if (!this.watcher) {
-          // Watcher가 이미 존재하지 않는 경우에만 생성
-          this.watcher = chokidar.watch(this.svgFileDir, {
-            persistent: true,
-            ignored: /\/svg\/types\//
-          });
-
-          this.watcher.on('add', this.generate);
-          this.watcher.on('unlink', this.generate);
-        }
-      } else {
-        void this.svgCompGenerator.generate();
-      }
-
-      process.once('SIGINT', () => {
-        if (this.watcher) {
-          this.watcher.close();
-        }
-
-        process.exit(0);
-      });
-    });
-
-    compiler.hooks.done.tap('WebpackSvgComponentPlugin', () => {
+    process.once('SIGINT', () => {
       if (this.watcher) {
         this.watcher.close();
         this.watcher = null;
       }
+      process.exit(0);
     });
+  }
+
+  async apply(compiler: Compiler) {
+    const isDevMode = compiler.options.mode === 'development';
+    const isTarget = Array.isArray(compiler.options.target) ? compiler.options.target.includes('web') : compiler.options.target === 'web';
+  
+    if(isTarget) {
+        compiler.hooks.compile.tap('WebpackSvgComponentPlugin', () => {      
+          if (!isDevMode) {
+            void this.svgCompGenerator.generate();
+          } else if(!this.watcher) {
+          void this.svgCompGenerator.generate();
+
+          // Watcher가 이미 존재하지 않는 경우에만 생성
+          this.watcher = chokidar.watch(this.svgFileDir, {
+            persistent: true,
+            awaitWriteFinish: true
+          });
+
+          const watchGenerate = (filePath: string) => {
+            if(filePath.endsWith('.svg')) {
+              this.svgCompGenerator.generate();
+            }
+          }
+
+          this.watcher.on('add', watchGenerate);
+          this.watcher.on('change', watchGenerate);
+          this.watcher.on('unlink', watchGenerate);
+        }
+      });
+    }
   }
 }
 

@@ -1,3 +1,3 @@
 /* eslint-disable */
-export type StaticSvgIconName = 'default-profile' | 'ico-chevron-down';
-export type SvgComponentName = 'SvgDefaultProfile' | 'SvgIcoChevronDown'
+export type StaticSvgIconName = 'default-profile' | 'ico-chevron-down' | 'vercel';
+export type SvgComponentName = 'SvgDefaultProfile' | 'SvgIcoChevronDown' | 'SvgVercel'
