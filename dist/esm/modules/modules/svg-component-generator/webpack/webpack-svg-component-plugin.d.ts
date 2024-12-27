@@ -7,7 +7,6 @@ declare class WebpackSvgComponentPlugin {
     private readonly outputDir;
     private watcher?;
     constructor({ svgFileDir, outputDir, typescript, title, description }: WebpackPluginOptions);
-    generate(): void;
     apply(compiler: Compiler): Promise<void>;
 }
 export default WebpackSvgComponentPlugin;
