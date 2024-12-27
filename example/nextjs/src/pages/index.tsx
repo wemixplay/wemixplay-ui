@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
-import {Button, FeedBox} from "wemixplay-ui";
+import {Button, FeedBox, NumberInput, TextInput} from "wemixplay-ui";
 
 import 'wemixplay-ui/styles.css';
 
@@ -19,6 +19,9 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={`${styles.main} ${inter.className}`}>
+        <NumberInput />
+        <TextInput />
+        awdawd
         <Button>Click</Button>
       </main>
     </>
