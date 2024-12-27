@@ -1,1 +1,0 @@
-import{getDefaultExportFromCjs as r}from"../../_virtual/_commonjsHelpers.js";import{_ as e}from"./_baseGetTag.js";import{i as o}from"./isObjectLike.js";var t=e,s=o;var a=function(r){return"number"==typeof r||s(r)&&"[object Number]"==t(r)},m=r(a);export{m as default,a as i};
