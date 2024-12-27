@@ -84,6 +84,7 @@ const plugins = [
             @import "./src/styles/abstracts/_mixin.scss";
             @import "./src/styles/abstracts/_animation.scss";
             @import "./src/styles/global.scss";
+            @import "./src/styles/theme.scss";
           `
         }
       ]
