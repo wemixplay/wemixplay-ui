@@ -1,6 +1,6 @@
 /* stylelint-disable custom-property-pattern */
 
-[data-theme="light"] .wm-ui {
+:root .wm-ui {
   // static
   --wp-semantic-static-white: #{$color-global-common-100};
   --wp-semantic-static-black: #{$color-global-common-0};
