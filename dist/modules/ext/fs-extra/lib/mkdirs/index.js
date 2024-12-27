@@ -1,1 +1,0 @@
-"use strict";var r=require("../../../../_virtual/index2.js");require("../../../universalify/index.js");var e=require("../../../../_virtual/make-dir.js");require("./make-dir.js");const i=r.__exports.fromPromise,{makeDir:s,makeDirSync:m}=e.__exports,a=i(s);var n={mkdirs:a,mkdirsSync:m,mkdirp:a,mkdirpSync:m,ensureDir:a,ensureDirSync:m};exports.mkdirs=n;

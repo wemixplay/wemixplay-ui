@@ -1,1 +1,0 @@
-"use strict";var r=require("./_castSlice.js"),e=require("./_hasUnicode.js"),i=require("./_stringToArray.js"),t=require("./toString.js"),s=r._castSlice,n=e._hasUnicode,a=i._stringToArray,c=t.toString_1;var o=function(r){return function(e){e=c(e);var i=n(e)?a(e):void 0,t=i?i[0]:e.charAt(0),o=i?s(i,1).join(""):e.slice(1);return t[r]()+o}};exports._createCaseFirst=o;

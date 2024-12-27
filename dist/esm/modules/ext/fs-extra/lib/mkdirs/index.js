@@ -1,1 +1,0 @@
-import{__exports as r}from"../../../../_virtual/index2.js";import"../../../universalify/index.js";import{__exports as i}from"../../../../_virtual/make-dir.js";import"./make-dir.js";const m=r.fromPromise,{makeDir:s,makeDirSync:e}=i,o=m(s);var a={mkdirs:o,mkdirsSync:e,mkdirp:o,mkdirpSync:e,ensureDir:o,ensureDirSync:e};export{a as m};

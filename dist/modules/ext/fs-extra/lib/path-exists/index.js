@@ -1,1 +1,0 @@
-"use strict";var s=require("../../../../_virtual/index2.js");require("../../../universalify/index.js");var e=require("../../../../_virtual/index.js");require("../fs/index.js");const r=s.__exports.fromPromise,i=e.__exports;var t={pathExists:r((function(s){return i.access(s).then((()=>!0)).catch((()=>!1))})),pathExistsSync:i.existsSync};exports.pathExists_1=t;

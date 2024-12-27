@@ -1,1 +1,0 @@
-"use strict";var r=require("../../../../_virtual/utils.js");const t=require("path");r.__exports.checkPath=function(r){if("win32"===process.platform){if(/[<>:"|?*]/.test(r.replace(t.parse(r).root,""))){const t=new Error(`Path contains invalid characters: ${r}`);throw t.code="EINVAL",t}}},module.exports=r.__exports;

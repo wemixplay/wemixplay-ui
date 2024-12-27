@@ -1,1 +1,0 @@
-"use strict";var r=require("../../_virtual/_commonjsHelpers.js"),e=require("./_createCompounder.js"),t=require("./upperFirst.js"),u=e._createCompounder,o=t.upperFirst_1,s=u((function(r,e,t){return r+(t?" ":"")+o(e)})),p=r.getDefaultExportFromCjs(s);module.exports=p;

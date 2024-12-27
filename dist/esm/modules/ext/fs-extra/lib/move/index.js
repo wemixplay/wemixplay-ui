@@ -1,1 +1,0 @@
-import{m}from"./move.js";import{m as o}from"./move-sync.js";import{__exports as r}from"../../../../_virtual/index2.js";import"../../../universalify/index.js";var s={move:(0,r.fromPromise)(m),moveSync:o};export{s as m};

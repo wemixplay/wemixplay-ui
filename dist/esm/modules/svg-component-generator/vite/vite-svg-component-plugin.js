@@ -1,1 +1,0 @@
-import t from"../svgComponentGenerator.js";const e=e=>{let{svgFileDir:i,outputDir:r,typescript:o,title:n,description:p}=e;return{name:"vite-svg-component-plugin",buildStart(){new t({svgFileDir:i,outputDir:r,typescript:o,title:n,description:p}).generate()},buildEnd(){}}};process.once("SIGINT",(()=>{process.exit(0)}));export{e as ViteSvgComponentPlugin};

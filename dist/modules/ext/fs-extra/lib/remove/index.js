@@ -1,1 +1,0 @@
-"use strict";var r=require("../../../../_virtual/index2.js");require("../../../universalify/index.js");const e=require("../../../graceful-fs/graceful-fs.js").gracefulFs;var c={remove:(0,r.__exports.fromCallback)((function(r,c){e.rm(r,{recursive:!0,force:!0},c)})),removeSync:function(r){e.rmSync(r,{recursive:!0,force:!0})}};exports.remove_1=c;

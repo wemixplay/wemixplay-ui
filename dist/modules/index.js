@@ -1,1 +1,0 @@
-"use strict";var e=require("./svg-component-generator/svgComponentGenerator.js"),n=require("./svg-component-generator/vite/vite-svg-component-plugin.js"),o=require("./svg-component-generator/webpack/webpack-svg-component-plugin.js");exports.SvgComponentGenerator=e,exports.ViteSvgComponentPlugin=n.ViteSvgComponentPlugin,exports.WebpackSvgComponentPlugin=o;

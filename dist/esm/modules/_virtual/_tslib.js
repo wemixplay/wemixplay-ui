@@ -1,1 +1,0 @@
-function n(n,t,e,c){return new(e||(e=Promise))((function(o,u){function i(n){try{a(c.next(n))}catch(n){u(n)}}function r(n){try{a(c.throw(n))}catch(n){u(n)}}function a(n){var t;n.done?o(n.value):(t=n.value,t instanceof e?t:new e((function(n){n(t)}))).then(i,r)}a((c=c.apply(n,t||[])).next())}))}export{n as __awaiter};
