@@ -196,7 +196,7 @@ class SvgComponentGenerator {
         { flag: 'w' }
       )
         .then(() => {
-          console.log('✨[Static Svg Type File] is Generated!');
+          console.info('✨[Static Svg Type File] is Generated!');
         })
         .catch(console.error);
     }
@@ -224,7 +224,7 @@ class SvgComponentGenerator {
       { flag: 'w' }
     )
       .then(() => {
-        console.log('✨[Static Svg Export File] is Generated!');
+        console.info('✨[Static Svg Export File] is Generated!');
       })
       .catch(console.error);
   }

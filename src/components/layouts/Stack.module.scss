@@ -388,10 +388,10 @@
 
 @for $i from 1 through 500 {
   .column-gap-#{$i} {
-    column-gap: calc(#{$i} / 16) em;
+    column-gap: calc(#{$i} / 16 * 1em);
   }
 
   .row-gap-#{$i} {
-    row-gap: calc(#{$i} / 16) em;
+    row-gap: calc(#{$i} / 16 * 1em);
   }
 }
