@@ -1,0 +1,2 @@
+'use client';
+"use strict";var e=require("../../_virtual/_tslib.js"),t=require("react"),s=require("../../utils/forReactUtils.js"),a=require("../avatars/Person.js"),r=require("./AvatarButton.module.scss.js");const i=s.makeCxFunc(r);var u=s=>{var{className:r="",size:u="medium",onClick:c}=s,n=e.__rest(s,["className","size","onClick"]);return t.createElement("button",{className:i(r,"avatar-button",u),type:"button",onClick:c},t.createElement(a,Object.assign({},n,{className:i("avatar-button-person"),size:u})))};module.exports=u;

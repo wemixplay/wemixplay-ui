@@ -235,7 +235,7 @@ class SvgComponentGenerator {
 
     await this.writeSvgTypeFile(svgFileList);
     await this.writeStaticSvgExportFile(svgFileList);
-  }, 1500);
+  }, 300);
 }
 
 export default SvgComponentGenerator;
