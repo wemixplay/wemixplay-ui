@@ -1,8 +1,8 @@
 .curation-box {
   overflow: hidden;
-  border: 1px solid var(--semantic-line-normal-normal);
+  border: 1px solid var(--wp-semantic-line-normal-normal);
   border-radius: $rd-8;
-  background: var(--semantic-background-elevated-normal);
+  background: var(--wp-semantic-background-elevated-normal);
 
   @include breakpoint-768 {
     border-radius: $rd-12;
@@ -10,7 +10,7 @@
 
   &-content {
     height: 160px;
-    background: var(--semantic-fill-alternative);
+    background: var(--wp-semantic-fill-alternative);
 
     .text-content {
       height: 100%;
@@ -43,7 +43,7 @@
 
   .curation-writer-info {
     padding: $sp-12 $sp-12 $sp-12 $sp-12;
-    background: var(--semantic-background-elevated-normal);
+    background: var(--wp-semantic-background-elevated-normal);
 
     @include breakpoint-768 {
       padding: $sp-20;
@@ -73,7 +73,7 @@
 
           display: block;
           min-height: 14px;
-          color: var(--semantic-label-normal);
+          color: var(--wp-semantic-label-normal);
 
           @include ellipsis(1);
 

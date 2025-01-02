@@ -32,6 +32,16 @@ type Props = {
   thumbSize?: number;
   /** slider 높이 */
   sliderHeight?: number;
+  /** thumb 테두리 색상 */
+  thumbBorderColor?: CSSProperties['borderColor'];
+  /** thumb 색상 */
+  thumbColor?: CSSProperties['backgroundColor'];
+  /** track 색상 */
+  trackColor?: CSSProperties['backgroundColor'];
+  /** range 색상 */
+  rangeColor?: CSSProperties['backgroundColor'];
+  /** 텍스트 입력 영역 표시 여부 */
+  showTextInput?: boolean;
   /**
    * handleChange 두번째 인자로 전달될 name 값
    */
@@ -59,6 +69,11 @@ const cx = makeCxFunc(style);
  * @param {number} [props.step] - 슬라이더의 값 변경 단위 (기본값: 1)
  * @param {number} [props.thumbSize] - 슬라이더 thumb의 크기 (픽셀 단위)
  * @param {number} [props.sliderHeight] - 슬라이더의 높이 (픽셀 단위)
+ * @param {string} [props.thumbBorderColor] - thumb 테두리 색상
+ * @param {string} [props.thumbColor] - thumb 색상
+ * @param {string} [props.trackColor] - track 색상
+ * @param {string} [props.rangeColor] - range 색상
+ * @param {boolean} [props.showTextInput] - 텍스트 입력 영역 표시 여부
  * @param {string} [props.name] - handleChange 두 번째 인자로 전달될 name 값
  * @param {number[]} [props.value] - 바인딩할 데이터 값 (배열 형태)
  * @param {function} [props.handleChange] - 값이 변경될 때 호출될 함수
@@ -75,6 +90,11 @@ const MultiRangeInput = forwardRef<MultiRangeInputForwardRef, Props>((props, ref
     step = 1,
     thumbSize = 26,
     sliderHeight = 6,
+    thumbBorderColor,
+    thumbColor,
+    trackColor,
+    rangeColor,
+    showTextInput = true,
     handleChange,
     onChange
   } = props;
@@ -109,7 +129,7 @@ const MultiRangeInput = forwardRef<MultiRangeInputForwardRef, Props>((props, ref
 
   const onChangeSlide = useCallback(
     (direction: 'left' | 'right', e: ChangeEvent<HTMLInputElement>, changeEmit = false) => {
-      if (!textInpLeftRef.current || !textInpRightRef.current) return;
+      if (showTextInput && (!textInpLeftRef.current || !textInpRightRef.current)) return;
 
       const { value: domValue } = e.target;
 
@@ -130,7 +150,7 @@ const MultiRangeInput = forwardRef<MultiRangeInputForwardRef, Props>((props, ref
       onChange && onChange(e);
       syncTextValue();
     },
-    [onChange, syncTextValue, handleChange, name, range, step, min, max]
+    [onChange, showTextInput, syncTextValue, handleChange, name, range, step, min, max]
   );
 
   const onMouseUp = useCallback(() => {
@@ -161,7 +181,11 @@ const MultiRangeInput = forwardRef<MultiRangeInputForwardRef, Props>((props, ref
       style={
         {
           '--mri-thumb-size': `${thumbSize}px`,
-          '--mri-slider-height': `${sliderHeight}px`
+          '--mri-slider-height': `${sliderHeight}px`,
+          '--mri-thumb-border-color': thumbBorderColor,
+          '--mri-thumb-color': thumbColor,
+          '--mri-track-color': trackColor,
+          '--mri-range-color': rangeColor
         } as CustomCSSProperties
       }
     >
@@ -204,30 +228,34 @@ const MultiRangeInput = forwardRef<MultiRangeInputForwardRef, Props>((props, ref
           </div>
         </div>
       </div>
-      <div className={cx('range-input')}>
-        <div className={cx('input-box')}>
-          <label htmlFor="rangeMinInput">min</label>
-          <input
-            ref={textInpLeftRef}
-            type="text"
-            inputMode="numeric"
-            disabled={min === max}
-            onBlur={(e) => onChangeSlide('left', e, true)}
-            onKeyDown={onEnterTextInp}
-          />
+      {showTextInput && (
+        <div className={cx('range-input')}>
+          <div className={cx('input-box')}>
+            <label htmlFor="rangeMinInput">min</label>
+            <input
+              ref={textInpLeftRef}
+              type="text"
+              inputMode="numeric"
+              defaultValue={range[0]}
+              disabled={min === max}
+              onBlur={(e) => onChangeSlide('left', e, true)}
+              onKeyDown={onEnterTextInp}
+            />
+          </div>
+          <div className={cx('input-box')}>
+            <label htmlFor="rangeMaxInput">max</label>
+            <input
+              ref={textInpRightRef}
+              type="text"
+              inputMode="numeric"
+              defaultValue={range[1]}
+              disabled={min === max}
+              onBlur={(e) => onChangeSlide('right', e, true)}
+              onKeyDown={onEnterTextInp}
+            />
+          </div>
         </div>
-        <div className={cx('input-box')}>
-          <label htmlFor="rangeMaxInput">max</label>
-          <input
-            ref={textInpRightRef}
-            type="text"
-            inputMode="numeric"
-            disabled={min === max}
-            onBlur={(e) => onChangeSlide('right', e, true)}
-            onKeyDown={onEnterTextInp}
-          />
-        </div>
-      </div>
+      )}
     </div>
   );
 });
@@ -237,6 +265,10 @@ MultiRangeInput.displayName = 'MultiRangeInput';
 type CustomCSSProperties = CSSProperties & {
   '--mri-thumb-size': string;
   '--mri-slider-height': string;
+  '--mri-thumb-border-color': string;
+  '--mri-thumb-color': string;
+  '--mri-track-color': string;
+  '--mri-range-color': string;
 };
 
 export type { Props as MultiRangeInputProps };

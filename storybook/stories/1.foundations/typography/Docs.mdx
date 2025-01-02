@@ -1,0 +1,1029 @@
+import { Meta, Canvas, Controls } from '@storybook/blocks';
+
+<Meta title="1.foundations/typography/type별 폰트 스타일 안내" />
+
+## Typography
+<br /><br />
+
+### Display 
+``` css
+
+ /* display-01 */
+@mixin display-01-b {
+  font-weight: 700;
+  letter-spacing: -0.0319em;
+
+  @include font-size(56);
+  @include line-height(72);
+}
+
+@mixin display-01-sb {
+  font-weight: 600;
+  letter-spacing: -0.0319em;
+
+  @include font-size(56);
+  @include line-height(72);
+}
+
+@mixin display-01-m {
+  font-weight: 500;
+  letter-spacing: -0.0319em;
+
+  @include font-size(56);
+  @include line-height(72);
+}
+
+@mixin display-01-r {
+  font-weight: 400;
+  letter-spacing: -0.0319em;
+
+  @include font-size(56);
+  @include line-height(72);
+}
+
+@mixin display-02-b {
+  font-weight: 700;
+  letter-spacing: -0.0282em;
+
+  @include font-size(40);
+  @include line-height(52);
+}
+
+@mixin display-02-sb {
+  font-weight: 600;
+  letter-spacing: -0.0282em;
+
+  @include font-size(40);
+  @include line-height(52);
+}
+
+@mixin display-02-m {
+  font-weight: 500;
+  letter-spacing: -0.0282em;
+
+  @include font-size(40);
+  @include line-height(52);
+}
+
+@mixin display-02-r {
+  font-weight: 400;
+  letter-spacing: -0.0282em;
+
+  @include font-size(40);
+  @include line-height(52);
+}
+
+
+```
+### Title 
+``` css
+/* title-01 */
+@mixin title-01-b {
+  font-weight: 700;
+  letter-spacing: -0.027em;
+
+  @include font-size(36);
+  @include line-height(48);
+}
+
+@mixin title-01-sb {
+  font-weight: 600;
+  letter-spacing: -0.027em;
+
+  @include font-size(36);
+  @include line-height(48);
+}
+
+@mixin title-01-m {
+  font-weight: 500;
+  letter-spacing: -0.027em;
+
+  @include font-size(36);
+  @include line-height(48);
+}
+
+@mixin title-01-r {
+  font-weight: 400;
+  letter-spacing: -0.027em;
+
+  @include font-size(36);
+  @include line-height(48);
+}
+
+/* title-02 */
+@mixin title-02-b {
+  font-weight: 700;
+  letter-spacing: -0.0236em;
+
+  @include font-size(28);
+  @include line-height(38);
+}
+
+@mixin title-02-sb {
+  font-weight: 600;
+  letter-spacing: -0.0236em;
+
+  @include font-size(28);
+  @include line-height(38);
+}
+
+@mixin title-02-m {
+  font-weight: 500;
+  letter-spacing: -0.0236em;
+
+  @include font-size(28);
+  @include line-height(38);
+}
+
+@mixin title-02-r {
+  font-weight: 400;
+  letter-spacing: -0.0236em;
+
+  @include font-size(28);
+  @include line-height(38);
+}
+
+/* title-03 */
+@mixin title-03-b {
+  font-weight: 700;
+  letter-spacing: -0.023em;
+
+  @include font-size(24);
+  @include line-height(32);
+}
+
+@mixin title-03-sb {
+  font-weight: 600;
+  letter-spacing: -0.023em;
+
+  @include font-size(24);
+  @include line-height(32);
+}
+
+@mixin title-03-m {
+  font-weight: 500;
+  letter-spacing: -0.023em;
+
+  @include font-size(24);
+  @include line-height(32);
+}
+
+@mixin title-03-r {
+  font-weight: 400;
+  letter-spacing: -0.023em;
+
+  @include font-size(24);
+  @include line-height(32);
+}
+
+
+```
+### Heading 
+``` css
+/* heading-01 */
+@mixin heading-01-b {
+  font-weight: 700;
+  letter-spacing: -0.0194em;
+
+  @include font-size(22);
+  @include line-height(30);
+}
+
+@mixin heading-01-sb {
+  font-weight: 600;
+  letter-spacing: -0.0194em;
+
+  @include font-size(22);
+  @include line-height(30);
+}
+
+@mixin heading-01-m {
+  font-weight: 500;
+  letter-spacing: -0.0194em;
+
+  @include font-size(22);
+  @include line-height(30);
+}
+
+@mixin heading-01-r {
+  font-weight: 400;
+  letter-spacing: -0.0194em;
+
+  @include font-size(22);
+  @include line-height(30);
+}
+
+/* heading-02 */
+@mixin heading-02-b {
+  font-weight: 700;
+  letter-spacing: -0.012em;
+
+  @include font-size(20);
+  @include line-height(28);
+}
+
+@mixin heading-02-sb {
+  font-weight: 600;
+  letter-spacing: -0.012em;
+
+  @include font-size(20);
+  @include line-height(28);
+}
+
+@mixin heading-02-m {
+  font-weight: 500;
+  letter-spacing: -0.012em;
+
+  @include font-size(20);
+  @include line-height(28);
+}
+
+@mixin heading-02-r {
+  font-weight: 400;
+  letter-spacing: -0.012em;
+
+  @include font-size(20);
+  @include line-height(28);
+}
+
+
+```
+### Headline 
+``` css
+/* headline-01 */
+@mixin headline-01-b {
+  font-weight: 700;
+  letter-spacing: -0.002em;
+
+  @include font-size(18);
+  @include line-height(26);
+}
+
+@mixin headline-01-sb {
+  font-weight: 600;
+  letter-spacing: -0.002em;
+
+  @include font-size(18);
+  @include line-height(26);
+}
+
+@mixin headline-01-m {
+  font-weight: 500;
+  letter-spacing: -0.002em;
+
+  @include font-size(18);
+  @include line-height(26);
+}
+
+@mixin headline-01-r {
+  font-weight: 400;
+  letter-spacing: -0.002em;
+
+  @include font-size(18);
+  @include line-height(26);
+}
+
+
+/* headline-02 */
+@mixin headline-02-b {
+  font-weight: 700;
+  letter-spacing: 0;
+
+  @include font-size(17);
+  @include line-height(24);
+}
+
+@mixin headline-02-sb {
+  font-weight: 600;
+  letter-spacing: 0;
+
+  @include font-size(17);
+  @include line-height(24);
+}
+
+@mixin headline-02-m {
+  font-weight: 500;
+  letter-spacing: 0;
+
+  @include font-size(17);
+  @include line-height(24);
+}
+
+@mixin headline-02-r {
+  font-weight: 400;
+  letter-spacing: 0;
+
+  @include font-size(17);
+  @include line-height(24);
+}
+
+
+
+
+```
+### Body 
+``` css
+/* body-01-normal */
+@mixin body-01-normal-b {
+  font-weight: 700;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(24);
+}
+
+@mixin body-01-normal-sb {
+  font-weight: 600;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(24);
+}
+
+@mixin body-01-normal-m {
+  font-weight: 500;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(24);
+}
+
+@mixin body-01-normal-r {
+  font-weight: 400;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(24);
+}
+
+
+/* body-01-reading-01 */
+@mixin body-01-reading-01-b {
+  font-weight: 700;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(26);
+}
+
+@mixin body-01-reading-01-sb {
+  font-weight: 600;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(26);
+}
+
+@mixin body-01-reading-01-m {
+  font-weight: 500;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(26);
+}
+
+@mixin body-01-reading-01-r {
+  font-weight: 400;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(26);
+}
+
+/* body-01-reading-02 */
+@mixin body-01-reading-02-b {
+  font-weight: 700;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(21);
+}
+
+@mixin body-01-reading-02-sb {
+  font-weight: 600;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(21);
+}
+
+@mixin body-01-reading-02-m {
+  font-weight: 500;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(21);
+}
+
+@mixin body-01-reading-02-r {
+  font-weight: 400;
+  letter-spacing: 0.0057em;
+
+  @include font-size(16);
+  @include line-height(21);
+}
+
+/* body-02-normal */
+@mixin body-02-normal-b {
+  font-weight: 700;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-normal-sb {
+  font-weight: 600;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-normal-m {
+  font-weight: 500;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-normal-r {
+  font-weight: 400;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+
+/* body-02-reading */
+@mixin body-02-reading-b {
+  font-weight: 700;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-reading-sb {
+  font-weight: 600;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-reading-m {
+  font-weight: 500;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+@mixin body-02-reading-r {
+  font-weight: 400;
+  letter-spacing: 0.0096em;
+
+  @include font-size(15);
+  @include line-height(22);
+}
+
+```
+### Label 
+``` css
+
+/* label-01-normal */
+@mixin label-01-normal-b {
+  font-weight: 700;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(20);
+}
+
+@mixin label-01-normal-sb {
+  font-weight: 600;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(20);
+}
+
+@mixin label-01-normal-m {
+  font-weight: 500;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(20);
+}
+
+@mixin label-01-normal-r {
+  font-weight: 400;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(20);
+}
+
+/* label-01-reading */
+@mixin label-01-reading-b {
+  font-weight: 700;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-01-reading-sb {
+  font-weight: 600;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-01-reading-m {
+  font-weight: 500;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-01-reading-r {
+  font-weight: 400;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+/* label-02-normal */
+@mixin label-02-normal-b {
+  font-weight: 700;
+  letter-spacing: 0.0194em;
+
+  @include font-size(13);
+  @include line-height(18);
+}
+
+@mixin label-02-normal-sb {
+  font-weight: 600;
+  letter-spacing: 0.0194em;
+
+  @include font-size(13);
+  @include line-height(18);
+}
+
+@mixin label-02-normal-m {
+  font-weight: 500;
+  letter-spacing: 0.0194em;
+
+  @include font-size(13);
+  @include line-height(18);
+}
+
+@mixin label-02-normal-r {
+  font-weight: 400;
+  letter-spacing: 0.0194em;
+
+  @include font-size(13);
+  @include line-height(18);
+}
+
+/* label-01-reading */
+@mixin label-01-reading-b {
+  font-weight: 700;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-01-reading-sb {
+  font-weight: 600;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-01-reading-m {
+  font-weight: 500;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+@mixin label-01-reading-r {
+  font-weight: 400;
+  letter-spacing: 0.0145em;
+
+  @include font-size(14);
+  @include line-height(22);
+}
+
+
+```
+### Caption
+``` css
+
+/* caption-01 */
+@mixin caption-01-b {
+  font-weight: 700;
+  letter-spacing: 0.0252em;
+
+  @include font-size(12);
+  @include line-height(16) ;
+}
+
+@mixin caption-01-sb {
+  font-weight: 600;
+  letter-spacing: 0.0252em;
+
+  @include font-size(12);
+  @include line-height(16) ;
+}
+
+@mixin caption-01-m {
+  font-weight: 500;
+  letter-spacing: 0.0252em;
+
+  @include font-size(12);
+  @include line-height(16) ;
+}
+
+@mixin caption-01-r {
+  font-weight: 400;
+  letter-spacing: 0.0252em;
+
+  @include font-size(12);
+  @include line-height(16) ;
+}
+
+/* caption-02 */
+@mixin caption-02-b {
+  font-weight: 700;
+
+  @include font-size(11);
+  @include line-height(14);
+}
+
+@mixin caption-02-sb {
+  font-weight: 600;
+
+  @include font-size(11);
+  @include line-height(14);
+}
+
+@mixin caption-02-m {
+  font-weight: 500;
+
+  @include font-size(11);
+  @include line-height(14);
+}
+
+@mixin caption-02-r {
+  font-weight: 400;
+
+  @include font-size(11);
+  @include line-height(14);
+}
+
+@mixin add-title-28 {
+  line-height: 100%;
+
+  @include font-size(28);
+}
+
+@mixin add-title-28-eb {
+  @include add-title-28 ;
+
+  font-weight: 800;
+}
+
+@mixin add-title-28-b {
+  @include add-title-28 ;
+
+  font-weight: 700;
+}
+
+@mixin add-title-28-sb {
+  @include add-title-28 ;
+
+  font-weight: 600;
+}
+
+@mixin add-title-28-m {
+  @include add-title-28 ;
+
+  font-weight: 500;
+}
+
+@mixin add-title-28-r {
+  @include add-title-28 ;
+
+  font-weight: 400;
+}
+
+@mixin add-title-20 {
+  font-feature-settings: "ss10" on;
+  line-height: 100%;
+
+  @include font-size(20);
+}
+
+@mixin add-title-20-eb {
+  @include add-title-20 ;
+
+  font-weight: 800;
+}
+
+@mixin add-title-20-b {
+  @include add-title-20 ;
+
+  font-weight: 700;
+}
+
+@mixin add-title-20-sb {
+  @include add-title-20 ;
+
+  font-weight: 600;
+}
+
+@mixin add-title-20-m {
+  @include add-title-20 ;
+
+  font-weight: 500;
+}
+
+@mixin add-title-20-r {
+  @include add-title-20 ;
+
+  font-weight: 400;
+}
+
+@mixin add-title-18 {
+  font-feature-settings: "ss10" on;
+  line-height: 100%;
+
+  @include font-size(18);
+}
+
+@mixin add-title-18-eb {
+  @include add-title-18 ;
+
+  font-weight: 800;
+}
+
+@mixin add-title-18-b {
+  @include add-title-18 ;
+
+  font-weight: 700;
+}
+
+@mixin add-title-18-sb {
+  @include add-title-18 ;
+
+  font-weight: 600;
+}
+
+@mixin add-title-18-m {
+  @include add-title-18 ;
+
+  font-weight: 500;
+}
+
+@mixin add-title-18-r {
+  @include add-title-18 ;
+
+  font-weight: 400;
+}
+
+@mixin add-body-text-18 {
+  font-feature-settings: "ss10" on;
+  line-height: 100%;
+
+  @include font-size(18);
+}
+
+@mixin add-body-text-18-eb {
+  @include add-body-text-18;
+
+  font-weight: 800;
+}
+
+@mixin add-body-text-18-b {
+  @include add-body-text-18;
+
+  font-weight: 700;
+}
+
+@mixin add-body-text-18-sb {
+  @include add-body-text-18;
+
+  font-weight: 600;
+}
+
+@mixin add-body-text-18-m {
+  @include add-body-text-18;
+
+  font-weight: 500;
+}
+
+@mixin add-body-text-18-r {
+  @include add-body-text-18;
+
+  font-weight: 400;
+}
+
+@mixin add-body-text-16 {
+  font-feature-settings: "ss10" on;
+  line-height: 100%;
+
+  @include font-size(16);
+}
+
+@mixin add-body-text-16-eb {
+  @include add-body-text-16;
+
+  font-weight: 800;
+}
+
+@mixin add-body-text-16-b {
+  @include add-body-text-16;
+
+  font-weight: 700;
+}
+
+@mixin add-body-text-16-sb {
+  @include add-body-text-16;
+
+  font-weight: 600;
+}
+
+@mixin add-body-text-16-m {
+  @include add-body-text-16;
+
+  font-weight: 500;
+}
+
+@mixin add-body-text-16-r {
+  @include add-body-text-16;
+
+  font-weight: 400;
+}
+
+@mixin add-body-text-15 {
+  font-feature-settings: "ss10" on;
+  line-height: 100%;
+
+  @include font-size(15);
+}
+
+@mixin add-body-text-15-eb {
+  @include add-body-text-15;
+
+  font-weight: 800;
+}
+
+@mixin add-body-text-15-b {
+  @include add-body-text-15;
+
+  font-weight: 700;
+}
+
+@mixin add-body-text-15-sb {
+  @include add-body-text-15;
+
+  font-weight: 600;
+}
+
+@mixin add-body-text-15-m {
+  @include add-body-text-15;
+
+  font-weight: 500;
+}
+
+@mixin add-body-text-15-r {
+  @include add-body-text-15;
+
+  font-weight: 400;
+}
+
+@mixin add-body-text-14 {
+  font-feature-settings: "ss10" on;
+  line-height: 100%;
+
+  @include font-size(14);
+}
+
+@mixin add-body-text-14-eb {
+  @include add-body-text-14;
+
+  font-weight: 800;
+}
+
+@mixin add-body-text-14-b {
+  @include add-body-text-14;
+
+  font-weight: 700;
+}
+
+@mixin add-body-text-14-sb {
+  @include add-body-text-14;
+
+  font-weight: 600;
+}
+
+@mixin add-body-text-14-m {
+  @include add-body-text-14;
+
+  font-weight: 500;
+}
+
+@mixin add-body-text-14-r {
+  @include add-body-text-14;
+
+  font-weight: 400;
+}
+
+@mixin add-body-text-13 {
+  font-feature-settings: "ss10" on;
+  line-height: 100%;
+
+  @include font-size(13);
+}
+
+@mixin add-body-text-13-eb {
+  font-weight: 800;
+
+  @include add-body-text-13;
+}
+
+@mixin add-body-text-13-b {
+  @include add-body-text-13;
+
+  font-weight: 700;
+}
+
+@mixin add-body-text-13-sb {
+  @include add-body-text-13;
+
+  font-weight: 600;
+}
+
+@mixin add-body-text-13-m {
+  @include add-body-text-13;
+
+  font-weight: 500;
+}
+
+@mixin add-body-text-13-r {
+  @include add-body-text-13;
+
+  font-weight: 400;
+}
+
+@mixin add-body-text-12 {
+  font-feature-settings: "ss10" on;
+  line-height: 100%;
+
+  @include font-size(12);
+}
+
+@mixin add-body-text-12-eb {
+  @include add-body-text-12;
+
+  font-weight: 800;
+}
+
+@mixin add-body-text-12-b {
+  @include add-body-text-12;
+
+  font-weight: 700;
+}
+
+@mixin add-body-text-12-sb {
+  @include add-body-text-12;
+
+  font-weight: 600;
+}
+
+@mixin add-body-text-12-m {
+  @include add-body-text-12;
+
+  font-weight: 500;
+}
+
+@mixin add-body-text-12-r {
+  @include add-body-text-12;
+
+  font-weight: 400;
+}
+
+
+```

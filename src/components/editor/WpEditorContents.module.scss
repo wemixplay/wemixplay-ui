@@ -1,5 +1,5 @@
 .editor-contents {
-  color: var(--semantic-label-normal);
+  color: var(--wp-semantic-label-normal);
   white-space: pre-wrap;
   word-break: break-all;
 
@@ -24,7 +24,7 @@
     }
 
     a {
-      color: var(--semantic-status-blue);
+      color: var(--wp-semantic-status-blue);
       text-decoration: none;
     }
 
@@ -46,13 +46,13 @@
       }
 
       &.complete-mention {
-        color: var(--semantic-status-blue);
+        color: var(--wp-semantic-status-blue);
       }
     }
 
     .hash {
       position: relative;
-      color: var(--semantic-status-blue);
+      color: var(--wp-semantic-status-blue);
       font-size: inherit;
       font-weight: inherit;
       letter-spacing: inherit;

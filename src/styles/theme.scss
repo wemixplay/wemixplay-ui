@@ -1,267 +1,213 @@
 /* stylelint-disable custom-property-pattern */
 
-[data-theme="light"] {
+:root .wm-ui {
   // static
-  --semantic-static-white: #{$color-global-common-100};
-  --semantic-static-black: #{$color-global-common-0};
-  --semantic-static-gray05: #{$color-global-coolNeutral-99};
-  --semantic-static-gray10: #{rgba( $color-global-coolNeutral-50, $color-global-opacity-6)};
-  --semantic-static-gray80: #43444a;
-  --semantic-static-gray85: #313337;
-  --semantic-static-gray90: #252629;
-  --semantic-static-gray95: #1f2023;
+  --wp-semantic-static-white: #{$color-global-common-100};
+  --wp-semantic-static-black: #{$color-global-common-0};
+  --wp-semantic-static-gray05: #{$color-global-coolNeutral-99};
+  --wp-semantic-static-gray10: #{rgba( $color-global-coolNeutral-50, $color-global-opacity-6)};
+  --wp-semantic-static-gray80: #43444a;
+  --wp-semantic-static-gray85: #313337;
+  --wp-semantic-static-gray90: #252629;
+  --wp-semantic-static-gray95: #1f2023;
 
   // primary
-  --semantic-primary-normal: #{$color-global-wemixplay-50};
-  --semantic-primary-strong: #{$color-global-wemixplay-40};
-  --semantic-primary-heavy: #{$color-global-wemixplay-30};
+  --wp-semantic-primary-normal: #{$color-global-wemixplay-50};
+  --wp-semantic-primary-strong: #{$color-global-wemixplay-40};
+  --wp-semantic-primary-heavy: #{$color-global-wemixplay-30};
 
   // highlight
-  --semantic-highlight-normal: #{$color-global-blue-50};
-  --semantic-highlight-strong: #{$color-global-blue-45};
-  --semantic-highlight-heavy: #{$color-global-blue-40};
+  --wp-semantic-highlight-normal: #{$color-global-blue-50};
+  --wp-semantic-highlight-strong: #{$color-global-blue-45};
+  --wp-semantic-highlight-heavy: #{$color-global-blue-40};
 
   // label
-  --semantic-label-normal: #{$color-global-coolNeutral-10};
-  --semantic-label-strong: #{$color-global-common-0};
-  --semantic-label-neutral: #{rgba($color-global-coolNeutral-22, $color-global-opacity-88)};
-  --semantic-label-alternative: #{rgba($color-global-coolNeutral-25, $color-global-opacity-61)};
-  --semantic-label-assistive: #{rgba($color-global-coolNeutral-25, $color-global-opacity-28)};
-  --semantic-label-disable: #{rgba($color-global-coolNeutral-25, $color-global-opacity-16)};
-  --semantic-label-inverse-normal: #{$color-global-coolNeutral-99};
-  --semantic-label-inverse-alternative: #{rgba($color-global-coolNeutral-80, $color-global-opacity-61)};
+  --wp-semantic-label-normal: #{$color-global-coolNeutral-10};
+  --wp-semantic-label-strong: #{$color-global-common-0};
+  --wp-semantic-label-neutral: #{rgba($color-global-coolNeutral-22, $color-global-opacity-88)};
+  --wp-semantic-label-alternative: #{rgba($color-global-coolNeutral-25, $color-global-opacity-61)};
+  --wp-semantic-label-assistive: #{rgba($color-global-coolNeutral-25, $color-global-opacity-28)};
+  --wp-semantic-label-disable: #{rgba($color-global-coolNeutral-25, $color-global-opacity-16)};
+  --wp-semantic-label-inverse-normal: #{$color-global-coolNeutral-99};
+  --wp-semantic-label-inverse-alternative: #{rgba($color-global-coolNeutral-80, $color-global-opacity-61)};
 
   // background
-  --semantic-background-normal-normal: #{$color-global-common-100};
-  --semantic-background-normal-alternative: #{$color-global-coolNeutral-99};
-  --semantic-background-elevated-normal: #{$color-global-common-100};
-  --semantic-background-elevated-alternative: #{$color-global-coolNeutral-99};
-  --semantic-background-black: #{rgba($color-global-common-0, $color-global-opacity-61)};
+  --wp-semantic-background-normal-normal: #{$color-global-common-100};
+  --wp-semantic-background-normal-alternative: #{$color-global-coolNeutral-99};
+  --wp-semantic-background-elevated-normal: #{$color-global-common-100};
+  --wp-semantic-background-elevated-alternative: #{$color-global-coolNeutral-99};
+  --wp-semantic-background-black: #{rgba($color-global-common-0, $color-global-opacity-61)};
 
   // interaction
-  --semantic-interaction-inactive: #{$color-global-coolNeutral-70};
-  --semantic-interaction-disable: #{$color-global-coolNeutral-98};
+  --wp-semantic-interaction-inactive: #{$color-global-coolNeutral-70};
+  --wp-semantic-interaction-disable: #{$color-global-coolNeutral-98};
 
   // line
-  --semantic-line-normal-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
-  --semantic-line-normal-neutral: #{rgba($color-global-coolNeutral-50, $color-global-opacity-16)};
-  --semantic-line-normal-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-8)};
-  --semantic-line-normal-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-52)};
-  --semantic-line-solid-normal: #{$color-global-coolNeutral-96};
-  --semantic-line-solid-neutral: #{$color-global-coolNeutral-97};
-  --semantic-line-solid-alternative: #{$color-global-coolNeutral-98};
-  --semantic-line-solid-strong: #{$color-global-coolNeutral-80};
+  --wp-semantic-line-normal-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
+  --wp-semantic-line-normal-neutral: #{rgba($color-global-coolNeutral-50, $color-global-opacity-16)};
+  --wp-semantic-line-normal-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-8)};
+  --wp-semantic-line-normal-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-52)};
+  --wp-semantic-line-solid-normal: #{$color-global-coolNeutral-96};
+  --wp-semantic-line-solid-neutral: #{$color-global-coolNeutral-97};
+  --wp-semantic-line-solid-alternative: #{$color-global-coolNeutral-98};
+  --wp-semantic-line-solid-strong: #{$color-global-coolNeutral-80};
 
   // status
-  --semantic-status-positive: #{$color-global-green-50};
-  --semantic-status-positive-heavy: #{$color-global-green-40};
-  --semantic-status-positive-bg: #{rgba($color-global-green-50, $color-global-opacity-10)};
-  --semantic-status-cautionary: #{$color-global-orange-50};
-  --semantic-status-cautionary-bg: #{rgba($color-global-orange-50, $color-global-opacity-10)};
-  --semantic-status-negative: #{$color-global-red-50};
-  --semantic-status-negative-bg: #{rgba($color-global-red-50, $color-global-opacity-16)};
-  --semantic-status-negative-ball: #{rgba($color-global-red-50, $color-global-opacity-74)};
-  --semantic-status-blue: #{$color-global-blue-50};
-  --semantic-status-blue-bg: #{rgba($color-global-blue-50, $color-global-opacity-10)};
+  --wp-semantic-status-positive: #{$color-global-green-50};
+  --wp-semantic-status-positive-heavy: #{$color-global-green-40};
+  --wp-semantic-status-positive-bg: #{rgba($color-global-green-50, $color-global-opacity-10)};
+  --wp-semantic-status-cautionary: #{$color-global-orange-50};
+  --wp-semantic-status-cautionary-bg: #{rgba($color-global-orange-50, $color-global-opacity-10)};
+  --wp-semantic-status-negative: #{$color-global-red-50};
+  --wp-semantic-status-negative-bg: #{rgba($color-global-red-50, $color-global-opacity-16)};
+  --wp-semantic-status-negative-ball: #{rgba($color-global-red-50, $color-global-opacity-74)};
+  --wp-semantic-status-blue: #{$color-global-blue-50};
+  --wp-semantic-status-blue-bg: #{rgba($color-global-blue-50, $color-global-opacity-10)};
 
   // accent
-  --semantic-accent-lime: #{$color-global-lime-50};
-  --semantic-accent-cyan: #{$color-global-cyan-50};
-  --semantic-accent-lightBlue: #{$color-global-lightBlue-50};
-  --semantic-accent-violet: #{$color-global-violet-50};
-  --semantic-accent-purple: #{$color-global-purple-50};
-  --semantic-accent-pink: #{$color-global-pink-50};
-  --semantic-accent-redOrange: #{$color-global-redOrange-50};
+  --wp-semantic-accent-lime: #{$color-global-lime-50};
+  --wp-semantic-accent-cyan: #{$color-global-cyan-50};
+  --wp-semantic-accent-lightBlue: #{$color-global-lightBlue-50};
+  --wp-semantic-accent-violet: #{$color-global-violet-50};
+  --wp-semantic-accent-purple: #{$color-global-purple-50};
+  --wp-semantic-accent-pink: #{$color-global-pink-50};
+  --wp-semantic-accent-redOrange: #{$color-global-redOrange-50};
 
   // Component - fill
-  --semantic-fill-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-8)};
-  --semantic-fill-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-16)};
-  --semantic-fill-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-5)};
+  --wp-semantic-fill-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-8)};
+  --wp-semantic-fill-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-16)};
+  --wp-semantic-fill-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-5)};
 
   // Component - Material
-  --semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-74)};
-  --semantic-material-badge-violet-bg: #{rgba($color-global-violet-70, $color-global-opacity-20)};
-  --semantic-material-badge-violet-50: #{$color-global-violet-50};
-  --semantic-material-badge-violet-20: #{$color-global-violet-20};
+  --wp-semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-74)};
+  --wp-semantic-material-badge-violet-bg: #{rgba($color-global-violet-70, $color-global-opacity-20)};
+  --wp-semantic-material-badge-violet-50: #{$color-global-violet-50};
+  --wp-semantic-material-badge-violet-20: #{$color-global-violet-20};
 
   // Shadow
-  --semantic-shadow-normal:
+  --wp-semantic-shadow-normal:
     0 1px 2px rgb(0 0 0 / 12%),
     0 0 1px rgb(0 0 0 / 8%),
     0 0 1px rgb(0 0 0 / 8%);
-  --semantic-shadow-emphasize:
+  --wp-semantic-shadow-emphasize:
     0 2px 8px rgb(0 0 0 / 12%),
     0 1px 4px rgb(0 0 0 / 8%),
     0 0 1px rgb(0 0 0 / 8%);
-  --semantic-shadow-strong:
+  --wp-semantic-shadow-strong:
     0 6px 12px rgb(0 0 0 / 12%),
     0 4px 8px rgb(0 0 0 / 8%),
     0 0 4px rgb(0 0 0 / 8%);
-  --semantic-shadow-heavy:
+  --wp-semantic-shadow-heavy:
     0 16px 20px rgb(0 0 0 / 12%),
     0 8px 16px rgb(0 0 0 / 8%),
     0 0 8px rgb(0 0 0 / 8%);
-  --semantic-shadow-big: 0 20px 50px 0 rgb(0 0 0 / 10%);
-  --semantic-shadow-cookie: 0 -5px 18px 0 rgb(0 0 0 / 8%);
-  --semantic-feed-shadow: 0 8px 26px 0 rgb(0 0 0 / 6%);
-
-  /*  Nft Marketplace */
-
-  /* Status */
-  --semantic-status-sold-out: #{$color-global-red-50};
-  --semantic-status-sold-out-line: #{rgba($color-global-red-50, $color-global-opacity-28)};
-  --semantic-status-sold-out-bg: #{rgba($color-global-red-50, $color-global-opacity-5)};
-  --semantic-status-burned: #{$color-global-orange-50};
-  --semantic-status-burned-line: #{rgba(255, 129, 13, 0.39)};
-  --semantic-status-burned-bg: #{$color-global-orange-95};
-  --semantic-color-gradation: #{linear-gradient(102deg, #c23d6e 0%, #ac40d2 32.81%, #7c46ed 66.67%, #4a45d1 100%)};
-  --semantic-nft-state-badge: #{rgb(255 0 102 / 10%)};
-  --semantic-status-bidding: #{$color-global-green-50};
-  --semantic-status-soon: #{$color-global-lightBlue-50};
-
-  // Button
-  --semantic-nft-switch-disabled: #{$color-global-neutral-50};
-
-  // Hover Color
-  --semantic-color-hover: #{rgba(112, 115, 124, 0.08)};
-
-  // 모바일 선택한 Filter Chip 스크롤 오른쪽 그라데이션 효과
-  --semantic-scroll: #{rgba($color-global-common-100, $color-global-opacity-5)};
-
-  // Gradient
-  --semantic-gradient-wemix: linear-gradient(102deg, #f74590 0%, #c049f8 32.81%, #7e50ff 66.67%, #4f51f8 100%);
-  --semantic-gradient-play: linear-gradient(93deg, #ea0388 -4.57%, #f06 47.57%, #fd6669 108.78%);
+  --wp-semantic-shadow-big: 0 20px 50px 0 rgb(0 0 0 / 10%);
+  --wp-semantic-shadow-cookie: 0 -5px 18px 0 rgb(0 0 0 / 8%);
+  --wp-semantic-feed-shadow: 0 8px 26px 0 rgb(0 0 0 / 6%);
 }
 
-[data-theme="dark"] {
+[data-theme="dark"] .wm-ui {
   // static
-  --semantic-static-white: #{$color-global-common-100};
-  --semantic-static-black: #{$color-global-common-0};
-  --semantic-static-gray05: #{$color-global-coolNeutral-99};
-  --semantic-static-gray10: #{rgba( $color-global-coolNeutral-50, $color-global-opacity-6)};
-  --semantic-static-gray80: #43444a;
-  --semantic-static-gray85: #313337;
-  --semantic-static-gray90: #252629;
-  --semantic-static-gray95: #1f2023;
+  --wp-semantic-static-white: #{$color-global-common-100};
+  --wp-semantic-static-black: #{$color-global-common-0};
+  --wp-semantic-static-gray05: #{$color-global-coolNeutral-99};
+  --wp-semantic-static-gray10: #{rgba( $color-global-coolNeutral-50, $color-global-opacity-6)};
+  --wp-semantic-static-gray80: #43444a;
+  --wp-semantic-static-gray85: #313337;
+  --wp-semantic-static-gray90: #252629;
+  --wp-semantic-static-gray95: #1f2023;
 
   // primary
-  --semantic-primary-normal: #{$color-global-wemixplay-50};
-  --semantic-primary-strong: #{$color-global-wemixplay-40};
-  --semantic-primary-heavy: #{$color-global-wemixplay-30};
+  --wp-semantic-primary-normal: #{$color-global-wemixplay-50};
+  --wp-semantic-primary-strong: #{$color-global-wemixplay-40};
+  --wp-semantic-primary-heavy: #{$color-global-wemixplay-30};
 
   // highlight
-  --semantic-highlight-normal: #{$color-global-blue-60};
-  --semantic-highlight-strong: #{$color-global-blue-55};
-  --semantic-highlight-heavy: #{$color-global-blue-50};
+  --wp-semantic-highlight-normal: #{$color-global-blue-60};
+  --wp-semantic-highlight-strong: #{$color-global-blue-55};
+  --wp-semantic-highlight-heavy: #{$color-global-blue-50};
 
   // label
-  --semantic-label-normal: #{$color-global-coolNeutral-99};
-  --semantic-label-strong: #{$color-global-common-100};
-  --semantic-label-neutral: #{rgba($color-global-coolNeutral-90, $color-global-opacity-88)};
-  --semantic-label-alternative: #{rgba($color-global-coolNeutral-80, $color-global-opacity-61)};
-  --semantic-label-assistive: #{rgba($color-global-coolNeutral-80, $color-global-opacity-28)};
-  --semantic-label-disable: #{rgba($color-global-coolNeutral-70, $color-global-opacity-16)};
-  --semantic-label-inverse-normal: #{$color-global-coolNeutral-10};
-  --semantic-label-inverse-alternative: #{rgba($color-global-coolNeutral-25, $color-global-opacity-61)};
+  --wp-semantic-label-normal: #{$color-global-coolNeutral-99};
+  --wp-semantic-label-strong: #{$color-global-common-100};
+  --wp-semantic-label-neutral: #{rgba($color-global-coolNeutral-90, $color-global-opacity-88)};
+  --wp-semantic-label-alternative: #{rgba($color-global-coolNeutral-80, $color-global-opacity-61)};
+  --wp-semantic-label-assistive: #{rgba($color-global-coolNeutral-80, $color-global-opacity-28)};
+  --wp-semantic-label-disable: #{rgba($color-global-coolNeutral-70, $color-global-opacity-16)};
+  --wp-semantic-label-inverse-normal: #{$color-global-coolNeutral-10};
+  --wp-semantic-label-inverse-alternative: #{rgba($color-global-coolNeutral-25, $color-global-opacity-61)};
 
   // background
-  --semantic-background-normal-normal: #{$color-global-coolNeutral-15};
-  --semantic-background-normal-alternative: #{$color-global-coolNeutral-5};
-  --semantic-background-elevated-normal: #{$color-global-coolNeutral-17};
-  --semantic-background-elevated-alternative: #{$color-global-coolNeutral-7};
-  --semantic-background-black: #{rgba($color-global-common-0, $color-global-opacity-61)};
+  --wp-semantic-background-normal-normal: #{$color-global-coolNeutral-15};
+  --wp-semantic-background-normal-alternative: #{$color-global-coolNeutral-5};
+  --wp-semantic-background-elevated-normal: #{$color-global-coolNeutral-17};
+  --wp-semantic-background-elevated-alternative: #{$color-global-coolNeutral-7};
+  --wp-semantic-background-black: #{rgba($color-global-common-0, $color-global-opacity-61)};
 
   // interaction
-  --semantic-interaction-inactive: #{$color-global-coolNeutral-40};
-  --semantic-interaction-disable: #{$color-global-coolNeutral-22};
+  --wp-semantic-interaction-inactive: #{$color-global-coolNeutral-40};
+  --wp-semantic-interaction-disable: #{$color-global-coolNeutral-22};
 
   // line
-  --semantic-line-normal-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-32)};
-  --semantic-line-normal-neutral: #{rgba($color-global-coolNeutral-50, $color-global-opacity-28)};
-  --semantic-line-normal-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
-  --semantic-line-normal-strong: #{rgba($color-global-coolNeutral-90, $color-global-opacity-52)};
-  --semantic-line-solid-normal: #{$color-global-coolNeutral-25};
-  --semantic-line-solid-neutral: #{$color-global-coolNeutral-23};
-  --semantic-line-solid-alternative: #{$color-global-coolNeutral-22};
-  --semantic-line-solid-strong: #{$color-global-coolNeutral-50};
+  --wp-semantic-line-normal-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-32)};
+  --wp-semantic-line-normal-neutral: #{rgba($color-global-coolNeutral-50, $color-global-opacity-28)};
+  --wp-semantic-line-normal-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
+  --wp-semantic-line-normal-strong: #{rgba($color-global-coolNeutral-90, $color-global-opacity-52)};
+  --wp-semantic-line-solid-normal: #{$color-global-coolNeutral-25};
+  --wp-semantic-line-solid-neutral: #{$color-global-coolNeutral-23};
+  --wp-semantic-line-solid-alternative: #{$color-global-coolNeutral-22};
+  --wp-semantic-line-solid-strong: #{$color-global-coolNeutral-50};
 
   // status
-  --semantic-status-positive: #{$color-global-green-60};
-  --semantic-status-positive-heavy: #{$color-global-green-40};
-  --semantic-status-positive-bg: #{rgba($color-global-green-60, $color-global-opacity-10)};
-  --semantic-status-cautionary: #{$color-global-orange-60};
-  --semantic-status-cautionary-bg: #{rgba($color-global-orange-60, $color-global-opacity-10)};
-  --semantic-status-negative: #{$color-global-red-60};
-  --semantic-status-negative-bg: #{rgba($color-global-red-60, $color-global-opacity-16)};
-  --semantic-status-negative-ball: #{rgba($color-global-red-60, $color-global-opacity-74)};
-  --semantic-status-blue: #{$color-global-blue-60};
-  --semantic-status-blue-bg: #{rgba($color-global-blue-60, $color-global-opacity-10)};
+  --wp-semantic-status-positive: #{$color-global-green-60};
+  --wp-semantic-status-positive-heavy: #{$color-global-green-40};
+  --wp-semantic-status-positive-bg: #{rgba($color-global-green-60, $color-global-opacity-10)};
+  --wp-semantic-status-cautionary: #{$color-global-orange-60};
+  --wp-semantic-status-cautionary-bg: #{rgba($color-global-orange-60, $color-global-opacity-10)};
+  --wp-semantic-status-negative: #{$color-global-red-60};
+  --wp-semantic-status-negative-bg: #{rgba($color-global-red-60, $color-global-opacity-16)};
+  --wp-semantic-status-negative-ball: #{rgba($color-global-red-60, $color-global-opacity-74)};
+  --wp-semantic-status-blue: #{$color-global-blue-60};
+  --wp-semantic-status-blue-bg: #{rgba($color-global-blue-60, $color-global-opacity-10)};
 
   // accent
-  --semantic-accent-lime: #{$color-global-lime-60};
-  --semantic-accent-cyan: #{$color-global-cyan-60};
-  --semantic-accent-lightBlue: #{$color-global-lightBlue-60};
-  --semantic-accent-violet: #{$color-global-violet-60};
-  --semantic-accent-purple: #{$color-global-purple-60};
-  --semantic-accent-pink: #{$color-global-pink-60};
-  --semantic-accent-redOrange: #{$color-global-redOrange-60};
+  --wp-semantic-accent-lime: #{$color-global-lime-60};
+  --wp-semantic-accent-cyan: #{$color-global-cyan-60};
+  --wp-semantic-accent-lightBlue: #{$color-global-lightBlue-60};
+  --wp-semantic-accent-violet: #{$color-global-violet-60};
+  --wp-semantic-accent-purple: #{$color-global-purple-60};
+  --wp-semantic-accent-pink: #{$color-global-pink-60};
+  --wp-semantic-accent-redOrange: #{$color-global-redOrange-60};
 
   // Component - fill
-  --semantic-fill-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
-  --semantic-fill-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-28)};
-  --semantic-fill-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-12)};
+  --wp-semantic-fill-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
+  --wp-semantic-fill-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-28)};
+  --wp-semantic-fill-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-12)};
 
   // Component - Material
-  --semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-74)};
-  --semantic-material-badge-violet-bg: #{rgba($color-global-violet-70, $color-global-opacity-30)};
-  --semantic-material-badge-violet-50: #{$color-global-violet-70};
-  --semantic-material-badge-violet-20: #{$color-global-violet-90};
+  --wp-semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-74)};
+  --wp-semantic-material-badge-violet-bg: #{rgba($color-global-violet-70, $color-global-opacity-30)};
+  --wp-semantic-material-badge-violet-50: #{$color-global-violet-70};
+  --wp-semantic-material-badge-violet-20: #{$color-global-violet-90};
 
   // Shadow
-  --semantic-shadow-normal:
+  --wp-semantic-shadow-normal:
     0 1px 2px rgb(0 0 0 / 12%),
     0 0 1px rgb(0 0 0 / 8%),
     0 0 1px rgb(0 0 0 / 8%);
-  --semantic-shadow-emphasize:
+  --wp-semantic-shadow-emphasize:
     0 2px 8px rgb(0 0 0 / 12%),
     0 1px 4px rgb(0 0 0 / 8%),
     0 0 1px rgb(0 0 0 / 8%);
-  --semantic-shadow-strong:
+  --wp-semantic-shadow-strong:
     0 6px 12px rgb(0 0 0 / 12%),
     0 4px 8px rgb(0 0 0 / 8%),
     0 0 4px rgb(0 0 0 / 8%);
-  --semantic-shadow-heavy:
+  --wp-semantic-shadow-heavy:
     0 16px 20px rgb(0 0 0 / 12%),
     0 8px 16px rgb(0 0 0 / 8%),
     0 0 8px rgb(0 0 0 / 8%);
-  --semantic-shadow-big: 0 20px 50px 0 rgb(0 0 0 / 10%);
-  --semantic-shadow-cookie: 0 -5px 18px 0 rgb(0 0 0 / 8%);
-  --semantic-feed-shadow: 0 8px 26px 0 rgb(0 0 0 / 6%);
-
-  /*  Nft Marketplace */
-
-  /* Status */
-  --semantic-status-sold-out: #{$color-global-red-50};
-  --semantic-status-sold-out-line: #{rgba($color-global-red-50, $color-global-opacity-28)};
-  --semantic-status-sold-out-bg: #{rgba($color-global-red-50, $color-global-opacity-5)};
-  --semantic-status-burned: #{$color-global-orange-50};
-  --semantic-status-burned-line: #{rgba(255, 129, 13, 0.39)};
-  --semantic-status-burned-bg: #{$color-global-orange-95};
-  --semantic-color-gradation: #{linear-gradient(102deg, #c23d6e 0%, #ac40d2 32.81%, #7c46ed 66.67%, #4a45d1 100%)};
-  --semantic-nft-state-badge: #{rgb(255 0 102 / 10%)};
-  --semantic-status-bidding: #{$color-global-green-50};
-  --semantic-status-soon: #{$color-global-lightBlue-50};
-
-  // Button
-  --semantic-nft-switch-disabled: #{$color-global-neutral-50};
-
-  // Hover Color
-  --semantic-color-hover: #{rgba(112, 115, 124, 0.08)};
-
-  // 모바일 선택한 Filter Chip 스크롤 오른쪽 그라데이션 효과
-  --semantic-scroll: #{rgba($color-global-common-0, $color-global-opacity-5)};
-
-  // Gradient
-  --semantic-gradient-wemix: linear-gradient(102deg, #f74590 0%, #c049f8 32.81%, #7e50ff 66.67%, #4f51f8 100%);
-  --semantic-gradient-play: linear-gradient(93deg, #ea0388 -4.57%, #f06 47.57%, #fd6669 108.78%);
+  --wp-semantic-shadow-big: 0 20px 50px 0 rgb(0 0 0 / 10%);
+  --wp-semantic-shadow-cookie: 0 -5px 18px 0 rgb(0 0 0 / 8%);
+  --wp-semantic-feed-shadow: 0 8px 26px 0 rgb(0 0 0 / 6%);
 }

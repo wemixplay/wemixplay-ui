@@ -30,7 +30,7 @@ fi
 version=$(grep "\"$current_branch\":" version.json | sed -E "s/.*\"$current_branch\": *\"([^\"]+)\".*/\1/")
 
 if [ -z "$version" ]; then
-    print_string "error" "package.json에서 버전 정보를 찾을 수 없습니다. 파일을 확인하세요."
+    print_string "error" "version.json에서 버전 정보를 찾을 수 없습니다. 파일을 확인하세요."
     exit 1
 fi
 
@@ -46,6 +46,8 @@ minor=$((minor))
 patch=$((patch))
 tag=$([ "$current_branch" = "main" ] && echo "latest" || echo "alpha")
 tag_str=$([ "$tag" = "latest" ] && echo "" || echo "-alpha")
+
+export NPM_PUBLISH_TAG=$tag
 
 if [ -z "$major" ] || [ -z "$minor" ] || [ -z "$patch" ]; then
     print_string "error" "버전 정보를 올바르게 추출하지 못했습니다. 파일을 확인하세요."
@@ -69,6 +71,13 @@ auto_new_version="$major.$minor.$patch${tag_str}"
 
 read -p "새로운 버전을 입력하세요 ( 자동 생성 버전: $auto_new_version ): " new_version
 
+# 버전 형식 확인
+version_regex="^[0-9]+\.[0-9]+\.[0-9]+(-alpha)?$"
+if [[ -n "$new_version" && ! "$new_version" =~ $version_regex ]]; then
+    print_string "error" "올바른 버전 형식이 아닙니다. 형식: number.number.number 또는 number.number.number-alpha"
+    exit 1
+fi
+
 if [ -z "$new_version" ]; then
     new_version=$auto_new_version
 else
@@ -84,16 +93,22 @@ fi
 tag_version="npm-publish/$new_version"
 
 print_string "warning" "프로젝트 빌드 중..."
-yarn cache clean && yarn run build || { print_string "error" "빌드 실패"; exit 1; }
+rm -rf dist
+yarn cache clean && yarn && yarn build || { print_string "error" "빌드 실패"; exit 1; }
 
 print_string "success" "패키지 설치 및 빌드 완료"
 
 # 버전 업데이트
 yarn version --new-version $new_version --tag $tag --no-git-tag-version
 
-echo $current_branch
-echo $new_version
-echo $version;
+git add -f package.json version.json ./dist
+
+git commit -m "update version to $new_version"
+git push origin $current_branch
+
+git tag -a $tag_version -m "Release $new_version"
+git push origin $tag_version
+git tag -d $tag_version
 
 # version.json 업데이트
 # MacOS와 Linux 모두 호환되도록 수정
@@ -105,14 +120,10 @@ else
     sed -i "s/\"$current_branch\": *\"[^\"]*\"/\"$current_branch\": \"$new_version\"/" version.json
 fi
 
-git add -f package.json version.json ./dist
+git add -f version.json
 
-git commit -m "update version to $new_version"
+git commit -m "update version.json"
 git push origin $current_branch
-
-git tag -a $tag_version -m "Release $new_version"
-git push origin $tag_version
-git tag -d $tag_version
 
 print_string "success" "=================================="
 print_string "success" "✨🎉 v $new_version 배포 완료 🎉✨"

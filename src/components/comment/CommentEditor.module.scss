@@ -17,15 +17,15 @@
       width: 100%;
       height: 180px;
       padding: $sp-12;
-      border: 1px solid var(--semantic-line-normal-alternative);
+      border: 1px solid var(--wp-semantic-line-normal-alternative);
       border-radius: $rd-12;
       margin: 0;
-      background: var(--semantic-background-normal-alternative);
-      color: var(--semantic-label-normal);
+      background: var(--wp-semantic-background-normal-alternative);
+      color: var(--wp-semantic-label-normal);
       font-feature-settings: "ss10" on;
       overflow-y: auto;
 
-      @include scroll(3px, var(--semantic-fill-strong), transparent);
+      @include scroll(3px, var(--wp-semantic-fill-strong), transparent);
       @include label-01-normal-r;
 
       @include breakpoint-768 {
@@ -36,24 +36,24 @@
       }
 
       &:focus {
-        border: 1px solid var(--semantic-label-alternative);
+        border: 1px solid var(--wp-semantic-label-alternative);
 
         @include breakpoint-768 {
-          background: var(--semantic-background-normal-normal);
+          background: var(--wp-semantic-background-normal-normal);
         }
       }
 
       &.filled {
         @include breakpoint-768 {
-          border: 1px solid var(--semantic-label-alternative);
-          border-color: var(--semantic-label-alternative) !important;
-          background: var(--semantic-background-normal-normal);
+          border: 1px solid var(--wp-semantic-label-alternative);
+          border-color: var(--wp-semantic-label-alternative) !important;
+          background: var(--wp-semantic-background-normal-normal);
         }
       }
 
       &:empty {
         &::before {
-          color: var(--semantic-label-alternative);
+          color: var(--wp-semantic-label-alternative);
 
           @include label-02-normal-r;
         }
@@ -66,7 +66,7 @@
     align-items: center;
     justify-content: flex-end;
     margin-top: $sp-12;
-    color: var(--semantic-label-assistive);
+    color: var(--wp-semantic-label-assistive);
     font-feature-settings: "ss10" on;
     font-style: normal;
     text-align: center;
@@ -79,7 +79,7 @@
 
     .counter-current {
       padding-right: $sp-4;
-      color: var(--semantic-label-normal);
+      color: var(--wp-semantic-label-normal);
       font-style: normal;
     }
 

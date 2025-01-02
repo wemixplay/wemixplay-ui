@@ -44,7 +44,7 @@
     .author-name {
       width: 100%;
       min-height: 24px;
-      color: var(--semantic-label-normal);
+      color: var(--wp-semantic-label-normal);
 
       @include add-body-text-16-b;
 
@@ -58,7 +58,7 @@
 
     .author-followers {
       margin-right: $sp-8;
-      color: var(--semantic-label-normal);
+      color: var(--wp-semantic-label-normal);
       font-feature-settings: "ss10" on;
 
       @include add-body-text-13-m;
@@ -69,7 +69,7 @@
     }
 
     .author-time {
-      color: var(--semantic-label-alternative);
+      color: var(--wp-semantic-label-alternative);
       font-feature-settings: "ss10" on;
 
       @include add-body-text-13-m;

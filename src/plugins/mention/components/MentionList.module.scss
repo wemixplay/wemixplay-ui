@@ -6,9 +6,9 @@
   width: 100%;
   max-width: 240px;
   padding: $sp-8 0 $sp-8 $sp-8;
-  border: 1px solid  var(--semantic-line-solid-normal);
+  border: 1px solid  var(--wp-semantic-line-solid-normal);
   border-radius: $rd-8;
-  background: var(--semantic-background-normal-alternative);
+  background: var(--wp-semantic-background-normal-alternative);
   box-shadow: 0 8px 14px 0 rgb(0 0 0 / 14%);
   visibility: hidden;
 
@@ -26,7 +26,7 @@
     margin-right: 3px;
     list-style: none;
 
-    @include scroll(3px, var(--semantic-fill-strong), transparent);
+    @include scroll(3px, var(--wp-semantic-fill-strong), transparent);
 
     >.mention-item {
       display: flex;
@@ -36,7 +36,7 @@
       align-items: center;
       padding: $sp-8;
       border-radius: $rd-8;
-      color: var(--semantic-label-normal);
+      color: var(--wp-semantic-label-normal);
       cursor: pointer;
       transition: background 0.3s;
       user-select: none;
@@ -70,8 +70,8 @@
 
       &.active {
         /* stylelint-disable-next-line custom-property-pattern */
-        background: var(--semantic-line-solid-neutral);
-        color: var(--semantic-label-normal);
+        background: var(--wp-semantic-line-solid-neutral);
+        color: var(--wp-semantic-label-normal);
         font-weight: 700;
       }
     }

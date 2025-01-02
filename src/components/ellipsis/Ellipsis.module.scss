@@ -1,5 +1,5 @@
 .ellipsis-wrap {
-  color: var(--semantic-label-strong);
+  color: var(--wp-semantic-label-strong);
 
   &.shortened {
     .btn-ellipsis-trigger {
@@ -47,7 +47,7 @@
     margin-top: $sp-8;
     background: transparent;
     color: inherit;
-    color: var(--semantic-label-neutral);
+    color: var(--wp-semantic-label-neutral);
     font-size: inherit;
     font-style: normal;
     font-weight: inherit;
@@ -68,7 +68,7 @@
       transition: transform 0.25s;
 
       path {
-        fill: var(--semantic-label-neutral);
+        fill: var(--wp-semantic-label-neutral);
       }
 
       @include breakpoint-768 {

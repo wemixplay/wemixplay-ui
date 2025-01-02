@@ -9,14 +9,14 @@
   .wp-editor-content {
     display: block;
     padding: $sp-12 $sp-20;
-    border: 1px solid var(--semantic-line-normal-alternative);
+    border: 1px solid var(--wp-semantic-line-normal-alternative);
     margin: $sp-12 0;
     overflow-y: auto;
 
     &:empty:not(:focus) {
       &::before {
         display: inline-block;
-        color: var(--semantic-label-assistive);
+        color: var(--wp-semantic-label-assistive);
         content: attr(aria-placeholder);
         font-size: inherit;
         font-weight: inherit;

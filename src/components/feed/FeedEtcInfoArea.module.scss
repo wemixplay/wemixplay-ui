@@ -23,7 +23,7 @@
     }
 
     &:hover {
-      background: var(--semantic-fill-normal);
+      background: var(--wp-semantic-fill-normal);
     }
 
     &:not(.btn-share) {
@@ -77,22 +77,22 @@
       path,
       rect {
         &[class*="fill"] {
-          fill: var(--semantic-label-neutral);
+          fill: var(--wp-semantic-label-neutral);
           fill-opacity: 1;
           stroke-opacity: 1;
 
           @include breakpoint-768 {
-            fill: var(--semantic-label-normal);
+            fill: var(--wp-semantic-label-normal);
           }
         }
 
         &[class*="stroke"] {
           fill-opacity: 1;
-          stroke: var(--semantic-label-neutral);
+          stroke: var(--wp-semantic-label-neutral);
           stroke-opacity: 1;
 
           @include breakpoint-768 {
-            fill: var(--semantic-label-normal);
+            fill: var(--wp-semantic-label-normal);
           }
         }
       }
@@ -111,31 +111,31 @@
       .icon {
         svg {
           [class*="fill"] {
-            fill: var(--semantic-primary-normal);
+            fill: var(--wp-semantic-primary-normal);
           }
 
           [class*="stroke"] {
-            stroke: var(--semantic-primary-normal);
+            stroke: var(--wp-semantic-primary-normal);
           }
         }
       }
 
       .count {
-        color: var(--semantic-primary-normal);
+        color: var(--wp-semantic-primary-normal);
       }
     }
   }
 
   .count {
     padding-left: $sp-2;
-    color: var(--semantic-label-neutral);
+    color: var(--wp-semantic-label-neutral);
     font-feature-settings: "ss10" on;
 
     @include add-body-text-14-sb;
 
     @include breakpoint-768 {
       padding-left: 0;
-      color: var(--semantic-label-normal);
+      color: var(--wp-semantic-label-normal);
 
       @include add-body-text-16-sb;
     }

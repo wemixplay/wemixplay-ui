@@ -241,6 +241,7 @@ $color-global-violet-10: #11024d;
 
 /* purple */
 $color-global-purple-99: #fefbff;
+$color-global-purple-98: rgb(203 89 255 / 20%);
 $color-global-purple-95: #f9edff;
 $color-global-purple-90: #f2d6ff;
 $color-global-purple-80: #e9baff;
@@ -995,7 +996,7 @@ $icon-chennel-certified: #3d6aff;
 }
 
 @mixin add-title-24-r {
-  @include add-title-28 ;
+  @include add-title-24 ;
 
   font-weight: 400;
 }
@@ -1300,6 +1301,7 @@ $icon-chennel-certified: #3d6aff;
 $color-white: #f5f5f5;
 $white: #eaecef;
 $black: #000;
+$gray00: #fff;
 $gray100: #1a1a1a;
 $gray90: #262626;
 $gray80: #404040;
@@ -1310,7 +1312,6 @@ $gray40: #a6a6a6;
 $gray30: #bfbfbf;
 $gray20: #d9d9d9;
 $gray10: #f2f2f2;
-$gray00: #fff;
 $play-red: #df3e82;
 $play-purple: #9573ff;
 $color-pink: #e12172;
@@ -1344,58 +1345,3 @@ $color-content-bg-dark: #141425;
 $color-content-bg-dark2: #101021;
 $color-black-popup-bg: #151521;
 $color-black-popup-content: #212132;
-
-/* Opacity Black */
-$black-100: rgb(0 0 0 / 100%);
-$black-96: rgb(0 0 0 / 96%);
-$black-88: rgb(0 0 0 / 88%);
-$black-80: rgb(0 0 0 / 80%);
-$black-72: rgb(0 0 0 / 72%);
-$black-64: rgb(0 0 0 / 64%);
-$black-56: rgb(0 0 0 / 56%);
-$black-48: rgb(0 0 0 / 48%);
-$black-40: rgb(0 0 0 / 40%);
-$black-32: rgb(0 0 0 / 32%);
-$black-24: rgb(0 0 0 / 24%);
-$black-16: rgb(0 0 0 / 16%);
-$black-8: rgb(0 0 0 / 8%);
-
-/* Opacity White  */
-$white-100: rgb(255  255 255 / 100%);
-$white-96: rgb(255  255 255 / 96%);
-$white-88: rgb(255  255 255 / 88%);
-$white-80: rgb(255  255 255 / 80%);
-$white-72: rgb(255  255 255 / 72%);
-$white-64: rgb(255  255 255 / 64%);
-$white-56: rgb(255  255 255 / 56%);
-$white-48: rgb(255  255 255 / 48%);
-$white-40: rgb(255  255 255 / 40%);
-$white-32: rgb(255  255 255 / 32%);
-$white-24: rgb(255  255 255 / 24%);
-$white-16: rgb(255  255 255 / 16%);
-$white-8: rgb(255  255 255 / 8%);
-
-/* Pink  */
-$pink-500: #df3e82;
-$pink-400: #f54977;
-$pink-300: #ff6690;
-$pink-200: #ffb3c7;
-
-/* Dark Grey */
-$dark-grey-01: #0c0c18;
-$dark-grey-02: #141425;
-$dark-grey-03: #18182c;
-$dark-grey-04: #272742;
-
-/* Grey */
-$grey-01: rgba(#f5f5f5, 0.64);
-$grey-02: #8a95a3;
-
-/* Gradient */
-$gradient-01: linear-gradient(90deg, rgb(255 41 93) 0%, rgb(255 66 202) 50.52%, rgb(178 81 255) 100%);
-$gradient-02: linear-gradient(78deg, rgb(181 187 247) -13.11%, rgb(207 206 224) 6.27%, rgb(214 201 219) 47.85%, rgb(186 232 255) 61.83%, rgb(205 204 248) 74.32%, rgb(205 204 248) 80.25%, rgb(255 251 253) 86.21%, rgb(255 251 253) 92.32%, rgb(252 206 245) 99.95%);
-$gradient-03: linear-gradient(256deg, rgb(255 255 255) 2.74%, rgb(212 212 212) 42.75%, rgb(255 255 255) 69.29%, rgb(197 197 197) 84.4%);
-
-/* Color */
-$green-01: #2dbe85;
-$red-01: #fc3044;

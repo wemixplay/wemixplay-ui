@@ -30,9 +30,9 @@
         bottom: 0;
         left: 0;
         display: block;
-        border: 1px solid var(--semantic-line-solid-normal);
+        border: 1px solid var(--wp-semantic-line-solid-normal);
         border-radius: 8px;
-        background-color: var(--semantic-background-normal-alternative);
+        background-color: var(--wp-semantic-background-normal-alternative);
         content: "";
         pointer-events: none;
         transition: border 0.3s, background-color 0.3s;
@@ -43,11 +43,11 @@
       // checked 됐을때
       &:checked {
         ~ .text {
-          color: var(--semantic-label-inverse-normal);
+          color: var(--wp-semantic-label-inverse-normal);
 
           &::after {
-            border: 1px solid var(--semantic-label-normal);
-            background-color: var(--semantic-label-normal);
+            border: 1px solid var(--wp-semantic-label-normal);
+            background-color: var(--wp-semantic-label-normal);
           }
         }
       }

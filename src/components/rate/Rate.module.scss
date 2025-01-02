@@ -1,0 +1,35 @@
+.rate {
+  @include caption-01-m;
+
+  display: flex;
+  align-items: center;
+  color: var(--wp-semantic-label-inverse-normal);
+
+  svg {
+    margin-right: 2px;
+  }
+
+  .fluctuation {
+    margin-left: $sp-4;
+  }
+
+  &.complement {
+    color: var(--wp-semantic-label-normal);
+    opacity: 0.6;
+    svg path { fill: var(--wp-semantic-label-normal); }
+  }
+
+  &.increase {
+    color: var(--wp-semantic-status-positive);
+    svg path { fill: var(--wp-semantic-status-positive); }
+  }
+
+  &.decrease {
+    color: var(--wp-semantic-status-negative);
+
+    svg {
+      transform: rotate(180deg);
+      path { fill: var(--wp-semantic-status-negative); }
+    }
+  }
+}

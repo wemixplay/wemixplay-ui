@@ -4,10 +4,10 @@
   height: 48px;
   box-sizing: border-box;
   padding: 0 $sp-16 0 $sp-16;
-  border: 1px solid var(--semantic-label-disable);
+  border: 1px solid var(--wp-semantic-label-disable);
   border-radius: $rd-6;
-  background: var(--semantic-background-normal-alternative);
-  color: var(--semantic-label-alternative);
+  background: var(--wp-semantic-background-normal-alternative);
+  color: var(--wp-semantic-label-alternative);
   cursor: pointer;
   transition: border-color ease-in-out 0.25s;
   vertical-align: middle;
@@ -17,7 +17,7 @@
   @include body-02-reading-m;
 
   &.placeholder {
-    color: var(--semantic-label-alternative);
+    color: var(--wp-semantic-label-alternative);
   }
 
   &.not-allow {
@@ -30,13 +30,13 @@
 
   &:hover:not(.not-allow) {
     // border-color: rgb(255 255 255 / 45%);
-    border-color: var(--semantic-label-alternative);
+    border-color: var(--wp-semantic-label-alternative);
   }
 
   &.focus:not(.not-allow) {
     // border-color: $gray00;
-    border-color: var(--semantic-label-normal);
-    background-color: var(--semantic-background-normal-normal);
+    border-color: var(--wp-semantic-label-normal);
+    background-color: var(--wp-semantic-background-normal-normal);
   }
 
   &.open {
@@ -131,7 +131,7 @@
       transition: border-color ease-in-out 0.25s, transform  ease-in-out 0.25s;
 
       rect {
-        fill: var(--semantic-label-normal);
+        fill: var(--wp-semantic-label-normal);
       }
     }
   }

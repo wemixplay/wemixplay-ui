@@ -3,7 +3,7 @@
   padding: $sp-20 0;
 
   &:not(:last-of-type) {
-    border-bottom: 1px solid var(--semantic-line-normal-neutral);
+    border-bottom: 1px solid var(--wp-semantic-line-normal-neutral);
   }
 
   &.has-click-event {
@@ -23,7 +23,7 @@
   .comment-content {
     padding: $sp-6 0 $sp-14;
     margin-top: $sp-8;
-    color: var(--semantic-label-strong);
+    color: var(--wp-semantic-label-strong);
     font-feature-settings: "ss10" on;
 
     @include add-body-text-14-m;
@@ -67,7 +67,7 @@
     align-items: center;
     justify-content: center;
     padding: $sp-18 0;
-    color: var(--semantic-label-alternative);
+    color: var(--wp-semantic-label-alternative);
     font-feature-settings: "ss10" on;
     text-align: center;
 
@@ -95,7 +95,7 @@
       }
 
       [class*="fill"] {
-        fill: var(--semantic-label-normal);
+        fill: var(--wp-semantic-label-normal);
       }
     }
   }

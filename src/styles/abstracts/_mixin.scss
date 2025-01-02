@@ -2,7 +2,7 @@
 /* stylelint-disable order/properties-order */
 /* stylelint-disable scss/no-duplicate-mixins */
 
-@mixin scroll($width: 6px, $thumb: $gray40, $track: $gray00) {
+@mixin scroll($width: 2px, $thumb:  var(--wp-semantic-fill-strong), $track:var(--wp-semantic-scroll)) {
   $scrollbar-thumb-width: $width;
   $scrollbar-thumb-color: $thumb;
   $scrollbar-track-color: $track;
@@ -22,7 +22,7 @@
 
     &-track,
     &-thumb {
-      border-radius: 8px;
+      border-radius: $rd-12;
     }
   }
 }
@@ -30,43 +30,21 @@
 // 라이트모드 컬러가 적용된 스크롤바
 @mixin scroll-interaction {
   &::-webkit-scrollbar {
-    width: 9px; // 인터랙션이 포함된 스크롤바 영역의 width
+    width: 8px; // 인터랙션이 포함된 스크롤바 영역의 width
 
     &-track {
       background-color: white;
     }
 
     &-thumb {
-      background-color: rgb(112 115 124 / 16%);
+      background-color: var(--wp-semantic-fill-strong);
       background-clip: padding-box;
       border: 3px solid white;
     }
 
     &-track,
     &-thumb {
-      border-radius: 10px;
-    }
-  }
-}
-
-// 라이트모드 컬러가 적용된 스크롤바
-@mixin scroll-interaction {
-  &::-webkit-scrollbar {
-    width: 9px; // 인터랙션이 포함된 스크롤바 영역의 width
-
-    &-track {
-      background-color: white;
-    }
-
-    &-thumb {
-      background-color: rgb(112 115 124 / 16%);
-      background-clip: padding-box;
-      border: 3px solid white;
-    }
-
-    &-track,
-    &-thumb {
-      border-radius: 10px;
+      border-radius: $rd-10;
     }
   }
 }
@@ -103,8 +81,9 @@
   word-wrap: initial !important;
 }
 
-@mixin skeleton-basic-animation($duration: 2s) {
-  animation: skeleton-blank ease $duration infinite;
+@mixin skeleton-basic-animation($duration: 5s) {
+  background: var(--wp-semantic-background-elevated-alternative);
+  animation: skeleton-blank linear $duration infinite;
 }
 
 @mixin word-break {
@@ -114,12 +93,12 @@
 
 @mixin font-size($size: 12, $base: 16) {
   font-size: $size + px;
-  font-size: ($size / $base) * 1rem;
+  font-size: calc($size / $base) * 1rem;
 }
 
 @mixin line-height($height: 12, $base: 16) {
   line-height: $height + px;
-  line-height: ($height / $base) * 1rem;
+  line-height: calc($height / $base) * 1rem;
 }
 
 @mixin mobile-status {
@@ -146,9 +125,10 @@
   }
 }
 
-/* 640 NFT이미지 대응  */
-@mixin breakpoint-640 {
-  @media (min-width: 640px) {
+/* 5120 NFT이미지 대응  */
+
+@mixin breakpoint-512 {
+  @media (min-width: 512px) {
     @content;
   }
 }
@@ -181,9 +161,34 @@
   }
 }
 
+/* 1600 ~ */
+@mixin breakpoint-1600 {
+  @media (min-width: 1600px) {
+    @content;
+  }
+}
+
 /* 1920 ~ */
 @mixin breakpoint-1920 {
   @media (min-width: 1920px) {
     @content;
   }
+}
+
+@mixin skeleton($width : "", $height: "") {
+  @if $width != "" {
+    width: $width;
+  }
+
+  @if $height != "" {
+    height: $height;
+  }
+
+  // font-size: 0 !important;
+  border-radius: $rd-2;
+  color: transparent !important;
+  animation: skeleton-blank infinite 3s !important;
+  overflow: hidden;
+  user-select: none !important;
+  pointer-events: none !important;
 }

@@ -1,0 +1,187 @@
+// 기본 스타일
+.divider {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  &::before,
+  &::after {
+    display: block;
+    width: 100%;
+    border-width: 0;
+    border-color: var(--divider-color, var(--wp-semantic-line-normal-normal));
+    background-color: transparent;
+    content: "";
+  }
+
+  &.content-align-left {
+    &::before {
+      width: 1.5em;
+    }
+
+    @for $i from 0 through 500 {
+      &.content-position-#{$i} {
+        &::before {
+          width: #{$i}px;
+        }
+      }
+    }
+  }
+
+  &.content-align-right {
+    &::after {
+      width: 1.5em;
+    }
+
+    @for $i from 0 through 500 {
+      &.content-position-#{$i} {
+        &::after {
+          width: #{$i}px;
+        }
+      }
+    }
+  }
+}
+
+.horizontal {
+  &::before,
+  &::after {
+    width: 100%;
+  }
+
+  @for $i from 1 through 500 {
+    &.size-#{$i} {
+      &::before,
+      &::after {
+        border-top-width: #{$i}px;
+      }
+    }
+  }
+
+  &.both {
+    @for $i from 1 through 500 {
+      &.space-size-#{$i} {
+        &::before,
+        &::after {
+          margin: calc(#{$i} / 16) em 0;
+        }
+      }
+    }
+  }
+
+  &.solid {
+    &::before,
+    &::after {
+      border-style: solid;
+    }
+  }
+
+  &.dashed {
+    &::before,
+    &::after {
+      border-style: dashed;
+    }
+  }
+
+  &.dotted {
+    &::before,
+    &::after {
+      border-style: dotted;
+    }
+  }
+}
+
+.vertical {
+  &::before {
+    width: fit-content;
+    height: 100%;
+  }
+
+  @for $i from 1 through 500 {
+    &.size-#{$i} {
+      &::before {
+        border-left-width: #{$i}px;
+      }
+    }
+  }
+
+  &.both {
+    @for $i from 1 through 500 {
+      &.space-size-#{$i} {
+        &::before {
+          margin: 0 calc(#{$i} / 16) em;
+        }
+      }
+    }
+  }
+
+  &.solid {
+    &::before {
+      border-style: solid;
+    }
+  }
+
+  &.dashed {
+    &::before {
+      border-style: dashed;
+    }
+  }
+
+  &.dotted {
+    &::before {
+      border-style: dotted;
+    }
+  }
+}
+
+.top {
+  @for $i from 1 through 500 {
+    &.space-size-#{$i} {
+      &::before,
+      &::after {
+        margin-top: calc(#{$i} / 16) em;
+      }
+    }
+  }
+}
+
+.bottom {
+  @for $i from 1 through 500 {
+    &.space-size-#{$i} {
+      &::before,
+      &::after {
+        margin-bottom: calc(#{$i} / 16) em;
+      }
+    }
+  }
+}
+
+.left {
+  @for $i from 1 through 500 {
+    &.space-size-#{$i} {
+      &::before,
+      &::after {
+        margin-left: calc(#{$i} / 16) em;
+      }
+    }
+  }
+}
+
+.right {
+  @for $i from 1 through 500 {
+    &.space-size-#{$i} {
+      &::before,
+      &::after {
+        margin-right: calc(#{$i} / 16) em;
+      }
+    }
+  }
+}
+
+.divider-content {
+  @for $i from 1 through 500 {
+    &.content-space-#{$i} {
+      padding: 0 calc(#{$i} / 16) em;
+    }
+  }
+}

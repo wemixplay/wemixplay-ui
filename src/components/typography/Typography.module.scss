@@ -1,0 +1,492 @@
+.typography {
+  /** Display */
+  &.display-01-b {
+    @include display-01-b;
+  }
+
+  &.display-01-sb {
+    @include display-01-sb;
+  }
+
+  &.display-01-m {
+    @include display-01-m;
+  }
+
+  &.display-01-r {
+    @include display-01-r;
+  }
+
+  &.display-02-b {
+    @include display-02-b;
+  }
+
+  &.display-02-sb {
+    @include display-02-sb;
+  }
+
+  &.display-02-m {
+    @include display-02-m;
+  }
+
+  &.display-02-r {
+    @include display-02-r;
+  }
+
+  /** Title */
+  &.title-01-b {
+    @include title-01-b;
+  }
+
+  &.title-01-sb {
+    @include title-01-sb;
+  }
+
+  &.title-01-m {
+    @include title-01-m;
+  }
+
+  &.title-01-r {
+    @include title-01-r;
+  }
+
+  &.title-02-b {
+    @include title-02-b;
+  }
+
+  &.title-02-sb {
+    @include title-02-sb;
+  }
+
+  &.title-02-m {
+    @include title-02-m;
+  }
+
+  &.title-02-r {
+    @include title-02-r;
+  }
+
+  &.title-03-b {
+    @include title-03-b;
+  }
+
+  &.title-03-sb {
+    @include title-03-sb;
+  }
+
+  &.title-03-m {
+    @include title-03-m;
+  }
+
+  &.title-03-r {
+    @include title-03-r;
+  }
+
+  /** Heading */
+  &.heading-01-b {
+    @include heading-01-b;
+  }
+
+  &.heading-01-sb {
+    @include heading-01-sb;
+  }
+
+  &.heading-01-m {
+    @include heading-01-m;
+  }
+
+  &.heading-01-r {
+    @include heading-01-r;
+  }
+
+  &.heading-02-b {
+    @include heading-02-b;
+  }
+
+  &.heading-02-sb {
+    @include heading-02-sb;
+  }
+
+  &.heading-02-m {
+    @include heading-02-m;
+  }
+
+  &.heading-02-r {
+    @include heading-02-r;
+  }
+
+  /** Headline */
+  &.headline-01-b {
+    @include headline-01-b;
+  }
+
+  &.headline-01-sb {
+    @include headline-01-sb;
+  }
+
+  &.headline-01-m {
+    @include headline-01-m;
+  }
+
+  &.headline-01-r {
+    @include headline-01-r;
+  }
+
+  &.headline-02-b {
+    @include headline-02-b;
+  }
+
+  &.headline-02-sb {
+    @include headline-02-sb;
+  }
+
+  &.headline-02-m {
+    @include headline-02-m;
+  }
+
+  &.headline-02-r {
+    @include headline-02-r;
+  }
+
+  /** Body */
+  &.body-01-normal-b {
+    @include body-01-normal-b;
+  }
+
+  &.body-01-normal-sb {
+    @include body-01-normal-sb;
+  }
+
+  &.body-01-normal-m {
+    @include body-01-normal-m;
+  }
+
+  &.body-01-normal-r {
+    @include body-01-normal-r;
+  }
+
+  &.body-01-reading-01-b {
+    @include body-01-reading-01-b;
+  }
+
+  &.body-01-reading-01-sb {
+    @include body-01-reading-01-sb;
+  }
+
+  &.body-01-reading-01-m {
+    @include body-01-reading-01-m;
+  }
+
+  &.body-01-reading-01-r {
+    @include body-01-reading-01-r;
+  }
+
+  &.body-01-reading-02-b {
+    @include body-01-reading-02-b;
+  }
+
+  &.body-01-reading-02-sb {
+    @include body-01-reading-02-sb;
+  }
+
+  &.body-01-reading-02-m {
+    @include body-01-reading-02-m;
+  }
+
+  &.body-01-reading-02-r {
+    @include body-01-reading-02-r;
+  }
+
+  &.body-02-normal-b {
+    @include body-02-normal-b;
+  }
+
+  &.body-02-normal-sb {
+    @include body-02-normal-sb;
+  }
+
+  &.body-02-normal-m {
+    @include body-02-normal-m;
+  }
+
+  &.body-02-normal-r {
+    @include body-02-normal-r;
+  }
+
+  &.body-02-reading-b {
+    @include body-02-reading-b;
+  }
+
+  &.body-02-reading-sb {
+    @include body-02-reading-sb;
+  }
+
+  &.body-02-reading-m {
+    @include body-02-reading-m;
+  }
+
+  &.body-02-reading-r {
+    @include body-02-reading-r;
+  }
+
+  /** Label */
+  &.label-01-normal-b {
+    @include label-01-normal-b;
+  }
+
+  &.label-01-normal-sb {
+    @include label-01-normal-sb;
+  }
+
+  &.label-01-normal-m {
+    @include label-01-normal-m;
+  }
+
+  &.label-01-normal-r {
+    @include label-01-normal-r;
+  }
+
+  &.label-01-reading-b {
+    @include label-01-reading-b;
+  }
+
+  &.label-01-reading-sb {
+    @include label-01-reading-sb;
+  }
+
+  &.label-01-reading-m {
+    @include label-01-reading-m;
+  }
+
+  &.label-01-reading-r {
+    @include label-01-reading-r;
+  }
+
+  &.label-02-normal-b {
+    @include label-02-normal-b;
+  }
+
+  &.label-02-normal-sb {
+    @include label-02-normal-sb;
+  }
+
+  &.label-02-normal-m {
+    @include label-02-normal-m;
+  }
+
+  &.label-02-normal-r {
+    @include label-02-normal-r;
+  }
+
+  /** Caption */
+  &.caption-01-b {
+    @include caption-01-b;
+  }
+
+  &.caption-01-sb {
+    @include caption-01-sb;
+  }
+
+  &.caption-01-m {
+    @include caption-01-m;
+  }
+
+  &.caption-01-r {
+    @include caption-01-r;
+  }
+
+  &.caption-02-b {
+    @include caption-02-b;
+  }
+
+  &.caption-02-sb {
+    @include caption-02-sb;
+  }
+
+  &.caption-02-m {
+    @include caption-02-m;
+  }
+
+  &.caption-02-r {
+    @include caption-02-r;
+  }
+
+  &.add-title-28-eb {
+    @include add-title-28-eb;
+  }
+
+  &.add-title-28-b {
+    @include add-title-28-b;
+  }
+
+  &.add-title-28-sb {
+    @include add-title-28-sb;
+  }
+
+  &.add-title-28-m {
+    @include add-title-28-m;
+  }
+
+  &.add-title-28-r {
+    @include add-title-28-r;
+  }
+
+  &.add-title-20-eb {
+    @include add-title-20-eb;
+  }
+
+  &.add-title-20-b {
+    @include add-title-20-b;
+  }
+
+  &.add-title-20-sb {
+    @include add-title-20-sb;
+  }
+
+  &.add-title-20-m {
+    @include add-title-20-m;
+  }
+
+  &.add-title-20-r {
+    @include add-title-20-r;
+  }
+
+  &.add-title-18-eb {
+    @include add-title-18-eb;
+  }
+
+  &.add-title-18-b {
+    @include add-title-18-b;
+  }
+
+  &.add-title-18-sb {
+    @include add-title-18-sb;
+  }
+
+  &.add-title-18-m {
+    @include add-title-18-m;
+  }
+
+  &.add-title-18-r {
+    @include add-title-18-r;
+  }
+
+  &.add-body-text-18-eb {
+    @include add-body-text-18-eb;
+  }
+
+  &.add-body-text-18-b {
+    @include add-body-text-18-b;
+  }
+
+  &.add-body-text-18-sb {
+    @include add-body-text-18-sb;
+  }
+
+  &.add-body-text-18-m {
+    @include add-body-text-18-m;
+  }
+
+  &.add-body-text-18-r {
+    @include add-body-text-18-r;
+  }
+
+  &.add-body-text-16-eb {
+    @include add-body-text-16-eb;
+  }
+
+  &.add-body-text-16-b {
+    @include add-body-text-16-b;
+  }
+
+  &.add-body-text-16-sb {
+    @include add-body-text-16-sb;
+  }
+
+  &.add-body-text-16-m {
+    @include add-body-text-16-m;
+  }
+
+  &.add-body-text-16-r {
+    @include add-body-text-16-r;
+  }
+
+  &.add-body-text-15-eb {
+    @include add-body-text-15-eb;
+  }
+
+  &.add-body-text-15-b {
+    @include add-body-text-15-b;
+  }
+
+  &.add-body-text-15-sb {
+    @include add-body-text-15-sb;
+  }
+
+  &.add-body-text-15-m {
+    @include add-body-text-15-m;
+  }
+
+  &.add-body-text-15-r {
+    @include add-body-text-15-r;
+  }
+
+  &.add-body-text-14-eb {
+    @include add-body-text-14-eb;
+  }
+
+  &.add-body-text-14-b {
+    @include add-body-text-14-b;
+  }
+
+  &.add-body-text-14-sb {
+    @include add-body-text-14-sb;
+  }
+
+  &.add-body-text-14-m {
+    @include add-body-text-14-m;
+  }
+
+  &.add-body-text-14-r {
+    @include add-body-text-14-r;
+  }
+
+  &.add-body-text-13-eb {
+    @include add-body-text-13-eb;
+  }
+
+  &.add-body-text-13-b {
+    @include add-body-text-13-b;
+  }
+
+  &.add-body-text-13-sb {
+    @include add-body-text-13-sb;
+  }
+
+  &.add-body-text-13-m {
+    @include add-body-text-13-m;
+  }
+
+  &.add-body-text-13-r {
+    @include add-body-text-13-r;
+  }
+
+  &.add-body-text-12-eb {
+    @include add-body-text-12-eb;
+  }
+
+  &.add-body-text-12-b {
+    @include add-body-text-12-b;
+  }
+
+  &.add-body-text-12-sb {
+    @include add-body-text-12-sb;
+  }
+
+  &.add-body-text-12-m {
+    @include add-body-text-12-m;
+  }
+
+  &.add-body-text-12-r {
+    @include add-body-text-12-r;
+  }
+}
