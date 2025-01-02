@@ -1,0 +1,1 @@
+import e from'./../../ext/style-inject/dist/style-inject.es.js';var r={"counter-wrapper":"Counter-module_counter-wrapper__vuVAi"};e(".Counter-module_counter-wrapper__vuVAi{font-size:20px}");export{r as default};
