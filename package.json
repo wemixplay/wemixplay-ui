@@ -25,6 +25,16 @@
       "import": "./dist/esm/modules/index.esm.mjs",
       "require": "./dist/modules/index.cjs.js"
     },
+    "./utils": {
+      "types": "./dist/utils/index.d.ts",
+      "import": "./dist/esm/utils/index.esm.mjs",
+      "require": "./dist/utils/index.js"
+    },
+    "./constants": {
+      "types": "./dist/constants/index.d.ts",
+      "import": "./dist/esm/constants/index.esm.mjs",
+      "require": "./dist/constants/index.js"
+    },
     "./styles.css": "./dist/styles.css"
   },
   "scripts": {
