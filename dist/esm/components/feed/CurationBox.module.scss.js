@@ -1,0 +1,1 @@
+var o={"curation-box":"CurationBox-module_curation-box__nXKd-","curation-box-content":"CurationBox-module_curation-box-content__arEBl","text-content":"CurationBox-module_text-content__M8R6v","curation-writer-info":"CurationBox-module_curation-writer-info__wTLxy",profile:"CurationBox-module_profile__4rEVH"};export{o as default};
