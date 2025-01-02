@@ -1,7 +1,7 @@
 // import '@/styles/theme.scss';
 // import '@/styles/base/_reset.scss';
 // import '@/styles/global.scss';
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import '../styles/storybook.scss';
 import {pretendard, twkEverett} from '@/constants/font.c';
 import WemixplayUIProvider from '@/providers/WemixplayUi';
