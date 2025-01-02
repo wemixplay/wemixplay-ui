@@ -1,1 +1,0 @@
-"use strict";require('./../../ext/style-inject/dist/style-inject.es.js')(".Counter-module_counter-wrapper__vuVAi{font-size:20px}"),module.exports={"counter-wrapper":"Counter-module_counter-wrapper__vuVAi"};
