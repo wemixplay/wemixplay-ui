@@ -35,7 +35,7 @@ class WebpackSvgComponentPlugin {
 
   async apply(compiler: Compiler) {
     const isDevMode = compiler.options.mode === 'development';
-    const isTarget = Array.isArray(compiler.options.target) ? compiler.options.target.includes('web') : compiler.options.target === 'web';
+    const isTarget = compiler.options.name !== 'edge-server' && Array.isArray(compiler.options.target) ? compiler.options.target.includes('web') : compiler.options.target === 'web';
   
     if(isTarget) {
         compiler.hooks.compile.tap('WebpackSvgComponentPlugin', () => {      
