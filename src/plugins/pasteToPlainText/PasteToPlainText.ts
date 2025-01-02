@@ -1,6 +1,8 @@
 import { ClipboardEvent, MutableRefObject } from 'react';
 import { WpEditorPlugin } from '@/components/editor/WpEditor';
-import { sanitize } from 'isomorphic-dompurify';
+import dompurify from 'isomorphic-dompurify';
+
+const { sanitize } = dompurify;
 
 type PasteToPlainTextConfig = {
   /**

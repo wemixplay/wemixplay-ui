@@ -47,6 +47,8 @@ patch=$((patch))
 tag=$([ "$current_branch" = "main" ] && echo "latest" || echo "alpha")
 tag_str=$([ "$tag" = "latest" ] && echo "" || echo "-alpha")
 
+export NPM_PUBLISH_TAG=$tag
+
 if [ -z "$major" ] || [ -z "$minor" ] || [ -z "$patch" ]; then
     print_string "error" "버전 정보를 올바르게 추출하지 못했습니다. 파일을 확인하세요."
     exit 1
@@ -69,6 +71,13 @@ auto_new_version="$major.$minor.$patch${tag_str}"
 
 read -p "새로운 버전을 입력하세요 ( 자동 생성 버전: $auto_new_version ): " new_version
 
+# 버전 형식 확인
+version_regex="^[0-9]+\.[0-9]+\.[0-9]+(-alpha)?$"
+if [[ -n "$new_version" && ! "$new_version" =~ $version_regex ]]; then
+    print_string "error" "올바른 버전 형식이 아닙니다. 형식: number.number.number 또는 number.number.number-alpha"
+    exit 1
+fi
+
 if [ -z "$new_version" ]; then
     new_version=$auto_new_version
 else
@@ -84,7 +93,7 @@ fi
 tag_version="npm-publish/$new_version"
 
 print_string "warning" "프로젝트 빌드 중..."
-rm -rf node_modules dist
+rm -rf dist
 yarn cache clean && yarn && yarn build || { print_string "error" "빌드 실패"; exit 1; }
 
 print_string "success" "패키지 설치 및 빌드 완료"

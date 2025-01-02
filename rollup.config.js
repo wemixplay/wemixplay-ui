@@ -15,6 +15,7 @@ const { visualizer } = require("rollup-plugin-visualizer");
 const packageJson = require('./package.json');
 const { optimizeLodashImports } = require("@optimize-lodash/rollup-plugin");
 const renameNodeModules = require("rollup-plugin-rename-node-modules");
+const { preserveDirective } = require('rollup-preserve-directives');
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -35,29 +36,24 @@ const plugins = [
   }),
   optimizeLodashImports(),
   babel({
-		babelHelpers: 'runtime',
-		exclude: 'node_modules/**',
-		extensions,
-		presets: [
-			[
-				'@babel/preset-env',
-				{
-					useBuiltIns: 'usage',
-					corejs: 3, // core-js version 3 사용
-				}
-			],
-			'@babel/preset-react',
-			'@babel/preset-typescript'
-		],
-		plugins: [
-			'@babel/plugin-transform-runtime'
-		],
+	  babelHelpers: 'runtime', // 여전히 runtime helpers를 사용할 수 있지만 core-js는 사용하지 않음
+    exclude: 'node_modules/**',
+    extensions,
+    presets: [
+      [
+        '@babel/preset-env',
+        {
+          // useBuiltIns 옵션을 제거하여 core-js 의존성을 없앰
+          targets: '> 0.25%, not dead', // 브라우저 타겟을 설정하여 필요한 최소 기능만 변환
+        }
+      ],
+      '@babel/preset-react',
+      '@babel/preset-typescript'
+    ],
+    plugins: [
+      '@babel/plugin-transform-runtime' // corejs 없이 runtime 헬퍼만 사용
+    ]
 	}),
-  {
-    transform(code, id) {
-        return code.replace(/\/\*\* @class \*\//g, "\/*@__PURE__*\/");
-    }
-  },
   renameNodeModules('ext', process.env.NODE_ENV === 'development'),
   svgr({
     prettier: false,
@@ -72,27 +68,6 @@ const plugins = [
     },
     titleProp: true
   }),
-  postcss({
-    modules: true,
-    extensions: ['.css', '.scss', '.sass'],
-    use: [
-      [
-        'sass',
-        {
-          data: `
-            @import "./src/styles/abstracts/_variables.scss";
-            @import "./src/styles/abstracts/_mixin.scss";
-            @import "./src/styles/abstracts/_animation.scss";
-            @import "./src/styles/global.scss";
-          `
-        }
-      ]
-    ],
-    extract: 'styles.css',
-    inject: false,
-    minimize: true,
-    sourceMap: process.env.NODE_ENV === 'development'
-  }),
   alias({
     entries: [
       { find: '@', replacement: path.resolve(__dirname, 'src') }
@@ -101,7 +76,7 @@ const plugins = [
   resolve({
     extensions,
     browser: true,
-    dedupe: ['react', 'react-dom', 'lodash-es']
+    dedupe: ['react', 'react-dom', 'lodash-es', 'core-js']
   }),
   replace({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
@@ -115,7 +90,7 @@ if (process.env.NODE_ENV === 'production') {
       unused: true,
       dead_code: true,
       conditionals: true,
-      drop_console: true,
+      drop_console: process.env.NPM_PUBLISH_TAG === 'latest',
       pure_funcs: ['console.info', 'console.debug', 'console.warn'],
     },
     mangle: {
@@ -134,33 +109,85 @@ if (process.env.NODE_VI === 'OK') {
   }))
 }
 
-module.exports = {
-  external:  [
-    ...Object.keys(packageJson.dependencies).filter(dep => dep !== 'react-youtube'),
-    /@babel\/runtime/,
-    /fsevents/
-  ],
-  plugins,
-  input: './src/index.ts',
-  output: [
-    {
-      dir: 'dist/esm',
-      format: 'esm',
-      preserveModules: true, // indicate not create a single-file
-      preserveModulesRoot: 'src',
-      sourcemap: process.env.NODE_ENV === 'development'
+module.exports = [
+  {
+    external:  [
+      ...Object.keys(packageJson.dependencies).filter(dep => dep !== 'react-youtube' && dep !== 'swiper'),
+      /@babel\/runtime/,
+      /fsevents/
+    ],
+    plugins: [
+      ...plugins,
+      preserveDirective({
+        directives: ['use client']
+      }),
+      postcss({
+        modules: true,
+        extensions: ['.css', '.scss', '.sass'],
+        use: [
+          [
+            'sass',
+            {
+              data: `
+                @import "./src/styles/abstracts/_variables.scss";
+                @import "./src/styles/abstracts/_mixin.scss";
+                @import "./src/styles/abstracts/_animation.scss";
+                @import "./src/styles/global.scss";
+                @import "./src/styles/theme.scss";
+              `
+            }
+          ]
+        ],
+        extract: 'styles.css',
+        inject: false,
+        minimize: true,
+        sourceMap: process.env.NODE_ENV === 'development'
+      })
+    ],
+    input: './src/components/index.ts',
+    output: [
+      {
+        dir: 'dist/esm',
+        format: 'esm',
+        preserveModules: true, // indicate not create a single-file
+        preserveModulesRoot: 'src',
+        sourcemap: process.env.NODE_ENV === 'development'
+      },
+      {
+        dir: 'dist',
+        format: 'cjs',
+        preserveModules: true, // indicate not create a single-file
+        preserveModulesRoot: 'src',
+        exports: 'auto',
+        sourcemap: process.env.NODE_ENV === 'development'
+      }
+    ],
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
     },
-    {
-      dir: 'dist',
-      format: 'cjs',
-      preserveModules: true, // indicate not create a single-file
-      preserveModulesRoot: 'src',
-      sourcemap: process.env.NODE_ENV === 'development'
-    }
-  ],
-	treeshake: {
-		moduleSideEffects: false,
-		propertyReadSideEffects: false,
-		unknownGlobalSideEffects: false,
-	},
-};
+  },
+  {
+    external: ['react', 'react-dom', id => /fsevents/.test(id)],
+    plugins,
+    input: './src/modules/index.ts',
+    output: [
+			{
+				file: 'dist/modules/index.cjs.js',
+				format: 'cjs',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+			{
+				file: 'dist/esm/modules/index.esm.mjs',
+				format: 'esm',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+		],
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
+    },
+  }
+];

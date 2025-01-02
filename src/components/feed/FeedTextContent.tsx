@@ -7,7 +7,9 @@ import Ellipsis from '../ellipsis/Ellipsis';
 import { convertMarkdownToHtmlStr } from '@/utils/valueParserUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import style from './FeedTextContent.module.scss';
-import { sanitize } from 'isomorphic-dompurify';
+import dompurify from 'isomorphic-dompurify';
+
+const { sanitize } = dompurify;
 
 type Props = {
   /**

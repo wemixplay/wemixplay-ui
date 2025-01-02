@@ -63,7 +63,7 @@
       &.space-size-#{$i} {
         &::before,
         &::after {
-          margin: #{$i / 16}em 0;
+          margin: calc(#{$i} / 16) em 0;
         }
       }
     }
@@ -109,7 +109,7 @@
     @for $i from 1 through 500 {
       &.space-size-#{$i} {
         &::before {
-          margin: 0 #{$i / 16}em;
+          margin: 0 calc(#{$i} / 16) em;
         }
       }
     }
@@ -139,7 +139,7 @@
     &.space-size-#{$i} {
       &::before,
       &::after {
-        margin-top: #{$i / 16}em;
+        margin-top: calc(#{$i} / 16) em;
       }
     }
   }
@@ -150,7 +150,7 @@
     &.space-size-#{$i} {
       &::before,
       &::after {
-        margin-bottom: #{$i / 16}em;
+        margin-bottom: calc(#{$i} / 16) em;
       }
     }
   }
@@ -161,7 +161,7 @@
     &.space-size-#{$i} {
       &::before,
       &::after {
-        margin-left: #{$i / 16}em;
+        margin-left: calc(#{$i} / 16) em;
       }
     }
   }
@@ -172,7 +172,7 @@
     &.space-size-#{$i} {
       &::before,
       &::after {
-        margin-right: #{$i / 16}em;
+        margin-right: calc(#{$i} / 16) em;
       }
     }
   }
@@ -181,7 +181,7 @@
 .divider-content {
   @for $i from 1 through 500 {
     &.content-space-#{$i} {
-      padding: 0 #{$i / 16}em;
+      padding: 0 calc(#{$i} / 16) em;
     }
   }
 }
