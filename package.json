@@ -25,6 +25,11 @@
       "import": "./dist/esm/modules/index.esm.mjs",
       "require": "./dist/modules/index.cjs.js"
     },
+    "./hooks": {
+      "types": "./dist/hooks/index.d.ts",
+      "import": "./dist/esm/hooks/index.esm.mjs",
+      "require": "./dist/hooks/index.js"
+    },
     "./utils": {
       "types": "./dist/utils/index.d.ts",
       "import": "./dist/esm/utils/index.esm.mjs",
@@ -34,8 +39,7 @@
       "types": "./dist/constants/index.d.ts",
       "import": "./dist/esm/constants/index.esm.mjs",
       "require": "./dist/constants/index.js"
-    },
-    "./styles.css": "./dist/styles.css"
+    }
   },
   "scripts": {
     "postinstall": "[ \"$NODE_ENV\" != \"production\" ] && yarn lefthook install || exit 0",

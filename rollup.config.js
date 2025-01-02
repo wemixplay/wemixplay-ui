@@ -130,15 +130,11 @@ module.exports = [
               data: `
                 @import "./src/styles/abstracts/_variables.scss";
                 @import "./src/styles/abstracts/_mixin.scss";
-                @import "./src/styles/abstracts/_animation.scss";
-                @import "./src/styles/global.scss";
-                @import "./src/styles/theme.scss";
               `
             }
           ]
         ],
-        extract: 'styles.css',
-        inject: false,
+        inject: true,
         minimize: true,
         sourceMap: process.env.NODE_ENV === 'development'
       })
@@ -161,6 +157,28 @@ module.exports = [
         sourcemap: process.env.NODE_ENV === 'development'
       }
     ],
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
+    },
+  },
+  {
+    external: ['react', 'react-dom', id => /fsevents/.test(id)],
+    plugins,
+    input: './src/hooks/index.ts',
+    output: [
+			{
+				file: 'dist/hooks/index.cjs.js',
+				format: 'cjs',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+			{
+				file: 'dist/esm/hooks/index.esm.mjs',
+				format: 'esm',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+		],
     treeshake: {
       moduleSideEffects: false,
       propertyReadSideEffects: false,
