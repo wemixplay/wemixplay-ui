@@ -15,7 +15,7 @@ const { visualizer } = require("rollup-plugin-visualizer");
 const packageJson = require('./package.json');
 const { optimizeLodashImports } = require("@optimize-lodash/rollup-plugin");
 const renameNodeModules = require("rollup-plugin-rename-node-modules");
-const preserveUseClientDirective = require('./rollup-plugins/rollup-plugin-preserve-client-directive');
+const { preserveDirective } = require('rollup-preserve-directives');
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -54,7 +54,6 @@ const plugins = [
       '@babel/plugin-transform-runtime' // corejs 없이 runtime 헬퍼만 사용
     ]
 	}),
-  preserveUseClientDirective(),
   renameNodeModules('ext', process.env.NODE_ENV === 'development'),
   svgr({
     prettier: false,
@@ -119,6 +118,9 @@ module.exports = [
     ],
     plugins: [
       ...plugins,
+      preserveDirective({
+        directives: ['use client']
+      }),
       postcss({
         modules: true,
         extensions: ['.css', '.scss', '.sass'],
