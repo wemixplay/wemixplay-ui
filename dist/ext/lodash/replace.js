@@ -1,0 +1,1 @@
+"use strict";var r=require("../../_virtual/_commonjsHelpers.js"),e=require("./toString.js").toString_1;var t=function(){var r=arguments,t=e(r[0]);return r.length<3?t:t.replace(r[1],r[2])},o=r.getDefaultExportFromCjs(t);module.exports=o;
