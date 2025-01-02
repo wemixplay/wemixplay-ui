@@ -1,0 +1,2 @@
+'use client';
+"use strict";var e=require("react"),t=require("react-dom");module.exports=r=>{let{children:d,id:n="portal-wrapper"}=r;const[o,l]=e.useState(null);return e.useEffect((()=>{if(n){let e=!1,t=document.getElementById(n);if(!t){e=!0;const r=document.createElement("div");r.setAttribute("id",n),document.body.appendChild(r),t=r}return l(t),()=>{e&&(null==t?void 0:t.parentNode)&&t.parentNode.removeChild(t)}}}),[n]),o&&t.createPortal(d,o)};
