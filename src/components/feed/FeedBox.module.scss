@@ -90,7 +90,7 @@
     .carousel {
       // overflow: hidden;
       width: 100%;
-      margin-bottom: 0;
+      margin-bottom: $sp-12;
 
       @include breakpoint-768 {
         padding: 0;
