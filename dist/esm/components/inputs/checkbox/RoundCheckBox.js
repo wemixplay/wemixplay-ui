@@ -1,0 +1,2 @@
+'use client';
+import{__rest as o}from"../../../_virtual/_tslib.js";import s from"react";import r from"./RoundCheckBox.module.scss.js";import e from"./CheckBox.js";import{makeCxFunc as t}from"../../../utils/forReactUtils.js";const a=t(r),m=r=>{var{className:t=""}=r,m=o(r,["className"]);return s.createElement(e,Object.assign({className:a(t,"checkbox-round")},m))};m.displayName="RoundCheckBox";var c=m;export{c as default};
