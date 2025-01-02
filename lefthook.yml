@@ -14,15 +14,6 @@ pre-commit:
             fi
           done
         fi
-        
-        if [ "$BRANCH" = "alpha" ]; then
-          for file in $CHANGED_FILES; do
-            if [[ ! "$file" =~ ^(.github/|scripts/|lefthook.yml|package.json|yarn.lock|dist/|scripts/publish.sh|version.json|.vscode/|src/assets/svgs/) ]]; then
-              echo "❌ alpha 브랜치에서는 .github/workflows와 scripts 디렉토리의 파일만 수정할 수 있습니다. PR을 통한 병합을 진행해주세요."
-              exit 1
-            fi
-          done
-        fi
 
 pre-push:
   commands:
