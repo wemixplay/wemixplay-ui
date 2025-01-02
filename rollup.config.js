@@ -90,8 +90,7 @@ if (process.env.NODE_ENV === 'production') {
       unused: true,
       dead_code: true,
       conditionals: true,
-      drop_console: process.env.NPM_PUBLISH_TAG === 'latest',
-      pure_funcs: ['console.info', 'console.debug', 'console.warn'],
+      pure_funcs: ['console.log', 'console.debug', 'console.warn'],
     },
     mangle: {
       toplevel: true,
@@ -180,6 +179,50 @@ module.exports = [
 			},
 			{
 				file: 'dist/esm/modules/index.esm.mjs',
+				format: 'esm',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+		],
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
+    },
+  },
+  {
+    external: ['react', 'react-dom', id => /fsevents/.test(id)],
+    plugins,
+    input: './src/utils/index.ts',
+    output: [
+			{
+				file: 'dist/utils/index.cjs.js',
+				format: 'cjs',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+			{
+				file: 'dist/esm/utils/index.esm.mjs',
+				format: 'esm',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+		],
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
+    },
+  },
+  {
+    external: ['react', 'react-dom', id => /fsevents/.test(id)],
+    plugins,
+    input: './src/constants/index.ts',
+    output: [
+			{
+				file: 'dist/constants/index.cjs.js',
+				format: 'cjs',
+				sourcemap: process.env.NODE_ENV !== 'production',
+			},
+			{
+				file: 'dist/esm/constants/index.esm.mjs',
 				format: 'esm',
 				sourcemap: process.env.NODE_ENV !== 'production',
 			},

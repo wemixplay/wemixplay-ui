@@ -35,13 +35,16 @@ class WebpackSvgComponentPlugin {
 
   async apply(compiler: Compiler) {
     const isDevMode = compiler.options.mode === 'development';
-    const isTarget = compiler.options.name !== 'edge-server' && Array.isArray(compiler.options.target) ? compiler.options.target.includes('web') : compiler.options.target === 'web';
-  
-    if(isTarget) {
-        compiler.hooks.compile.tap('WebpackSvgComponentPlugin', () => {      
-          if (!isDevMode) {
-            void this.svgCompGenerator.generate();
-          } else if(!this.watcher) {
+    const isTarget =
+      compiler.options.name !== 'edge-server' && Array.isArray(compiler.options.target)
+        ? compiler.options.target.includes('web')
+        : compiler.options.target === 'web';
+
+    if (isTarget) {
+      compiler.hooks.compile.tap('WebpackSvgComponentPlugin', () => {
+        if (!isDevMode) {
+          void this.svgCompGenerator.generate();
+        } else if (!this.watcher) {
           void this.svgCompGenerator.generate();
 
           // Watcher가 이미 존재하지 않는 경우에만 생성
@@ -51,10 +54,10 @@ class WebpackSvgComponentPlugin {
           });
 
           const watchGenerate = (filePath: string) => {
-            if(filePath.endsWith('.svg')) {
+            if (filePath.endsWith('.svg')) {
               this.svgCompGenerator.generate();
             }
-          }
+          };
 
           this.watcher.on('add', watchGenerate);
           this.watcher.on('change', watchGenerate);
