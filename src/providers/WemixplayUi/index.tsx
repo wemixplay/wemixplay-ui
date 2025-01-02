@@ -1,4 +1,4 @@
-import React, { createContext } from 'react';
+import React, { createContext, useEffect, useMemo, useState } from 'react';
 import styles from './wemixplay-ui.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
@@ -7,6 +7,7 @@ const cx = makeCxFunc(styles);
 type WemixplayUIContextType = {
   /** wemixplay ui 현재 테마 */
   theme?: 'dark' | 'light';
+  setThemeData?: (theme: 'dark' | 'light') => void;
 };
 
 type WemixplayUIProviderProps = {
@@ -18,9 +19,17 @@ type WemixplayUIProviderProps = {
 const WemixplayUIContext = createContext<WemixplayUIContextType>({});
 
 const WemixplayUIProvider = ({ children, theme }: WemixplayUIProviderProps) => {
+  const [themeData, setThemeData] = useState(theme);
+
+  const value = useMemo(() => ({ theme: themeData, setThemeData }), [themeData, setThemeData]);
+
+  useEffect(() => {
+    setThemeData(theme);
+  }, [theme]);
+
   return (
-    <WemixplayUIContext.Provider value={{ theme }}>
-      <div className={cx('wemixplay-ui')} data-theme={theme}>
+    <WemixplayUIContext.Provider value={value}>
+      <div className={cx('wemixplay-ui')} data-theme={themeData}>
         {children}
       </div>
     </WemixplayUIContext.Provider>
