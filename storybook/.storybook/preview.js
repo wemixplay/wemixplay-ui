@@ -32,15 +32,20 @@ const preview = {
     (Story, context) => {
       const backgrounds = context.backgrounds;
 
+      const [theme, setTheme] = useState('light');
+
       useEffect(() => {
-        document.body.setAttribute('data-theme', backgrounds === '#141415' ? 'dark' : 'light');
+        setTheme(backgrounds === '#141415' ? 'dark' : 'light');
       }, [backgrounds]);
 
       return (
         <div className={`storybook-font ${pretendard.variable} ${twkEverett.variable}`}>
-          <WemixplayUIProvider>
-            <Story />
-          </WemixplayUIProvider>
+      
+            <WemixplayUIProvider theme={theme}>
+              {/* Story의 내용이 WemixplayUIProvider의 컨텍스트를 사용합니다. */}
+              <Story />
+            </WemixplayUIProvider>
+     
         </div>
       )
     }
