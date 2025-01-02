@@ -1,1 +1,0 @@
-"use strict";module.exports={accordion:"Accordion-module_accordion__zA8aC","accor-hd":"Accordion-module_accor-hd__gRdHg","ico-subject":"Accordion-module_ico-subject__owjMv","accor-bd":"Accordion-module_accor-bd__pIT2F",subject:"Accordion-module_subject__WDHeS","accor-bd-inner":"Accordion-module_accor-bd-inner__F5kVd"};

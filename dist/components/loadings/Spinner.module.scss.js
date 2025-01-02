@@ -1,1 +1,0 @@
-"use strict";module.exports={spinner:"Spinner-module_spinner__lbqaR",rotate:"Spinner-module_rotate__R1CrO",border:"Spinner-module_border__KyGiu",path:"Spinner-module_path__Fd1Vm",dash:"Spinner-module_dash__FSusF"};
