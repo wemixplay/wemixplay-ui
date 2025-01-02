@@ -1,11 +1,12 @@
+/* stylelint-disable custom-property-pattern */
 .wemixplay-ui {
   main {
     display: block;
   }
 
   h1 {
-    margin: 0.67em 0;
-    font-size: 2em;
+    margin: 0.67rem 0;
+    font-size: 2rem;
   }
 
   hr {
@@ -15,9 +16,7 @@
   }
 
   pre {
-    margin: 0;
-    font-family: inherit;
-    font-size: 1em;
+    font-size: 1rem;
   }
 
   a {
@@ -38,7 +37,7 @@
   code,
   kbd,
   samp {
-    font-size: 1em;
+    font-size: 1rem;
   }
 
   small {
@@ -54,11 +53,11 @@
   }
 
   sub {
-    bottom: -0.25em;
+    bottom: -0.25rem;
   }
 
   sup {
-    top: -0.5em;
+    top: -0.5rem;
   }
 
   img {
@@ -73,7 +72,7 @@
   textarea {
     margin: 0;
     font-family: inherit;
-    font-size: 100%;
+    font-size: 1rem;
     line-height: 1.15;
   }
 
@@ -110,7 +109,7 @@
   }
 
   fieldset {
-    padding: 0.35em 0.75em 0.625em;
+    padding: 0.35rem 0.75rem 0.625rem;
   }
 
   legend {
@@ -160,7 +159,7 @@
   }
 
   summary {
-    display: list-item;
+    display: list-itrem;
   }
 
   template {
@@ -183,11 +182,11 @@
     }
   }
 
-  /*   ::selection {
+  ::selection {
     background: #000;
     color: #666;
   }
- */
+
   table {
     border-collapse: collapse;
     border-spacing: 0;
@@ -219,7 +218,6 @@
     padding: 0;
     border: none;
     margin: 0;
-    background: transparent;
 
     &:hover {
       cursor: pointer;
@@ -230,7 +228,7 @@
     padding: 0;
     border: none;
     margin: 0;
-    background: transparent;
+    background-color: transparent;
 
     &::placeholder {
       color: var(--gray02);
@@ -260,30 +258,221 @@
     -webkit-text-fill-color: var(--gray00);
   }
 
-  .a11y {
-    @include a11y;
-  }
-
   *,
   *::before,
   *::after {
     box-sizing: border-box;
   }
 
-  // 디바이스 변경시 display none/block 방식을 사용하기 위한 클래스
-  .show {
-    display: block !important;
+  &:not([data-theme="dark"]) {
+    // static
+    --wp-semantic-static-white: #{$color-global-common-100};
+    --wp-semantic-static-black: #{$color-global-common-0};
+    --wp-semantic-static-gray05: #{$color-global-coolNeutral-99};
+    --wp-semantic-static-gray10: #{rgba( $color-global-coolNeutral-50, $color-global-opacity-6)};
+    --wp-semantic-static-gray80: #43444a;
+    --wp-semantic-static-gray85: #313337;
+    --wp-semantic-static-gray90: #252629;
+    --wp-semantic-static-gray95: #1f2023;
+
+    // primary
+    --wp-semantic-primary-normal: #{$color-global-wemixplay-50};
+    --wp-semantic-primary-strong: #{$color-global-wemixplay-40};
+    --wp-semantic-primary-heavy: #{$color-global-wemixplay-30};
+
+    // highlight
+    --wp-semantic-highlight-normal: #{$color-global-blue-50};
+    --wp-semantic-highlight-strong: #{$color-global-blue-45};
+    --wp-semantic-highlight-heavy: #{$color-global-blue-40};
+
+    // label
+    --wp-semantic-label-normal: #{$color-global-coolNeutral-10};
+    --wp-semantic-label-strong: #{$color-global-common-0};
+    --wp-semantic-label-neutral: #{rgba($color-global-coolNeutral-22, $color-global-opacity-88)};
+    --wp-semantic-label-alternative: #{rgba($color-global-coolNeutral-25, $color-global-opacity-61)};
+    --wp-semantic-label-assistive: #{rgba($color-global-coolNeutral-25, $color-global-opacity-28)};
+    --wp-semantic-label-disable: #{rgba($color-global-coolNeutral-25, $color-global-opacity-16)};
+    --wp-semantic-label-inverse-normal: #{$color-global-coolNeutral-99};
+    --wp-semantic-label-inverse-alternative: #{rgba($color-global-coolNeutral-80, $color-global-opacity-61)};
+
+    // background
+    --wp-semantic-background-normal-normal: #{$color-global-common-100};
+    --wp-semantic-background-normal-alternative: #{$color-global-coolNeutral-99};
+    --wp-semantic-background-elevated-normal: #{$color-global-common-100};
+    --wp-semantic-background-elevated-alternative: #{$color-global-coolNeutral-99};
+    --wp-semantic-background-black: #{rgba($color-global-common-0, $color-global-opacity-61)};
+
+    // interaction
+    --wp-semantic-interaction-inactive: #{$color-global-coolNeutral-70};
+    --wp-semantic-interaction-disable: #{$color-global-coolNeutral-98};
+
+    // line
+    --wp-semantic-line-normal-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
+    --wp-semantic-line-normal-neutral: #{rgba($color-global-coolNeutral-50, $color-global-opacity-16)};
+    --wp-semantic-line-normal-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-8)};
+    --wp-semantic-line-normal-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-52)};
+    --wp-semantic-line-solid-normal: #{$color-global-coolNeutral-96};
+    --wp-semantic-line-solid-neutral: #{$color-global-coolNeutral-97};
+    --wp-semantic-line-solid-alternative: #{$color-global-coolNeutral-98};
+    --wp-semantic-line-solid-strong: #{$color-global-coolNeutral-80};
+
+    // status
+    --wp-semantic-status-positive: #{$color-global-green-50};
+    --wp-semantic-status-positive-heavy: #{$color-global-green-40};
+    --wp-semantic-status-positive-bg: #{rgba($color-global-green-50, $color-global-opacity-10)};
+    --wp-semantic-status-cautionary: #{$color-global-orange-50};
+    --wp-semantic-status-cautionary-bg: #{rgba($color-global-orange-50, $color-global-opacity-10)};
+    --wp-semantic-status-negative: #{$color-global-red-50};
+    --wp-semantic-status-negative-bg: #{rgba($color-global-red-50, $color-global-opacity-16)};
+    --wp-semantic-status-negative-ball: #{rgba($color-global-red-50, $color-global-opacity-74)};
+    --wp-semantic-status-blue: #{$color-global-blue-50};
+    --wp-semantic-status-blue-bg: #{rgba($color-global-blue-50, $color-global-opacity-10)};
+
+    // accent
+    --wp-semantic-accent-lime: #{$color-global-lime-50};
+    --wp-semantic-accent-cyan: #{$color-global-cyan-50};
+    --wp-semantic-accent-lightBlue: #{$color-global-lightBlue-50};
+    --wp-semantic-accent-violet: #{$color-global-violet-50};
+    --wp-semantic-accent-purple: #{$color-global-purple-50};
+    --wp-semantic-accent-pink: #{$color-global-pink-50};
+    --wp-semantic-accent-redOrange: #{$color-global-redOrange-50};
+
+    // Component - fill
+    --wp-semantic-fill-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-8)};
+    --wp-semantic-fill-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-16)};
+    --wp-semantic-fill-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-5)};
+
+    // Component - Material
+    --wp-semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-74)};
+    --wp-semantic-material-badge-violet-bg: #{rgba($color-global-violet-70, $color-global-opacity-20)};
+    --wp-semantic-material-badge-violet-50: #{$color-global-violet-50};
+    --wp-semantic-material-badge-violet-20: #{$color-global-violet-20};
+
+    // Shadow
+    --wp-semantic-shadow-normal:
+      0 1px 2px rgb(0 0 0 / 12%),
+      0 0 1px rgb(0 0 0 / 8%),
+      0 0 1px rgb(0 0 0 / 8%);
+    --wp-semantic-shadow-emphasize:
+      0 2px 8px rgb(0 0 0 / 12%),
+      0 1px 4px rgb(0 0 0 / 8%),
+      0 0 1px rgb(0 0 0 / 8%);
+    --wp-semantic-shadow-strong:
+      0 6px 12px rgb(0 0 0 / 12%),
+      0 4px 8px rgb(0 0 0 / 8%),
+      0 0 4px rgb(0 0 0 / 8%);
+    --wp-semantic-shadow-heavy:
+      0 16px 20px rgb(0 0 0 / 12%),
+      0 8px 16px rgb(0 0 0 / 8%),
+      0 0 8px rgb(0 0 0 / 8%);
+    --wp-semantic-shadow-big: 0 20px 50px 0 rgb(0 0 0 / 10%);
+    --wp-semantic-shadow-cookie: 0 -5px 18px 0 rgb(0 0 0 / 8%);
+    --wp-semantic-feed-shadow: 0 8px 26px 0 rgb(0 0 0 / 6%);
   }
 
-  .hide {
-    display: none !important;
-  }
+  &[data-theme="dark"] {
+    // static
+    --wp-semantic-static-white: #{$color-global-common-100};
+    --wp-semantic-static-black: #{$color-global-common-0};
+    --wp-semantic-static-gray05: #{$color-global-coolNeutral-99};
+    --wp-semantic-static-gray10: #{rgba( $color-global-coolNeutral-50, $color-global-opacity-6)};
+    --wp-semantic-static-gray80: #43444a;
+    --wp-semantic-static-gray85: #313337;
+    --wp-semantic-static-gray90: #252629;
+    --wp-semantic-static-gray95: #1f2023;
 
-  .show-flex {
-    display: flex !important;
-  }
+    // primary
+    --wp-semantic-primary-normal: #{$color-global-wemixplay-50};
+    --wp-semantic-primary-strong: #{$color-global-wemixplay-40};
+    --wp-semantic-primary-heavy: #{$color-global-wemixplay-30};
 
-  .show-flex-inline {
-    display: flex !important;
+    // highlight
+    --wp-semantic-highlight-normal: #{$color-global-blue-60};
+    --wp-semantic-highlight-strong: #{$color-global-blue-55};
+    --wp-semantic-highlight-heavy: #{$color-global-blue-50};
+
+    // label
+    --wp-semantic-label-normal: #{$color-global-coolNeutral-99};
+    --wp-semantic-label-strong: #{$color-global-common-100};
+    --wp-semantic-label-neutral: #{rgba($color-global-coolNeutral-90, $color-global-opacity-88)};
+    --wp-semantic-label-alternative: #{rgba($color-global-coolNeutral-80, $color-global-opacity-61)};
+    --wp-semantic-label-assistive: #{rgba($color-global-coolNeutral-80, $color-global-opacity-28)};
+    --wp-semantic-label-disable: #{rgba($color-global-coolNeutral-70, $color-global-opacity-16)};
+    --wp-semantic-label-inverse-normal: #{$color-global-coolNeutral-10};
+    --wp-semantic-label-inverse-alternative: #{rgba($color-global-coolNeutral-25, $color-global-opacity-61)};
+
+    // background
+    --wp-semantic-background-normal-normal: #{$color-global-coolNeutral-15};
+    --wp-semantic-background-normal-alternative: #{$color-global-coolNeutral-5};
+    --wp-semantic-background-elevated-normal: #{$color-global-coolNeutral-17};
+    --wp-semantic-background-elevated-alternative: #{$color-global-coolNeutral-7};
+    --wp-semantic-background-black: #{rgba($color-global-common-0, $color-global-opacity-61)};
+
+    // interaction
+    --wp-semantic-interaction-inactive: #{$color-global-coolNeutral-40};
+    --wp-semantic-interaction-disable: #{$color-global-coolNeutral-22};
+
+    // line
+    --wp-semantic-line-normal-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-32)};
+    --wp-semantic-line-normal-neutral: #{rgba($color-global-coolNeutral-50, $color-global-opacity-28)};
+    --wp-semantic-line-normal-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
+    --wp-semantic-line-normal-strong: #{rgba($color-global-coolNeutral-90, $color-global-opacity-52)};
+    --wp-semantic-line-solid-normal: #{$color-global-coolNeutral-25};
+    --wp-semantic-line-solid-neutral: #{$color-global-coolNeutral-23};
+    --wp-semantic-line-solid-alternative: #{$color-global-coolNeutral-22};
+    --wp-semantic-line-solid-strong: #{$color-global-coolNeutral-50};
+
+    // status
+    --wp-semantic-status-positive: #{$color-global-green-60};
+    --wp-semantic-status-positive-heavy: #{$color-global-green-40};
+    --wp-semantic-status-positive-bg: #{rgba($color-global-green-60, $color-global-opacity-10)};
+    --wp-semantic-status-cautionary: #{$color-global-orange-60};
+    --wp-semantic-status-cautionary-bg: #{rgba($color-global-orange-60, $color-global-opacity-10)};
+    --wp-semantic-status-negative: #{$color-global-red-60};
+    --wp-semantic-status-negative-bg: #{rgba($color-global-red-60, $color-global-opacity-16)};
+    --wp-semantic-status-negative-ball: #{rgba($color-global-red-60, $color-global-opacity-74)};
+    --wp-semantic-status-blue: #{$color-global-blue-60};
+    --wp-semantic-status-blue-bg: #{rgba($color-global-blue-60, $color-global-opacity-10)};
+
+    // accent
+    --wp-semantic-accent-lime: #{$color-global-lime-60};
+    --wp-semantic-accent-cyan: #{$color-global-cyan-60};
+    --wp-semantic-accent-lightBlue: #{$color-global-lightBlue-60};
+    --wp-semantic-accent-violet: #{$color-global-violet-60};
+    --wp-semantic-accent-purple: #{$color-global-purple-60};
+    --wp-semantic-accent-pink: #{$color-global-pink-60};
+    --wp-semantic-accent-redOrange: #{$color-global-redOrange-60};
+
+    // Component - fill
+    --wp-semantic-fill-normal: #{rgba($color-global-coolNeutral-50, $color-global-opacity-22)};
+    --wp-semantic-fill-strong: #{rgba($color-global-coolNeutral-50, $color-global-opacity-28)};
+    --wp-semantic-fill-alternative: #{rgba($color-global-coolNeutral-50, $color-global-opacity-12)};
+
+    // Component - Material
+    --wp-semantic-material-dimmer: #{rgba($color-global-coolNeutral-10, $color-global-opacity-74)};
+    --wp-semantic-material-badge-violet-bg: #{rgba($color-global-violet-70, $color-global-opacity-30)};
+    --wp-semantic-material-badge-violet-50: #{$color-global-violet-70};
+    --wp-semantic-material-badge-violet-20: #{$color-global-violet-90};
+
+    // Shadow
+    --wp-semantic-shadow-normal:
+      0 1px 2px rgb(0 0 0 / 12%),
+      0 0 1px rgb(0 0 0 / 8%),
+      0 0 1px rgb(0 0 0 / 8%);
+    --wp-semantic-shadow-emphasize:
+      0 2px 8px rgb(0 0 0 / 12%),
+      0 1px 4px rgb(0 0 0 / 8%),
+      0 0 1px rgb(0 0 0 / 8%);
+    --wp-semantic-shadow-strong:
+      0 6px 12px rgb(0 0 0 / 12%),
+      0 4px 8px rgb(0 0 0 / 8%),
+      0 0 4px rgb(0 0 0 / 8%);
+    --wp-semantic-shadow-heavy:
+      0 16px 20px rgb(0 0 0 / 12%),
+      0 8px 16px rgb(0 0 0 / 8%),
+      0 0 8px rgb(0 0 0 / 8%);
+    --wp-semantic-shadow-big: 0 20px 50px 0 rgb(0 0 0 / 10%);
+    --wp-semantic-shadow-cookie: 0 -5px 18px 0 rgb(0 0 0 / 8%);
+    --wp-semantic-feed-shadow: 0 8px 26px 0 rgb(0 0 0 / 6%);
   }
 }
