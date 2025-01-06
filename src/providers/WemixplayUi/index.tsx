@@ -24,7 +24,10 @@ const WemixplayUIProvider = ({ children, theme }: WemixplayUIProviderProps) => {
   const value = useMemo(() => ({ theme: themeData, setThemeData }), [themeData, setThemeData]);
 
   useEffect(() => {
-    setThemeData(theme);
+    const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const newTheme = typeof theme === 'undefined' ? (isDarkMode ? 'dark' : 'light') : theme;
+
+    setThemeData(newTheme);
   }, [theme]);
 
   return (
