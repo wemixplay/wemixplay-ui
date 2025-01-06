@@ -1,6 +1,7 @@
 import type { Meta, StoryObj, StoryFn } from '@storybook/react';
 import { useMemo } from 'react';
 import Carousel, { CarouselProps } from '@/components/carousel/Carousel';
+import useWemixplayUI from '@/hooks/useWemixplayUI';
 
 type StoryComponent = StoryObj<typeof Carousel>;
 type StoryTemplate = StoryFn<typeof Carousel>;
@@ -12,7 +13,8 @@ export default {
 } as Meta<typeof Carousel>;
 
 const SlideTemplate: StoryTemplate = (args) => {
-  const props = useMemo(() => {}, []);
+  const { theme } = useWemixplayUI();
+
   return (
     <div>
       <Carousel
@@ -28,7 +30,8 @@ const SlideTemplate: StoryTemplate = (args) => {
               fontSize: 16,
               fontWeight: 900,
               textAlign: 'center',
-              border: '1px solid'
+              border: '1px solid',
+              backgroundColor: 'var(--wp-semantic-static-gray05)'
             }}
           >
             <strong>{index + 1}</strong>

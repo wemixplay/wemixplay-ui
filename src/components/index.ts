@@ -83,6 +83,10 @@ import ListVirtualScroll, {
   ListVirtualScrollProps,
   VirtualElementFunc
 } from './virtualScroll/ListVirtualScroll';
+import WemixplayUIProvider, {
+  WemixplayUIContext,
+  WemixplayUIContextType
+} from '@/providers/WemixplayUi';
 
 export type {
   WpEditorRef,
@@ -165,7 +169,8 @@ export type {
   TooltipProps,
   ListVirtualScrollProps,
   GridVirtualScrollProps,
-  VirtualElementFunc
+  VirtualElementFunc,
+  WemixplayUIContextType
 };
 export {
   WpEditor,
@@ -229,5 +234,7 @@ export {
   HStack,
   VStack,
   ListVirtualScroll,
-  GridVirtualScroll
+  GridVirtualScroll,
+  WemixplayUIContext,
+  WemixplayUIProvider
 };
