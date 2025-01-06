@@ -111,8 +111,6 @@ const VStack = ({
     return typeof gap === 'number' && gap > 0 && gap <= 500;
   };
 
-  console.log(checkGapClassName(columnGap, gap));
-
   return createElement(
     tag,
     {
