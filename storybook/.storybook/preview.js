@@ -30,7 +30,7 @@ const preview = {
   },
   decorators: [
     (Story, context) => {
-      const backgrounds = context.backgrounds;
+      const backgrounds = context.globals?.backgrounds?.value;
 
       const [theme, setTheme] = useState('light');
 
@@ -40,7 +40,6 @@ const preview = {
 
       return (
         <div className={`storybook-font ${pretendard.variable} ${twkEverett.variable}`}>
-      
             <WemixplayUIProvider theme={theme}>
               {/* Story의 내용이 WemixplayUIProvider의 컨텍스트를 사용합니다. */}
               <Story />
