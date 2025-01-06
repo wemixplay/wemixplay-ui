@@ -1,1 +1,1 @@
-"use strict";module.exports={loading:"ListMap-module_loading__71wiW"};
+"use strict";require('./../../ext/style-inject/dist/style-inject.es.js')(".ListMap-module_loading__71wiW{align-items:center;display:flex;height:100%;justify-content:center;left:50%;position:absolute;top:50%;transform:translate(-50%,-50%);width:100%}"),module.exports={loading:"ListMap-module_loading__71wiW"};

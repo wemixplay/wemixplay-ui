@@ -1,1 +1,1 @@
-var o={"checkbox-round":"RoundCheckBox-module_checkbox-round__joLjj"};export{o as default};
+import o from'./../../../ext/style-inject/dist/style-inject.es.js';var e={"checkbox-round":"RoundCheckBox-module_checkbox-round__joLjj"};o(".RoundCheckBox-module_checkbox-round__joLjj .ico-check .icon{border-radius:50%;height:20px;width:20px}");export{e as default};
