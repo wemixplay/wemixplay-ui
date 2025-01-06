@@ -18,7 +18,7 @@ import CommentBox, { CommentBoxProps } from './comment/CommentBox';
 import CommentEditor, { CommentEditorProps } from './comment/CommentEditor';
 import CommentEtcInfo, { CommentEtcInfoProps } from './comment/CommentEtcInfo';
 import CommentWriterInfo, { CommentWriterInfoProps } from './comment/CommentWriterInfo';
-import { FeedIframesViewRef, IframePlayState } from './feed/FeedIframesView';
+import FeedIframesView, { FeedIframesViewRef, IframePlayState } from './feed/FeedIframesView';
 import { convertHtmlToMarkdownStr, convertMarkdownToHtmlStr } from '../utils/valueParserUtils';
 import CurationBox, { CurationBoxProps } from './feed/CurationBox';
 import Accordion, { AccordionProps } from './accordion/Accordion';
@@ -66,18 +66,18 @@ import InfiniteScroll, { InfiniteScrollProps } from './list/InfiniteScroll';
 import ListMap, { ListMapProps } from './list/ListMap';
 import Marquee, { MarqueeProps } from './marquee/Marquee';
 import Pagination, { PaginationProps } from './pagination/Pagination';
-import { SimplePaginationProps } from './pagination/SimplePagination';
-import { RateProps } from './rate/Rate';
-import { RatingProps } from './ratings/Rating';
+import SimplePagination, { SimplePaginationProps } from './pagination/SimplePagination';
+import Rate, { RateProps } from './rate/Rate';
+import Rating, { RatingProps } from './ratings/Rating';
 import Typography, { TypographyProps } from './typography/Typography';
-import { SwitchProps } from './switch/Switch';
-import { ChipTabProps } from './tab/ChipTab';
-import { TabProps } from './tab/Tab';
-import { TableProps } from './table/Table';
-import { TableRowProps } from './table/TableRow';
-import { TdColumnProps } from './table/TdColumn';
-import { TdExpendProps } from './table/TdExpend';
-import { TooltipProps } from './tooltip/Tooltip';
+import Switch, { SwitchProps } from './switch/Switch';
+import ChipTab, { ChipTabProps } from './tab/ChipTab';
+import Tab, { TabProps } from './tab/Tab';
+import Table, { TableProps } from './table/Table';
+import TableRow, { TableRowProps } from './table/TableRow';
+import TdColumn, { TdColumnProps } from './table/TdColumn';
+import TdExpend, { TdExpendProps } from './table/TdExpend';
+import Tooltip, { TooltipProps } from './tooltip/Tooltip';
 import GridVirtualScroll, { GridVirtualScrollProps } from './virtualScroll/GridVirtualScroll';
 import ListVirtualScroll, {
   ListVirtualScrollProps,
@@ -87,6 +87,7 @@ import WemixplayUIProvider, {
   WemixplayUIContext,
   WemixplayUIContextType
 } from '@/providers/WemixplayUi';
+import useWemixplayUI from '@/hooks/useWemixplayUI';
 
 export type {
   WpEditorRef,
@@ -229,6 +230,18 @@ export {
   ListMap,
   Marquee,
   Pagination,
+  FeedIframesView,
+  SimplePagination,
+  Rate,
+  Rating,
+  Switch,
+  ChipTab,
+  Tab,
+  Table,
+  TableRow,
+  TdColumn,
+  TdExpend,
+  Tooltip,
   Divider,
   Typography,
   HStack,
@@ -236,5 +249,6 @@ export {
   ListVirtualScroll,
   GridVirtualScroll,
   WemixplayUIContext,
-  WemixplayUIProvider
+  WemixplayUIProvider,
+  useWemixplayUI
 };
