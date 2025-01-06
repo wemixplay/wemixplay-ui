@@ -1,1 +1,0 @@
-import{__module as o}from"../../_virtual/isBuffer.js";import{s as r}from"./stubFalse.js";import{_ as s}from"./_root.js";!function(o,e){var t=s,f=r,i=e&&!e.nodeType&&e,p=i&&o&&!o.nodeType&&o,a=p&&p.exports===i?t.Buffer:void 0,m=(a?a.isBuffer:void 0)||f;o.exports=m}(o,o.exports);var e=o.exports;export{e as i};
