@@ -14,7 +14,7 @@
     "react": "^18",
     "react-dom": "^18",
     "swiper": "^11.1.8",
-    "wemixplay-ui": "^1.13.182-alpha"
+    "wemixplay-ui": "^1.13.196-alpha"
   },
   "devDependencies": {
     "@types/decimal.js": "^7.4.3",
