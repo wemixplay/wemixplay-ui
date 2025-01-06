@@ -68,7 +68,12 @@ export default {
 
 const Template: StoryTemplate = (args) => {
   return (
-    <div style={{ display: args.type === 'vertical' ? 'flex' : 'block' }}>
+    <div
+      style={{
+        display: args.type === 'vertical' ? 'flex' : 'block',
+        color: 'var(--wp-semantic-label-normal)'
+      }}
+    >
       <p style={{ margin: '0' }}>Section1</p>
       <Divider {...args} />
       <p style={{ margin: '0' }}>Section2</p>

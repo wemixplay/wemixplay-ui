@@ -1,7 +1,9 @@
 .counter-wrapper {
-  font-size: 20px;
+  // style
 }
 
 .counter-value {
-  //
+  @include label-02-normal-r;
+
+  color: var(--wp-semantic-label-normal);
 }

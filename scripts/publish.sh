@@ -93,7 +93,12 @@ fi
 tag_version="npm-publish/$new_version"
 
 print_string "warning" "프로젝트 빌드 중..."
-rm -rf dist
+
+# dist 디렉토리가 존재할 경우에만 삭제
+if [ -d "dist" ]; then
+    rm -rf dist
+fi
+
 yarn cache clean && yarn && yarn build || { print_string "error" "빌드 실패"; exit 1; }
 
 print_string "success" "패키지 설치 및 빌드 완료"

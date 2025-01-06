@@ -15,7 +15,7 @@ const { visualizer } = require("rollup-plugin-visualizer");
 const packageJson = require('./package.json');
 const { optimizeLodashImports } = require("@optimize-lodash/rollup-plugin");
 const renameNodeModules = require("rollup-plugin-rename-node-modules");
-const { preserveDirective } = require('rollup-preserve-directives');
+const { preserveDirectives } = require('rollup-plugin-preserve-directives');
 
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
@@ -36,7 +36,7 @@ const plugins = [
   }),
   optimizeLodashImports(),
   babel({
-	  babelHelpers: 'runtime', // 여전히 runtime helpers를 사용할 수 있지만 core-js는 사용하지 않음
+    babelHelpers: 'runtime', // 여전히 runtime helpers를 사용할 수 있지만 core-js는 사용하지 않음
     exclude: 'node_modules/**',
     extensions,
     presets: [
@@ -53,7 +53,26 @@ const plugins = [
     plugins: [
       '@babel/plugin-transform-runtime' // corejs 없이 runtime 헬퍼만 사용
     ]
-	}),
+  }),
+  preserveDirectives({ exclude: ["**/*.scss", "**/*.svg"] }),
+  postcss({
+    modules: true,
+    extensions: ['.css', '.scss', '.sass'],
+    use: [
+      [
+        'sass',
+        {
+          data: `
+            @import "./src/styles/abstracts/_variables.scss";
+            @import "./src/styles/abstracts/_mixin.scss";
+          `
+        }
+      ]
+    ],
+    extract: false,
+    minimize: true,
+    sourceMap: process.env.NODE_ENV === 'development'
+  }),
   renameNodeModules('ext', process.env.NODE_ENV === 'development'),
   svgr({
     prettier: false,
@@ -80,6 +99,7 @@ const plugins = [
   }),
   replace({
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+    preventAssignment: true,
   }),
   commonjs()
 ]
@@ -108,41 +128,38 @@ if (process.env.NODE_VI === 'OK') {
   }))
 }
 
+const makeExportConfig = ({external = ['react', 'react-dom', id => /fsevents/.test(id)], input, output, plugins}) => {
+  return {
+    external,
+    plugins,
+    input,
+    output,
+    onwarn: (warning, warn) => {
+      // "use client" 지시어와 관련된 경고 무시
+      if (warning.code === 'MODULE_LEVEL_DIRECTIVE') {
+        if (warning.message.includes('"use client"')) {
+          return;
+        }
+      }
+      // 다른 경고는 기본 경고 처리기 사용
+      warn(warning);
+    },
+    treeshake: {
+      moduleSideEffects: false,
+      propertyReadSideEffects: false,
+      unknownGlobalSideEffects: false,
+    },
+  }
+}
+
 module.exports = [
-  {
+  makeExportConfig({
     external:  [
       ...Object.keys(packageJson.dependencies).filter(dep => dep !== 'react-youtube' && dep !== 'swiper'),
       /@babel\/runtime/,
       /fsevents/
     ],
-    plugins: [
-      ...plugins,
-      preserveDirective({
-        directives: ['use client']
-      }),
-      postcss({
-        modules: true,
-        extensions: ['.css', '.scss', '.sass'],
-        use: [
-          [
-            'sass',
-            {
-              data: `
-                @import "./src/styles/abstracts/_variables.scss";
-                @import "./src/styles/abstracts/_mixin.scss";
-                @import "./src/styles/abstracts/_animation.scss";
-                @import "./src/styles/global.scss";
-                @import "./src/styles/theme.scss";
-              `
-            }
-          ]
-        ],
-        extract: 'styles.css',
-        inject: false,
-        minimize: true,
-        sourceMap: process.env.NODE_ENV === 'development'
-      })
-    ],
+    plugins,
     input: './src/components/index.ts',
     output: [
       {
@@ -161,76 +178,70 @@ module.exports = [
         sourcemap: process.env.NODE_ENV === 'development'
       }
     ],
-    treeshake: {
-      moduleSideEffects: false,
-      propertyReadSideEffects: false,
-      unknownGlobalSideEffects: false,
-    },
-  },
-  {
-    external: ['react', 'react-dom', id => /fsevents/.test(id)],
+  }),
+  makeExportConfig({
+    plugins,
+    input: './src/hooks/index.ts',
+    output: [
+      {
+        file: 'dist/hooks/index.cjs.js',
+        format: 'cjs',
+        sourcemap: process.env.NODE_ENV !== 'production',
+      },
+      {
+        file: 'dist/esm/hooks/index.esm.mjs',
+        format: 'esm',
+        sourcemap: process.env.NODE_ENV !== 'production',
+      },
+    ],
+  }),
+  makeExportConfig({
     plugins,
     input: './src/modules/index.ts',
     output: [
-			{
-				file: 'dist/modules/index.cjs.js',
-				format: 'cjs',
-				sourcemap: process.env.NODE_ENV !== 'production',
-			},
-			{
-				file: 'dist/esm/modules/index.esm.mjs',
-				format: 'esm',
-				sourcemap: process.env.NODE_ENV !== 'production',
-			},
-		],
-    treeshake: {
-      moduleSideEffects: false,
-      propertyReadSideEffects: false,
-      unknownGlobalSideEffects: false,
-    },
-  },
-  {
-    external: ['react', 'react-dom', id => /fsevents/.test(id)],
+      {
+        file: 'dist/modules/index.cjs.js',
+        format: 'cjs',
+        sourcemap: process.env.NODE_ENV !== 'production',
+      },
+      {
+        file: 'dist/esm/modules/index.esm.mjs',
+        format: 'esm',
+        sourcemap: process.env.NODE_ENV !== 'production',
+      },
+    ],
+  }),
+  makeExportConfig({
     plugins,
     input: './src/utils/index.ts',
     output: [
-			{
-				file: 'dist/utils/index.cjs.js',
-				format: 'cjs',
-				sourcemap: process.env.NODE_ENV !== 'production',
-			},
-			{
-				file: 'dist/esm/utils/index.esm.mjs',
-				format: 'esm',
-				sourcemap: process.env.NODE_ENV !== 'production',
-			},
-		],
-    treeshake: {
-      moduleSideEffects: false,
-      propertyReadSideEffects: false,
-      unknownGlobalSideEffects: false,
-    },
-  },
-  {
-    external: ['react', 'react-dom', id => /fsevents/.test(id)],
+      {
+        file: 'dist/utils/index.cjs.js',
+        format: 'cjs',
+        sourcemap: process.env.NODE_ENV !== 'production',
+      },
+      {
+        file: 'dist/esm/utils/index.esm.mjs',
+        format: 'esm',
+        sourcemap: process.env.NODE_ENV !== 'production',
+      },
+    ],
+  }),
+  makeExportConfig({
     plugins,
     input: './src/constants/index.ts',
     output: [
-			{
-				file: 'dist/constants/index.cjs.js',
-				format: 'cjs',
-				sourcemap: process.env.NODE_ENV !== 'production',
-			},
-			{
-				file: 'dist/esm/constants/index.esm.mjs',
-				format: 'esm',
-				sourcemap: process.env.NODE_ENV !== 'production',
-			},
-		],
-    treeshake: {
-      moduleSideEffects: false,
-      propertyReadSideEffects: false,
-      unknownGlobalSideEffects: false,
-    },
-  }
+      {
+        file: 'dist/constants/index.cjs.js',
+        format: 'cjs',
+        sourcemap: process.env.NODE_ENV !== 'production',
+      },
+      {
+        file: 'dist/esm/constants/index.esm.mjs',
+        format: 'esm',
+        sourcemap: process.env.NODE_ENV !== 'production',
+      },
+    ],
+  })
 ];
+
