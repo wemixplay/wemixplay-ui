@@ -6,8 +6,8 @@ const cx = makeCxFunc(styles);
 
 type WemixplayUIContextType = {
   /** wemixplay ui 현재 테마 */
-  theme?: 'dark' | 'light';
-  setThemeData?: (theme: 'dark' | 'light') => void;
+  theme: 'dark' | 'light';
+  setThemeData: (theme: 'dark' | 'light') => void;
 };
 
 type WemixplayUIProviderProps = {
@@ -16,12 +16,17 @@ type WemixplayUIProviderProps = {
   children: React.ReactNode;
 };
 
-const WemixplayUIContext = createContext<WemixplayUIContextType>({});
+const initialValue: WemixplayUIContextType = {
+  theme: 'light',
+  setThemeData: (newTheme) => {}
+}
 
+const WemixplayUIContext = createContext<WemixplayUIContextType>(initialValue);
+  
 const WemixplayUIProvider = ({ children, theme }: WemixplayUIProviderProps) => {
   const [themeData, setThemeData] = useState(theme);
 
-  const value = useMemo(() => ({ theme: themeData, setThemeData }), [themeData, setThemeData]);
+  const value = useMemo(() => ({ ...initialValue, theme: themeData, setThemeData }), [themeData, setThemeData]);
 
   useEffect(() => {
     const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
