@@ -50,7 +50,12 @@ const Box = ({ children }: { children: ReactNode }) => {
     <VStack
       justifyContent="center"
       alignItems="center"
-      style={{ width: '100px', height: '100px', backgroundColor: 'gray' }}
+      style={{
+        width: '100px',
+        height: '100px',
+        backgroundColor: 'gray',
+        color: 'var(--wp-semantic-label-normal)'
+      }}
     >
       {children}
     </VStack>
