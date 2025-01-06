@@ -1,1 +1,0 @@
-"use strict";var r=require("./isSymbol.js").isSymbol_1;var i=function(i,e){if(i!==e){var n=void 0!==i,u=null===i,o=i==i,s=r(i),t=void 0!==e,l=null===e,v=e==e,a=r(e);if(!l&&!a&&!s&&i>e||s&&t&&v&&!l&&!a||u&&t&&v||!n&&v||!o)return 1;if(!u&&!s&&!a&&i<e||a&&n&&o&&!u&&!s||l&&n&&o||!t&&o||!v)return-1}return 0};exports._compareAscending=i;
