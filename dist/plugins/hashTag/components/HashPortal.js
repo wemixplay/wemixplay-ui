@@ -1,1 +1,2 @@
+"use client";
 "use strict";var e=require("react"),t=require("react-dom");module.exports=r=>{let{children:d}=r;const[o,l]=e.useState(null);return e.useEffect((()=>{let e=!1,t=document.getElementById("wp-editor-hash-portal");if(!t){e=!0;const r=document.createElement("div");r.setAttribute("id","wp-editor-hash-portal"),document.body.appendChild(r),t=r}return l(t),()=>{e&&(null==t?void 0:t.parentNode)&&t.parentNode.removeChild(t)}}),[]),o&&t.createPortal(d,o)};
