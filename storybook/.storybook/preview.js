@@ -5,9 +5,20 @@ import { useEffect, useState } from 'react'
 import '../styles/storybook.scss';
 import {pretendard, twkEverett} from '@/constants/font.c';
 import WemixplayUIProvider from '@/providers/WemixplayUi';
+import { DocsContainer } from '@storybook/addon-docs/blocks';
+import { themes } from '@storybook/theming';
+import { withThemes } from '@storybook/addon-themes';
+
 const preview = {
   parameters: {
     actions: { argTypesRegex: '^(on|handle)(?!Icon)[A-Z].*' },
+    themes: {
+      default: 'light',
+      list: [
+        { name: 'light', class: 'theme-light', color: '#ffffff', default: true },
+        { name: 'dark', class: 'theme-dark', color: '#000000' },
+      ],
+    },
     backgrounds: {
       default: 'light',
       values: [
@@ -26,6 +37,19 @@ const preview = {
         color: /(background|color)$/i,
         date: /Date$/
       }
+    },
+     docs: {
+      theme: themes.dark,
+      container: ({ context, children }) => {
+        return (
+          <WemixplayUIProvider theme={context.store.globals.globals.backgrounds?.value === '#141415' ? 'dark' : 'light'}>
+            <DocsContainer context={context}>
+                {children}
+            </DocsContainer>
+          </WemixplayUIProvider>
+        
+        )
+      },
     },
   },
   decorators: [

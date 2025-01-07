@@ -9,11 +9,11 @@ const config = {
     to: path.resolve(__dirname, "../../src/assets/font")
   }],
   addons: [
+    '@storybook/addon-themes',
     '@storybook/addon-links',
     '@storybook/addon-essentials',
     '@storybook/addon-interactions',
-    '@storybook/addon-controls',
-    'storybook-addon-react-docgen'
+    'storybook-addon-react-docgen',
   ],
   framework: {
     name: '@storybook/nextjs'
@@ -38,13 +38,22 @@ const config = {
     if (!config.module.rules) config.module.rules = [];
 
     config.module.rules.push({
-      test: /\.s(a|c)ss$/,
+      test: /\.module\.s(a|c)ss$/,
       loader: 'sass-loader',
       options: {
-        additionalData:  `
-          @import "../src/styles/abstracts/_variables.scss"; 
-          @import "../src/styles/abstracts/_mixin.scss";
-        `
+        additionalData: (content) => {
+          const modifiedContent = content.replace(/(\.(?!wemixplay-ui)[a-zA-Z][\w-]*)(?=\s*{)/g, (match, p1) => {
+            const globalScopeRegex = new RegExp(`:global\\s*{[^}]*\\${p1}`, 'g');
+            return globalScopeRegex.test(content) ? p1 : `.wm-ui${p1}, ${p1}`;
+          });
+
+          return `
+            @import "../src/styles/abstracts/_variables.scss"; 
+            @import "../src/styles/abstracts/_mixin.scss";
+            
+            ${modifiedContent}
+          `;
+        }
       },
     });
 
