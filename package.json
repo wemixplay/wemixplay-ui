@@ -1,6 +1,6 @@
 {
   "name": "wemixplay-ui",
-  "version": "1.13.201-alpha",
+  "version": "1.13.203-alpha",
   "author": "WEMADE",
   "license": "MIT",
   "sideEffects": false,
@@ -155,7 +155,8 @@
     "react-responsive": "^10.0.0",
     "react-youtube": "^10.1.0",
     "style-inject": "^0.3.0",
-    "swiper": "^11.1.1"
+    "swiper": "^11.1.1",
+    "webpack": "^5.97.1"
   },
   "resolutions": {
     "**/fsevents": "2.3.2",
