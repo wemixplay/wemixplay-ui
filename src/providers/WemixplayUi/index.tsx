@@ -1,8 +1,8 @@
 import React, { createContext, useEffect, useMemo, useState } from 'react';
 import styles from './wemixplay-ui.module.scss';
-import { makeCxFunc } from '@/utils/forReactUtils';
+import classNames from 'classnames/bind';
 
-const cx = makeCxFunc(styles);
+const cx = classNames.bind(styles);
 
 type WemixplayUIContextType = {
   /** wemixplay ui 현재 테마 */

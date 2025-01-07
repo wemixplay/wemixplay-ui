@@ -1,1 +1,0 @@
-"use strict";var e=require("../providers/WemixplayUi/index.js"),t=require("react");var r=()=>{const{theme:r,setThemeData:a}=t.useContext(e.WemixplayUIContext),s=t.useCallback((e=>{document.body.setAttribute("data-theme",e),a(e)}),[a]);return{theme:r,changeTheme:s}};module.exports=r;
