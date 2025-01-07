@@ -17,6 +17,16 @@ const { optimizeLodashImports } = require("@optimize-lodash/rollup-plugin");
 const renameNodeModules = require("rollup-plugin-rename-node-modules");
 const { preserveDirectives } = require('rollup-plugin-preserve-directives');
 
+
+const addPrefixToSelectors = (css) => {
+  css.walkRules((rule) => {
+    rule.selectors = rule.selectors.map((selector) => {
+      const newSelector = selector.replace(/(\.(?!wemixplay-ui)[a-zA-Z][\w-]*)/g, '.wm-ui$1');
+      return `${selector}, ${newSelector}`;
+    });
+  });
+};
+
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 
 const plugins = [
@@ -57,6 +67,9 @@ const plugins = [
   preserveDirectives({ exclude: ["**/*.scss", "**/*.svg"] }),
   postcss({
     modules: true,
+    plugins: [
+      addPrefixToSelectors
+    ],
     extensions: ['.css', '.scss', '.sass'],
     use: [
       [
