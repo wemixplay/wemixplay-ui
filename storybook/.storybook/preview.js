@@ -35,7 +35,6 @@ const preview = {
       const [theme, setTheme] = useState('light');
 
       useEffect(() => {
-        console.log('backgrounds', backgrounds);
         setTheme(backgrounds === '#141415' ? 'dark' : 'light');
       }, [backgrounds]);
 
