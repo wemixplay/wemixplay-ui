@@ -19,13 +19,14 @@ jobs:
           HEAD_COMMIT=${{ github.event.pull_request.head.sha }}
           echo "Base Commit: $BASE_COMMIT"
           echo "Head Commit: $HEAD_COMMIT"
-          commits=$(git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed '1s/^/- /' | tr '\n' '\\n' | sed 's/"/\\"/g')
+          commits=$(git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed 's/^/- /' | sed 's/$/\\n/' | sed 's/"/\\"/g')
           echo "Commits: $commits"
-          echo "::set-output name=commits::$commits"
+          echo "commits=$commits" >> $GITHUB_ENV
 
       - name: Update PR title and description
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          COMMITS: ${{ env.commits }}
         run: |
           PR_BRANCH=$(echo "${{ github.event.pull_request.head.ref }}")
           BASE_BRANCH=$(echo "${{ github.event.pull_request.base.ref }}")
@@ -40,7 +41,7 @@ jobs:
             exit 0
           fi
 
-          DESCRIPTION="## 커밋 내역\n${{ steps.get-commits.outputs.commits }}"
+          DESCRIPTION="## 커밋 내역\n$COMMITS"
 
           curl -X PATCH \
             -H "Authorization: token $GITHUB_TOKEN" \
