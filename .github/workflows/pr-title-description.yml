@@ -14,7 +14,7 @@ jobs:
       - name: Get commit messages
         id: get-commits
         run: |
-          commits=$(git log --format=%B ${{ github.event.pull_request.base.sha }}..${{ github.sha }})
+          commits=$(git log --format=%B ${{ github.event.pull_request.base.sha }}..${{ github.sha }} | sed 's/^/- /')
           echo "Commits: $commits"
           echo "commits=$commits" >> $GITHUB_ENV
 
