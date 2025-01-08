@@ -37,7 +37,7 @@ const WemixplayUIProvider = ({ children, theme }: WemixplayUIProviderProps) => {
 
   return (
     <WemixplayUIContext.Provider value={value}>
-      <div className={cx('wemixplay-ui')} data-theme={themeData}>
+      <div id="wemixplay-ui" className={cx('wemixplay-ui')} data-theme={themeData}>
         {children}
       </div>
     </WemixplayUIContext.Provider>
