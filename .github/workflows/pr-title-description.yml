@@ -22,7 +22,7 @@ jobs:
           echo "Base Commit: $BASE_COMMIT"
           echo "Head Commit: $HEAD_COMMIT"
 
-          git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed '/^$/d' | sed 's/^/- /' | sed 's/$/\n/' > commits.txt
+          git log --format="- %B%n" $BASE_COMMIT..$HEAD_COMMIT | sed '/^$/d' > commits.txt
 
           COMMITS=$(cat commits.txt)
 
@@ -47,9 +47,11 @@ jobs:
             exit 0
           fi
 
+          COMMITS=$(echo "${{ steps.get-commits.outputs.commits }}" | awk '{printf "%s\\n", $0}')
+
           echo "{
             \"title\": \"$TITLE\",
-            \"body\": \"## 커밋 내역\n\n${{ steps.get-commits.outputs.commits }}\"
+            \"body\": \"## 커밋 내역\\n\\n$COMMITS\"
           }" > pr-update.json
 
           curl -X PATCH \
