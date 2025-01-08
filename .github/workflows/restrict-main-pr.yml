@@ -1,0 +1,19 @@
+name: Restrict Main Branch PRs
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  restrict-pr:
+    runs-on: self-hosted
+    steps:
+      - name: Check PR source branch
+        if: github.event.pull_request.head.ref == 'alpha'
+        run: echo "PR from alpha branch is allowed."
+      - name: Fail if not from alpha
+        if: github.event.pull_request.head.ref != 'alpha'
+        run: |
+          echo "PRs from branches other than alpha are not allowed."
+          exit 1
