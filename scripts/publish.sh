@@ -18,14 +18,6 @@ function print_string(){
   fi
 }
 
-if [ "$current_branch" = "main" ] || [ "$current_branch" = "alpha" ]; then
-    print_string "success" "현재 브랜치가 $current_branch 입니다. 최신 변경 사항을 가져옵니다."
-    git pull origin $current_branch
-else
-    print_string "error" "현재 브랜치가 $current_branch 입니다. main이나 alpha 브랜치로 변경 후 배포 작업을 진행해주세요."
-    exit 1
-fi
-
 tag=$([ "$current_branch" = "main" ] && echo "latest" || echo "alpha")
 tag_str=$([ "$tag" = "latest" ] && echo "" || echo "-alpha")
 
@@ -33,6 +25,15 @@ tag_str=$([ "$tag" = "latest" ] && echo "" || echo "-alpha")
 version_file="version.json"
 if [ "$tag_str" = "-alpha" ]; then
     version_file="version.alpha.json"
+fi
+
+if [ "$current_branch" = "main" ] || [ "$current_branch" = "alpha" ]; then
+    print_string "success" "현재 브랜치가 $current_branch 입니다. version 파일만 원격의 최신 내용으로 업데이트합니다."
+    git fetch origin $current_branch
+    git checkout origin/$current_branch -- $version_file
+else
+    print_string "error" "현재 브랜치가 $current_branch 입니다. main이나 alpha 브랜치로 변경 후 배포 작업을 진행해주세요."
+    exit 1
 fi
 
 # version 값 추출
