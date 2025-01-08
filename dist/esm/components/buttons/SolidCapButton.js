@@ -1,2 +1,0 @@
-"use client";
-import{__rest as t}from"../../_virtual/_tslib.js";import s from"react";import a from"./Button.module.scss.js";import o from"./Button.js";import{makeCxFunc as r}from"../../utils/forReactUtils.js";const m=r(a),e=a=>{var{className:r=""}=a,e=t(a,["className"]);return s.createElement(o,Object.assign({className:m(r,"btn-solid-cap")},e))};e.displayName="SolidCapButton";var i=e;export{i as default};
