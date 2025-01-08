@@ -16,7 +16,7 @@ jobs:
         run: |
           commits=$(git log --format=%B ${{ github.event.pull_request.base.sha }}..${{ github.sha }})
           echo "Commits: $commits"
-          echo "::set-output name=commits::$commits"
+          echo "commits=$commits" >> $GITHUB_ENV
 
       - name: Update PR title and description
         env:
