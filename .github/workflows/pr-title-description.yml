@@ -19,7 +19,7 @@ jobs:
           HEAD_COMMIT=${{ github.event.pull_request.head.sha }}
           echo "Base Commit: $BASE_COMMIT"
           echo "Head Commit: $HEAD_COMMIT"
-          commits=$(git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed 's/^/- /' | sed 's/$/\\n/' | sed 's/"/\\"/g')
+          commits=$(git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed '/^$/d' | sed 's/^/- /' | tr '\n' '\\n' | sed 's/"/\\"/g')
           echo "Commits: $commits"
           echo "commits=$commits" >> $GITHUB_ENV
 
