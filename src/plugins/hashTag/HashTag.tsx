@@ -663,9 +663,14 @@ class HashTag implements WpEditorPlugin {
         selection.removeAllRanges();
         selection.addRange(newRange);
       }
+
       const [firstChar, secondChar] = splitText;
 
-      if (secondChar && secondChar === focusNode.parentElement.dataset.name) {
+      if (
+        secondChar &&
+        secondChar === focusNode.parentElement.dataset.name &&
+        checkValidHashTag(`#${secondChar}`)
+      ) {
         const normalTextNode = document.createTextNode(firstChar);
         hashTagNode.textContent = `#${secondChar}`;
 
