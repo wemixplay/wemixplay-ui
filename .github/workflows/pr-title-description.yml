@@ -21,7 +21,7 @@ jobs:
           echo "Head Commit: $HEAD_COMMIT"
           commits=$(git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed 's/^/- /' | tr '\n' '\\n')
           echo "Commits: $commits"
-          echo "commits=$commits" >> $GITHUB_ENV
+          echo "::set-output name=commits::$commits"
 
       - name: Update PR title and description
         env:
