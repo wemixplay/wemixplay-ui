@@ -49,7 +49,7 @@ jobs:
 
           # 직접 outputs에서 커밋 메시지 가져오기
           DESCRIPTION=$(echo -e "## 커밋 내역\n\n${{ steps.get-commits.outputs.commits }}")
-          JSON_BODY=$(echo "$DESCRIPTION" | jq -R -s '.')
+          JSON_BODY=$(python3 -c "import json; print(json.dumps('''$DESCRIPTION'''))")
 
           curl -X PATCH \
             -H "Authorization: token $GITHUB_TOKEN" \
