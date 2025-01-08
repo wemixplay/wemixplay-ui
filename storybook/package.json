@@ -20,7 +20,7 @@
   },
   "scripts": {
     "storybook": "env-cmd -e local storybook dev -p 6008",
-    "build-storybook": "NODE_ENV=production cross-env NODE_OPTIONS=--openssl-legacy-provider storybook build"
+    "build-storybook": "yarn && NODE_ENV=production cross-env NODE_OPTIONS=--openssl-legacy-provider storybook build"
   },
   "resolutions": {
     "jackspeak": "2.1.1"
