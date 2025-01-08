@@ -14,9 +14,21 @@ jobs:
       - name: Get commit messages
         id: get-commits
         run: |
-          commits=$(git log --format=%B ${{ github.event.pull_request.base.sha }}..${{ github.sha }})
-          echo "Commits: $commits"
-          echo "::set-output name=commits::$commits"
+          git fetch origin
+
+          BASE_COMMIT=${{ github.event.pull_request.base.sha }}
+          HEAD_COMMIT=${{ github.event.pull_request.head.sha }}
+
+          echo "Base Commit: $BASE_COMMIT"
+          echo "Head Commit: $HEAD_COMMIT"
+
+          git log --format="- %B%n" $BASE_COMMIT..$HEAD_COMMIT | sed '/^$/d' > commits.txt
+
+          COMMITS=$(cat commits.txt)
+
+          echo "commits<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMITS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Update PR title and description
         env:
@@ -35,10 +47,15 @@ jobs:
             exit 0
           fi
 
-          DESCRIPTION="## 커밋 내역\n${{ steps.get-commits.outputs.commits }}"
+          COMMITS=$(echo "${{ steps.get-commits.outputs.commits }}" | awk '{printf "%s\\n", $0}')
+
+          echo "{
+            \"title\": \"$TITLE\",
+            \"body\": \"## 커밋 내역\\n\\n$COMMITS\"
+          }" > pr-update.json
 
           curl -X PATCH \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/$REPO/pulls/$PR_NUMBER \
-            -d "{\"title\":\"$TITLE\", \"body\":\"$DESCRIPTION\"}"
+            --data @pr-update.json
