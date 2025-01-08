@@ -50,7 +50,7 @@
     "build": "rm -rf dist && NODE_ENV=production rollup -c",
     "publish-ui": "chmod +x ./scripts/publish.sh && ./scripts/publish.sh",
     "storybook": "NODE_ENV=development node scripts/svgComponentGenerator.js & cd storybook && yarn && yarn storybook",
-    "build-storybook": "cd storybook && yarn build-storybook",
+    "build-storybook": "cd storybook && yarn && yarn build-storybook",
     "generate:svg": "node scripts/svgComponentGenerator.js"
   },
   "devDependencies": {
