@@ -18,7 +18,7 @@ jobs:
 
           BASE_COMMIT=${{ github.event.pull_request.base.sha }}
           HEAD_COMMIT=${{ github.event.pull_request.head.sha }}
-          
+
           echo "Base Commit: $BASE_COMMIT"
           echo "Head Commit: $HEAD_COMMIT"
 
@@ -49,9 +49,10 @@ jobs:
 
           # 직접 outputs에서 커밋 메시지 가져오기
           DESCRIPTION=$(echo -e "## 커밋 내역\n\n${{ steps.get-commits.outputs.commits }}")
+          JSON_BODY=$(echo "$DESCRIPTION" | jq -R -s '.')
 
           curl -X PATCH \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/$REPO/pulls/$PR_NUMBER \
-            -d "{\"title\":\"$TITLE\", \"body\":\"$DESCRIPTION\"}"
+            -d "{\"title\":\"$TITLE\", \"body\":\"$JSON_BODY\"}"
