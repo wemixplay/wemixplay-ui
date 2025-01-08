@@ -1,5 +1,5 @@
 /* stylelint-disable custom-property-pattern */
-.wemixplay-ui {
+:global(.wemixplay-ui) {
   &:not([data-theme="dark"]) {
     // static
     --wp-semantic-static-white: #{$color-global-common-100};

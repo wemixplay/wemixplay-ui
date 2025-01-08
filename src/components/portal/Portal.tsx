@@ -47,6 +47,11 @@ const Portal = ({ children, id = 'portal-wrapper' }: PropsType) => {
 
         const wrapperElement = document.createElement('div');
         wrapperElement.setAttribute('id', id);
+        wrapperElement.setAttribute('class', 'wemixplay-ui');
+        wrapperElement.setAttribute(
+          'data-theme',
+          document.getElementById('wemixplay-ui')?.getAttribute('data-theme') || 'light'
+        );
         document.body.appendChild(wrapperElement);
 
         element = wrapperElement;
@@ -56,7 +61,7 @@ const Portal = ({ children, id = 'portal-wrapper' }: PropsType) => {
 
       return () => {
         // 시스템이 직접 만들어준 element라면 unmount시 element 삭제
-        if (systemCreated && element?.parentNode) {
+        if (systemCreated && element?.parentNode && element.parentNode.childElementCount === 1) {
           element.parentNode.removeChild(element);
         }
       };
