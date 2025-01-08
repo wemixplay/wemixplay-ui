@@ -19,14 +19,18 @@ jobs:
           HEAD_COMMIT=${{ github.event.pull_request.head.sha }}
           echo "Base Commit: $BASE_COMMIT"
           echo "Head Commit: $HEAD_COMMIT"
-          commits=$(git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed '/^$/d' | sed 's/^/- /' | base64 -w 0)
-          echo "Commits: $commits"
-          echo "commits=$commits" >> $GITHUB_OUTPUT
+          # 임시 파일에 커밋 메시지 저장
+          git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed '/^$/d' | sed 's/^/- /' > commits.txt
+          # 파일 내용을 변수에 저장
+          COMMITS=$(cat commits.txt)
+          # GitHub output으로 설정
+          echo "commits<<EOF" >> $GITHUB_OUTPUT
+          echo "$COMMITS" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
 
       - name: Update PR title and description
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMMITS: ${{ env.commits }}
         run: |
           PR_BRANCH=$(echo "${{ github.event.pull_request.head.ref }}")
           BASE_BRANCH=$(echo "${{ github.event.pull_request.base.ref }}")
@@ -41,8 +45,8 @@ jobs:
             exit 0
           fi
 
-          COMMITS=$(echo "${{ steps.get-commits.outputs.commits }}" | base64 -d)
-          DESCRIPTION=$(echo -e "## 커밋 내역\n\n$COMMITS")
+          # 직접 outputs에서 커밋 메시지 가져오기
+          DESCRIPTION=$(echo -e "## 커밋 내역\n\n${{ steps.get-commits.outputs.commits }}")
 
           curl -X PATCH \
             -H "Authorization: token $GITHUB_TOKEN" \
