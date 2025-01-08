@@ -47,12 +47,13 @@ jobs:
             exit 0
           fi
 
-          # 직접 outputs에서 커밋 메시지 가져오기
-          DESCRIPTION=$(echo -e "## 커밋 내역\n\n${{ steps.get-commits.outputs.commits }}")
-          JSON_BODY=$(python3 -c "import json; print(json.dumps('''$DESCRIPTION'''))")
+          echo "{
+            \"title\": \"$TITLE\",
+            \"body\": \"## 커밋 내역\n\n${{ steps.get-commits.outputs.commits }}\"
+          }" > pr-update.json
 
           curl -X PATCH \
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/$REPO/pulls/$PR_NUMBER \
-            -d "{\"title\":\"$TITLE\", \"body\":\"$JSON_BODY\"}"
+            --data @pr-update.json
