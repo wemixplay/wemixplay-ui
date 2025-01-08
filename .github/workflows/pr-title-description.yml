@@ -14,7 +14,11 @@ jobs:
       - name: Get commit messages
         id: get-commits
         run: |
-          commits=$(git log --format=%B ${{ github.event.pull_request.base.sha }}..${{ github.sha }} | sed 's/^/- /')
+          BASE_COMMIT=${{ github.event.pull_request.base.sha }}
+          HEAD_COMMIT=${{ github.event.pull_request.head.sha }}
+          echo "Base Commit: $BASE_COMMIT"
+          echo "Head Commit: $HEAD_COMMIT"
+          commits=$(git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed 's/^/- /')
           echo "Commits: $commits"
           echo "commits=$commits" >> $GITHUB_ENV
 
