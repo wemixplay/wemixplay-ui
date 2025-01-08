@@ -28,7 +28,6 @@ const SEMANTIC_TYPOGRAPHY_COLORS = Object.values(TYPOGRAPHY_COLORS).reduce(
 );
 
 const Color = () => {
-  console.log('test!!');
   return (
     <>
       <VStack tag="article" rowGap={32} className={cx('palette')}>
