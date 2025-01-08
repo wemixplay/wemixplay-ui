@@ -21,7 +21,7 @@ jobs:
           echo "Head Commit: $HEAD_COMMIT"
           commits=$(git log --format=%B $BASE_COMMIT..$HEAD_COMMIT | sed '/^$/d' | sed 's/^/- /' | sed 's/"/\\"/g' | tr '\n' ' ')
           echo "Commits: $commits"
-          echo "commits=$commits" >> $GITHUB_ENV
+          echo "commits=$commits" >> $GITHUB_OUTPUT
 
       - name: Update PR title and description
         env:
@@ -41,7 +41,7 @@ jobs:
             exit 0
           fi
 
-          DESCRIPTION="## 커밋 내역\n $COMMITS"
+          DESCRIPTION=$(echo "## 커밋 내역\n ${{ steps.get-commits.outputs.commits }}")
 
           curl -X PATCH \
             -H "Authorization: token $GITHUB_TOKEN" \
