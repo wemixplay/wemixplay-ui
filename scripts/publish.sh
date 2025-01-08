@@ -26,11 +26,20 @@ else
     exit 1
 fi
 
+tag=$([ "$current_branch" = "main" ] && echo "latest" || echo "alpha")
+tag_str=$([ "$tag" = "latest" ] && echo "" || echo "-alpha")
+
+# version 파일 결정
+version_file="version.json"
+if [ "$tag_str" = "-alpha" ]; then
+    version_file="version.alpha.json"
+fi
+
 # version 값 추출
-version=$(grep "\"$current_branch\":" version.json | sed -E "s/.*\"$current_branch\": *\"([^\"]+)\".*/\1/")
+version=$(grep "\"version\":" $version_file | sed -E "s/.*\"version\": *\"([^\"]+)\".*/\1/")
 
 if [ -z "$version" ]; then
-    print_string "error" "version.json에서 버전 정보를 찾을 수 없습니다. 파일을 확인하세요."
+    print_string "error" "$version_file에서 버전 정보를 찾을 수 없습니다. 파일을 확인하세요."
     exit 1
 fi
 
@@ -44,8 +53,7 @@ IFS='.' read -r major minor patch <<< "$version_num"
 major=$((major))
 minor=$((minor))
 patch=$((patch))
-tag=$([ "$current_branch" = "main" ] && echo "latest" || echo "alpha")
-tag_str=$([ "$tag" = "latest" ] && echo "" || echo "-alpha")
+
 
 export NPM_PUBLISH_TAG=$tag
 
@@ -106,7 +114,7 @@ print_string "success" "패키지 설치 및 빌드 완료"
 # 버전 업데이트
 yarn version --new-version $new_version --tag $tag --no-git-tag-version
 
-git add -f package.json version.json ./dist
+git add -f package.json $version_file ./dist
 
 git commit -m "update version to $new_version"
 git push origin $current_branch
@@ -119,15 +127,15 @@ git tag -d $tag_version
 # MacOS와 Linux 모두 호환되도록 수정
 if [[ "$OSTYPE" == "darwin"* ]]; then
     # MacOS
-    sed -i '' "s/\"$current_branch\": *\"[^\"]*\"/\"$current_branch\": \"$new_version\"/" version.json
+    sed -i '' "s/\"version\": *\"[^\"]*\"/\"version\": \"$new_version\"/" $version_file
 else
     # Linux
-    sed -i "s/\"$current_branch\": *\"[^\"]*\"/\"$current_branch\": \"$new_version\"/" version.json
+    sed -i "s/\"version\": *\"[^\"]*\"/\"version\": \"$new_version\"/" $version_file
 fi
 
-git add -f version.json
+git add -f $version_file
 
-git commit -m "update version.json"
+git commit -m "update $version_file"
 git push origin $current_branch
 
 print_string "success" "=================================="
