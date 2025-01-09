@@ -672,8 +672,10 @@ class HashTag implements WpEditorPlugin {
         checkValidHashTag(`#${secondChar}`)
       ) {
         const normalTextNode = document.createTextNode(firstChar);
+        const spaceNode = document.createTextNode('\u00A0');
         hashTagNode.textContent = `#${secondChar}`;
 
+        hashTagNode.parentNode.insertBefore(spaceNode, hashTagNode);
         hashTagNode.parentNode.insertBefore(normalTextNode, hashTagNode);
 
         const newRange = document.createRange();
