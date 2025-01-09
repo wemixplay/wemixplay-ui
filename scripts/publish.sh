@@ -180,9 +180,11 @@ git_tag_work "$current_branch" "$version_file" "$new_version" "$tag_version" || 
 update_version_file "$version_file" "$new_version"
 
 # version.json Git 작업
-git add -f $version_file || { print_string "error" "Git version file add 실패"; last_git_work_status="bad"; }
-git commit -m "update $version_file" || { print_string "error" "Git version file commit 실패"; last_git_work_status="bad"; }
-git push origin $current_branch || { print_string "error" "Git version file push 실패"; last_git_work_status="bad"; }
+if [ "$last_git_work_status" = "normal" ]; then
+    git add -f $version_file || { print_string "error" "Git version file add 실패"; last_git_work_status="bad"; }
+    git commit -m "update $version_file" || { print_string "error" "Git version file commit 실패"; last_git_work_status="bad"; }
+    git push origin $current_branch || { print_string "error" "Git version file push 실패"; last_git_work_status="bad"; }
+fi
 
 # 실패시 버전 롤백
 if [ "$last_git_work_status" = "bad" ]; then
