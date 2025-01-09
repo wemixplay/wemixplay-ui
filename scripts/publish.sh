@@ -51,12 +51,11 @@ function update_version_file() {
 # Git tag 작업 수행
 function git_tag_work() {
     local current_branch=$1
-    local version_file=$2
-    local new_version=$3
-    local tag_version=$4
+    local new_version=$2
+    local tag_version=$3
 
     git pull origin $current_branch || { print_string "error" "Git pull 실패"; return 1; }
-    git add -f package.json $version_file ./dist || { print_string "error" "Git add 실패"; return 1; }
+    git add -f package.json ./dist || { print_string "error" "Git add 실패"; return 1; }
     git commit -m "update version to $new_version" || { print_string "error" "Git commit 실패"; return 1; }
     git push origin $current_branch || { print_string "error" "Git push 실패"; return 1; }
     
@@ -174,7 +173,7 @@ build_project || exit 1
 
 # Git 작업 실행
 last_git_work_status="normal"
-git_tag_work "$current_branch" "$version_file" "$new_version" "$tag_version" || last_git_work_status="bad"
+git_tag_work "$current_branch" "$new_version" "$tag_version" || last_git_work_status="bad"
 
 # version.json 업데이트
 update_version_file "$version_file" "$new_version"
