@@ -1,1 +1,0 @@
-import{getDefaultExportFromCjs as r}from"../../_virtual/_commonjsHelpers.js";import{t}from"./toString.js";var o=t;var a=r((function(){var r=arguments,t=o(r[0]);return r.length<3?t:t.replace(r[1],r[2])}));export{a as default};
