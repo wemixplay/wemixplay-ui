@@ -1,0 +1,1 @@
+"use strict";var r=require("../../_virtual/_commonjsHelpers.js"),e=require("../../_virtual/index.js"),o=require("./factoryWithThrowingShims.js");e.__module.exports=o.factoryWithThrowingShims();var t=e.__module.exports,i=r.getDefaultExportFromCjs(t);module.exports=i;
