@@ -67,9 +67,9 @@ const plugins = [
   preserveDirectives({ exclude: ["**/*.scss", "**/*.svg"] }),
   postcss({
     modules: true,
-    plugins: [
-      addPrefixToSelectors
-    ],
+    // plugins: [
+    //   addPrefixToSelectors
+    // ],
     extensions: ['.css', '.scss', '.sass'],
     use: [
       [

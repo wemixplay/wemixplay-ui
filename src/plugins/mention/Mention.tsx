@@ -259,6 +259,14 @@ class Mention implements WpEditorPlugin {
 
     const mentionTagNextSibling = target.querySelector(`#${targetMentionId}`)?.nextSibling;
 
+    // console.log(
+    //   'mentionTagNextSibling',
+    //   mentionTagNextSibling,
+    //   Node.TEXT_NODE,
+    //   mentionTagNextSibling?.nodeType,
+    //   mentionTagNextSibling?.nodeValue?.trim()
+    // );
+
     if (
       Node.TEXT_NODE !== mentionTagNextSibling?.TEXT_NODE ||
       mentionTagNextSibling?.nodeValue?.trim()
