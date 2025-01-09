@@ -1,1 +1,0 @@
-"use strict";module.exports={"ellipsis-wrap":"Ellipsis-module_ellipsis-wrap__NAEpt",shortened:"Ellipsis-module_shortened__-2vVY","btn-ellipsis-trigger":"Ellipsis-module_btn-ellipsis-trigger__PLNWH","enable-show-more":"Ellipsis-module_enable-show-more__y6uQn","ellipsis-content":"Ellipsis-module_ellipsis-content__1vufz"};

@@ -1,1 +1,0 @@
-"use strict";module.exports={"inbox-pagination":"SimplePagination-module_inbox-pagination__s0EIS","pagination-page":"SimplePagination-module_pagination-page__vI1K6",selected:"SimplePagination-module_selected__aNjiU","pagination-next":"SimplePagination-module_pagination-next__uzTvl","pagination-prev":"SimplePagination-module_pagination-prev__1Kn2x"};

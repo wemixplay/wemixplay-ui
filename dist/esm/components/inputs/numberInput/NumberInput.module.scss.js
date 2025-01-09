@@ -1,1 +1,0 @@
-var u={"number-input":"NumberInput-module_number-input__ruAu8","number-inp-cont":"NumberInput-module_number-inp-cont__oFRiX","number-btn-area":"NumberInput-module_number-btn-area__c8LEy","number-btn":"NumberInput-module_number-btn__mk2Fy",error:"NumberInput-module_error__3bBfx"};export{u as default};

@@ -1,1 +1,0 @@
-"use strict";module.exports={stars:"Rating-module_stars__2szkU","star-area":"Rating-module_star-area__0NY5z",star:"Rating-module_star__AUCux",score:"Rating-module_score__OaOCb",current:"Rating-module_current__dZkp2",max:"Rating-module_max__68eUt"};

@@ -1,1 +1,0 @@
-"use strict";module.exports={"multiple-avatars":"AvatarGroup-module_multiple-avatars__upygc","avatars-area":"AvatarGroup-module_avatars-area__TMr9K","avatar-item":"AvatarGroup-module_avatar-item__CCPg0"};
