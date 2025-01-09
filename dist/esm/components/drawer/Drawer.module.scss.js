@@ -1,1 +1,1 @@
-import e from'./../../ext/style-inject/dist/style-inject.es.js';var r={drawer:"Drawer-module_drawer__dpCZz"};e(".Drawer-module_drawer__dpCZz{position:relative;width:100%}");export{r as default};
+import e from'./../../ext/style-inject/dist/style-inject.es.js';var r={drawer:"Drawer-module_drawer__dpCZz","wm-ui":"Drawer-module_wm-ui__YLiN1"};e(".Drawer-module_drawer__dpCZz,.Drawer-module_wm-ui__YLiN1.Drawer-module_drawer__dpCZz{position:relative;width:100%}");export{r as default};
