@@ -51,13 +51,12 @@ function update_version_file() {
 # Git tag 작업 수행
 function git_tag_work() {
     local current_branch=$1
-    local version_file=$2
-    local new_version=$3
-    local tag_version=$4
+    local new_version=$2
+    local tag_version=$3
 
     git pull origin $current_branch || { print_string "error" "Git pull 실패"; return 1; }
-    git add -f package.json $version_file ./dist || { print_string "error" "Git add 실패"; return 1; }
-    git commit -m "update version to $new_version" || { print_string "error" "Git commit 실패"; return 1; }
+    git add -f package.json ./dist || { print_string "error" "Git add 실패"; return 1; }
+    git commit --allow-empty -m "update version to $new_version" || { print_string "error" "Git commit 실패"; return 1; }
     git push origin $current_branch || { print_string "error" "Git push 실패"; return 1; }
     
     git tag -a $tag_version -m "Release $new_version" || { print_string "error" "Git tag 실패"; return 1; }
@@ -174,15 +173,17 @@ build_project || exit 1
 
 # Git 작업 실행
 last_git_work_status="normal"
-git_tag_work "$current_branch" "$version_file" "$new_version" "$tag_version" || last_git_work_status="bad"
+git_tag_work "$current_branch" "$new_version" "$tag_version" || last_git_work_status="bad"
 
 # version.json 업데이트
 update_version_file "$version_file" "$new_version"
 
 # version.json Git 작업
-git add -f $version_file || { print_string "error" "Git version file add 실패"; last_git_work_status="bad"; }
-git commit -m "update $version_file" || { print_string "error" "Git version file commit 실패"; last_git_work_status="bad"; }
-git push origin $current_branch || { print_string "error" "Git version file push 실패"; last_git_work_status="bad"; }
+if [ "$last_git_work_status" = "normal" ]; then
+    git add -f $version_file || { print_string "error" "Git version file add 실패"; last_git_work_status="bad"; }
+    git commit -m "update $version_file" || { print_string "error" "Git version file commit 실패"; last_git_work_status="bad"; }
+    git push origin $current_branch || { print_string "error" "Git version file push 실패"; last_git_work_status="bad"; }
+fi
 
 # 실패시 버전 롤백
 if [ "$last_git_work_status" = "bad" ]; then

@@ -82,6 +82,9 @@ const plugins = [
         }
       ]
     ],
+    inject: {
+      insertAt: 'top'
+    },
     extract: false,
     minimize: true,
     sourceMap: process.env.NODE_ENV === 'development'
