@@ -1,0 +1,1 @@
+import{e,c as a}from"./utils.js";function s(s,t,r,c){return s.params.createElements&&Object.keys(c).forEach((l=>{if(!r[l]&&!0===r.auto){let o=e(s.el,`.${c[l]}`)[0];o||(o=a("div",c[l]),o.className=c[l],s.el.append(o)),r[l]=o,t[l]=o}})),r}export{s as c};
