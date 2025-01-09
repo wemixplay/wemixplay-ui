@@ -1,0 +1,1 @@
+var a={"inbox-pagination":"Pagination-module_inbox-pagination__V3exT","pagination-page":"Pagination-module_pagination-page__Vz8uc",selected:"Pagination-module_selected__n20h4","pagination-next":"Pagination-module_pagination-next__j-mNp","pagination-prev":"Pagination-module_pagination-prev__uOCwU"};export{a as default};

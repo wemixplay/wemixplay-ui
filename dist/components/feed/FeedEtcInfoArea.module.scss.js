@@ -1,0 +1,1 @@
+"use strict";module.exports={"feed-comments":"FeedEtcInfoArea-module_feed-comments__h5COv","btn-share":"FeedEtcInfoArea-module_btn-share__YEuRo",icon:"FeedEtcInfoArea-module_icon__vkfDG","has-click-event":"FeedEtcInfoArea-module_has-click-event__XUGgL",active:"FeedEtcInfoArea-module_active__QQf6D",count:"FeedEtcInfoArea-module_count__ELRIS"};
