@@ -1,2 +1,0 @@
-"use client";
-import{__rest as t}from"../../_virtual/_tslib.js";import a from"react";import{makeCxFunc as s}from"../../utils/forReactUtils.js";import e from"../avatars/Person.js";import r from"./AvatarButton.module.scss.js";const o=s(r);var m=s=>{var{className:r="",size:m="medium",onClick:i}=s,l=t(s,["className","size","onClick"]);return a.createElement("button",{className:o(r,"avatar-button",m),type:"button",onClick:i},a.createElement(e,Object.assign({},l,{className:o("avatar-button-person"),size:m})))};export{m as default};
