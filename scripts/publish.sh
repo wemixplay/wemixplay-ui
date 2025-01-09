@@ -56,7 +56,7 @@ function git_tag_work() {
 
     git pull origin $current_branch || { print_string "error" "Git pull 실패"; return 1; }
     git add -f package.json ./dist || { print_string "error" "Git add 실패"; return 1; }
-    git commit -m "update version to $new_version" || { print_string "error" "Git commit 실패"; return 1; }
+    git commit --allow-empty -m "update version to $new_version" || { print_string "error" "Git commit 실패"; return 1; }
     git push origin $current_branch || { print_string "error" "Git push 실패"; return 1; }
     
     git tag -a $tag_version -m "Release $new_version" || { print_string "error" "Git tag 실패"; return 1; }
