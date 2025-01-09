@@ -1,4 +1,7 @@
 .comment-box {
+  width: 100%;
+  padding: $sp-20 0;
+
   &.has-click-event {
     cursor: pointer;
   }
