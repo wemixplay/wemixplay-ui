@@ -38,6 +38,11 @@ const HashPortal = ({ children }: Props) => {
 
       const wrapperElement = document.createElement('div');
       wrapperElement.setAttribute('id', 'wp-editor-hash-portal');
+      wrapperElement.setAttribute('class', 'wemixplay-ui');
+      wrapperElement.setAttribute(
+        'data-theme',
+        document.getElementById('wemixplay-ui')?.getAttribute('data-theme') || 'light'
+      );
       document.body.appendChild(wrapperElement);
 
       element = wrapperElement;
@@ -47,7 +52,7 @@ const HashPortal = ({ children }: Props) => {
 
     return () => {
       // 시스템이 직접 만들어준 element라면 unmount시 element 삭제
-      if (systemCreated && element?.parentNode) {
+      if (systemCreated && element?.parentNode && element.parentNode.childElementCount === 1) {
         element.parentNode.removeChild(element);
       }
     };

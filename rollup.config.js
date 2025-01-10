@@ -67,9 +67,9 @@ const plugins = [
   preserveDirectives({ exclude: ["**/*.scss", "**/*.svg"] }),
   postcss({
     modules: true,
-    plugins: [
-      addPrefixToSelectors
-    ],
+    // plugins: [
+    //   addPrefixToSelectors
+    // ],
     extensions: ['.css', '.scss', '.sass'],
     use: [
       [
@@ -82,6 +82,9 @@ const plugins = [
         }
       ]
     ],
+    inject: {
+      insertAt: 'top'
+    },
     extract: false,
     minimize: true,
     sourceMap: process.env.NODE_ENV === 'development'

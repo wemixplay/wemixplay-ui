@@ -42,10 +42,30 @@ const config = {
       loader: 'sass-loader',
       options: {
         additionalData: (content) => {
-          const modifiedContent = content.replace(/(\.(?!wemixplay-ui)[a-zA-Z][\w-]*)(?=\s*{)/g, (match, p1) => {
-            const globalScopeRegex = new RegExp(`:global\\s*{[^}]*\\${p1}`, 'g');
-            return globalScopeRegex.test(content) ? p1 : `.wm-ui${p1}, ${p1}`;
-          });
+          // :global 블록 내부에 있는지 확인하는 함수
+          const isInGlobalScope = (content, position) => {
+            const contentBeforePosition = content.slice(0, position);
+            const globalBlocks = contentBeforePosition.match(/:global\s*{/g) || [];
+            const closingBraces = contentBeforePosition.match(/}/g) || [];
+            return globalBlocks.length > closingBraces.length;
+          };
+
+          // &:global 블록 내부에 있는지 확인
+          const isInNestedGlobalScope = (content, position) => {
+            const lines = content.slice(0, position).split('\n');
+            return lines.some(line => line.trim().includes('&:global'));
+          };
+
+          const modifiedContent = content.replace(
+            /\.(?!wemixplay-ui)[a-zA-Z][\w-]*/g,
+            (match, offset) => {
+              // :global 블록 내부이거나 &:global 중첩 구조 내부인 경우 변환하지 않음
+              if (isInGlobalScope(content, offset) || isInNestedGlobalScope(content, offset)) {
+                return match;
+              }
+              return `.wm-ui${match}, ${match}`;
+            }
+          );
 
           return `
             @import "../src/styles/abstracts/_variables.scss"; 
