@@ -1,5 +1,6 @@
 'use client';
 
+import useWemixplayUI from '@/hooks/useWemixplayUI';
 import React, { ReactNode, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
@@ -22,7 +23,17 @@ type Props = {
  * </MentionPortal>
  */
 const MentionPortal = ({ children }: Props) => {
+  const { theme } = useWemixplayUI();
+
   const [wrapperElement, setWrapperElement] = useState<HTMLElement | null>(null);
+
+  useEffect(() => {
+    const element = document.getElementById('wp-editor-mention-portal');
+
+    if (element) {
+      element.setAttribute('data-theme', theme);
+    }
+  }, [theme]);
 
   useEffect(() => {
     // 존재하지 않는 엘리먼트를 시스템이 직접 만들었는지 확인하는 flag
@@ -36,6 +47,11 @@ const MentionPortal = ({ children }: Props) => {
 
       const wrapperElement = document.createElement('div');
       wrapperElement.setAttribute('id', 'wp-editor-mention-portal');
+      wrapperElement.setAttribute('class', 'wemixplay-ui');
+      wrapperElement.setAttribute(
+        'data-theme',
+        document.getElementById('wemixplay-ui')?.getAttribute('data-theme') || 'light'
+      );
       document.body.appendChild(wrapperElement);
 
       element = wrapperElement;
@@ -45,7 +61,7 @@ const MentionPortal = ({ children }: Props) => {
 
     return () => {
       // 시스템이 직접 만들어준 element라면 unmount시 element 삭제
-      if (systemCreated && element?.parentNode) {
+      if (systemCreated && element?.parentNode && element.parentNode.childElementCount === 1) {
         element.parentNode.removeChild(element);
       }
     };
