@@ -1,0 +1,1 @@
+"use strict";var e=require("react"),r=require("../../utils/forReactUtils.js"),s=require("../../assets/svgs/ico-rate-triangle.svg.js"),t=require("./Rate.module.scss.js");const a=r.makeCxFunc(t);var c=r=>{let{className:t="",rateType:c,icon:l=!1,rateText:u=""}=r;return e.createElement("span",{className:a("rate",c,t)},l&&"complement"!==c&&e.createElement(s,null),u)};module.exports=c;
