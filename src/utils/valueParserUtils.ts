@@ -113,7 +113,7 @@ export const decodeHtmlEntities = (str: string) => {
 
 export const convertMarkdownToHtmlStr = (text: string) => {
   // 변환된 문자열을 저장할 변수 초기화
-  let convertStr = decodeHtmlEntities(text).replace(/<[^>]*>/g, '');
+  let convertStr = decodeHtmlEntities(text);
 
   // WP@ 변환
   convertStr = convertStr.replace(
