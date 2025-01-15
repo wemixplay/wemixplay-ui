@@ -1,0 +1,1 @@
+"use strict";var e=require("../../../_virtual/_commonjsHelpers.js"),o=require("../../../_virtual/updateLocale.js");!function(o,r){e.commonjsGlobal,o.exports=function(e,o,r){r.updateLocale=function(e,o){var t=r.Ls[e];if(t)return(o?Object.keys(o):[]).forEach((function(e){t[e]=o[e]})),t}}}(o.__module);var r=o.__module.exports,t=e.getDefaultExportFromCjs(r);module.exports=t;
