@@ -108,7 +108,9 @@ export const decodeHtmlEntities = (str: string, matchEntities: MatchEntity[] = [
   while (decodedStr !== prevStr) {
     prevStr = decodedStr;
     decodedStr = decodedStr.replace(/&[#\w]+;/g, (match) =>
-      matchEntities.includes(match as MatchEntity) ? entityMap[match] || match : match
+      matchEntities.includes(match as MatchEntity) || !matchEntities.length
+        ? entityMap[match] || match
+        : match
     );
   }
 
