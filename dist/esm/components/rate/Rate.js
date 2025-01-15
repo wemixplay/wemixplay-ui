@@ -1,1 +1,0 @@
-import e from"react";import{makeCxFunc as t}from"../../utils/forReactUtils.js";import r from"../../assets/svgs/ico-rate-triangle.svg.js";import s from"./Rate.module.scss.js";const a=t(s);var m=t=>{let{className:s="",rateType:m,icon:o=!1,rateText:l=""}=t;return e.createElement("span",{className:a("rate",m,s)},o&&"complement"!==m&&e.createElement(r,null),l)};export{m as default};
