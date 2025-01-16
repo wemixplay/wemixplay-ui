@@ -52,6 +52,7 @@ jobs:
         continue-on-error: true
 
       - name: Delete tag remotely
+        if: always()
         env:
           GH_TOKEN: ${{ secrets.WP_GITHUB_TOKEN }}
         run: git push https://${GH_TOKEN}@github.com/${{ github.repository }} :refs/tags/npm-publish/${{ steps.get_tag_version.outputs.version }}
