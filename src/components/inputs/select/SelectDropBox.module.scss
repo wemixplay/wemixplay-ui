@@ -53,7 +53,7 @@
     max-height: calc((100 * var(--vh)) - 24px);
     border-radius: $rd-16 $rd-16  0 0;
     animation: select-option-mobile-slide 0.2s;
-    background: var(--wp-semantic-background-normal-alternative);
+    background: var(--wp-semantic-background-elevated-normal);
     color: var(--wp-semantic-label-alternative);
 
     @include breakpoint-768 {
@@ -63,12 +63,11 @@
       overflow: hidden;
       min-height: unset;
       box-sizing: border-box;
-      border: none;
-      border-radius: $rd-12;
-
-      // border-radius: $rd-8;
+      border: 1px solid var(--wp-semantic-line-solid-normal);
+      border-radius: $rd-8;
       animation: none;
-      box-shadow: 0 8px 16px 0 rgb(0 0 0 / 12%);
+      background: var(--wp-semantic-background-normal-alternative);
+      box-shadow: 0 4px 14px 0 rgb(0 0 0 / 12%);
     }
 
     >div {
@@ -80,7 +79,6 @@
     position: relative;
     overflow: hidden auto;
     max-height: calc((100 * var(--vh)) - 70px);
-    padding: $sp-8 $sp-8;
 
     @include scroll(3px, var(--wp-semantic-fill-strong), transparent);
 
@@ -187,7 +185,7 @@
     display: -webkit-box;
     overflow: hidden;
     -webkit-box-orient: vertical;
-    color: #1a1a1a;
+    color: var(--wp-semantic-label-normal);
     font-size: 20px;
     font-style: normal;
     font-weight: 600;
@@ -211,7 +209,7 @@
       height: 100%;
 
       path {
-        stroke: #1a1a1a;
+        stroke: var(--wp-semantic-label-normal);
       }
     }
   }
@@ -221,7 +219,7 @@
       opacity: 0;
       transform: scaleY(0.3);
     }
-  
+
     to {
       opacity: 1;
       transform: scaleY(1);
