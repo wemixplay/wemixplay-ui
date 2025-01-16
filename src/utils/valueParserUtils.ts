@@ -1,8 +1,6 @@
 import Decimal from 'decimal.js';
 import { isNaN, isNumber } from 'lodash';
 
-type MatchEntity = '&amp;' | '&lt;' | '&gt;' | '&quot;' | '&#39;' | '&#x2F;' | '&#x60;' | '&#x3D;';
-
 /**
  * 특정 길이만큼 앞에 특정값을 채움
  */
@@ -89,7 +87,7 @@ export const removeSpaceAndLineBreak = (str: string) => {
   return str.replace(/\[LINEBREAK\]/g, '').replace(/\s+/g, '');
 };
 
-export const decodeHtmlEntities = (str: string, matchEntities: MatchEntity[] = []) => {
+export const decodeHtmlEntities = (str: string) => {
   const entityMap = {
     '&amp;': '&',
     '&lt;': '<',
@@ -107,11 +105,7 @@ export const decodeHtmlEntities = (str: string, matchEntities: MatchEntity[] = [
   let prevStr = '';
   while (decodedStr !== prevStr) {
     prevStr = decodedStr;
-    decodedStr = decodedStr.replace(/&[#\w]+;/g, (match) =>
-      matchEntities.includes(match as MatchEntity) || !matchEntities.length
-        ? entityMap[match] || match
-        : match
-    );
+    decodedStr = decodedStr.replace(/&[#\w]+;/g, (match) => entityMap[match] || match);
   }
 
   return decodedStr;
@@ -119,7 +113,14 @@ export const decodeHtmlEntities = (str: string, matchEntities: MatchEntity[] = [
 
 export const convertMarkdownToHtmlStr = (text: string) => {
   // 변환된 문자열을 저장할 변수 초기화
-  let convertStr = decodeHtmlEntities(text, ['&amp;', '&quot;', '&#39;']);
+  let convertStr = decodeHtmlEntities(text);
+
+  const tempEl = document.createElement('div');
+  tempEl.innerHTML = convertStr;
+
+  convertStr = tempEl.textContent;
+
+  tempEl.remove();
 
   // WP@ 변환
   convertStr = convertStr.replace(
