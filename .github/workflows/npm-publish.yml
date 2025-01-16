@@ -31,12 +31,24 @@ jobs:
         with:
           ref: refs/tags/npm-publish/${{ steps.get_tag_version.outputs.version }}
 
+      - name: Get tag message
+        id: get_tag_message
+        run: |
+          TAG_MESSAGE=$(git tag -l --format='%(contents)' "npm-publish/${{ steps.get_tag_version.outputs.version }}")
+          # 태그 메시지를 GitHub Actions 출력 변수로 설정 (여러 줄 지원)
+          echo "message<<EOF" >> $GITHUB_OUTPUT
+          echo "$TAG_MESSAGE" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
       - name: Authenticate with npm
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.DEREK_NPM_TOKEN }}" > ./.npmrc
 
       - name: Publish to npm
         id: publish
-        run: yarn publish --new-version ${{ steps.get_tag_version.outputs.version }} --tag ${{ steps.get_tag_version.outputs.npm_tag }}
+        run: |
+          yarn publish --new-version ${{ steps.get_tag_version.outputs.version }} \
+            --tag ${{ steps.get_tag_version.outputs.npm_tag }} \
+            --message "${{ steps.get_tag_message.outputs.message }}"
         continue-on-error: true
 
       - name: Delete tag remotely
