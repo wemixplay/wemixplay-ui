@@ -1,0 +1,1 @@
+"use strict";var e=require("../../_virtual/isBuffer.js"),r=require("./stubFalse.js"),o=require("./_root.js");!function(e,s){var u=o._root,t=r.stubFalse_1,i=s&&!s.nodeType&&s,_=i&&e&&!e.nodeType&&e,f=_&&_.exports===i?u.Buffer:void 0,p=(f?f.isBuffer:void 0)||t;e.exports=p}(e.__module,e.__module.exports);var s=e.__module.exports;exports.isBufferExports=s;
