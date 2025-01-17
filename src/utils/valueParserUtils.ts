@@ -1,4 +1,5 @@
 import Decimal from 'decimal.js';
+import { sanitize } from 'isomorphic-dompurify';
 import { isNaN, isNumber } from 'lodash';
 
 /**
@@ -114,6 +115,11 @@ export const decodeHtmlEntities = (str: string) => {
 export const convertMarkdownToHtmlStr = (text: string) => {
   // 변환된 문자열을 저장할 변수 초기화
   let convertStr = decodeHtmlEntities(text);
+
+  convertStr = sanitize(convertStr, {
+    ALLOWED_TAGS: [], // 모든 HTML 태그 제거
+    KEEP_CONTENT: true // 태그 안의 컨텐츠는 유지
+  });
 
   // WP@ 변환
   convertStr = convertStr.replace(
