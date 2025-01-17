@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.13.228-alpha] - 2025-01-17
+- console.info 디버깅을 위한 알파 배포
+
+
 ## [1.13.227-alpha] - 2025-01-17
 - FeedTextContent에 html 태그 안먹도록 수정
 
