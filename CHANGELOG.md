@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.13.230-alpha] - 2025-01-17
+- console.info 제거 후 정식 알파버전 배포
+
+
 ## [1.13.229-alpha] - 2025-01-17
 - dompurify로 html 태그 삭제 후 텍스트만 정제하도록 빌드 테스트
 
