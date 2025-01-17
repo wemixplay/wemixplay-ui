@@ -77,15 +77,18 @@ function git_tag_work() {
     local tag_version=$3
     local release_message=$4
 
+    git pull origin $current_branch || { print_string "error" "Git pull 실패"; return 1; }
     git add -f package.json ./dist || { print_string "error" "Git add 실패"; return 1; }
     git commit --allow-empty -m "update version to $new_version" || { print_string "error" "Git commit 실패"; return 1; }
-    git pull origin $current_branch || { print_string "error" "Git pull 실패"; return 1; }
     git push origin $current_branch || { print_string "error" "Git push 실패"; return 1; }
 
     git tag -a $tag_version -m "$release_message" || { print_string "error" "Git tag 실패"; return 1; }
     git push origin $tag_version || { print_string "error" "Git tag push 실패"; return 1; }
     git tag -d $tag_version || { print_string "error" "Git tag 삭제 실패"; return 1; }
-    
+
+    git rm -r --cached dist || { print_string "error" "Git rm 실패"; return 1; }
+    git commit --allow-empty -m "chore: dist 폴더 Git 추적 제거" || { print_string "error" "Git commit 실패"; return 1; }
+    git push origin $current_branch || { print_string "error" "Git push 실패"; return 1; }
     return 0
 }
 
@@ -194,7 +197,7 @@ version_file="version.json"
 if [ "$current_branch" = "main" ] || [ "$current_branch" = "alpha" ]; then
     print_string "success" "현재 브랜치가 $current_branch 입니다. version 파일만 원격의 최신 내용으로 업데이트합니다."
     git fetch origin $current_branch
-    git checkout origin/$current_branch -- $version_file
+    git checkout origin/$current_branch -- $version_file dist/
 else
     print_string "error" "현재 브랜치가 $current_branch 입니다. main이나 alpha 브랜치로 변경 후 배포 작업을 진행해주세요."
     exit 1
