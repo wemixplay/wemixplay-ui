@@ -2,6 +2,16 @@ import Decimal from 'decimal.js';
 import { sanitize } from 'isomorphic-dompurify';
 import { isNaN, isNumber } from 'lodash';
 
+type MatchEntities =
+  | '&amp;'
+  | '&lt;'
+  | '&gt;'
+  | '&quot;'
+  | '&#39;'
+  | '&#x2F;'
+  | '&#x60;'
+  | '&#x3D;';
+
 /**
  * 특정 길이만큼 앞에 특정값을 채움
  */
@@ -88,7 +98,7 @@ export const removeSpaceAndLineBreak = (str: string) => {
   return str.replace(/\[LINEBREAK\]/g, '').replace(/\s+/g, '');
 };
 
-export const decodeHtmlEntities = (str: string) => {
+export const decodeHtmlEntities = (str: string, matchEntities: MatchEntities[] = []) => {
   const entityMap = {
     '&amp;': '&',
     '&lt;': '<',
@@ -104,9 +114,14 @@ export const decodeHtmlEntities = (str: string) => {
 
   // 반복적으로 HTML 엔티티를 디코딩
   let prevStr = '';
+
   while (decodedStr !== prevStr) {
     prevStr = decodedStr;
-    decodedStr = decodedStr.replace(/&[#\w]+;/g, (match) => entityMap[match] || match);
+    decodedStr = decodedStr.replace(/&[#\w]+;/g, (match) =>
+      matchEntities.includes(match as MatchEntities) || !matchEntities.length
+        ? entityMap[match] || match
+        : match
+    );
   }
 
   return decodedStr;
@@ -114,7 +129,7 @@ export const decodeHtmlEntities = (str: string) => {
 
 export const convertMarkdownToHtmlStr = (text: string) => {
   // 변환된 문자열을 저장할 변수 초기화
-  let convertStr = decodeHtmlEntities(text);
+  let convertStr = decodeHtmlEntities(text, ['&quot;', '&amp;', '&#x3D;']);
 
   convertStr = sanitize(convertStr, {
     ALLOWED_TAGS: [], // 모든 HTML 태그 제거
