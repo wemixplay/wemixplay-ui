@@ -1,0 +1,1 @@
+"use strict";var r=require("./_baseEach.js"),e=require("./isArrayLike.js"),a=r._baseEach,s=e.isArrayLike_1;var i=function(r,e){var i=-1,t=s(r)?Array(r.length):[];return a(r,(function(r,a,s){t[++i]=e(r,a,s)})),t};exports._baseMap=i;
