@@ -1,7 +1,7 @@
 # Changelog
 
 ## [1.13.233-alpha] - 2025-01-20
-- pastToPlainText santize 추가
+- 에디터에 XSS 공격 방지를 위한 pastToPlainText sanitize 추가
 
 
 ## [1.13.232-alpha] - 2025-01-20
