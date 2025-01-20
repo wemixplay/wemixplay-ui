@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.13.232-alpha] - 2025-01-20
+- html entyties들 decode 할 entities만 decode 하도록 수정
+
+
 ## [1.13.231-alpha] - 2025-01-17
 - 배포 테스트 
 
