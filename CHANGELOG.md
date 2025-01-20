@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.14.13] - 2025-01-20
+- feedImageView Img 태그 error 처리 로직 변경
+- 에디터에 XSS 공격 방지를 위한 pastToPlainText sanitize 추가
+- html entyties들 decode 할 entities만 decode 하도록 수정
+
+
 ## [1.13.235-alpha] - 2025-01-20
 - image Fix
 
