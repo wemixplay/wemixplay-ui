@@ -1,10 +1,11 @@
 .option {
   position: relative;
   display: flex;
+  height: 48px;
   min-height: 40px;
   align-items: center;
-  padding: 0 $sp-8;
-  color: var(--wp-semantic-label-normal);
+  padding: $sp-14 $sp-16;
+  color: var(--wp-semantic-label-strong);
   cursor: pointer;
   transition: background-color ease-in-out 0.25s;
 
@@ -18,24 +19,34 @@
   //   }
   // }
 
-  &.active {
-    border-radius: $sp-8;
-    border-top: 0;
-    background-color: var(--wp-semantic-line-solid-neutral);
+  @include breakpoint-768 {
+    &:not(:first-child) {
+      border-top: 1px solid var(--wp-semantic-line-solid-normal);
+    }
+  }
 
-    @include add-body-text-14-b;
+  &.active {
+    background-color: var(--wp-semantic-fill-normal);
+
+    @include breakpoint-768 {
+      background-color: var(--wp-semantic-background-normal-normal);
+    }
   }
 
   &:hover {
-    border-radius: $sp-8;
-    border-top: 0;
-    background-color: var(--wp-semantic-line-solid-neutral);
+    background-color: var(--wp-semantic-fill-normal);
 
-    @include add-body-text-14-b;
+    @include breakpoint-768 {
+      background-color: var(--wp-semantic-background-normal-normal);
+    }
   }
 
   &.match:not(:hover) {
-    background-color: var(--wp-semantic-line-solid-neutral);
+    background-color: var(--wp-semantic-fill-normal);
+
+    @include breakpoint-768 {
+      background-color: var(--wp-semantic-background-normal-normal);
+    }
   }
 
   &.hide { display: none; }

@@ -15,6 +15,7 @@ function print_string(){
     "error") echo -e "${RED}${2}${NC}" ;;
     "success") echo -e "${GREEN}${2}${NC}" ;;
     "warning") echo -e "${YELLOW}${2}${NC}" ;;
+    "info") echo -e "${NC}${2}${NC}" ;;
   esac
 }
 
@@ -48,21 +49,46 @@ function update_version_file() {
     fi
 }
 
+# 작업 내역 입력 받는 함수
+function get_release_message() {
+    local release_message=""
+    
+    # print_string 출력을 /dev/tty로 강제 지정
+    print_string "info" "작업 내역을 입력해주세요 (필수, 여러 줄 입력. 입력 완료 시 Enter를 치고 Control+D를 입력하세요):" > /dev/tty
+    
+    # read -e를 사용하여 편집 가능한 입력 받기
+    while IFS= read -e line; do
+        release_message+="$line"$'\n'
+    done < /dev/tty
+    
+    release_message_trimmed=$(echo "$release_message" | tr -d '[:space:]')
+    if [ -z "$release_message_trimmed" ]; then
+        print_string "error" "작업 내역이 비어있습니다. 다시 입력해주세요." > /dev/tty
+        release_message=$(get_release_message)
+    fi
+    
+    echo "$release_message"
+}
+
 # Git tag 작업 수행
 function git_tag_work() {
     local current_branch=$1
     local new_version=$2
     local tag_version=$3
+    local release_message=$4
 
     git pull origin $current_branch || { print_string "error" "Git pull 실패"; return 1; }
     git add -f package.json ./dist || { print_string "error" "Git add 실패"; return 1; }
     git commit --allow-empty -m "update version to $new_version" || { print_string "error" "Git commit 실패"; return 1; }
     git push origin $current_branch || { print_string "error" "Git push 실패"; return 1; }
-    
-    git tag -a $tag_version -m "Release $new_version" || { print_string "error" "Git tag 실패"; return 1; }
+
+    git tag -a $tag_version -m "$release_message" || { print_string "error" "Git tag 실패"; return 1; }
     git push origin $tag_version || { print_string "error" "Git tag push 실패"; return 1; }
     git tag -d $tag_version || { print_string "error" "Git tag 삭제 실패"; return 1; }
-    
+
+    git rm -r --cached dist || { print_string "error" "Git rm 실패"; return 1; }
+    git commit --allow-empty -m "chore: dist 폴더 Git 추적 제거" || { print_string "error" "Git commit 실패"; return 1; }
+    git push origin $current_branch || { print_string "error" "Git push 실패"; return 1; }
     return 0
 }
 
@@ -99,6 +125,46 @@ function build_project() {
     return 0
 }
 
+# CHANGELOG 업데이트 함수 추가
+function update_changelog() {
+    local version=$1
+    local message=$2
+    local date=$(date +%Y-%m-%d)
+    local changelog_file="CHANGELOG.md"
+    
+    # CHANGELOG.md 파일이 없으면 생성
+    if [ ! -f $changelog_file ]; then
+        echo "# Changelog\n" > $changelog_file
+    fi
+    
+    # 임시 파일 생성
+    local temp_file=$(mktemp)
+    
+    # 새로운 변경사항을 파일 상단에 추가
+    echo "# Changelog" > "$temp_file"
+    echo "" >> "$temp_file"
+    echo "## [$version] - $date" >> "$temp_file"
+
+    echo "$message" | while IFS= read -r line; do
+        if [ ! -z "$line" ]; then
+            echo "- $line" >> "$temp_file"
+        fi
+    done
+    
+    echo "" >> "$temp_file"
+    
+    # 기존 내용에서 첫 줄(# Changelog)을 제외한 나머지를 추가
+    tail -n +2 "$changelog_file" 2>/dev/null >> "$temp_file"
+    
+    # 임시 파일을 CHANGELOG.md로 이동
+    mv "$temp_file" "$changelog_file"
+    
+    # Git에 CHANGELOG.md 추가
+    git add $changelog_file
+    git commit -m "docs: update CHANGELOG.md for version $version"
+    git push origin $current_branch
+}
+
 # 완료 메시지 출력
 function print_completion_message() {
     local new_version=$1
@@ -131,7 +197,7 @@ version_file="version.json"
 if [ "$current_branch" = "main" ] || [ "$current_branch" = "alpha" ]; then
     print_string "success" "현재 브랜치가 $current_branch 입니다. version 파일만 원격의 최신 내용으로 업데이트합니다."
     git fetch origin $current_branch
-    git checkout origin/$current_branch -- $version_file
+    git checkout origin/$current_branch -- $version_file dist/
 else
     print_string "error" "현재 브랜치가 $current_branch 입니다. main이나 alpha 브랜치로 변경 후 배포 작업을 진행해주세요."
     exit 1
@@ -162,6 +228,8 @@ auto_new_version=$(calculate_next_version $major $minor $patch $tag_str)
 # 사용자 입력 버전 처리
 read -p "새로운 버전을 입력하세요 ( 자동 생성 버전: $auto_new_version ): " new_version
 
+release_message=$(get_release_message)
+
 new_version=${new_version:-$auto_new_version}
 validate_version "$new_version" || exit 1
 
@@ -173,7 +241,7 @@ build_project || exit 1
 
 # Git 작업 실행
 last_git_work_status="normal"
-git_tag_work "$current_branch" "$new_version" "$tag_version" || last_git_work_status="bad"
+git_tag_work "$current_branch" "$new_version" "$tag_version" "$release_message" || last_git_work_status="bad"
 
 # version.json 업데이트
 update_version_file "$version_file" "$new_version"
@@ -190,6 +258,8 @@ if [ "$last_git_work_status" = "bad" ]; then
     update_version_file "$version_file" "$version"
     exit 1
 fi
+
+update_changelog "$new_version" "$release_message"
 
 # 완료 메시지 출력
 print_completion_message "$new_version" "$tag"
