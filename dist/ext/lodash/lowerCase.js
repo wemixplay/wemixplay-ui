@@ -1,1 +1,0 @@
-"use strict";var e=require("../../_virtual/_commonjsHelpers.js"),r=(0,require("./_createCompounder.js")._createCompounder)((function(e,r,o){return e+(o?" ":"")+r.toLowerCase()})),o=e.getDefaultExportFromCjs(r);module.exports=o;
