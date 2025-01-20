@@ -99,10 +99,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
    * 이미지 로드 중 에러가 발생했을 때 호출되는 함수
    * @param {React.SyntheticEvent<HTMLImageElement>} e - 이미지 에러 이벤트
    */
-  const handleOnImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
-    const imgEl = e.target as HTMLImageElement;
-    const { src } = imgEl;
-
+  const handleOnImageError = useCallback((src: string) => {
     setErrorStatus((errorStatus) => ({ ...errorStatus, [src]: true }));
   }, []);
 
@@ -174,7 +171,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
                 </div>
               )}
 
-              <img src={image.src} alt={image.src} onError={handleOnImageError} />
+              <img src={image.src} alt={image.src} onError={() => handleOnImageError(image.src)} />
 
               {!!errorStatus[image.src] && (
                 <div className={cx('no-image')}>
