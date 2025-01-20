@@ -97,9 +97,9 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
     const selection = window.getSelection();
 
     /** 클립보드에서 일반 텍스트 */
-    const originTextData = event.nativeEvent.clipboardData.getData('text');
+    const originTextData = sanitize(event.nativeEvent.clipboardData.getData('text'));
     /** 클립보드에서 HTML 형식의 텍스트 */
-    const originHtmlTextData = event.nativeEvent.clipboardData.getData('text/html');
+    const originHtmlTextData = sanitize(event.nativeEvent.clipboardData.getData('text/html'));
 
     /** 클립보드에서 순수 텍스트 데이터 */
     let plainTextData = event.nativeEvent.clipboardData.getData('text/plain');
