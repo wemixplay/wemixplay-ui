@@ -1,0 +1,1 @@
+"use strict";var r=require("./_compareAscending.js")._compareAscending;var e=function(e,i,n){for(var t=-1,c=e.criteria,a=i.criteria,s=c.length,o=n.length;++t<s;){var u=r(c[t],a[t]);if(u)return t>=o?u:u*("desc"==n[t]?-1:1)}return e.index-i.index};exports._compareMultiple=e;
