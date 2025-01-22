@@ -1,1 +1,0 @@
-"use strict";var e=require("./_Set.js"),r=require("./noop.js"),t=require("./_setToArray.js"),o=e._Set,s=r.noop_1,n=t._setToArray,u=o&&1/n(new o([,-0]))[1]==1/0?function(e){return new o(e)}:s;exports._createSet=u;
