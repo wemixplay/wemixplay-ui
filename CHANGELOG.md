@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.13.237-alpha] - 2025-01-23
+- theme 관련 버그 이슈 수정
+
+
 ## [1.13.236-alpha] - 2025-01-22
 - feed ui fix
   
