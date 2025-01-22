@@ -19,25 +19,26 @@ type WemixplayUIProviderProps = {
 const initialValue: WemixplayUIContextType = {
   theme: 'light',
   setThemeData: (newTheme) => {}
-}
+};
 
 const WemixplayUIContext = createContext<WemixplayUIContextType>(initialValue);
-  
+
 const WemixplayUIProvider = ({ children, theme }: WemixplayUIProviderProps) => {
   const [themeData, setThemeData] = useState(theme);
 
-  const value = useMemo(() => ({ ...initialValue, theme: themeData, setThemeData }), [themeData, setThemeData]);
+  const value = useMemo(
+    () => ({ ...initialValue, theme: themeData, setThemeData }),
+    [themeData, setThemeData]
+  );
 
   useEffect(() => {
-    const isDarkMode = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const newTheme = typeof theme === 'undefined' ? (isDarkMode ? 'dark' : 'light') : theme;
-
-    setThemeData(newTheme);
+    setThemeData(theme);
+    document.body.setAttribute('data-theme', theme);
   }, [theme]);
 
   return (
     <WemixplayUIContext.Provider value={value}>
-      <div id="wemixplay-ui" className={cx('wemixplay-ui')} data-theme={themeData}>
+      <div id="wemixplay-ui" className={cx('wemixplay-ui')}>
         {children}
       </div>
     </WemixplayUIContext.Provider>
@@ -47,3 +48,4 @@ const WemixplayUIProvider = ({ children, theme }: WemixplayUIProviderProps) => {
 export type { WemixplayUIContextType };
 export { WemixplayUIContext };
 export default WemixplayUIProvider;
+

@@ -1,5 +1,5 @@
 /* stylelint-disable custom-property-pattern */
-:global(.wemixplay-ui) {
+:global(body) {
   &:not([data-theme="dark"]) {
     // static
     --wp-semantic-static-white: #{$color-global-common-100};
@@ -478,3 +478,5 @@
     box-sizing: border-box;
   }
 }
+
+
