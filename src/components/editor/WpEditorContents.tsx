@@ -11,14 +11,7 @@ interface Props extends HTMLAttributes<HTMLDivElement> {
 const cx = makeCxFunc(style);
 
 const WpEditorContents = forwardRef<HTMLDivElement, Props>(({ className, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      className={cx(className, 'editor-contents')}
-      {...props}
-      suppressContentEditableWarning={true}
-    ></div>
-  );
+  return <div ref={ref} className={cx(className, 'editor-contents')} {...props}></div>;
 });
 
 WpEditorContents.displayName = 'WpEditorContents';
