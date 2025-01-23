@@ -138,7 +138,7 @@ const FeedBox = forwardRef<FeedBoxRef, Props>(
                 <PopoverButton
                   anchorId={onManageBtnClick ? '' : `feed-manage-${uid.replace(/:/gi, '')}`}
                   id={`feed-manage-${uid.replace(/:/gi, '')}`}
-                  popoverStyle={{ right: -10, top: 10, zIndex: 999 }}
+                  popoverStyle={{ right: 0, top: 10, zIndex: 999 }}
                   popoverElement={managePopoverElement}
                   popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
                   whenWindowScrollClose={true}

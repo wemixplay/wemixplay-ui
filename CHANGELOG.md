@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.237-alpha] - 2025-01-23
+- theme 관련 버그 이슈 수정
+
+
+## [1.13.236-alpha] - 2025-01-22
+- feed ui fix
+  
 ## [1.14.13] - 2025-01-20
 - feedImageView Img 태그 error 처리 로직 변경
 - 에디터에 XSS 공격 방지를 위한 pastToPlainText sanitize 추가
