@@ -1,0 +1,2 @@
+"use client";
+"use strict";var e=require("../../_virtual/_tslib.js"),t=require("react"),s=require("./WpEditorContents.module.scss.js");const r=require("../../utils/forReactUtils.js").makeCxFunc(s),a=t.forwardRef(((s,a)=>{var{className:i}=s,n=e.__rest(s,["className"]);return t.createElement("div",Object.assign({ref:a,className:r(i,"editor-contents")},n,{contentEditable:!0,suppressContentEditableWarning:!0}))}));a.displayName="WpEditorContents",module.exports=a;

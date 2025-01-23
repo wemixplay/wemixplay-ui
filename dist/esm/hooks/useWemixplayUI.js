@@ -1,0 +1,1 @@
+import{WemixplayUIContext as e}from"../providers/WemixplayUi/index.js";import{useContext as t,useCallback as r}from"react";var m=()=>{const{theme:m,setThemeData:a}=t(e),o=r((e=>{document.body.setAttribute("data-theme",e),a(e)}),[a]);return{theme:m,changeTheme:o}};export{m as default};
