@@ -328,9 +328,11 @@ const WpEditor = forwardRef<WpEditorRef, Props>(
         plugins.forEach((plugin) => {
           plugin.handleKeyDown && plugin.handleKeyDown({ event: e });
         });
-
-        // Enter 입력시 개행 처리 (플러그인에서 Enter 입력시 내용 변경을 한것이 없다면 개행처리 진행)
+        console.log('event.defaultPrevented', e.defaultPrevented);
+        // preventDefault 가 호출되지 않았을 때, Enter 입력시 개행 처리
+        // (플러그인에서 Enter 입력시 내용 변경을 한것이 없다면 개행처리 진행)
         if (
+          !e.defaultPrevented &&
           (e.code === 'Enter' || e.code === 'NumpadEnter') &&
           !e.shiftKey &&
           !e.nativeEvent.isComposing &&
