@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.13.238-alpha] - 2025-02-03
+- wpEditor event preventDetault 시, Enter 로직 수정
+
+
 ## [1.13.237-alpha] - 2025-01-23
 - theme 관련 버그 이슈 수정
 
