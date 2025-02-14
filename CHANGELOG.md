@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.14.17] - 2025-02-14
+- max-length 수정
+
+
 ## [1.14.16] - 2025-01-23
 - contentable FIx
 
