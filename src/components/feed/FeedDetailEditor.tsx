@@ -22,7 +22,7 @@ import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import PasteToPlainText from '@/plugins/pasteToPlainText/PasteToPlainText';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
-import { uniqBy } from 'lodash';
+import { uniqBy, merge } from 'lodash';
 import { imageFileUpload, readAsDataURLAsync } from '@/utils/fileUtils';
 import FeedImagesView from './FeedImagesView';
 import {
@@ -543,41 +543,43 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             placeholder={placeholder}
             maxLength={maxLength}
             {...editorProps}
-            config={{
-              pasteToPlainText: {
-                onMatchUrlReplace: onMatchUrl
-              },
-              autoUrlMatch: {
-                onMatchUrl: (url) => {
-                  return onMatchUrl({ textUrls: [url], mediaUrls: [] });
+            config={merge(
+              {
+                pasteToPlainText: {
+                  onMatchUrlReplace: onMatchUrl
                 },
-                onChangeMatchUrls: (urls) => {
-                  const imagePattern = /\.(jpg|jpeg|png|gif|bmp|webp|tiff|avif)$/i;
-                  const normalUrls = urls.filter(
-                    (url) => !imagePattern.test(url) && !isYouTubeURL(url) && !isTwitchURL(url)
-                  );
+                autoUrlMatch: {
+                  onMatchUrl: (url) => {
+                    return onMatchUrl({ textUrls: [url], mediaUrls: [] });
+                  },
+                  onChangeMatchUrls: (urls) => {
+                    const imagePattern = /\.(jpg|jpeg|png|gif|bmp|webp|tiff|avif)$/i;
+                    const normalUrls = urls.filter(
+                      (url) => !imagePattern.test(url) && !isYouTubeURL(url) && !isTwitchURL(url)
+                    );
 
-                  setExcludeOgSiteUrl(
-                    excludeOgSiteUrl.filter((url) => {
-                      return normalUrls.includes(url);
-                    })
-                  );
+                    setExcludeOgSiteUrl(
+                      excludeOgSiteUrl.filter((url) => {
+                        return normalUrls.includes(url);
+                      })
+                    );
 
-                  const externalUrls = normalUrls.filter((url) => {
-                    return !excludeOgSiteUrl.includes(url);
-                  });
+                    const externalUrls = normalUrls.filter((url) => {
+                      return !excludeOgSiteUrl.includes(url);
+                    });
 
-                  if (!excludeOgSiteUrl.includes(externalUrls[0])) {
-                    handleExternalUrlChange && handleExternalUrlChange(externalUrls[0]);
+                    if (!excludeOgSiteUrl.includes(externalUrls[0])) {
+                      handleExternalUrlChange && handleExternalUrlChange(externalUrls[0]);
+                    }
                   }
+                },
+                countTextLength: {
+                  hideUi: true,
+                  onChangeTextLength: setTextLength
                 }
               },
-              countTextLength: {
-                hideUi: true,
-                onChangeTextLength: setTextLength
-              },
-              ...config
-            }}
+              config
+            )}
             onDragOver={onDragOver}
             onDrop={onInputDrop}
             onPaste={handlePaste}
