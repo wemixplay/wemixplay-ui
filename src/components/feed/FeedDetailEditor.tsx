@@ -544,7 +544,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             maxLength={maxLength}
             {...editorProps}
             config={{
-              ...config,
               pasteToPlainText: {
                 onMatchUrlReplace: onMatchUrl
               },
@@ -576,7 +575,8 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               countTextLength: {
                 hideUi: true,
                 onChangeTextLength: setTextLength
-              }
+              },
+              ...config
             }}
             onDragOver={onDragOver}
             onDrop={onInputDrop}

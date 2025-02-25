@@ -105,76 +105,90 @@ class PasteToPlainText implements WpEditorPlugin<PasteToPlainTextConfig> {
     let plainTextData = event.nativeEvent.clipboardData.getData('text/plain');
     plainTextData = sanitize(plainTextData);
 
-    // 이미지, 비디오, iframe 태그를 텍스트 URL로 교체
-    plainTextData = plainTextData.replace(
-      /<img[^>]*src="([^"]*)"[^>]*>|<video[^>]*>.*?<\/video>|<iframe[^>]*>.*?<\/iframe>/gi,
-      '$1'
-    );
-
     /** 에디터 최대 문자열 길이값 */
     const ariaValueMax = this.contentEditableEl.current.getAttribute('aria-valuemax');
 
     // contentEditable 요소의 최대 텍스트 길이를 가져와 텍스트가 초과하지 않도록 자름
     if (ariaValueMax) {
-      const availableInputLength =
-        Number(ariaValueMax) - this.contentEditableEl.current.textContent.length - 1;
-
-      if (availableInputLength > 0) {
-        plainTextData = plainTextData.slice(0, availableInputLength);
-      } else {
+      const currentTextLength = this.contentEditableEl.current.textContent.length;
+      const pasteTextLength = plainTextData.length;
+      const isAvailableInputLength = Number(ariaValueMax) - (currentTextLength + pasteTextLength);
+      // 붙여넣기 된 텍스트가 최대 문자열 길이를 초과하면 붙여넣기 된 텍스트를 제거
+      if (isAvailableInputLength < 0) {
         plainTextData = '';
+        event.preventDefault();
       }
     }
 
-    /** HTML 포맷을 확인하여 미디어 URL 추출한 배열 값 */
-    const matchMediaList = this.getMediaMatchUrlList(
-      this.checkHTMLFormat(originTextData) ? originTextData : originHtmlTextData
-    );
+    // 이미지, 비디오, iframe 태그를 텍스트 URL로 교체
+    plainTextData = plainTextData
+      .replace(/<img[^>]*src="([^"]*)"[^>]*>/gi, '$1')
+      .replace(/<video[^>]*>.*?<\/video>/gi, '')
+      .replace(/<iframe[^>]*>.*?<\/iframe>/gi, '');
 
-    /** 순수 텍스트에서 URL 패턴 추출한 배열 값 */
-    const matchUrlList = this.getUrlMatchList(plainTextData);
+    /** HTML 포맷을 확인하여 미디어 URL 추출한 배열 값 */
+    const matchMediaList = [
+      ...new Set(
+        this.getMediaMatchUrlList(
+          this.checkHTMLFormat(originTextData) ? originTextData : originHtmlTextData
+        )
+      )
+    ];
+
+    /** 순수 텍스트에서 URL 패턴 추출한 배열 값 (중복 제거)*/
+    const matchUrlList = [...new Set(this.getUrlMatchList(plainTextData))];
 
     /** onMatchUrlReplace 함수가 설정되었다면 치환된 URL 리스트 가져옴 */
-    const replaceMatchUrlList =
-      this.config.onMatchUrlReplace?.({
-        textUrls: matchUrlList,
-        mediaUrls: matchMediaList
-      }) ?? [];
-
+    const replaceMatchUrlList = [
+      ...new Set(
+        this.config.onMatchUrlReplace?.({
+          textUrls: matchUrlList,
+          mediaUrls: matchMediaList
+        }) ?? []
+      )
+    ];
     // 추출된 URL을 치환할 URL로 교체
     matchUrlList.forEach((url, index) => {
       if (replaceMatchUrlList[index]) {
+        const escapedUrl = url.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        const urlWithoutProtocol = url.replace('https://', '');
         if (plainTextData.includes(url)) {
-          plainTextData = plainTextData.replace(url, replaceMatchUrlList[index]);
-        } else if (plainTextData.includes(url.replace('https://', ''))) {
+          plainTextData = plainTextData.replace(new RegExp(escapedUrl, 'g'), (match, offset) => {
+            const beforeText = plainTextData.slice(Math.max(0, offset - 5), offset);
+            return beforeText.includes('src="') ? match : replaceMatchUrlList[index];
+          });
+        } else if (plainTextData.includes(urlWithoutProtocol)) {
           plainTextData = plainTextData.replace(
-            url.replace('https://', ''),
-            replaceMatchUrlList[index]
+            new RegExp(urlWithoutProtocol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'),
+            (match, offset) => {
+              const beforeText = plainTextData.slice(Math.max(0, offset - 5), offset);
+              return beforeText.includes('src="') ? match : replaceMatchUrlList[index];
+            }
           );
         }
       }
     });
-    const range = selection.getRangeAt(0);
-    console.log('range', range);
-    range.deleteContents();
+    if (plainTextData.length > 0) {
+      const range = selection.getRangeAt(0);
+      range.deleteContents();
+      // 수정된 데이터를 contenteditable 요소에 삽입
+      const tempDiv = document.createElement('div');
+      tempDiv.innerHTML = `${plainTextData.replace(/<script\b[^>]*>([\s\S]*?)<\/script>|<style\b[^>]*>([\s\S]*?)<\/style>/gi, '').trim()}&nbsp;`;
+      const element = tempDiv.lastChild;
 
-    // 수정된 데이터를 contenteditable 요소에 삽입
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = `${plainTextData.replace(/<script\b[^>]*>([\s\S]*?)<\/script>|<style\b[^>]*>([\s\S]*?)<\/style>/gi, '').trim()}&nbsp;`;
-    const element = tempDiv.lastChild;
+      // tempDiv에 들어간 child를 하나씩 추가
+      for (const child of Array.from(tempDiv.childNodes).reverse()) {
+        range.insertNode(child);
+      }
 
-    // tempDiv에 들어간 child를 하나씩 추가
-    for (const child of Array.from(tempDiv.childNodes).reverse()) {
-      range.insertNode(child);
+      tempDiv.remove();
+
+      // 커서를 수정된 텍스트의 끝으로 이동
+      range.setStartAfter(element);
+      range.setEndAfter(element);
+      selection.removeAllRanges();
+      selection.addRange(range);
     }
-
-    tempDiv.remove();
-
-    // 커서를 수정된 텍스트의 끝으로 이동
-    range.setStartAfter(element);
-    range.setEndAfter(element);
-    selection.removeAllRanges();
-    selection.addRange(range);
 
     event.preventDefault();
 
