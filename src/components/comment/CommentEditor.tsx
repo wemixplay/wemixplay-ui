@@ -25,6 +25,7 @@ import {
   convertMarkdownToHtmlStr,
   removeSpaceAndLineBreak
 } from '@/utils/valueParserUtils';
+import { merge } from 'lodash';
 
 type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
   /** 추가적인 CSS 클래스명 */
@@ -141,8 +142,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
           <WpEditor
             className={cx('editor', { filled: text.length })}
             plugin={[Mention, AutoUrlMatch, PasteToPlainText, CountTextLength]}
-            config={{
-              ...config,
+            config={merge({}, config, {
               pasteToPlainText: {
                 onMatchUrlReplace: onMatchUrl
               },
@@ -155,7 +155,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
                 hideUi: true,
                 onChangeTextLength: setTextLength
               }
-            }}
+            })}
             name={name}
             initialValue={text}
             placeholder={placeholder}
