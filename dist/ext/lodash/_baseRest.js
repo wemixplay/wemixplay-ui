@@ -1,1 +1,0 @@
-"use strict";var e=require("./_overRest.js"),r=require("./_setToString.js"),t=require("./identity.js").identity_1,s=e._overRest,i=r._setToString;var n=function(e,r){return i(s(e,r,t),e+"")};exports._baseRest=n;

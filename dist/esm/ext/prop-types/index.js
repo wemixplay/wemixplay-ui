@@ -1,1 +1,0 @@
-import{getDefaultExportFromCjs as r}from"../../_virtual/_commonjsHelpers.js";import{__module as o}from"../../_virtual/index2.js";import{f as s}from"./factoryWithThrowingShims.js";o.exports=s();var t=r(o.exports);export{t as default};
