@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.13.239-alpha] - 2025-02-25
+- maxlength 로직 수정
+
+
 ## [1.13.238-alpha] - 2025-02-03
 - wpEditor event preventDetault 시, Enter 로직 수정
 
