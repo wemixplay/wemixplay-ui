@@ -96,6 +96,8 @@ type Props = Omit<WpEditorProps, 'plugin' | 'initialValue' | 'handleChange'> & {
   iframeMaxCnt?: number;
   /** 로딩 상태 */
   loading?: boolean;
+  /** 제출 버튼 비활성화 여부 */
+  isSubmitDisabled?: boolean;
   /** 외부 URL이 변경될 때 호출되는 함수 */
   handleExternalUrlChange?: (url: string) => void;
   /** 작성자 프로필 클릭 이벤트 핸들러 */
@@ -159,6 +161,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       selectChannelPopoverElement = <></>,
       selectCategoryPopoverElement = <></>,
       loading,
+      isSubmitDisabled = false,
       handleTextChange,
       handleImageChange,
       handleMediaChange,
@@ -204,7 +207,8 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
           minLength > textLength ||
           loading ||
           isImageLoading ||
-          (!isFillMedia && !isFillImages && !isFillText)
+          (!isFillMedia && !isFillImages && !isFillText) ||
+          isSubmitDisabled
       };
     }, [loading, minLength, textLength, memorizationData]);
 
