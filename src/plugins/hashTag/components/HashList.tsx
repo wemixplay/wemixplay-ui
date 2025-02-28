@@ -208,7 +208,6 @@ const HashList = forwardRef<HashListRef, Props>(
         };
 
         if (isMobile) {
-          console.log('isMobile');
           positionStyle.maxWidth = '95%';
         }
 
