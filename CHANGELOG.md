@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.14.18] - 2025-03-06
+- countLength 및 AutoUrl 수정
+
+
 ## [1.14.17] - 2025-02-14
 - max-length 수정
 
