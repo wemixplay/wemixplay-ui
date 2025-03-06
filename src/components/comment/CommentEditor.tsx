@@ -146,20 +146,23 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
           <WpEditor
             className={cx('editor', { filled: text.length })}
             plugin={[Mention, AutoUrlMatch, PasteToPlainText, CountTextLength]}
-            config={merge({}, config, {
-              pasteToPlainText: {
-                onMatchUrlReplace: onMatchUrl
-              },
-              autoUrlMatch: {
-                onMatchUrl: (url) => {
-                  return onMatchUrl({ textUrls: [url] });
+            config={merge(
+              {
+                pasteToPlainText: {
+                  onMatchUrlReplace: onMatchUrl
+                },
+                autoUrlMatch: {
+                  onMatchUrl: (url) => {
+                    return onMatchUrl({ textUrls: [url] });
+                  }
+                },
+                countTextLength: {
+                  hideUi: true,
+                  onChangeTextLength: setTextLength
                 }
               },
-              countTextLength: {
-                hideUi: true,
-                onChangeTextLength: setTextLength
-              }
-            })}
+              config
+            )}
             name={name}
             initialValue={text}
             placeholder={placeholder}

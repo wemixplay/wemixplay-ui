@@ -203,7 +203,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
       return {
         loading: loading || isImageLoading,
-        disalbed:
+        disabled:
           minLength > textLength ||
           loading ||
           isImageLoading ||
@@ -651,7 +651,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               className={cx('btn-submit', {
                 loading: buttonStatus.loading
               })}
-              disabled={buttonStatus.disalbed}
+              disabled={buttonStatus.disabled}
               onClick={() =>
                 handleSubmit(
                   {
