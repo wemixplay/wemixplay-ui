@@ -1,0 +1,1 @@
+import r from'./../../ext/style-inject/dist/style-inject.es.js';var e={"error-boundary":"ErrorBoundary-module_error-boundary__b18MZ"};r(".ErrorBoundary-module_error-boundary__b18MZ{align-items:center;display:flex;height:100%;justify-content:center}",{insertAt:"top"});export{e as default};
