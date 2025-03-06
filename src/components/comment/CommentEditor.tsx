@@ -25,6 +25,7 @@ import {
   convertMarkdownToHtmlStr,
   removeSpaceAndLineBreak
 } from '@/utils/valueParserUtils';
+import { merge } from 'lodash';
 
 type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
   /** 추가적인 CSS 클래스명 */
@@ -39,6 +40,8 @@ type Props = Omit<WpEditorProps, 'plugin' | 'initialValue'> & {
   value?: string;
   /** 제출 버튼 클릭 시 호출되는 함수, 작성된 텍스트 값을 인자로 받음 */
   handleSubmit?: (value: string) => void;
+  /** 제출 버튼 비활성화 여부 */
+  isSubmitDisabled?: boolean;
 };
 
 const cx = makeCxFunc(style);
@@ -68,6 +71,7 @@ const cx = makeCxFunc(style);
  * @param {string} [placeholder] - 에디터에 표시될 플레이스홀더 텍스트
  * @param {string} [name] - 에디터의 이름 (필드 이름으로 사용됨)
  * @param {function} [handleChange] - 텍스트가 변경될 때 호출되는 함수, 변경된 텍스트와 에디터 이름을 인자로 받음
+ * @param {boolean} [isSubmitDisabled=false] - 제출 버튼 비활성화 여부
  */
 const CommentEditor = forwardRef<WpEditorRef, Props>(
   (
@@ -82,6 +86,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
       maxLength = 1000,
       placeholder,
       name,
+      isSubmitDisabled = false,
       handleChange,
       handleSubmit,
       ...editorProps
@@ -141,21 +146,23 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
           <WpEditor
             className={cx('editor', { filled: text.length })}
             plugin={[Mention, AutoUrlMatch, PasteToPlainText, CountTextLength]}
-            config={{
-              ...config,
-              pasteToPlainText: {
-                onMatchUrlReplace: onMatchUrl
-              },
-              autoUrlMatch: {
-                onMatchUrl: (url) => {
-                  return onMatchUrl({ textUrls: [url] });
+            config={merge(
+              {
+                pasteToPlainText: {
+                  onMatchUrlReplace: onMatchUrl
+                },
+                autoUrlMatch: {
+                  onMatchUrl: (url) => {
+                    return onMatchUrl({ textUrls: [url] });
+                  }
+                },
+                countTextLength: {
+                  hideUi: true,
+                  onChangeTextLength: setTextLength
                 }
               },
-              countTextLength: {
-                hideUi: true,
-                onChangeTextLength: setTextLength
-              }
-            }}
+              config
+            )}
             name={name}
             initialValue={text}
             placeholder={placeholder}
@@ -172,7 +179,7 @@ const CommentEditor = forwardRef<WpEditorRef, Props>(
           <SolidCapButton
             size="medium"
             className={cx('btn-post')}
-            disabled={minLength > textLength || !removeSpaceAndLineBreak(text)}
+            disabled={minLength > textLength || !removeSpaceAndLineBreak(text) || isSubmitDisabled}
             onClick={handleSubmitBtnClick}
           >
             {btnSubmitText}

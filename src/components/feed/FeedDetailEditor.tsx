@@ -22,7 +22,7 @@ import AutoUrlMatch from '@/plugins/autoUrlMatch/AutoUrlMatch';
 import PasteToPlainText from '@/plugins/pasteToPlainText/PasteToPlainText';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
-import { uniqBy } from 'lodash';
+import { uniqBy, merge } from 'lodash';
 import { imageFileUpload, readAsDataURLAsync } from '@/utils/fileUtils';
 import FeedImagesView from './FeedImagesView';
 import {
@@ -96,6 +96,8 @@ type Props = Omit<WpEditorProps, 'plugin' | 'initialValue' | 'handleChange'> & {
   iframeMaxCnt?: number;
   /** 로딩 상태 */
   loading?: boolean;
+  /** 제출 버튼 비활성화 여부 */
+  isSubmitDisabled?: boolean;
   /** 외부 URL이 변경될 때 호출되는 함수 */
   handleExternalUrlChange?: (url: string) => void;
   /** 작성자 프로필 클릭 이벤트 핸들러 */
@@ -159,6 +161,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
       selectChannelPopoverElement = <></>,
       selectCategoryPopoverElement = <></>,
       loading,
+      isSubmitDisabled = false,
       handleTextChange,
       handleImageChange,
       handleMediaChange,
@@ -200,11 +203,12 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
 
       return {
         loading: loading || isImageLoading,
-        disalbed:
+        disabled:
           minLength > textLength ||
           loading ||
           isImageLoading ||
-          (!isFillMedia && !isFillImages && !isFillText)
+          (!isFillMedia && !isFillImages && !isFillText) ||
+          isSubmitDisabled
       };
     }, [loading, minLength, textLength, memorizationData]);
 
@@ -543,41 +547,43 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
             placeholder={placeholder}
             maxLength={maxLength}
             {...editorProps}
-            config={{
-              ...config,
-              pasteToPlainText: {
-                onMatchUrlReplace: onMatchUrl
-              },
-              autoUrlMatch: {
-                onMatchUrl: (url) => {
-                  return onMatchUrl({ textUrls: [url], mediaUrls: [] });
+            config={merge(
+              {
+                pasteToPlainText: {
+                  onMatchUrlReplace: onMatchUrl
                 },
-                onChangeMatchUrls: (urls) => {
-                  const imagePattern = /\.(jpg|jpeg|png|gif|bmp|webp|tiff|avif)$/i;
-                  const normalUrls = urls.filter(
-                    (url) => !imagePattern.test(url) && !isYouTubeURL(url) && !isTwitchURL(url)
-                  );
+                autoUrlMatch: {
+                  onMatchUrl: (url) => {
+                    return onMatchUrl({ textUrls: [url], mediaUrls: [] });
+                  },
+                  onChangeMatchUrls: (urls) => {
+                    const imagePattern = /\.(jpg|jpeg|png|gif|bmp|webp|tiff|avif)$/i;
+                    const normalUrls = urls.filter(
+                      (url) => !imagePattern.test(url) && !isYouTubeURL(url) && !isTwitchURL(url)
+                    );
 
-                  setExcludeOgSiteUrl(
-                    excludeOgSiteUrl.filter((url) => {
-                      return normalUrls.includes(url);
-                    })
-                  );
+                    setExcludeOgSiteUrl(
+                      excludeOgSiteUrl.filter((url) => {
+                        return normalUrls.includes(url);
+                      })
+                    );
 
-                  const externalUrls = normalUrls.filter((url) => {
-                    return !excludeOgSiteUrl.includes(url);
-                  });
+                    const externalUrls = normalUrls.filter((url) => {
+                      return !excludeOgSiteUrl.includes(url);
+                    });
 
-                  if (!excludeOgSiteUrl.includes(externalUrls[0])) {
-                    handleExternalUrlChange && handleExternalUrlChange(externalUrls[0]);
+                    if (!excludeOgSiteUrl.includes(externalUrls[0])) {
+                      handleExternalUrlChange && handleExternalUrlChange(externalUrls[0]);
+                    }
                   }
+                },
+                countTextLength: {
+                  hideUi: true,
+                  onChangeTextLength: setTextLength
                 }
               },
-              countTextLength: {
-                hideUi: true,
-                onChangeTextLength: setTextLength
-              }
-            }}
+              config
+            )}
             onDragOver={onDragOver}
             onDrop={onInputDrop}
             onPaste={handlePaste}
@@ -645,7 +651,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
               className={cx('btn-submit', {
                 loading: buttonStatus.loading
               })}
-              disabled={buttonStatus.disalbed}
+              disabled={buttonStatus.disabled}
               onClick={() =>
                 handleSubmit(
                   {
