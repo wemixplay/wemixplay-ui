@@ -1,0 +1,1 @@
+"use strict";var r=function(r,e,a){switch(a.length){case 0:return r.call(e);case 1:return r.call(e,a[0]);case 2:return r.call(e,a[0],a[1]);case 3:return r.call(e,a[0],a[1],a[2])}return r.apply(e,a)};exports._apply=r;
