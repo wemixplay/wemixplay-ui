@@ -211,6 +211,24 @@
     --wp-semantic-shadow-cookie: 0 -5px 18px 0 rgb(0 0 0 / 8%);
     --wp-semantic-feed-shadow: 0 8px 26px 0 rgb(0 0 0 / 6%);
   }
+
+  [class*="fill"] {
+    path { fill: $color-global-coolNeutral-10; }
+    rect { fill: $color-global-coolNeutral-10; }
+    circle { fill: $color-global-coolNeutral-10; }
+  }
+
+  [class*="medium-color"] {
+    path {
+      fill: $color-global-coolNeutral-10;
+      &:not(:first-child) { fill: $color-global-coolNeutral-99; }
+    }
+  }
+
+  [class*="cancel-color"] {
+    path { fill: $color-global-coolNeutral-10; }
+    circle { fill: $color-global-coolNeutral-99; }
+  }
 }
 
 :global(.wm-ui) {
@@ -478,5 +496,3 @@
     box-sizing: border-box;
   }
 }
-
-
