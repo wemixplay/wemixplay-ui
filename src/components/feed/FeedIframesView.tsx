@@ -12,7 +12,7 @@ import React, {
 } from 'react';
 import style from './FeedIframesView.module.scss';
 import Carousel from '../carousel/Carousel';
-import { SvgIcoDeleteX } from '@/assets/svgs';
+import { SvgIconCancelMono } from '@/assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import YouTube, { YouTubeEvent, YouTubePlayer, YouTubeProps } from 'react-youtube';
 
@@ -251,7 +251,7 @@ const FeedIframesView = forwardRef<FeedIframesViewRef, Props>(
                   className={cx('btn-img-delete')}
                   onClick={() => handleDeleteIframe({ deleteIndex: index })}
                 >
-                  <SvgIcoDeleteX />
+                  <SvgIconCancelMono />
                 </button>
               )}
               <div
