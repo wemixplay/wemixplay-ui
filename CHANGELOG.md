@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.13.242-alpha] - 2025-04-18
+- svg icon 업데이트
+
+
 ## [1.13.241-alpha] - 2025-02-26
 - submit btn props Add
 
