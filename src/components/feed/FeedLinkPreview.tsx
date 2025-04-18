@@ -2,7 +2,7 @@
 
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedLinkPreview.module.scss';
-import { SvgIconCancelMono } from '@/assets/svgs';
+import { SvgIconCancelColor, SvgIconCancelMono } from '@/assets/svgs';
 import WpImage from '../image/WpImage';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
@@ -93,7 +93,7 @@ const FeedLinkPreview = ({ className = '', ogMetaData, handleDeleteOgMetaData }:
             className={cx('btn-img-delete')}
             onClick={() => handleDeleteOgMetaData({ urls: [ogMetaData.url], type: 'delete' })}
           >
-            <SvgIconCancelMono />
+            <SvgIconCancelColor />
           </button>
         )}
 
