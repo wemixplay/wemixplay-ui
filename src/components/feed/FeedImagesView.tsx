@@ -3,7 +3,7 @@
 import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import style from './FeedImagesView.module.scss';
 import Carousel from '../carousel/Carousel';
-import { SvgIconCancelMono, SvgIconEyeOff, SvgIconImage } from '@/assets/svgs';
+import { SvgIconCancelColor, SvgIconCancelMono, SvgIconEyeOff, SvgIconImage } from '@/assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import Spinner from '../loadings/Spinner';
 
@@ -144,7 +144,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
                 className={cx('btn-img-delete')}
                 onClick={() => handleDeleteImg({ deleteIndex: index })}
               >
-                <SvgIconCancelMono />
+                <SvgIconCancelColor />
               </button>
             )}
 
