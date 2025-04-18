@@ -2,7 +2,15 @@
 
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedEtcInfoArea.module.scss';
-import { SvgIcoComment, SvgIcoLike, SvgIcoShare, SvgIcoShareM } from '@/assets/svgs';
+import {
+  SvgIcoComment,
+  SvgIcoLike,
+  SvgIconComment,
+  SvgIconCopy,
+  SvgIconThumbupOutline,
+  SvgIcoShare,
+  SvgIcoShareM
+} from '@/assets/svgs';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import { isMobile } from 'react-device-detect';
@@ -111,7 +119,7 @@ const FeedEtcInfoArea = ({
         onClick={handleCommentClick}
       >
         <i className={cx('icon')}>
-          <SvgIcoComment />
+          <SvgIconComment />
         </i>
         <span className={cx('count')}>{toFormatterByInt(commentCount, 1)}</span>
       </button>
@@ -124,7 +132,7 @@ const FeedEtcInfoArea = ({
         onClick={handleLikeBtnClick}
       >
         <span className={cx('icon')}>
-          <SvgIcoLike />
+          <SvgIconThumbupOutline />
         </span>
         <span className={cx('count')}>{toFormatterByInt(likeCount, 1)}</span>
       </button>
@@ -134,7 +142,8 @@ const FeedEtcInfoArea = ({
           className={cx('btn-share', 'has-click-event')}
           onClick={handleShareBtnClick}
         >
-          {isMobile ? <SvgIcoShareM /> : <SvgIcoShare />}
+          {/* {isMobile ? <SvgIcoShareM /> : <SvgIcoShare />} */}
+          <SvgIconCopy />
         </button>
       )}
     </div>

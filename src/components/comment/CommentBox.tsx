@@ -4,7 +4,7 @@ import React, { MouseEvent, ReactElement, useCallback, useId } from 'react';
 import style from './CommentBox.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import PopoverButton from '../popover/PopoverButton';
-import { SvgIcoHDots, SvgIcoVDots } from '@/assets/svgs';
+import { SvgIconMorehorizontal } from '@/assets/svgs';
 import CommentWriterInfo from './CommentWriterInfo';
 import FeedTextContent from '../feed/FeedTextContent';
 import CommentEtcInfo from './CommentEtcInfo';
@@ -155,7 +155,7 @@ const CommentBox = ({
                 popoverAnimation={{ name: 'modal-pop-fade', duration: 300 }}
                 onClick={handleManageBtnClick}
               >
-                <SvgIcoHDots width={22} height={22} />
+                <SvgIconMorehorizontal />
               </PopoverButton>
             </div>
           </div>

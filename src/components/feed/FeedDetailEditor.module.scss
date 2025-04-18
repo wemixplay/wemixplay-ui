@@ -36,7 +36,7 @@
             width: auto;
             height: auto;
             align-items: center;
-            border-radius: 0;
+            border-radius: 0 !important;
             color: var(--wp-semantic-label-normal);
 
             @include label-01-normal-m;
@@ -213,7 +213,7 @@
       margin-left: auto;
 
       .text-count {
-        @include label-02-reading-m;
+        @include label-02-normal-m;
 
         padding-right: $sp-16;
         color: var(--wp-semantic-label-assistive);
