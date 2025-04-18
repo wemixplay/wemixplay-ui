@@ -213,7 +213,7 @@
       margin-left: auto;
 
       .text-count {
-        @include label-02-reading-m;
+        @include label-02-normal-m;
 
         padding-right: $sp-16;
         color: var(--wp-semantic-label-assistive);

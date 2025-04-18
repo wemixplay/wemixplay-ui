@@ -10,7 +10,7 @@
 
   // font-size, font-weight, line-height, font-feature-settings, font-family, color는 .text로 전달되어 지기 때문에
   // 따로 .text에 위의 스타일 속성들을 정의하지 않으셔도 됩니다.
-  @include label-02-reading-r;
+  @include label-02-normal-r;
 
   &.readonly {
     cursor: not-allowed;

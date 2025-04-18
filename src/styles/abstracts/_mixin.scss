@@ -1,8 +1,10 @@
+@use "sass:list";
+
 /* stylelint-disable font-family-no-missing-generic-family-keyword */
 /* stylelint-disable order/properties-order */
 /* stylelint-disable scss/no-duplicate-mixins */
 
-@mixin scroll($width: 2px, $thumb:  var(--wp-semantic-fill-strong), $track:var(--wp-semantic-scroll)) {
+@mixin scroll($width: 2px, $thumb:  var(--semantic-fill-strong), $track:var(--semantic-scroll)) {
   $scrollbar-thumb-width: $width;
   $scrollbar-thumb-color: $thumb;
   $scrollbar-track-color: $track;
@@ -27,28 +29,6 @@
   }
 }
 
-// 라이트모드 컬러가 적용된 스크롤바
-@mixin scroll-interaction {
-  &::-webkit-scrollbar {
-    width: 8px; // 인터랙션이 포함된 스크롤바 영역의 width
-
-    &-track {
-      background-color: white;
-    }
-
-    &-thumb {
-      background-color: var(--wp-semantic-fill-strong);
-      background-clip: padding-box;
-      border: 3px solid white;
-    }
-
-    &-track,
-    &-thumb {
-      border-radius: $rd-10;
-    }
-  }
-}
-
 @mixin ellipsis($lines: 1) {
   @if $lines == 1 {
     overflow: hidden;
@@ -57,7 +37,7 @@
     word-break: break-all;
   } @else {
     display: block;
-    display: -webkit-box;
+    display: box;
     overflow: hidden;
     text-overflow: ellipsis;
     -webkit-line-clamp: $lines;
@@ -82,7 +62,7 @@
 }
 
 @mixin skeleton-basic-animation($duration: 5s) {
-  background: var(--wp-semantic-background-elevated-alternative);
+  background: var(--semantic-background-elevated-alternative);
   animation: skeleton-blank linear $duration infinite;
 }
 
@@ -99,6 +79,18 @@
 @mixin line-height($height: 12, $base: 16) {
   line-height: $height + px;
   line-height: calc($height / $base) * 1rem;
+}
+
+@mixin typo($size: null, $height: null, $base: 16) {
+  @if $size {
+    font-size: $size + px;
+    font-size: calc($size / $base) * 1rem;
+  }
+
+  @if $height {
+    line-height: $height + px;
+    line-height: calc($height / $base) * 1rem;
+  }
 }
 
 @mixin mobile-status {
@@ -191,4 +183,26 @@
   overflow: hidden;
   user-select: none !important;
   pointer-events: none !important;
+}
+
+// @include transition((properties), duration, function, delay);
+@mixin transition(
+  $properties: all, // 적용하려는 트랜지션 속성 목록
+  $duration: 0.3s, // 트랜지션 시간
+  $timing-function: cubic-bezier(0.45, 1.45, 0.8, 1), // timing function (default : nft origin 에 적용된 타이밍 함수)
+  $delay: 0s, // 지연시간
+) {
+  $transitions: ();
+
+  @if type-of($properties) == "list" {
+    // $properties 값이 2개 이상의 리스트일 경우, 각 속성별로 트랜지션 적용
+    @each $prop in $properties {
+      $transitions: list.append($transitions, #{$prop} $duration $timing-function, comma);
+    }
+  } @else {
+    // $properties 값이 1개일 경우,
+    $transitions: #{$properties} $duration $timing-function;
+  }
+
+  transition: $transitions;
 }

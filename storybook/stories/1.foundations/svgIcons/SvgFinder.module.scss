@@ -39,58 +39,90 @@
     height: 200px;
     align-items: center;
     justify-content: center;
-    color: $gray70;
+    color: #595959;
   }
-}
 
-.svg-list {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 !important;
-  margin-top: 0 !important;
-  margin-left: -$sp-12 !important;
-  list-style: none;
+  .title {
+    @include add-body-text-15-sb;
 
-  .svg-item {
+    margin-top: $sp-32 !important;
+  }
+
+  .desc {
+    @include add-title-20-eb;
+
+    margin-top: $sp-36;
+  }
+
+  .icon-list {
     display: flex;
-    width: calc(12.5% - 12px);
-    flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
-    padding: $sp-16 $sp-12;
-    border: 1px solid $gray20;
+    padding: 0 $sp-28 $sp-28;
     border-radius: $rd-8;
-    margin: $sp-12 0 0 $sp-12 !important;
-    list-style: none;
-    text-align: center;
+    margin: $sp-12 0 $sp-24;
+    background-color: var(--semantic-background-elevated-alternative);
 
-    &-title {
-      width: 100%;
-      padding-top: $sp-16;
+    &-item {
+      padding: 0;
+      margin: $sp-28 0 0 !important;
+      list-style: none;
 
-      @include font-size(11);
-
-      font-weight: 400;
-
-      @include ellipsis(1)
-;
+      &:not(:last-child) {
+        padding-right: $sp-24;
+      }
     }
+  }
 
-    .svg-componen-box {
-      position: relative;
+  .svg-list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0 !important;
+    margin-top: 0 !important;
+    margin-left: -$sp-12 !important;
+    list-style: none;
+
+    .svg-item {
       display: flex;
+      width: calc(12.5% - 12px);
+      flex-direction: column;
       align-items: center;
       justify-content: center;
+      padding: $sp-16 $sp-12;
+      border: 1px solid #d9d9d9;
+      border-radius: $rd-8;
+      margin: $sp-12 0 0 $sp-12 !important;
+      list-style: none;
+      text-align: center;
 
-      .icon-box {
+      &-title {
+        width: 100%;
+        padding-top: $sp-16;
+
+        @include font-size(11);
+
+        font-weight: 400;
+
+        @include ellipsis(1)
+  ;
+      }
+
+      .svg-componen-box {
+        position: relative;
         display: flex;
-        width: 36px;
-        height: 36px;
         align-items: center;
         justify-content: center;
-        padding: $sp-8;
-        border-radius: $rd-circle;
-        background-color: $color-global-neutral-99;
+
+        .icon-box {
+          display: flex;
+          width: 36px;
+          height: 36px;
+          align-items: center;
+          justify-content: center;
+          padding: $sp-8;
+          border-radius: $rd-circle;
+          background-color: $color-global-neutral-99;
+        }
       }
     }
   }
