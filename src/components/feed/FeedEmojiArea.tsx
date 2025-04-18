@@ -134,7 +134,6 @@ const FeedEmojiArea = ({
             whenWindowScrollClose={true}
             onClick={handleEmojiSelectBtnClick}
           >
-            {/* {isMobile ? <SvgIcoAddEmojiM /> : <SvgIcoAddEmoji />} */}
             <SvgIconEmoji />
           </PopoverButton>
         </div>

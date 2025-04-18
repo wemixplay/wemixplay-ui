@@ -142,7 +142,6 @@ const FeedEtcInfoArea = ({
           className={cx('btn-share', 'has-click-event')}
           onClick={handleShareBtnClick}
         >
-          {/* {isMobile ? <SvgIcoShareM /> : <SvgIcoShare />} */}
           <SvgIconCopy />
         </button>
       )}
