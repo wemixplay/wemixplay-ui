@@ -1,1 +1,0 @@
-"use strict";var e=require("./_baseAssignValue.js"),s=require("./eq.js"),r=e._baseAssignValue,a=s.eq_1,i=Object.prototype.hasOwnProperty;var t=function(e,s,t){var n=e[s];i.call(e,s)&&a(n,t)&&(void 0!==t||s in e)||r(e,s,t)};exports._assignValue=t;
