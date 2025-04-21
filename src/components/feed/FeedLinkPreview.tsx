@@ -2,7 +2,7 @@
 
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedLinkPreview.module.scss';
-import { SvgIconCancelColor, SvgIconCancelMono } from '@/assets/svgs';
+import { SvgIconCancelColor } from '@/assets/svgs';
 import WpImage from '../image/WpImage';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
