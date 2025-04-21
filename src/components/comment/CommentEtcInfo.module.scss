@@ -73,12 +73,8 @@
       // 내가 좋아요 했을때 스타일
       .icon {
         svg {
-          [class*="fill"] {
+          path {
             fill: var(--wp-semantic-primary-normal);
-          }
-
-          [class*="stroke"] {
-            stroke: var(--wp-semantic-primary-normal);
           }
         }
       }
