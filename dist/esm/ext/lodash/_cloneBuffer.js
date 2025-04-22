@@ -1,0 +1,1 @@
+import{__module as o}from"../../_virtual/_cloneBuffer.js";import{_ as r}from"./_root.js";var e,t,s,n,p,a,f;e=o,t=o.exports,s=r,n=t&&!t.nodeType&&t,p=n&&e&&!e.nodeType&&e,a=p&&p.exports===n?s.Buffer:void 0,f=a?a.allocUnsafe:void 0,e.exports=function(o,r){if(r)return o.slice();var e=o.length,t=f?f(e):new o.constructor(e);return o.copy(t),t};var i=o.exports;export{i as _};
