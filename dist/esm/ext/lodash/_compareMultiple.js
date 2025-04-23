@@ -1,0 +1,1 @@
+import{_ as r}from"./_compareAscending.js";var e=r;var i=function(r,i,n){for(var a=-1,t=r.criteria,c=i.criteria,o=t.length,s=n.length;++a<o;){var d=e(t[a],c[a]);if(d)return a>=s?d:d*("desc"==n[a]?-1:1)}return r.index-i.index};export{i as _};
