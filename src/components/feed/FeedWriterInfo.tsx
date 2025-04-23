@@ -2,7 +2,7 @@
 
 import React, { MouseEvent, useCallback, useEffect, useState } from 'react';
 import style from './FeedWriterInfo.module.scss';
-import { SvgIcoCertifiedV2 } from '@/assets/svgs';
+import { SvgIconCertified } from '@/assets/svgs';
 import { getModifyTimeString, getTimeString } from '@/utils/dateUtils';
 import Person from '../avatars/Person';
 import { makeCxFunc } from '@/utils/forReactUtils';
@@ -159,7 +159,7 @@ const FeedWriterInfo = ({
       <div className={cx('profile-text')}>
         <strong className={cx('title')} onClick={handleWriterProfileClick}>
           {name || '-'}
-          {!!certificated && <SvgIcoCertifiedV2 width={20} height={20} />}
+          {!!certificated && <SvgIconCertified width={20} height={20} />}
         </strong>
         <div className={cx('info')}>
           {!!categoryName && <span className={cx('category')}>{categoryName}</span>}
@@ -175,7 +175,7 @@ const FeedWriterInfo = ({
           <Person src={channelImg} customSize={24} onClick={handleChannelClick} />
           <div className={cx('channel')} onClick={handleChannelClick}>
             <span className={cx('channel-name')}>{channelName}</span>
-            {!!channelIsOfficial && <SvgIcoCertifiedV2 width={12} height={12} />}
+            {!!channelIsOfficial && <SvgIconCertified width={12} height={12} />}
           </div>
         </div>
       )}
