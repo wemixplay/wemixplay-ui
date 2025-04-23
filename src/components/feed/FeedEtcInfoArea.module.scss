@@ -23,7 +23,9 @@
     }
 
     &:hover {
-      background: var(--wp-semantic-fill-normal);
+      @include hover {
+        background: var(--wp-semantic-fill-normal);
+      }
     }
 
     &:not(.btn-share) {
