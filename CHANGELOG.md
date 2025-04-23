@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.13.246-alpha] - 2025-04-23
+- SVG 아이콘 업데이트
+
+
 ## [1.13.245-alpha] - 2025-04-22
 - feed svg icon update
 
