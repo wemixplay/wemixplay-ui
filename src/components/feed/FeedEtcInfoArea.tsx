@@ -2,18 +2,9 @@
 
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedEtcInfoArea.module.scss';
-import {
-  SvgIcoComment,
-  SvgIcoLike,
-  SvgIconComment,
-  SvgIconCopy,
-  SvgIconThumbupOutline,
-  SvgIcoShare,
-  SvgIcoShareM
-} from '@/assets/svgs';
+import { SvgIconComment, SvgIconCopy, SvgIconThumbupOutline } from '@/assets/svgs';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
-import { isMobile } from 'react-device-detect';
 
 type Props = {
   /**
