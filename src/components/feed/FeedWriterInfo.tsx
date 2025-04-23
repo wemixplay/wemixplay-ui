@@ -175,7 +175,7 @@ const FeedWriterInfo = ({
           <Person src={channelImg} customSize={24} onClick={handleChannelClick} />
           <div className={cx('channel')} onClick={handleChannelClick}>
             <span className={cx('channel-name')}>{channelName}</span>
-            {!!channelIsOfficial && <SvgIconCertified width={12} height={12} />}
+            {!!channelIsOfficial && <SvgIconCertified width={14} height={14} />}
           </div>
         </div>
       )}
