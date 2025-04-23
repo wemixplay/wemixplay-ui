@@ -25,6 +25,8 @@ const SvgFinder = ({}: PropsType) => {
     { name: 'SvgIconWebshopFill', component: SvgIcons.SvgIconWebshopFill },
     { name: 'SvgIconTokensOutline', component: SvgIcons.SvgIconTokensOutline },
     { name: 'SvgIconTokensFill', component: SvgIcons.SvgIconTokensFill },
+    { name: 'SvgIconFeedOutline', component: SvgIcons.SvgIconFeedOutline },
+    { name: 'SvgIconFeedFill', component: SvgIcons.SvgIconFeedFill },
     { name: 'SvgIconCommunityOutline', component: SvgIcons.SvgIconCommunityOutline },
     { name: 'SvgIconCommunityFill', component: SvgIcons.SvgIconCommunityFill }
   ];
@@ -83,7 +85,9 @@ const SvgFinder = ({}: PropsType) => {
     { name: 'SvgIconHourglass', component: SvgIcons.SvgIconHourglass },
     { name: 'SvgIconCancelMono', component: SvgIcons.SvgIconCancelMono },
     { name: 'SvgIconCancelColor', component: SvgIcons.SvgIconCancelColor },
-    { name: 'SvgIconConnector', component: SvgIcons.SvgIconConnector }
+    { name: 'SvgIconConnector', component: SvgIcons.SvgIconConnector },
+    { name: 'SvgIconDarkMode', component: SvgIcons.SvgIconDarkMode },
+    { name: 'SvgIconLightMode', component: SvgIcons.SvgIconLightMode }
   ];
   const arrowList = [
     { name: 'SvgIconChevronLeft', component: SvgIcons.SvgIconChevronLeft },
@@ -169,6 +173,62 @@ const SvgFinder = ({}: PropsType) => {
     { name: 'SvgIconSteam', component: SvgIcons.SvgIconSteam },
     { name: 'SvgIconMacos', component: SvgIcons.SvgIconMacos },
     { name: 'SvgIconApk', component: SvgIcons.SvgIconApk }
+  ];
+  const badgeList = [
+    {
+      name: 'SvgIconNewLarge',
+      component: SvgIcons.SvgIconNewLarge,
+      largeWidth: 35,
+      largeHeight: 18
+    },
+    { name: 'SvgIconNewSmall', component: SvgIcons.SvgIconNewSmall },
+    {
+      name: 'SvgIconBetaLarge',
+      component: SvgIcons.SvgIconBetaLarge,
+      largeWidth: 35,
+      largeHeight: 18
+    },
+    { name: 'SvgIconBetaSmall', component: SvgIcons.SvgIconBetaSmall },
+    {
+      name: 'SvgIconSoonLarge',
+      component: SvgIcons.SvgIconSoonLarge,
+      largeWidth: 35,
+      largeHeight: 18
+    },
+    { name: 'SvgIconSoonSmall', component: SvgIcons.SvgIconSoonSmall },
+    {
+      name: 'SvgIconEventLarge',
+      component: SvgIcons.SvgIconEventLarge,
+      largeWidth: 35,
+      largeHeight: 18
+    },
+    { name: 'SvgIconEventSmall', component: SvgIcons.SvgIconEventSmall },
+    {
+      name: 'SvgIconOpenLarge',
+      component: SvgIcons.SvgIconOpenLarge,
+      largeWidth: 35,
+      largeHeight: 18
+    },
+    { name: 'SvgIconOpenSmall', component: SvgIcons.SvgIconOpenSmall },
+    {
+      name: 'SvgIconCertified',
+      component: SvgIcons.SvgIconCertified,
+      largeWidth: 24,
+      largeHeight: 24
+    },
+    {
+      name: 'SvgIconNewShort',
+      component: SvgIcons.SvgIconNewShort,
+      largeWidth: 24,
+      largeHeight: 24
+    },
+    { name: 'SvgIconCrown', component: SvgIcons.SvgIconCrown, largeWidth: 24, largeHeight: 24 },
+    {
+      name: 'SvgIconMaintenance',
+      component: SvgIcons.SvgIconMaintenance,
+      largeWidth: 24,
+      largeHeight: 24
+    }
   ];
 
   const list = useMemo(() => {
@@ -356,6 +416,31 @@ const SvgFinder = ({}: PropsType) => {
               }}
             >
               {createElement(item.component, { width: 24, height: 24 }, <></>)}
+            </li>
+          )}
+        </ListMap>
+      </ul>
+
+      <h3 className={cx('title')}>
+        Badge - 서비스 내 특정 상태를 표현하기 위해 사용되는 아이콘들입니다.
+      </h3>
+
+      <ul className={cx('icon-list')}>
+        <ListMap list={badgeList}>
+          {({ item }) => (
+            <li
+              key={item.name}
+              className={cx('icon-list-item')}
+              onClick={() => {
+                copyClipboard({ text: `<${item.name} />` });
+                alert(`<${item.name} />`);
+              }}
+            >
+              {createElement(
+                item.component,
+                { width: item.largeWidth || 28, height: item.largeHeight || 14 },
+                <></>
+              )}
             </li>
           )}
         </ListMap>
