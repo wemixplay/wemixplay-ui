@@ -28,7 +28,9 @@
     background: transparent;
 
     &:hover {
-      background: var(--wp-semantic-fill-normal);
+      @include hover {
+        background: var(--wp-semantic-fill-normal);
+      }
     }
 
     &.no-exist-event {
@@ -82,7 +84,9 @@
     }
 
     &:hover {
-      background: var(--wp-semantic-fill-normal);
+      @include hover {
+        background: var(--wp-semantic-fill-normal);
+      }
     }
 
     :global {
