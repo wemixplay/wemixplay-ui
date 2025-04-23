@@ -1,0 +1,1 @@
+import{i as r}from"./isSymbol.js";var i=r;var n=function(r,n){if(r!==n){var o=void 0!==r,t=null===r,u=r==r,a=i(r),f=void 0!==n,l=null===n,v=n==n,e=i(n);if(!l&&!e&&!a&&r>n||a&&f&&v&&!l&&!e||t&&f&&v||!o&&v||!u)return 1;if(!t&&!a&&!e&&r<n||e&&o&&u&&!t&&!a||l&&o&&u||!f&&u||!v)return-1}return 0};export{n as _};
