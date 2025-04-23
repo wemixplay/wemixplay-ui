@@ -1,0 +1,1 @@
+import{i as r}from"./isObject.js";import{_ as t}from"./_nativeKeysIn.js";import{_ as o}from"./_isPrototype.js";var s=r,a=o,e=t,i=Object.prototype.hasOwnProperty;var n=function(r){if(!s(r))return e(r);var t=a(r),o=[];for(var n in r)("constructor"!=n||!t&&i.call(r,n))&&o.push(n);return o};export{n as _};
