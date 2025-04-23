@@ -69,13 +69,11 @@
       }
     }
 
-    &.active {
+    &[class*="active"] {
       // 내가 좋아요 했을때 스타일
       .icon {
-        svg {
-          path {
-            fill: var(--wp-semantic-primary-normal);
-          }
+        svg path {
+          fill: var(--wp-semantic-primary-normal);
         }
       }
 
