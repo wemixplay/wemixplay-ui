@@ -1,1 +1,0 @@
-var r=function(r,a,e){switch(e.length){case 0:return r.call(a);case 1:return r.call(a,e[0]);case 2:return r.call(a,e[0],e[1]);case 3:return r.call(a,e[0],e[1],e[2])}return r.apply(a,e)};export{r as _};
