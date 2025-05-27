@@ -1,5 +1,9 @@
 # Changelog
 
+## [1.13.250-alpha] - 2025-05-27
+- 테스트
+
+
 ## [1.13.249-alpha] - 2025-04-23
 - mixin ellipsis 수정, channel profile certified 아이콘 사이즈 변경 
 
