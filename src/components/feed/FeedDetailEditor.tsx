@@ -186,8 +186,6 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
     const [metaData, setMetaData] = useState(ogMetaData);
     const [excludeOgSiteUrl, setExcludeOgSiteUrl] = useState([]);
 
-    console.log('textLength', textLength);
-
     const memorizationData = useMemo(() => {
       return {
         ...mediaData,
