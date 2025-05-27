@@ -56,11 +56,17 @@ const config = {
             return lines.some(line => line.trim().includes('&:global'));
           };
 
+          // 가상 선택자나 특수 선택자가 포함된 라인인지 확인
+          const isSpecialSelector = (line) => {
+            const specialSelectors = ['&::', '&:', ':global'];
+            return specialSelectors.some(selector => line.trim().includes(selector));
+          };
+
           const modifiedContent = content.replace(
             /\.(?!wemixplay-ui)[a-zA-Z][\w-]*/g,
             (match, offset) => {
               // :global 블록 내부이거나 &:global 중첩 구조 내부인 경우 변환하지 않음
-              if (isInGlobalScope(content, offset) || isInNestedGlobalScope(content, offset)) {
+              if (isInGlobalScope(content, offset) || isInNestedGlobalScope(content, offset) || isSpecialSelector(content)) {
                 return match;
               }
               return `.wm-ui${match}, ${match}`;

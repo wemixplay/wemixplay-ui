@@ -3,7 +3,7 @@
 import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import style from './FeedImagesView.module.scss';
 import Carousel from '../carousel/Carousel';
-import { SvgIcoDeleteX, SvgIcoSenstive, SvgNoimagePlaceholder } from '@/assets/svgs';
+import { SvgIconCancelColor, SvgIconCancelMono, SvgIconEyeOff, SvgIconImage } from '@/assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import Spinner from '../loadings/Spinner';
 
@@ -99,10 +99,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
    * 이미지 로드 중 에러가 발생했을 때 호출되는 함수
    * @param {React.SyntheticEvent<HTMLImageElement>} e - 이미지 에러 이벤트
    */
-  const handleOnImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement>) => {
-    const imgEl = e.target as HTMLImageElement;
-    const { src } = imgEl;
-
+  const handleOnImageError = useCallback((src: string) => {
     setErrorStatus((errorStatus) => ({ ...errorStatus, [src]: true }));
   }, []);
 
@@ -147,7 +144,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
                 className={cx('btn-img-delete')}
                 onClick={() => handleDeleteImg({ deleteIndex: index })}
               >
-                <SvgIcoDeleteX />
+                <SvgIconCancelColor />
               </button>
             )}
 
@@ -168,17 +165,17 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
               {!!image.inappositeMsg && (
                 <div className={cx('senstive-content-layer')}>
                   <div className={cx('senstive-content')}>
-                    <SvgIcoSenstive />
+                    <SvgIconEyeOff />
                     <p>{image.inappositeMsg}</p>
                   </div>
                 </div>
               )}
 
-              <img src={image.src} alt={image.src} onError={handleOnImageError} />
+              <img src={image.src} alt={image.src} onError={() => handleOnImageError(image.src)} />
 
               {!!errorStatus[image.src] && (
                 <div className={cx('no-image')}>
-                  <SvgNoimagePlaceholder />
+                  <SvgIconImage />
                   <span>No Image</span>
                 </div>
               )}

@@ -4,7 +4,7 @@
   &.shortened {
     .btn-ellipsis-trigger {
       svg {
-        transform: rotate(90deg);
+        transform: rotate(-90deg);
       }
     }
   }
@@ -15,7 +15,6 @@
         svg {
           width: 12px;
           margin-top: 2.5px;
-          transform: rotate(0deg);
         }
       }
     }
@@ -64,7 +63,8 @@
     svg {
       width: 12px;
       height: 12px;
-      transform: rotate(-90deg);
+
+      // transform: rotate(-90deg);
       transition: transform 0.25s;
 
       path {

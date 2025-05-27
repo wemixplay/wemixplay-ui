@@ -36,7 +36,7 @@ export const TypographyH: StoryComponent = {
       source: {
         code:
           '\n<Typography.H hLevel={1}>' +
-          '\n\h태그를 쓸때는 <Typography.H />를 사용하면 됩니다.' +
+          '\nh태그를 쓸때는 <Typography.H />를 사용하면 됩니다.' +
           '\n</Typography.H>'
       }
     }
@@ -60,7 +60,7 @@ export const TypographyP: StoryComponent = {
       source: {
         code:
           '\n<Typography.P >' +
-          '\n\p태그를 쓸때는 <Typography.P />를 사용하면 됩니다.' +
+          '\np태그를 쓸때는 <Typography.P />를 사용하면 됩니다.' +
           '\n</Typography.P>'
       }
     }
@@ -86,7 +86,7 @@ export const TypographySpan: StoryComponent = {
       source: {
         code:
           '\n<Typography.Span>' +
-          '\n\span태그를 쓸때는 <Typography.Span />를 사용하면 됩니다.' +
+          '\nspan태그를 쓸때는 <Typography.Span />를 사용하면 됩니다.' +
           '\n</Typography.Span>'
       }
     }
@@ -138,7 +138,7 @@ export const TypographyLabel: StoryComponent = {
       source: {
         code:
           '\n<Typography.Label>' +
-          '\n\label태그를 쓸때는 <Typography.Label />를 사용하면 됩니다.' +
+          '\nlabel태그를 쓸때는 <Typography.Label />를 사용하면 됩니다.' +
           '\n</Typography.Label>'
       }
     }

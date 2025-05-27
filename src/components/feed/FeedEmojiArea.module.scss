@@ -28,7 +28,9 @@
     background: transparent;
 
     &:hover {
-      background: var(--wp-semantic-fill-normal);
+      @include hover {
+        background: var(--wp-semantic-fill-normal);
+      }
     }
 
     &.no-exist-event {
@@ -71,13 +73,8 @@
     }
 
     svg {
-      width: 22px;
-      height: 22px;
-
-      @include breakpoint-768 {
-        width: 32px;
-        height: 32px;
-      }
+      width: 24px;
+      height: 24px;
 
       path {
         &:not([class*="exclude"]) {
@@ -87,7 +84,9 @@
     }
 
     &:hover {
-      background: var(--wp-semantic-fill-normal);
+      @include hover {
+        background: var(--wp-semantic-fill-normal);
+      }
     }
 
     :global {

@@ -23,11 +23,12 @@
     }
 
     &:hover {
-      background: var(--wp-semantic-fill-normal);
+      @include hover {
+        background: var(--wp-semantic-fill-normal);
+      }
     }
 
     &:not(.btn-share) {
-      height: 26px;
       padding: $sp-2 $sp-6;
       border-radius: $rd-100;
 
@@ -37,8 +38,6 @@
 
       .icon {
         display: flex;
-        width: 22px;
-        height: 22px;
         align-items: center;
         justify-content: center;
 
@@ -51,25 +50,12 @@
     &.btn-share {
       display: flex;
       width: 36px;
-      height: 26px;
       align-items: center;
       justify-content: center;
       margin-left: auto;
 
       @include breakpoint-768 {
         width: 52px;
-        height: 36px;
-      }
-
-      svg {
-        width: auto;
-        width: 18px;
-        height: 18px;
-
-        @include breakpoint-768 {
-          width: 22px;
-          height: 22px;
-        }
       }
     }
 
@@ -106,17 +92,11 @@
       display: block;
     }
 
-    &.active {
+    &[class*="active"] {
       // 내가 좋아요 했을때 스타일
       .icon {
-        svg {
-          [class*="fill"] {
-            fill: var(--wp-semantic-primary-normal);
-          }
-
-          [class*="stroke"] {
-            stroke: var(--wp-semantic-primary-normal);
-          }
+        svg path {
+          fill: var(--wp-semantic-primary-normal);
         }
       }
 

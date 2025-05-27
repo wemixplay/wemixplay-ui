@@ -8,7 +8,7 @@ pre-commit:
         if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "storybook" ]; then
           echo $CHANGED_FILES
           for file in $CHANGED_FILES; do
-            if [[ ! "$file" =~ ^(.github/workflows/|lefthook.yml|package.json|dist/|scripts/publish.sh|version.json|.vscode/|src/assets/svgs/) ]]; then
+            if [[ ! "$file" =~ ^(.github/workflows/|lefthook.yml|CHANGELOG.md|package.json|dist/|scripts/publish.sh|version.json|.vscode/|src/assets/svgs/) ]]; then
               echo "❌ main과 storybook 브랜치에는 직접 커밋할 수 없습니다. PR을 통한 병합을 진행해주세요."
               exit 1
             fi
@@ -24,7 +24,7 @@ pre-push:
 
         if [ "$BRANCH" = "main" ]; then
           for file in $CHANGED_FILES; do
-            if [[ ! "$file" =~ ^(package.json|dist/|scripts/publish.sh|version.json|.vscode/|src/assets/svgs/) ]]; then
+            if [[ ! "$file" =~ ^(package.json|dist/|scripts/publish.sh|version.json|.vscode/|src/assets/svgs/|CHANGELOG.md) ]]; then
               echo "❌ protected 브랜치에는 직접 push할 수 없습니다. PR을 통한 병합을 진행해주세요."
               exit 1
             fi

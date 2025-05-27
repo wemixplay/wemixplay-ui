@@ -12,7 +12,7 @@ import 'swiper/css';
 import 'swiper/css/effect-fade';
 
 import style from './Carousel.module.scss';
-import { SvgIcoCarouselNext, SvgIcoCarouselPrev } from '@/assets/svgs';
+import { SvgIconChevronLeft, SvgIconChevronRight } from '@/assets/svgs';
 
 const cx = makeCxFunc(style);
 
@@ -205,8 +205,8 @@ const Carousel = ({
   allowTouchMove = true,
   navigation = false,
   pagination = false,
-  prevButton = <SvgIcoCarouselPrev />,
-  nextButton = <SvgIcoCarouselNext />,
+  prevButton = <SvgIconChevronLeft />,
+  nextButton = <SvgIconChevronRight />,
   onSlideChangeTransitionEnd,
   handleOnSlideChangeTransitionEnd,
   onSlideChange,

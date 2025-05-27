@@ -3,7 +3,7 @@
 import React, { ReactElement, MouseEvent, useId, useMemo, useCallback } from 'react';
 import style from './FeedEmojiArea.module.scss';
 import WpImage from '../image/WpImage';
-import { SvgIcoAddEmoji, SvgIcoAddEmojiM } from '@/assets/svgs';
+import { SvgIconEmoji } from '@/assets/svgs';
 import PopoverButton from '../popover/PopoverButton';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
@@ -134,7 +134,7 @@ const FeedEmojiArea = ({
             whenWindowScrollClose={true}
             onClick={handleEmojiSelectBtnClick}
           >
-            {isMobile ? <SvgIcoAddEmojiM /> : <SvgIcoAddEmoji />}
+            <SvgIconEmoji />
           </PopoverButton>
         </div>
       ) : (

@@ -1,5 +1,82 @@
 # Changelog
 
+## [1.13.249-alpha] - 2025-04-23
+- mixin ellipsis 수정, channel profile certified 아이콘 사이즈 변경 
+
+
+## [1.13.248-alpha] - 2025-04-23
+- update svg icons 
+
+
+## [1.13.247-alpha] - 2025-04-23
+- update svg icons 
+
+
+## [1.13.246-alpha] - 2025-04-23
+- SVG 아이콘 업데이트
+
+
+## [1.13.245-alpha] - 2025-04-22
+- feed svg icon update
+
+
+## [1.13.244-alpha] - 2025-04-18
+- ui update
+
+
+## [1.13.243-alpha] - 2025-04-18
+- wemixplay-ui 피드 아이콘 업데이트
+
+
+## [1.13.242-alpha] - 2025-04-18
+- svg icon 업데이트
+
+
+## [1.13.241-alpha] - 2025-02-26
+- submit btn props Add
+
+
+## [1.13.240-alpha] - 2025-02-25
+- merge FIx
+
+
+## [1.13.239-alpha] - 2025-02-25
+- maxlength 로직 수정
+
+
+## [1.13.238-alpha] - 2025-02-03
+- wpEditor event preventDetault 시, Enter 로직 수정
+
+
+## [1.13.237-alpha] - 2025-01-23
+- theme 관련 버그 이슈 수정
+
+
+## [1.13.236-alpha] - 2025-01-22
+- feed ui fix
+  
+## [1.14.13] - 2025-01-20
+- feedImageView Img 태그 error 처리 로직 변경
+- 에디터에 XSS 공격 방지를 위한 pastToPlainText sanitize 추가
+- html entyties들 decode 할 entities만 decode 하도록 수정
+
+
+## [1.13.235-alpha] - 2025-01-20
+- image Fix
+
+
+## [1.13.234-alpha] - 2025-01-20
+- feedImageView Img 태그 error 처리 로직 변경
+
+
+## [1.13.233-alpha] - 2025-01-20
+- 에디터에 XSS 공격 방지를 위한 pastToPlainText sanitize 추가
+
+
+## [1.13.232-alpha] - 2025-01-20
+- html entyties들 decode 할 entities만 decode 하도록 수정
+
+
 ## [1.13.231-alpha] - 2025-01-17
 - 배포 테스트 
 
