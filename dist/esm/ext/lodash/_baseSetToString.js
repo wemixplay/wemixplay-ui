@@ -1,0 +1,1 @@
+import{c as r}from"./constant.js";import{_ as t}from"./_defineProperty.js";import{i as e}from"./identity.js";var o=r,i=t,a=i?function(r,t){return i(r,"toString",{configurable:!0,enumerable:!1,value:o(t),writable:!0})}:e;export{a as _};

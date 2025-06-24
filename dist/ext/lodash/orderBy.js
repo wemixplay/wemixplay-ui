@@ -1,0 +1,1 @@
+"use strict";var r=require("../../_virtual/_commonjsHelpers.js"),e=require("./_baseOrderBy.js"),s=require("./isArray.js"),u=e._baseOrderBy,l=s.isArray_1;var i=function(r,e,s,i){return null==r?[]:(l(e)||(e=null==e?[]:[e]),l(s=i?void 0:s)||(s=null==s?[]:[s]),u(r,e,s))},t=r.getDefaultExportFromCjs(i);module.exports=t;

@@ -1,0 +1,1 @@
+"use strict";var e=require("./_assignValue.js"),s=require("./_baseAssignValue.js"),r=e._assignValue,a=s._baseAssignValue;var i=function(e,s,i,u){var n=!i;i||(i={});for(var t=-1,v=s.length;++t<v;){var o=s[t],g=u?u(i[o],e[o],o,i,e):void 0;void 0===g&&(g=e[o]),n?a(i,o,g):r(i,o,g)}return i};exports._copyObject=i;
