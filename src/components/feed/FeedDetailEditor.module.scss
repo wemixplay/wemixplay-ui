@@ -225,7 +225,10 @@
 
       .btn-submit {
         position: relative;
+        display: flex;
         height: 40px;
+        align-items: center;
+        justify-content: center;
         padding: 0 $sp-20;
         border-radius: $rd-100;
         background: var(--wp-semantic-label-normal);
@@ -234,6 +237,16 @@
         transition: background 0.25s, color 0.25s;
 
         @include body-02-normal-b;
+
+        svg {
+          width: 16px;
+          height: 16px;
+          margin-right: $sp-4;
+
+          path {
+            fill: currentcolor;
+          }
+        }
 
         &.loading {
           .text {
@@ -251,7 +264,6 @@
         }
 
         &:disabled {
-          border-radius: $sp-8;
           background: var(--wp-semantic-line-solid-alternative);
           color: var(--wp-semantic-label-alternative);
           cursor: not-allowed;
