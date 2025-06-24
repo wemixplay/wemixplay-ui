@@ -1,0 +1,1 @@
+import{_ as r}from"./_baseRest.js";import{_ as t}from"./_isIterateeCall.js";var o=r,e=t;var a=function(r){return o((function(t,o){var a=-1,i=o.length,n=i>1?o[i-1]:void 0,s=i>2?o[2]:void 0;for(n=r.length>3&&"function"==typeof n?(i--,n):void 0,s&&e(o[0],o[1],s)&&(n=i<3?void 0:n,i=1),t=Object(t);++a<i;){var v=o[a];v&&r(t,v,a,n)}return t}))};export{a as _};
