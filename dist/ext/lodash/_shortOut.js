@@ -1,1 +1,0 @@
-"use strict";var r=Date.now;var t=function(t){var e=0,n=0;return function(){var u=r(),a=16-(u-n);if(n=u,a>0){if(++e>=800)return arguments[0]}else e=0;return t.apply(void 0,arguments)}};exports._shortOut=t;
