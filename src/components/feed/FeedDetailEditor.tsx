@@ -33,7 +33,7 @@ import {
 } from '@/utils/urlUtils';
 import FeedIframesView from './FeedIframesView';
 import FeedLinkPreview, { FeedLinkPreviewProps } from './FeedLinkPreview';
-import { SvgIconChevronDown, SvgIconImage } from '@/assets/svgs';
+import { SvgIconChevronDown, SvgIconImage, SvgIconPost } from '@/assets/svgs';
 import CountTextLength from '@/plugins/countTextLength/CountTextLength';
 import {
   commaWithValue,
@@ -662,6 +662,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                 )
               }
             >
+              <SvgIconPost />
               <span className={cx('text')}>{btnSubmitText}</span>
               {loading ? (
                 <span className={cx('spinner')}>
