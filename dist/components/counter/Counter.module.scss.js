@@ -1,1 +1,0 @@
-"use strict";require('./../../ext/style-inject/dist/style-inject.es.js')(".Counter-module_counter-value__rl28g{color:var(--wp-semantic-label-normal);font-size:13px;font-size:.8125rem;font-weight:400;letter-spacing:.0194em;line-height:18px;line-height:1.125rem}",{insertAt:"top"}),module.exports={"counter-value":"Counter-module_counter-value__rl28g"};
