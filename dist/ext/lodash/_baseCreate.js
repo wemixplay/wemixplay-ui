@@ -1,1 +1,0 @@
-"use strict";var e=require("./isObject.js").isObject_1,t=Object.create,r=function(){function r(){}return function(n){if(!e(n))return{};if(t)return t(n);r.prototype=n;var i=new r;return r.prototype=void 0,i}}();exports._baseCreate=r;

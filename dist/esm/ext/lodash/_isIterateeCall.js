@@ -1,1 +1,0 @@
-import{e as r}from"./eq.js";import{i}from"./isArrayLike.js";import{_ as s}from"./_isIndex.js";import{i as t}from"./isObject.js";var e=r,o=i,a=s,m=t;var n=function(r,i,s){if(!m(s))return!1;var t=typeof i;return!!("number"==t?o(s)&&a(i,s.length):"string"==t&&i in s)&&e(s[i],r)};export{n as _};
