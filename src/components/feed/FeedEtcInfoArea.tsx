@@ -2,7 +2,12 @@
 
 import React, { MouseEvent, useCallback } from 'react';
 import style from './FeedEtcInfoArea.module.scss';
-import { SvgIconComment, SvgIconCopy, SvgIconThumbupOutline } from '@/assets/svgs';
+import {
+  SvgIconComment,
+  SvgIconCopy,
+  SvgIconThumbupFill,
+  SvgIconThumbupOutline
+} from '@/assets/svgs';
 import { toFormatterByInt } from '@/utils/valueParserUtils';
 import { makeCxFunc } from '@/utils/forReactUtils';
 
@@ -123,7 +128,7 @@ const FeedEtcInfoArea = ({
         onClick={handleLikeBtnClick}
       >
         <span className={cx('icon')}>
-          <SvgIconThumbupOutline />
+          {isMyClick ? <SvgIconThumbupFill /> : <SvgIconThumbupOutline />}
         </span>
         <span className={cx('count')}>{toFormatterByInt(likeCount, 1)}</span>
       </button>
