@@ -63,6 +63,25 @@
 ## [1.13.238-alpha] - 2025-02-03
 - wpEditor event preventDetault 시, Enter 로직 수정
 
+## [1.14.18] - 2025-03-06
+- countLength 및 AutoUrl 수정
+
+
+## [1.14.17] - 2025-02-14
+- max-length 수정
+
+
+## [1.14.16] - 2025-01-23
+- contentable FIx
+
+
+## [1.14.15] - 2025-01-23
+- contentable Fix
+
+
+## [1.14.14] - 2025-01-23
+- 엘레나 작업 커밋
+
 
 ## [1.13.237-alpha] - 2025-01-23
 - theme 관련 버그 이슈 수정
