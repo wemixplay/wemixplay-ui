@@ -1,0 +1,1 @@
+"use strict";var r=require("./_apply.js")._apply,t=Math.max;var a=function(a,e,n){return e=t(void 0===e?a.length-1:e,0),function(){for(var o=arguments,i=-1,s=t(o.length-e,0),u=Array(s);++i<s;)u[i]=o[e+i];i=-1;for(var v=Array(e+1);++i<e;)v[i]=o[i];return v[e]=n(u),r(a,this,v)}};exports._overRest=a;
