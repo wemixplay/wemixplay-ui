@@ -1,0 +1,1 @@
+"use strict";var e=require("./_baseCreate.js"),t=require("./_getPrototype.js"),r=require("./_isPrototype.js"),o=e._baseCreate,s=t._getPrototype,i=r._isPrototype;var n=function(e){return"function"!=typeof e.constructor||i(e)?{}:o(s(e))};exports._initCloneObject=n;

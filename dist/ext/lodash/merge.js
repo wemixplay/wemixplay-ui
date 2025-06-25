@@ -1,0 +1,1 @@
+"use strict";var e=require("../../_virtual/_commonjsHelpers.js"),r=require("./_createAssigner.js"),s=require("./_baseMerge.js")._baseMerge,t=(0,r._createAssigner)((function(e,r,t){s(e,r,t)})),i=e.getDefaultExportFromCjs(t);module.exports=i;
