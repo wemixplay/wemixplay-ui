@@ -1,9 +1,75 @@
 # Changelog
 
+<<<<<<< alpha
+## [1.13.253-alpha] - 2025-06-25
+- 아이콘수정정
+
+
+## [1.13.252-alpha] - 2025-06-24
+- test
+
+
+## [1.13.251-alpha] - 2025-06-24
+- feed 수정
+
+
+## [1.13.250-alpha] - 2025-05-27
+- 테스트
+
+
+## [1.13.249-alpha] - 2025-04-23
+- mixin ellipsis 수정, channel profile certified 아이콘 사이즈 변경 
+
+
+## [1.13.248-alpha] - 2025-04-23
+- update svg icons 
+
+
+## [1.13.247-alpha] - 2025-04-23
+- update svg icons 
+
+
+## [1.13.246-alpha] - 2025-04-23
+- SVG 아이콘 업데이트
+
+
+## [1.13.245-alpha] - 2025-04-22
+- feed svg icon update
+
+
+## [1.13.244-alpha] - 2025-04-18
+- ui update
+
+
+## [1.13.243-alpha] - 2025-04-18
+- wemixplay-ui 피드 아이콘 업데이트
+
+
+## [1.13.242-alpha] - 2025-04-18
+- svg icon 업데이트
+
+
+## [1.13.241-alpha] - 2025-02-26
+- submit btn props Add
+
+
+## [1.13.240-alpha] - 2025-02-25
+- merge FIx
+
+
+## [1.13.239-alpha] - 2025-02-25
+- maxlength 로직 수정
+
+
+## [1.13.238-alpha] - 2025-02-03
+- wpEditor event preventDetault 시, Enter 로직 수정
+
+=======
 ## [1.14.19] - 2025-06-25
 - feed 수정
 
 
+>>>>>>> main
 ## [1.14.18] - 2025-03-06
 - countLength 및 AutoUrl 수정
 

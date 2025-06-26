@@ -3,7 +3,7 @@
 import React, { MouseEvent, useCallback, useEffect, useRef, useState } from 'react';
 import style from './FeedImagesView.module.scss';
 import Carousel from '../carousel/Carousel';
-import { SvgIcoDeleteX, SvgIcoSenstive, SvgNoimagePlaceholder } from '@/assets/svgs';
+import { SvgIconCancelColor, SvgIconCancelMono, SvgIconEyeOff, SvgIconImage } from '@/assets/svgs';
 import { makeCxFunc } from '@/utils/forReactUtils';
 import Spinner from '../loadings/Spinner';
 
@@ -144,7 +144,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
                 className={cx('btn-img-delete')}
                 onClick={() => handleDeleteImg({ deleteIndex: index })}
               >
-                <SvgIcoDeleteX />
+                <SvgIconCancelColor />
               </button>
             )}
 
@@ -165,7 +165,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
               {!!image.inappositeMsg && (
                 <div className={cx('senstive-content-layer')}>
                   <div className={cx('senstive-content')}>
-                    <SvgIcoSenstive />
+                    <SvgIconEyeOff />
                     <p>{image.inappositeMsg}</p>
                   </div>
                 </div>
@@ -175,7 +175,7 @@ const FeedImagesView = ({ className = '', images = [], handleDeleteImg, onImageC
 
               {!!errorStatus[image.src] && (
                 <div className={cx('no-image')}>
-                  <SvgNoimagePlaceholder />
+                  <SvgIconImage />
                   <span>No Image</span>
                 </div>
               )}

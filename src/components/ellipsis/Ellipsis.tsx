@@ -12,7 +12,7 @@ import React, {
 
 import style from './Ellipsis.module.scss';
 import { makeCxFunc } from '@/utils/forReactUtils';
-import { SvgIcoEllipsisChevron } from '@/assets/svgs';
+import { SvgIconChevronDown } from '@/assets/svgs';
 
 if (typeof window === 'undefined') React.useLayoutEffect = React.useEffect;
 
@@ -241,7 +241,7 @@ const Ellipsis = ({
           className={cx('btn-ellipsis-trigger')}
         >
           {shortened ? triggerMore : triggerLess}
-          <SvgIcoEllipsisChevron width={14} height={14} />
+          <SvgIconChevronDown width={14} height={14} />
         </button>
       )}
     </div>

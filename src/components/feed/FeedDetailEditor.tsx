@@ -33,7 +33,7 @@ import {
 } from '@/utils/urlUtils';
 import FeedIframesView from './FeedIframesView';
 import FeedLinkPreview, { FeedLinkPreviewProps } from './FeedLinkPreview';
-import { SvgIcoChevronDown, SvgIcoImage } from '@/assets/svgs';
+import { SvgIconChevronDown, SvgIconImage, SvgIconPost } from '@/assets/svgs';
 import CountTextLength from '@/plugins/countTextLength/CountTextLength';
 import {
   commaWithValue,
@@ -506,7 +506,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                   <span className={cx('selected-channel')}>
                     {categoryName || '-'}{' '}
                     {selectCategoryPopoverElement || onSelectCategoryClick ? (
-                      <SvgIcoChevronDown />
+                      <SvgIconChevronDown width={16} height={16} />
                     ) : (
                       <></>
                     )}
@@ -528,7 +528,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                     )}
                     {channelName || '내 채널에 포스트'}
                     {selectChannelPopoverElement || onSelectChannelClick ? (
-                      <SvgIcoChevronDown />
+                      <SvgIconChevronDown width={16} height={16} />
                     ) : (
                       <></>
                     )}
@@ -640,7 +640,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                 onChange={onImageFileChange}
               />
 
-              <SvgIcoImage />
+              <SvgIconImage />
             </label>
           </div>
           <div className={cx('right')}>
@@ -662,6 +662,7 @@ const FeedDetailEditor = forwardRef<WpEditorRef, Props>(
                 )
               }
             >
+              <SvgIconPost />
               <span className={cx('text')}>{btnSubmitText}</span>
               {loading ? (
                 <span className={cx('spinner')}>
