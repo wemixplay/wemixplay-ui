@@ -1,5 +1,6 @@
 # Changelog
 
+<<<<<<< alpha
 ## [1.13.253-alpha] - 2025-06-25
 - 아이콘수정정
 
@@ -63,6 +64,12 @@
 ## [1.13.238-alpha] - 2025-02-03
 - wpEditor event preventDetault 시, Enter 로직 수정
 
+=======
+## [1.14.19] - 2025-06-25
+- feed 수정
+
+
+>>>>>>> main
 ## [1.14.18] - 2025-03-06
 - countLength 및 AutoUrl 수정
 
