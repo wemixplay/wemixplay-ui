@@ -110,28 +110,6 @@ export const ZH_CN__LOCALE_OBJECT = {
     past: '%s前',
     s: '1秒',
     ss: '%d秒',
-    m: '1分钟',
-    mm: '%d分钟',
-    h: '一小时',
-    hh: '%d小时',
-    d: '一天',
-    dd: '%d天',
-    w: '一周',
-    ww: '%d周',
-    M: '一个月',
-    MM: '%d个月',
-    y: '一年',
-    yy: '%d年'
-  }
-} as const;
-
-export const ZH_TW__LOCALE_OBJECT = {
-  name: 'zh-Hant',
-  relativeTime: {
-    future: '%s後',
-    past: '%s前',
-    s: '1秒',
-    ss: '%d秒',
     m: '1分鐘',
     mm: '%d分鐘',
     h: '一小時',
@@ -142,6 +120,28 @@ export const ZH_TW__LOCALE_OBJECT = {
     ww: '%d週',
     M: '一個月',
     MM: '%d個月',
+    y: '一年',
+    yy: '%d年'
+  }
+} as const;
+
+export const ZH_TW__LOCALE_OBJECT = {
+  name: 'zh-Hant',
+  relativeTime: {
+    future: '%s后',
+    past: '%s前',
+    s: '1秒',
+    ss: '%d秒',
+    m: '1分钟',
+    mm: '%d分钟',
+    h: '一小时',
+    hh: '%d小时',
+    d: '一天',
+    dd: '%d天',
+    w: '一周',
+    ww: '%d周',
+    M: '一个月',
+    MM: '%d个月',
     y: '一年',
     yy: '%d年'
   }
